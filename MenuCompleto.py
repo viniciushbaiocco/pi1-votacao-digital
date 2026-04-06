@@ -14,7 +14,7 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
         int: Retorna o valor inteiro (opção) escolhida pelo usuário.
 
     """
-    while True:
+    while 1: # Substitui while True
         try:
             escolha = int(input("\n"+mensagem))
             if min_val <= escolha <= max_val:
@@ -35,7 +35,8 @@ def menu_completo():
     Returns:
         None
     """
-    while True: # Mantém o menu ativo
+    executando_menu = 1 # Substitui o True
+    while executando_menu:
 
         SubMenus.exibir_menu_principal()
         escolha = obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
@@ -113,5 +114,5 @@ def menu_completo():
 
             case 3:
                 print("Saindo...")
-                break  # Sai do loop 'while True', encerrando o programa
+                executando_menu = 0
 menu_completo()
