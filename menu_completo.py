@@ -1,5 +1,5 @@
-import SubMenus as sm
-import GerenciadorDeEntrada as ge
+import sub_menus as sm
+import gerenciador_de_entrada as ge
 
 def menu_completo():
     """
@@ -92,4 +92,3 @@ def menu_completo():
             case 3:
                 print("Saindo...")
                 executando_menu = 1
-menu_completo()
