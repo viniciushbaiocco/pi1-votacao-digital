@@ -11,7 +11,8 @@ def exibir_menu_principal():
     print("\n--- Menu Principal ---")
     print("1 - Gerenciamento")
     print("2 - Votação")
-    print("3 - Sair")
+    print("3 - Auditoria de Votação")
+    print("4 - Sair")
 
 def exibir_menu_gerenciamento():
     """
@@ -101,4 +102,16 @@ def exibir_menu_restultados_votacao():
     print("2 - Estatísticas De Comparecimento")
     print("3 - Votos Por Partido")
     print("4 - Validação De Integridade")
+
+def exibir_menu_auditoria():
+    """
+        Exibe o menu da auditoria com as opções exibir logs de ocorrência e protocolos de votação
+        Args:
+            None
+
+        Returns:
+            None
+            """
+    print("1 - Exibir logs de ocorrência")
+    print("2 - Protocolos de votação")
 

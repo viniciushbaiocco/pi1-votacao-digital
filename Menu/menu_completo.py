@@ -1,5 +1,5 @@
-import sub_menus as sm
-import gerenciador_de_entrada as ge
+from Menu import sub_menus as sm
+from Menu import gerenciador_de_entrada as ge
 
 def menu_completo():
     """
@@ -16,7 +16,7 @@ def menu_completo():
     while (executando_menu == 0):
 
         sm.exibir_menu_principal()
-        escolha = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
+        escolha = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 4)
 
         match (escolha):
             case 1:  # Entra na parte de gerenciamento
@@ -90,5 +90,15 @@ def menu_completo():
                 # Após a execução do sub-menu, o loop principal continua e exibe o menu principal novamente
 
             case 3:
+                sm.exibir_menu_auditoria()
+                escolha_auditoria = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
+
+                match escolha_auditoria:
+                    case 1:
+                        print("Em desenvolvimento...")
+                    case 2:
+                        print("Em desenvolvimento...")
+
+            case 4:
                 print("Saindo...")
                 executando_menu = 1
