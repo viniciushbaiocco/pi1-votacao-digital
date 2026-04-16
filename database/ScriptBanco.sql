@@ -24,5 +24,5 @@ CREATE TABLE votos (
     id_candidato INT,
     data_hora DATETIME NOT NULL,
     protocolo_votacao VARCHAR(255) UNIQUE NOT NULL,
-    FOREIGN KEY (id_candidato) REFERENCES cadastro_candidatos(id)
+    FOREIGN KEY (id_candidato) REFERENCES candidatos(id)
 );
