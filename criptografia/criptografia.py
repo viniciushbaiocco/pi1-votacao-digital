@@ -6,15 +6,15 @@ MATRIZ_CHAVE = [
     [17, 3]
 ]
 '''
-Matriz-chave 2x2 = [5 8; 17 3]; de acordo com requisito ✅
-det = 23; é invertível ✅
+Matriz-chave 2x2 = [5 8; 17 3]; de acordo com requisito
+det = 23; é invertível
 '''
 
 
 
-# ------------------------------
+# ------------------------------------------------------------
 # Funções matemáticas
-# ------------------------------
+# ------------------------------------------------------------
 
 
 
@@ -100,9 +100,9 @@ Returns:
 
 
 
-# ------------------------------
+# ------------------------------------------------------------
 #Funções de conversão de texto
-# ------------------------------
+# ------------------------------------------------------------
 
 
 
@@ -163,3 +163,186 @@ Returns:
     str: Texto com comprimento par, com ultimo caracter duplicado.
 """
 
+
+
+# ------------------------------------------------------------
+#Funções Criptografia e Descriptografia
+# ------------------------------------------------------------
+
+
+
+def criptografar(texto: str) -> str:
+    texto = texto.upper()
+    texto = duplicar_ultimo(texto)
+    numeros = texto_para_numeros(texto)
+ 
+    resultado = []
+    # Processa em vetores de 2
+    for i in range(0, len(numeros), 2):
+        vetor = [numeros[i], numeros[i + 1]]
+        vetor_cifrado = multiplicar_matriz_vetor(MATRIZ_CHAVE, vetor, MODULO)
+        resultado.extend(vetor_cifrado)
+ 
+    return numeros_para_texto(resultado)
+ 
+"""
+Criptografa usando Cifra de Hill com MATRIZ_CHAVE 2x2.
+ 
+Etapas:
+    1. Converte o texto para maiúsculao e duplica o último caractere se necessário.
+    2. Divide em vetores de 2 caracteres.
+    3. Converte cada vetor para um vetor numérico.
+    4. Multiplica pela MATRIZ_CHAVE com módulo 36.
+    5. Converte os números resultantes de volta para caracteres. (fim da cifra)
+
+Args:
+    texto (str): Texto que será cifrado.
+ 
+Returns:
+    str: Texto cifrado.
+ 
+
+Raises:
+    ValueError: Se digitar texto que não  está no ALFABETO.
+"""
+
+def descriptografar(texto_cifrado: str):
+    texto_cifrado = texto_cifrado.upper()
+    matriz_inversa = inversa_matriz_2x2(MATRIZ_CHAVE, MODULO)
+    numeros = texto_para_numeros(texto_cifrado)
+ 
+    resultado = []
+    for i in range(0, len(numeros), 2):
+        vetor = [numeros[i], numeros[i + 1]]
+        vetor_decifrado = multiplicar_matriz_vetor(matriz_inversa, vetor, MODULO)
+        resultado.extend(vetor_decifrado)
+ 
+    return numeros_para_texto(resultado)
+
+"""
+Descriptografa o texto cifrado.
+ 
+Etapas:
+    1. Calcula a matriz inversa da MATRIZ_CHAVE com módulo 36.
+    2. Divide o texto cifrado em vetores de 2 caracteres, assim como na cifra.
+    3. Converte cada vetor para vetor numérico.
+    4. Multiplica pela matriz inversa com módulo 36.
+    5. Converte de volta para string.
+ 
+Args:
+    texto_cifrado (str): Texto cifrado, gerado criptografia.
+ 
+Returns:
+    str: Texto original descriptografado (com final duplicado ou não).
+ 
+Raises:
+    ValueError: Se digitar texto que não  está no ALFABETO.
+"""
+
+
+
+# ------------------------------------------------------------
+#Criptografia e Descriptografia | CPF
+# ------------------------------------------------------------
+
+
+
+def criptografar_cpf(cpf: str):
+    cpf_limpo = cpf.replace(".", "").replace("-", "")
+    return criptografar(cpf_limpo)
+
+"""
+Criptografa o CPF do eleitor.
+
+Remove pontos e traços do CPF formatado antes de cifrar,
+garantindo que apenas dígitos (0-9) sejam processados. (feature)
+
+Args:
+    cpf (str): CPF do eleitor no formato '12345678901' ou '123.456.789-01'.
+
+Returns:
+    str: CPF criptografado.
+"""
+
+ 
+ 
+def descriptografar_cpf(cpf_cifrado: str):
+    return descriptografar(cpf_cifrado)
+
+"""
+Descriptografa o CPF.
+
+Args:
+    cpf_cifrado (str): CPF criptografado, por criptografar_cpf().
+
+Returns:
+    str: CPF original com 11 dígitos sem formatação.
+"""
+
+# ------------------------------------------------------------
+#Criptografia - Chave de acesso
+# ------------------------------------------------------------
+
+
+ 
+def criptografar_chave_acesso(chave: str):
+    return criptografar(chave)
+
+"""
+Criptografa a chave de acesso do eleitor.
+
+Args:
+    chave (str): Chave de acesso do eleitor.
+
+Returns:
+    str: Chave de acesso criptografada.
+"""
+
+ 
+def descriptografar_chave_acesso(chave_cifrada: str):
+    return descriptografar(chave_cifrada)
+
+"""
+Descriptografa a chave de acesso do eleitor.
+
+Args:
+    chave_cifrada (str): Chave de acesso do eleitor cifrada.
+
+Returns:
+    str: Chave de acesso descriptografada.
+"""
+
+
+
+# ------------------------------------------------------------
+#Criptografia - Protocolo
+# ------------------------------------------------------------
+
+
+
+def criptografar_protocolo(protocolo: str):
+    return criptografar(protocolo)
+"""
+Criptografa o protocolo de votação.
+
+O protocolo segue o padrão: 'V' + 2 letras aleatórias + ano (2 dígitos) + número do candidato (2 dígitos) + 5 dígitos aleatórios.
+
+Args:
+    protocolo (str): Protocolo de votação gerado no voto.
+
+Returns:
+    str: Protocolo criptografado.
+"""
+ 
+def descriptografar_protocolo(protocolo_cifrado: str):
+    return descriptografar(protocolo_cifrado)
+
+"""
+Descriptografa o protocolo de votação.
+
+Args:
+    protocolo_cifrado (str): Protocolo criptografado.
+
+Returns:
+    str: Protocolo de votação descriptografado.
+"""
