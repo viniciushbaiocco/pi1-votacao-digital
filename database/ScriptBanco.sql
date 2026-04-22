@@ -1,7 +1,7 @@
 CREATE DATABASE projeto_integrador;
 USE projeto_integrador;
 
-CREATE TABLE cadastro_eleitores (
+CREATE TABLE eleitores ( 
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) UNIQUE NOT NULL,
     titulo_eleitor CHAR(12) UNIQUE NOT NULL,
@@ -11,11 +11,11 @@ CREATE TABLE cadastro_eleitores (
     status_votacao BOOLEAN DEFAULT FALSE NOT NULL
 );
 
-CREATE TABLE cadastro_candidatos (
+CREATE TABLE candidatos (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) UNIQUE NOT NULL,
     partido VARCHAR(50) NOT NULL,
-    sigla_partido VARCHAR(2) NOT NULL,
+    sigla_partido VARCHAR(6) NOT NULL,
     numero_votacao CHAR(2) UNIQUE NOT NULL
 );
 
@@ -24,5 +24,5 @@ CREATE TABLE votos (
     id_candidato INT,
     data_hora DATETIME NOT NULL,
     protocolo_votacao VARCHAR(255) UNIQUE NOT NULL,
-    FOREIGN KEY (id_candidato) REFERENCES cadastro_candidatos(id)
+    FOREIGN KEY (id_candidato) REFERENCES candidatos(id)
 );
