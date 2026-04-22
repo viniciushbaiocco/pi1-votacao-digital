@@ -1,7 +1,16 @@
-from conexao_banco import  conexao_banco
 import random
 
 def geracao_chave_acesso(nome):
+
+    """
+    Gera uma chave de acesso única combinando partes do nome do eleitor e um número aleatório.
+
+    Args:
+        nome (str): O nome completo do eleitor.
+
+    Returns:
+        str: A chave de acesso gerada.
+    """
 
     numero = random.randint(1000, 9999)
 
@@ -15,5 +24,6 @@ def geracao_chave_acesso(nome):
     chave_acesso = iniciais_nome + inicial_sobrenome + str(numero)
 
     print(f"Chave de acesso {chave_acesso} criada para o eleitor {nome}")
+    return chave_acesso
 
 
