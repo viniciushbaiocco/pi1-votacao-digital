@@ -25,11 +25,6 @@ def edicao_eleitores():
         return 'Eleitor não encontrado.'
     id_eleitor = eleitor[0]
 
-    #listar o eleitor antes da edição
-    cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
-    print('\n - Eleitor antes da edição - ')
-    print(cursor.fetchone())
-
     #edição dos dados do eleitor
     novo_nome = input('Digite o novo nome: ')
     novo_cpf = input('Digite o novo CPF: ')
@@ -50,6 +45,11 @@ def edicao_eleitores():
     cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s AND id != %s', (novo_titulo, id_eleitor))
     if cursor.fetchone():
         return 'Título de Eleitor já cadastrado.'
+    
+    #listar o eleitor antes da edição
+    cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
+    print('\n - Eleitor antes da edição - ')
+    print(cursor.fetchone())
 
     #atualizar BD
     cursor.execute(''' 
