@@ -6,20 +6,24 @@ def listagem_eleitores ():
     cursor = conexao.cursor()
 
     #deve listar tudo da tabela eleitores (nome, cpf, titulo, etc)
-    
     cursor.execute('SELECT * FROM eleitores')
     total_eleitores = cursor.fetchall()
     
-    for eleitores in range (total_eleitores):
-        print(eleitores)
+    for eleitores in (total_eleitores):
+        print('=' * 50)
+        print(f' ID: {eleitores['id']}')
+        print(f' Nome: {eleitores['nome']}')
+        print(f' CPF: {eleitores['cpf']}')
+        print(f' Título de Eleitor: {eleitores['titulo_eleitor']}')
+        print(f' Mesário: {eleitores['mesario']}')
+        print(f' Status de Votação: {eleitores['status_votacao']}')
+    print('=' *50)
+    print(f' Total de Eleitores Cadastrados: {len(total_eleitores)}')
 
     cursor.close()
     conexao.close()
 
-    return eleitores
-
     #NEXT STEPS 
-    #Ver se utilizar o try/except para caso não houver eleitores na tabela
-    #Testar no MYSQL no pc da PUC 
-    #Ao exibir resultado voltar para o menu de buscas ou menu eleitores
-    #erro no codigo, tentar usar o for
+    #ver se utilizar o try/except para caso não houver eleitores na tabela
+    #ao exibir resultado voltar para o menu de buscas ou menu eleitores
+    
