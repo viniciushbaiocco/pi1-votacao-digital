@@ -1,4 +1,5 @@
-from Menu import gerenciador_de_entrada as ge, sub_menus as sm
+from Menu import sub_menus as sm
+from Menu import gerenciador_de_entrada as ge
 
 def menu_completo():
     """
