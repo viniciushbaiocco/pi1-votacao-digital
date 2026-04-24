@@ -1,5 +1,6 @@
-import sub_menus as sm
-import gerenciador_de_entrada as ge
+from Menu import sub_menus as sm
+from Verificadores import gerenciador_de_entrada as ge
+from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
 
 def menu_completo():
     """
@@ -11,40 +12,45 @@ def menu_completo():
 
     Returns:
         None
+
     """
-    executando_menu = 0 # Substitui o True
-    while (executando_menu == 0):
-
+    executando_menu_principal = 1
+    while executando_menu_principal:
         sm.exibir_menu_principal()
-        escolha = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
+        escolha_principal = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
 
-        match (escolha):
-            case 1:  # Entra na parte de gerenciamento
+        if escolha_principal == 1:  # Gerenciamento
+            executando_menu_gerenciamento = 1
+            while executando_menu_gerenciamento == 1:
                 sm.exibir_menu_gerenciamento()
-                escolha_gerenciamento = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
+                escolha_gerenciamento = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
 
-                match (escolha_gerenciamento):
-                    case 1:
+                if escolha_gerenciamento == 1:  # Eleitores
+                    executando_menu_eleitores = 1
+                    while executando_menu_eleitores:
                         sm.exibir_menu_eleitores()
-                        escolha_eleitor = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 5)
+                        escolha_eleitor = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 6)
 
                         match escolha_eleitor:
                             case 1:
                                 print("Em desenvolvimento...")
                             case 2:
-                                print("Em desenvolvimento...")
+                                edicao_eleitores.edicao_eleitores()
                             case 3:
-                                print("Em desenvolvimento...")
+                                remocao_eleitores.remocao_eleitores()
                             case 4:
-                                print("Em desenvolvimento...")
+                                busca_eleitores.busca_eleitor()
                             case 5:
-                                print("Em desenvolvimento...")
-
-                    case 2:
+                                listagem_eleitores.listagem_eleitores()
+                            case 6:  # Voltar
+                                executando_menu_eleitores = 0
+                elif escolha_gerenciamento == 2:  # Candidatos
+                    executando_menu_candidatos = 1
+                    while executando_menu_candidatos == 1:
                         sm.exibir_menu_candidatos()
-                        escolha_candidatao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 5)
+                        escolha_candidato = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 6)
 
-                        match escolha_candidatao:
+                        match escolha_candidato:
                             case 1:
                                 print("Em desenvolvimento...")
                             case 2:
@@ -55,27 +61,35 @@ def menu_completo():
                                 print("Em desenvolvimento...")
                             case 5:
                                 print("Em desenvolvimento...")
+                            case 6:  # Voltar
+                                executando_menu_candidatos = 0
+                elif escolha_gerenciamento == 3:  # Voltar
+                    executando_menu_gerenciamento = 0
 
-                # Após a execução do sub-menu, o loop principal continua e exibe o menu principal novamente
-
-            case 2:  # Entra na parte de votação
+        elif escolha_principal == 2:  # Votação
+            executando_menu_votacao = 1
+            while executando_menu_votacao == 1:
                 sm.exibir_menu_votacao()
-                escolha_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
+                escolha_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
 
-                match (escolha_votacao):
-                    case 1:
+                if escolha_votacao == 1:  # Abrir Sistema De Votação
+                    executando_menu_sistema_votacao = 1
+                    while executando_menu_sistema_votacao == 1:
                         sm.exibir_menu_sistema_votacao()
-                        escolha_sistema_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
+                        escolha_sistema_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
 
                         match escolha_sistema_votacao:
                             case 1:
                                 print("Em desenvolvimento...")
                             case 2:
                                 print("Em desenvolvimento...")
-
-                    case 2:
+                            case 3:  # Voltar
+                                executando_menu_sistema_votacao = 0
+                elif escolha_votacao == 2:  # Resultados Da Votação
+                    executando_menu_resultados_votacao = 1
+                    while executando_menu_resultados_votacao == 1:
                         sm.exibir_menu_restultados_votacao()
-                        escolha_resultado_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 4)
+                        escolha_resultado_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 5)
 
                         match escolha_resultado_votacao:
                             case 1:
@@ -86,9 +100,11 @@ def menu_completo():
                                 print("Em desenvolvimento...")
                             case 4:
                                 print("Em desenvolvimento...")
+                            case 5:  # Voltar
+                                executando_menu_resultados_votacao = 0
+                elif escolha_votacao == 3:  # Voltar
+                    executando_menu_votacao = 0
 
-                # Após a execução do sub-menu, o loop principal continua e exibe o menu principal novamente
-
-            case 3:
-                print("Saindo...")
-                executando_menu = 1
+        elif escolha_principal == 3:  # Sair
+            print("Saindo...")
+            executando_menu_principal = 0
