@@ -7,15 +7,26 @@ def listagem_eleitores ():
     #deve listar tudo da tabela eleitores (nome, cpf, titulo, etc)
     cursor.execute('SELECT * FROM eleitores')
     total_eleitores = cursor.fetchall()
-    
+
     for eleitores in (total_eleitores):
         print('=' * 50)
         print(f' ID: {eleitores['id']}')
         print(f' Nome: {eleitores['nome']}')
-        print(f' CPF: {eleitores['cpf']}')
         print(f' Título de Eleitor: {eleitores['titulo_eleitor']}')
-        print(f' Mesário: {eleitores['mesario']}')
-        print(f' Status de Votação: {eleitores['status_votacao']}')
+
+        #para ficar melhor pro usuário transformarei 1 em sim 0 em não 
+        if eleitores['mesario'] == 1: 
+            mesario = 'Sim'
+        else:
+            mesario = 'Não' 
+        if eleitores['status_votacao'] == 1:
+            status_votacao = 'Já Votou'
+        else:
+            status_votacao = 'Não Votou'
+
+        print(f' Mesário: {mesario}')
+        print(f' Status de Votação: {status_votacao}')
+
     print('=' *50)
     print(f' Total de Eleitores Cadastrados: {len(total_eleitores)}')
 
@@ -23,6 +34,5 @@ def listagem_eleitores ():
     conexao.close()
 
     #NEXT STEPS 
-    #ver se utilizar o try/except para caso não houver eleitores na tabela
-    #ao exibir resultado voltar para o menu de buscas ou menu eleitores
-    
+    #ver se utilizar o try/except para caso não houver eleitores na tabela    
+    #tentar otimizar os ifs e else
