@@ -10,7 +10,7 @@ def verificar_cpf_banco(cpf_criptografado):
         mensagem(str): Retorna se há eleitor cadastrado com o CPF no banco de dados ou não.
 
     """
-    import conexao_banco
+    from database import conexao_banco
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor()
     query = "SELECT COUNT(*) FROM eleitores WHERE cpf = %s"
