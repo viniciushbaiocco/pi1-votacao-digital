@@ -14,7 +14,7 @@ def busca_eleitor():
     from Menu import gerenciador_de_entrada as ge
     from Menu import sub_menus as sb
     import verificacao_cpf
-    import conexao_banco as conect
+    from database import conexao_banco as conect
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor()

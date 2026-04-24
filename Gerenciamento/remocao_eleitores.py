@@ -1,6 +1,5 @@
 def remocao_eleitores():
-    import mysql.connector
-    import conexao_banco as conect
+    from database import conexao_banco as conect
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor()
@@ -42,4 +41,3 @@ def remocao_eleitores():
     conexao.close()
     return 'Eleitor removido com sucesso.'
 
-remocao_eleitores()
