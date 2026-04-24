@@ -11,7 +11,7 @@ def busca_eleitor():
     import Verificadores.validacao_cpf as val_cpf
     import Verificadores.verificacao_cpf_banco as ver_cpf
     import Verificadores.verificacao_titulo_banco as ver_titulo
-    import conexao_banco as conect
+    from database import conexao_banco as conect
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor()
