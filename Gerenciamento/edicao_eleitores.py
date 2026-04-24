@@ -1,22 +1,22 @@
 def edicao_eleitores():
     from database import conexao_banco as conect
+    from Verificadores import gerenciador_de_entrada as ge
+    from criptografia import criptografia as crip
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor()
 
     #utilizar entre CPF e Título para encontrar o eleitor no BD
     print('Qual método quer usar para fazer a edição: \n 1 - CPF \n 2 - Título de Eleitor')
-    opcao=int(input('Opção escolhida: '))
+    opcao = ge.obter_entrada_inteira_valida('Digite uma opção: ', 1, 3)
 
     match opcao:
         case 1:
             busca = input('CPF: ')
-            cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (busca,))
+            cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(busca),))
         case 2:
             busca = input('Título de Eleitor: ')
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (busca,))
-        case _:
-            return 'Opção Inválida, escolha entre 1 e 2.'
 
     #verificar a existência do eleitor no BD
     eleitor = cursor.fetchone()
@@ -28,6 +28,9 @@ def edicao_eleitores():
     novo_nome = input('Digite o novo nome: ')
     novo_cpf = input('Digite o novo CPF: ')
     novo_titulo = input('Digite o novo Título de Eleitor: ')
+
+    #criptografar o cpf novamente para colocar no banco de dados
+    novo_cpf = crip.criptografar_cpf(novo_cpf)
 
     #verificar se o CPF ou Título é valido 
     if len(novo_cpf) != 11:
