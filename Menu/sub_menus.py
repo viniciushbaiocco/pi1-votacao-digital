@@ -27,6 +27,7 @@ def exibir_menu_gerenciamento():
     print("\n-- Gerenciamento")
     print("1 - Eleitores")
     print("2 - Candidatos")
+    print("3 - Voltar")
 
 
 def exibir_menu_eleitores():
@@ -44,6 +45,7 @@ def exibir_menu_eleitores():
     print("3 - Excluir Eleitores")
     print("4 - Buscar Eleitores")
     print("5 - Visualizar Eleitores")
+    print("6 - Voltar")
 
 
 def exibir_menu_candidatos():
@@ -61,6 +63,7 @@ def exibir_menu_candidatos():
     print("3 - Excluir Candidatos")
     print("4 - Buscar Candidatos")
     print("5 - Visualizar Candidatos")
+    print("6 - Voltar")
 
 
 def exibir_menu_votacao():
@@ -76,6 +79,7 @@ def exibir_menu_votacao():
     print("\n--- Votação ---")
     print("1 - Abrir Sistema De Votação")
     print("2 - Resultados Da Votação")
+    print("3 - Voltar")
 
 
 def exibir_menu_sistema_votacao():
@@ -90,6 +94,7 @@ def exibir_menu_sistema_votacao():
     """
     print("1 - Votar")
     print("2 - Encerrar Sistema De Votação")
+    print("3 - Voltar")
 
 
 def exibir_menu_restultados_votacao():
@@ -107,3 +112,4 @@ def exibir_menu_restultados_votacao():
     print("2 - Estatísticas De Comparecimento")
     print("3 - Votos Por Partido")
     print("4 - Validação De Integridade")
+    print("5 - Voltar")
