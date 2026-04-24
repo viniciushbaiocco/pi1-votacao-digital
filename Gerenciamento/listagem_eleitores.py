@@ -2,7 +2,7 @@ def listagem_eleitores ():
     from database import conexao_banco as conect
 
     conexao = conect.conexao_banco()
-    cursor = conexao.cursor()
+    cursor = conexao.cursor(dictionary=True)
 
     #deve listar tudo da tabela eleitores (nome, cpf, titulo, etc)
     cursor.execute('SELECT * FROM eleitores')
