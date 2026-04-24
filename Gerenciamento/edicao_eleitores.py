@@ -71,3 +71,4 @@ def edicao_eleitores():
 #perguntar se precisar editar algo a mais alem do nome cpf e titulo
 #após a função de verificação ficar pronta, tentar substituir no código 
 #tentar usar a função de obter entrada no match case 
+#preciso fazer com que a busca veja o CPF criptografado
