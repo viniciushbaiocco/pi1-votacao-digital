@@ -9,7 +9,6 @@ Returns:
 """
     # Verificação do (1º dígito verificador)
     arrumando = cpf_digitado_usuario.replace(".", "").replace("-", "")
-    print(arrumando)
 
     # Verificação de tamanho do CPF
     if len(arrumando) != 11:

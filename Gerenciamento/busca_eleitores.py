@@ -29,6 +29,7 @@ def busca_eleitor():
 
             cpf = str(input("\nDigite o número do CPF a ser consultado: "))
             validacao_cpf = val_cpf.validacao_de_cpf(cpf)
+
             while validacao_cpf != True:
                 cpf = str(
                     input("\nDigite novamente o número do CPF a ser consultado: "))
@@ -125,6 +126,7 @@ def busca_eleitor():
 
 
 # usando esse if para poder rodar o teste dentro deste arquivo e nao na main.py
+
 if __name__ == "__main__":
     busca_eleitor()
 
