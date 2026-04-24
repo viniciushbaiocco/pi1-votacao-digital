@@ -54,21 +54,5 @@ Returns:
         print("Erro: Calculo de CPF inválido (dígitos verificadores não conferem).")
         return False
 
-    #Verifica se o CPF já existe no banco
-    
-    conexao.conexao_banco()
-    cursor = conexao.cursor()
-    query = "SELECT COUNT(*) FROM eleitores WHERE cpf = %s"
-    cursor.execute(query,(arrumando,))
-    resultado = cursor.fetchone()
-
-    cursor.close()
-    conexao.close()
-
-    if resultado [0] > 0:
-            print("CPF já cadastrado.")
-            return False
-
-   
-
     return True
+
