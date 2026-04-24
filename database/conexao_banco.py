@@ -13,9 +13,9 @@ def conexao_banco():
 
         conexao = mysql.connector.connect(
             host="localhost",
-            user="root",
-            password="141589",
-            database="projeto_integrador"
+            user="seu_usuario",
+            password="sua_senha",
+            database="seu_banco"
         )
         print("Conexão bem sucedida!")
         return conexao
