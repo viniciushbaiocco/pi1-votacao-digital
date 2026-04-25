@@ -7,7 +7,7 @@ def edicao_eleitores():
     cursor = conexao.cursor()
 
     #utilizar entre CPF e Título para encontrar o eleitor no BD
-    print('Qual método quer usar para fazer a edição: \n 1 - CPF \n 2 - Título de Eleitor')
+    print('Escolha um método para buscar o eleitor: \n 1 - CPF \n 2 - Título de Eleitor')
     opcao = ge.obter_entrada_inteira_valida('Digite uma opção: ', 1, 3)
 
     match opcao:
@@ -28,7 +28,8 @@ def edicao_eleitores():
     novo_nome = input('Digite o novo nome: ')
     novo_cpf = input('Digite o novo CPF: ')
     novo_titulo = input('Digite o novo Título de Eleitor: ')
-
+    novo_mesario = ge.obter_entrada_inteira_valida('Digite o novo mesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 3)
+    
     #criptografar o cpf novamente para colocar no banco de dados
     novo_cpf = crip.criptografar_cpf(novo_cpf)
 
@@ -56,8 +57,8 @@ def edicao_eleitores():
     #atualizar BD
     cursor.execute(''' 
         UPDATE eleitores SET nome = %s,
-        cpf = %s, titulo_eleitor = %s WHERE id = %s
-    ''', (novo_nome, novo_cpf, novo_titulo, id_eleitor))
+        cpf = %s, titulo_eleitor = %s, mesario = %s WHERE id = %s
+    ''', (novo_nome, novo_cpf, novo_titulo, novo_mesario, id_eleitor))
     conexao.commit()
 
     #listar o eleitor após edição
@@ -71,7 +72,6 @@ def edicao_eleitores():
 
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
-#perguntar se precisar editar algo a mais alem do nome cpf e titulo
+#mudar a listagem do antes e depois para o mesmo tipo de listagem que usei no listagem_eleitores para ficar melhor visualmente pro usuario
 #após a função de verificação ficar pronta, tentar substituir no código 
-#tentar usar a função de obter entrada no match case 
-#preciso fazer com que a busca veja o CPF criptografado
+
