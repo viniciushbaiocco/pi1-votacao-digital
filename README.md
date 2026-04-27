@@ -9,6 +9,7 @@ O projeto é o backend de um sistema de votação digital via terminal desenvolv
     Guilherme Luis da Silveira 
     Leonardo Varela Vacari
     Rafael Jorge Nicolau Correia
+    Vinícius Hegues Baiocco 
 
 **Tecnologias Utilizadas**
 
