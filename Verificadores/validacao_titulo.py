@@ -1,5 +1,17 @@
 def validar_titulo (titulo):
 
+    """
+    Valida matematicamente um Título de Eleitor verificando seus dois dígitos verificadores e
+    verificando o código de UF
+
+    Args:
+        titulo (str): O Título de Eleitor a ser validado com ou sem espaços
+
+    Returns:
+        bool: Retorna True se o Título de Eleitor for válido, False caso contrário.
+    
+    """
+
     arrumando = titulo.replace(" ", "")
 
     #Verificação de tamanho do título
@@ -21,9 +33,9 @@ def validar_titulo (titulo):
     "19": "MS","20": "DF","21": "SE","22": "AM","23": "RO","24": "AC","25": "AP","26": "RR","27": "TO",
     "28": "ZZ"
     }
-    str_uf    = arrumando[8:10]
-    uf_d1     = separado[8]
-    uf_d2   = separado[9]
+    str_uf = arrumando[8:10]
+    uf_d1 = separado[8]
+    uf_d2 = separado[9]
     codigo_uf = uf_d1 * 10 + uf_d2
  
     if str_uf not in dicionario_UF:
