@@ -1,114 +1,137 @@
-# entrada: CPF ou Título eleitor
-# processamento: busca no banco de dados a correspondencia de inputs.
-# o cpf está cifrado no banco, logo o input precisa passar pela cifragem para encontrar a correspondencia no banco
-# exibe: nome eleitor, titulo eleitor, se mesário, se votou
-
 
 def busca_eleitor():
+    """
+    A função exibe opções para receber valores str de cpf ou titulo de eleitor para consulta do eleitor no banco de dados.
+    Utiliza de funções de criptografia, validacao e verificacao de CPF e título de eleitor. 
 
-    from Verificadores import gerenciador_de_entrada as ge
-    from Menu import sub_menus as sb
+    Args:
+        none
+
+    Returns:
+        Exibe (print) os dados selecionados do eleitor na tela para o usuário. 
+        Exibe opções de novas buscas ou troca de Menu.
+
+    """
+
+    import Menu.sub_menus as sb
+    import database.conexao_banco as conect
+    import Verificadores. gerenciador_de_entrada as ge
     import Verificadores.validacao_cpf as val_cpf
+    import Verificadores.validacao_titulo as val_titulo
     import Verificadores.verificacao_cpf_banco as ver_cpf
     import Verificadores.verificacao_titulo_banco as ver_titulo
-    from database import conexao_banco as conect
+    import criptografia.criptografia as cripto
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor()
 
     print("\n--- 4 - Buscar Eleitores ---")
-    print("\nOpção 1: Busca pelo CPF")
-    print("\nOpção 2: Busca pelo Título de eleitor")
+    print("\nOpção 1: Buscar pelo CPF")
+    print("\nOpção 2: Buscar pelo Título de eleitor")
     print("\nOpção 3: Voltar ao Menu de Gerenciamento de Eleitores")
 
+    # Enquanto a opção estiver fora do intervalo, continua pedindo um valor válido
     opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 3)
 
+    # Enquanto não for escolhido a opção Voltar (3), a busca continua disponível
     while opcao != 3:
 
         if opcao == 1:
 
+            # Valida o CPF digitado
             cpf = str(input("\nDigite o número do CPF a ser consultado: "))
             validacao_cpf = val_cpf.validacao_de_cpf(cpf)
 
-            while validacao_cpf != True:
-                cpf = str(
-                    input("\nDigite novamente o número do CPF a ser consultado: "))
-                validacao_cpf = val_cpf.validacao_de_cpf(cpf)
+            if validacao_cpf == True:
+                # Criptografa o CPF digitado
+                cpf_criptografado = cripto.criptografar_cpf(cpf)
 
-            # Criptografia: tem que entar aqui. CPF criptografado deve ser entrada para ver_CPF_banco
+            # Verifica a existência do CPF criptografado no banco
+                verificacao_cpf_banco = ver_cpf.verificar_cpf_banco(
+                    cpf_criptografado)
 
-            verificacao_cpf_banco = ver_cpf.verificar_cpf_banco(
-                cpf)  # tem que ser CPF criptografado
+            # Se eleitor cadastrado, busca dados no banco e exibe ao usuário
+                if verificacao_cpf_banco[0] == 1:
+                    comando = (
+                        "SELECT nome, mesario, titulo_eleitor, status_votacao FROM eleitores WHERE cpf = %s")
+                    valores = (cpf_criptografado, )
 
-            if verificacao_cpf_banco[0] == 1:
-                comando = (
-                    "SELECT nome, mesario, titulo_eleitor, status_votacao FROM eleitores WHERE cpf = %s")
-                valores = (cpf, )
+                    cursor.execute(comando, valores)
+                    dados_eleitor = cursor.fetchone()
 
-                cursor.execute(comando, valores)
-                dados_eleitor = cursor.fetchone()
+                    nome = dados_eleitor[0]
+                    mesario = dados_eleitor[1]
+                    if mesario == 0:
+                        mesario = "Não"
+                    else:
+                        mesario = "Sim"
+                    titulo = dados_eleitor[2]
+                    status_votacao = dados_eleitor[3]
+                    if status_votacao == 0:
+                        status_votacao = "NÃO VOTOU"
+                    else:
+                        status_votacao = "VOTOU"
 
-                nome = dados_eleitor[0]
-                mesario = dados_eleitor[1]
-                if mesario == 0:
-                    mesario = "Não"
+                    print(f"\n --- Dados do eleitor ---"
+                          f"\nNome eleitor: {nome}"
+                          f"\nTítulo de eleitor: {titulo}"
+                          f"\nMesário: {mesario}"
+                          f"\nStatus votação: {status_votacao}")
+            # Se usuário não cadastrado, sugere cadastramento indicando o Menu correto
                 else:
-                    mesario = "Sim"
-                titulo = dados_eleitor[2]
-                status_votacao = dados_eleitor[3]
-                if status_votacao == 0:
-                    status_votacao = "NÃO VOTOU"
-                else:
-                    status_votacao = "VOTOU"
+                    print(
+                        "Eleitor não cadastrado. Realizar o cadastramento no Menu Gerenciamento de Eleitores.")
 
-                print(f"\n --- Dados do eleitor ---"
-                      f"\nNome eleitor: {nome}"
-                      f"\nTítulo de eleitor: {titulo}"
-                      f"\nMesário: {mesario}"
-                      f"\nStatus votação: {status_votacao}")
             else:
-                print(
-                    "Eleitor não cadastrado. Realizar o cadastramento no Menu Gerenciamento Eleitores.")
+                print("\nPor favor, refaça sua busca!")
 
         if opcao == 2:
-
+            # Valida o título de eleitor digitado
             titulo_eleitor = str(
                 input("Digite o número do Título de eleitor a ser consultado: "))
-            # inserir validacao do título
 
-            verificar_titulo = ver_titulo.verificar_titulo_de_eleitor_banco(
-                titulo_eleitor)
+            titulo_validado = val_titulo.validar_titulo(titulo_eleitor)
 
-            if verificar_titulo[0] == 1:
-                comando = (
-                    "SELECT nome, mesario, titulo_eleitor, status_votacao FROM eleitores WHERE titulo_eleitor = %s")
-                valores = (titulo_eleitor, )
+            if titulo_validado == True:
+                # Verifica a existência do título de eleitor no banco de dados
+                verificar_titulo = ver_titulo.verificar_titulo_de_eleitor_banco(
+                    titulo_eleitor)
+            # Se o título de eleitor existir no banco de dados, busca informações e exibe ao usuário
+                if verificar_titulo[0] == 1:
+                    comando = (
+                        "SELECT nome, mesario, titulo_eleitor, status_votacao FROM eleitores WHERE titulo_eleitor = %s")
+                    valores = (titulo_eleitor, )
 
-                cursor.execute(comando, valores)
-                dados_eleitor = cursor.fetchone()
+                    cursor.execute(comando, valores)
+                    dados_eleitor = cursor.fetchone()
 
-                nome = dados_eleitor[0]
-                mesario = dados_eleitor[1]
-                if mesario == 0:
-                    mesario = "Não"
+                    nome = dados_eleitor[0]
+                    mesario = dados_eleitor[1]
+                    if mesario == 0:
+                        mesario = "Não"
+                    else:
+                        mesario = "Sim"
+                    titulo = dados_eleitor[2]
+                    status_votacao = dados_eleitor[3]
+                    if status_votacao == 0:
+                        status_votacao = "NÃO VOTOU"
+                    else:
+                        status_votacao = "VOTOU"
+
+                    print(f"\n --- Dados do eleitor ---"
+                          f"\nNome eleitor: {nome}"
+                          f"\nTítulo de eleitor: {titulo}"
+                          f"\nMesário: {mesario}"
+                          f"\nStatus votação: {status_votacao}")
+                # Se usuário não cadastrado, sugere cadastramento indicando o Menu correto
                 else:
-                    mesario = "Sim"
-                titulo = dados_eleitor[2]
-                status_votacao = dados_eleitor[3]
-                if status_votacao == 0:
-                    status_votacao = "NÃO VOTOU"
-                else:
-                    status_votacao = "VOTOU"
+                    print(
+                        "Eleitor não cadastrado. Realizar o cadastramento no Menu Gerenciamento de Eleitores.")
 
-                print(f"\n --- Dados do eleitor ---"
-                      f"\nNome eleitor: {nome}"
-                      f"\nTítulo de eleitor: {titulo}"
-                      f"\nMesário: {mesario}"
-                      f"\nStatus votação: {status_votacao}")
             else:
-                print(
-                    "Eleitor não cadastrado. Realizar o cadastramento no Menu Gerenciamento Eleitores.")
+                print("\nPor favor, refaça sua busca!")
 
+        # Sugere nova busca ou voltar para Menu de Gerenciamento
         print("\n--- Deseja buscar um novo eleitor? ---")
         print("\nOpção 1: Busca pelo CPF")
         print("\nOpção 2: Busca pelo Título de eleitor")
@@ -120,6 +143,7 @@ def busca_eleitor():
     cursor.close()
     conexao.close()
 
+    # Se opção 3 escolhida, exibe o Menu de Gerenciamento
     print("\n")
     sb.exibir_menu_eleitores()
     print("\n")
@@ -129,15 +153,3 @@ def busca_eleitor():
 
 if __name__ == "__main__":
     busca_eleitor()
-
-
-# Next steps:
-# Proteger a devolucao do titulo de eleitor invalido
-# incluir criptografia
-
-# Finalizados:
-# incluir validacao de CPF e  Proteger a devolucao caso cpf caso invalido ok
-# Proteger caso cpf ou titulo nao encontrado no banco ok
-# Proteger a devolucao caso a opcao digitada seja diferente de 1, 2 e 3 - funcao gerenciador de entradas
-# ajustar saída: legível e amigável para o usuário ok!
-# Ao exibir o resultado, voltar para o menu de busca, permitindo novas buscas ou voltar pra o menu eleitores - ok
