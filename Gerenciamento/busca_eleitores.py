@@ -28,10 +28,9 @@ def busca_eleitor():
     print("\n--- 4 - Buscar Eleitores ---")
     print("\nOpção 1: Buscar pelo CPF")
     print("\nOpção 2: Buscar pelo Título de eleitor")
-    print("\nOpção 3: Voltar ao Menu de Gerenciamento de Eleitores")
 
     # Enquanto a opção estiver fora do intervalo, continua pedindo um valor válido
-    opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 3)
+    opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 2)
 
     # Enquanto não for escolhido a opção Voltar (3), a busca continua disponível
     while opcao != 3:
@@ -130,26 +129,8 @@ def busca_eleitor():
 
             else:
                 print("\nPor favor, refaça sua busca!")
-
-        # Sugere nova busca ou voltar para Menu de Gerenciamento
-        print("\n--- Deseja buscar um novo eleitor? ---")
-        print("\nOpção 1: Busca pelo CPF")
-        print("\nOpção 2: Busca pelo Título de eleitor")
-        print("\nOpção 3: Voltar ao Menu de Gerenciamento de Eleitores")
-
-        opcao = ge.obter_entrada_inteira_valida(
-            "\nDigite uma opção: ", 1, 3)
-
+        break
     cursor.close()
     conexao.close()
 
     # Se opção 3 escolhida, exibe o Menu de Gerenciamento
-    print("\n")
-    sb.exibir_menu_eleitores()
-    print("\n")
-
-
-# usando esse if para poder rodar o teste dentro deste arquivo e nao na main.py
-
-if __name__ == "__main__":
-    busca_eleitor()
