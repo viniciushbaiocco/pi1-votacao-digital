@@ -10,7 +10,7 @@ def verificar_titulo_de_eleitor_banco(titulo):
         mensagem(str): Retorna se há eleitor cadastrado com o título no banco de dados ou não.
 
     """
-    import conexao_banco
+    from database import conexao_banco
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor()
     query = "SELECT COUNT(*) FROM eleitores WHERE titulo_eleitor = %s"
