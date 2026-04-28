@@ -1,6 +1,6 @@
 from Menu import sub_menus as sm
 from Verificadores import gerenciador_de_entrada as ge
-from Cadastro import  cadastro_eleitores
+from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
 
 def menu_completo():
     """
@@ -33,15 +33,15 @@ def menu_completo():
 
                         match escolha_eleitor:
                             case 1:
-                                cadastro_eleitores.cadastrar_eleitor()
+                                print("Em desenvolvimento...")
                             case 2:
-                                print("Em desenvolvimento...")
+                                edicao_eleitores.edicao_eleitores()
                             case 3:
-                                print("Em desenvolvimento...")
+                                remocao_eleitores.remocao_eleitores()
                             case 4:
-                                print("Em desenvolvimento...")
+                                busca_eleitores.busca_eleitor()
                             case 5:
-                                print("Em desenvolvimento...")
+                                listagem_eleitores.listagem_eleitores()
                             case 6:  # Voltar
                                 executando_menu_eleitores = 0
                 elif escolha_gerenciamento == 2:  # Candidatos

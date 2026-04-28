@@ -23,9 +23,3 @@ def verificar_cpf_banco(cpf_criptografado):
     return resultado
 # entender com o grupo se deixa o return no resultado com 0/1 ou mensagem
 
-
-# Teste da funcao
-if __name__ == "__main__":
-    cpf = str(input("CPF: "))
-    result = verificar_cpf_banco(cpf)
-    print(result)
