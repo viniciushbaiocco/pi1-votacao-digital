@@ -12,7 +12,7 @@ def edicao_eleitores():
 
     #utilizar entre CPF e Título para encontrar o eleitor no BD
     print('Escolha um método para buscar o eleitor: \n 1 - CPF \n 2 - Título de Eleitor')
-    opcao = ge.obter_entrada_inteira_valida('Digite uma opção: ', 1, 3)
+    opcao = ge.obter_entrada_inteira_valida('Digite uma opção: ', 1, 2)
     match opcao:
         case 1:
             cpf = input('CPF: ')
@@ -38,7 +38,7 @@ def edicao_eleitores():
     #edição dos dados do eleitor
     novo_nome = input('Digite o novo nome: ')
     novo_titulo = input('Digite o novo Título de Eleitor: ')
-    novo_mesario = ge.obter_entrada_inteira_valida('Mesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 3)
+    novo_mesario = ge.obter_entrada_inteira_valida('Mesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
     novo_cpf = input('Digite o novo CPF: ')
     status_votacao = 0
     
