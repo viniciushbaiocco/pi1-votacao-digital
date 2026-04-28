@@ -2,23 +2,26 @@ def edicao_eleitores():
     from database import conexao_banco as conect
     from Verificadores import gerenciador_de_entrada as ge
     from criptografia import criptografia as crip
-    from Verificadores import verificacao_cpf_banco as vercpf
-    from Verificadores import verificacao_titulo_banco as vertit
+    from Verificadores import validacao_cpf as val_cpf
 
     conexao = conect.conexao_banco()
-    cursor = conexao.cursor()
+    cursor = conexao.cursor(dictionary=True)
 
     #utilizar entre CPF e Título para encontrar o eleitor no BD
     print('Escolha um método para buscar o eleitor: \n 1 - CPF \n 2 - Título de Eleitor')
     opcao = ge.obter_entrada_inteira_valida('Digite uma opção: ', 1, 3)
-
     match opcao:
         case 1:
-            busca = input('CPF: ')
-            cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(busca),))
+            cpf = input('CPF: ')
+            valid = val_cpf.validacao_de_cpf(cpf)
+            while valid == False:
+                cpf = input('CPF inválido, digite novamente: ')
+            cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
         case 2:
-            busca = input('Título de Eleitor: ')
-            cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (busca,))
+            tit = input('Título de Eleitor: ')
+            while len(tit) != 12:
+                tit = input('Título de eleitor inválido, digite novamente: ')
+            cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
 
     #verificar a existência do eleitor no BD
     eleitor = cursor.fetchone()
@@ -36,17 +39,6 @@ def edicao_eleitores():
     #criptografar o cpf novamente para colocar no banco de dados
     novo_cpf = crip.criptografar_cpf(novo_cpf)
 
-    #verificar unicidade do cpf
-    while vercpf.verificar_cpf_banco(novo_cpf)[0] == 1:
-        print('CPF já cadastrado.')
-        novo_cpf = input('Digite o novo CPF novamente: ')
-        novo_cpf = crip.criptografar_cpf(novo_cpf)
-    
-    #verificar unicidade do título
-    while vertit.verificar_titulo_de_eleitor_banco(novo_titulo)[0] == 1:
-        print('Título já cadastrado.')
-        novo_titulo = input('Digite o novo Título de Eleitor novamente: ')
-    
     #listar o eleitor antes da edição
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
     eleitor = cursor.fetchone()
@@ -104,5 +96,3 @@ def edicao_eleitores():
 
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
-
-
