@@ -18,11 +18,15 @@ def edicao_eleitores():
             cpf = input('CPF: ')
             while val_cpf.validacao_de_cpf(cpf) == False:
                 cpf = input('CPF inválido, digite novamente: ')
+            while ver_cpf.verificar_cpf_banco(cpf) == False:
+                cpf = input('CPF já cadastrado, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
         case 2:
             tit = input('Título de Eleitor: ')
             while val_tit.validar_titulo(tit) == False:
-                tit = input('Título de eleitor inválido, digite novamente: ')
+                tit = input('Título de Eleitor inválido, digite novamente: ')
+            while ver_tit.verificar_titulo_de_eleitor_banco(tit) == False:
+                tit = input('Título de Eleitor já cadastrado, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
 
     #verificar a existência do eleitor no BD
