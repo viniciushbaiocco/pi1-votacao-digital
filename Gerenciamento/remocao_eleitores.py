@@ -95,23 +95,8 @@ def remocao_eleitores():
             else:
                 print("\nRemoção cancelada pelo usuário.")
 
-        #sugere nova remoção ou voltar para menu de gerenciamento
-        print("\n--- Deseja remover um novo eleitor? ---")
-        print("\nOpção 1: Remover pelo CPF")
-        print("\nOpção 2: Remover pelo Título de eleitor")
-        print("\nOpção 3: Voltar ao Menu de Gerenciamento de Eleitores")
-
-        opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 3)
-
     cursor.close()
     conexao.close()
-
-    #se opção 3 escolhida, exibe o menu de gerenciamento
-    print("\n")
-    sb.exibir_menu_eleitores()
-    print("\n")
-
-
 #usando esse if para poder rodar o teste dentro deste arquivo e nao na main.py
 
 if __name__ == "__main__":
