@@ -16,11 +16,7 @@ def verificar_titulo_de_eleitor_banco(titulo):
     query = "SELECT COUNT(*) FROM eleitores WHERE titulo_eleitor = %s"
     cursor.execute(query, (titulo, ))
     resultado = cursor.fetchone()
-    if resultado[0] == 0:
-        resultado = "Sem eleitor cadastrado com este título"
-    else:
-        resultado = "Eleitor cadastrado com este título"
-
+    
     cursor.close()
     conexao.close()
 

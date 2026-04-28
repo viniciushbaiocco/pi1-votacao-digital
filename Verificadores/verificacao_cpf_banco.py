@@ -16,10 +16,6 @@ def verificar_cpf_banco(cpf_criptografado):
     query = "SELECT COUNT(*) FROM eleitores WHERE cpf = %s"
     cursor.execute(query, (cpf_criptografado, ))
     resultado = cursor.fetchone()
-    if resultado[0] == 0:
-        resultado = "Sem eleitor cadastrado com este CPF"
-    else:
-        resultado = "Eleitor cadastrado com este CPF"
 
     cursor.close()
     conexao.close()

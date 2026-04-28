@@ -13,19 +13,19 @@ Returns:
 
     #Verificação de tamanho do CPF
     if len(arrumando) != 11:
-        print(f"Erro: O CPF deve conter 11 dígitos.")
+        print(f"CPF inválido! O CPF deve conter 11 dígitos")
         return False
     
     #Verificação se têm números repitidos
     if arrumando == arrumando [0] * len(arrumando):
-        print("Erro: CPF inválido (sequência de números repetidos).")
+        print("CPF inválido! Sequência de números repetidos.")
         return False
     
     #Verificação se tem letras
     try:
         separado = [int(i) for i in arrumando]
     except ValueError:
-        print("Erro: O CPF deve conter apenas números.")
+        print("CPF inválido! O CPF deve conter apenas números.")
         return False
     
     lista_1_DV = [10, 9, 8, 7, 6, 5, 4, 3, 2]
@@ -49,8 +49,7 @@ Returns:
     resto_2_DV = soma_2_DV % 11
     digito_2_DV = 0 if resto_2_DV < 2 else 11 - resto_2_DV
     if digito_1_DV != separado[9] or digito_2_DV != separado[10]:
-        print("Erro: Calculo de CPF inválido (dígitos verificadores não conferem).")
+        print("CPF inválido!")
         return False
 
     return True
-
