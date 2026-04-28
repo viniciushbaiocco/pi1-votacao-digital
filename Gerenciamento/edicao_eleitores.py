@@ -104,6 +104,5 @@ def edicao_eleitores():
 
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
-#mudar a listagem do antes e depois para o mesmo tipo de listagem que usei no listagem_eleitores para ficar melhor visualmente pro usuario
-#após a função de verificação ficar pronta, tentar substituir no código 
+
 
