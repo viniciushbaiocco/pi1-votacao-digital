@@ -110,6 +110,5 @@ def edicao_eleitores():
     conexao.close()
     return '\n=== Eleitor Editado com Sucesso! === ' 
 
-edicao_eleitores()
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
