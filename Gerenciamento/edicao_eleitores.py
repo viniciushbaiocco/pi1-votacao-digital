@@ -4,6 +4,8 @@ def edicao_eleitores():
     from criptografia import criptografia as crip
     from Verificadores import validacao_cpf as val_cpf
     from Verificadores import validacao_titulo as val_tit
+    from Verificadores import verificacao_cpf_banco as ver_cpf
+    from Verificadores import verificacao_titulo_banco as ver_tit
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
@@ -26,7 +28,7 @@ def edicao_eleitores():
     #verificar a existência do eleitor no BD
     eleitor = cursor.fetchone()
     if eleitor is None:
-        return 'Eleitor não encontrado.'
+        return print('Erro, eleitor não encontrado.')
     id_eleitor = eleitor[0]
 
     #edição dos dados do eleitor
@@ -36,11 +38,15 @@ def edicao_eleitores():
     novo_cpf = input('Digite o novo CPF: ')
     status_votacao = 0
     
-    #validar o novo cpf e novo titulo
+    #validar e verificar o novo cpf e novo titulo
     while val_cpf.validacao_de_cpf(novo_cpf) == False:
         novo_cpf = input('Novo CPF inválido, digite novamente: ')
+    while ver_cpf.verificar_cpf_banco(novo_cpf) == False:
+        novo_cpf = input('CPF já cadastrado, digite novamente: ')
     while val_tit.validar_titulo(novo_titulo) == False:
         novo_titulo = input('Novo Título de Eleitor inválido, digite novamente: ')
+    while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == False:
+        novo_titulo = input('Título de Eleitor já cadastrado, digite novamente: ')
 
     #criptografar o cpf novamente para colocar no banco de dados
     novo_cpf = crip.criptografar_cpf(novo_cpf)
