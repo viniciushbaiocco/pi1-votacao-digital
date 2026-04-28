@@ -40,7 +40,7 @@ def exibir_menu_eleitores():
     Returns:
         None
     """
-    print("1 - Cadastrar Novos Eleitores")
+    print("\n1 - Cadastrar Novos Eleitores")
     print("2 - Editar Eleitores")
     print("3 - Excluir Eleitores")
     print("4 - Buscar Eleitores")
@@ -58,7 +58,7 @@ def exibir_menu_candidatos():
     Returns:
         None
     """
-    print("1 - Cadastrar Novos Candidatos")
+    print("\n1 - Cadastrar Novos Candidatos")
     print("2 - Editar Candidatos")
     print("3 - Excluir Candidatos")
     print("4 - Buscar Candidatos")
@@ -92,7 +92,7 @@ def exibir_menu_sistema_votacao():
     Returns:
         None
     """
-    print("1 - Votar")
+    print("\n1 - Votar")
     print("2 - Encerrar Sistema De Votação")
     print("3 - Voltar")
 
@@ -108,7 +108,7 @@ def exibir_menu_restultados_votacao():
     Returns:
         None
         """
-    print("1 - Boletim De Urna")
+    print("\n1 - Boletim De Urna")
     print("2 - Estatísticas De Comparecimento")
     print("3 - Votos Por Partido")
     print("4 - Validação De Integridade")
