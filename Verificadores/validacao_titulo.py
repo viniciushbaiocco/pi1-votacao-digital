@@ -19,7 +19,7 @@ def validar_titulo (titulo):
         print("Título de eleitor inválido! O Título de eleitor deve conter 12 dígitos.")
         return False
     
-    #Verificação se tem letras
+     #Verificação se tem letras
     try:
         separado = [int(i) for i in arrumando]
     
@@ -37,7 +37,7 @@ def validar_titulo (titulo):
     uf_d1 = separado[8]
     uf_d2 = separado[9]
     codigo_uf = uf_d1 * 10 + uf_d2
-
+ 
     if str_uf not in dicionario_UF:
         print(f"Título de eleitor inválido!")
         return False
@@ -46,34 +46,34 @@ def validar_titulo (titulo):
     soma_1_DV  = 0
     for i in range(8):
         soma_1_DV = soma_1_DV + (separado[i] * lista_1_DV[i])
-
+ 
     resto_1_DV = soma_1_DV % 11
-
+ 
     if resto_1_DV == 10:
         digito_1_DV = 0
     elif resto_1_DV == 0 and (codigo_uf == 1 or codigo_uf == 2):
         digito_1_DV = 1
     else:
         digito_1_DV = resto_1_DV
-
+ 
     lista_2_DV = [7, 8, 9]
     soma_2_DV  = 0
     nova_lista  = [uf_d1, uf_d2, digito_1_DV]
-
+ 
     for i in range(3):
         soma_2_DV = soma_2_DV + (nova_lista[i] * lista_2_DV[i])
-
+ 
     resto_2_DV = soma_2_DV % 11
-
+ 
     if resto_2_DV == 10:
         digito_2_DV = 0
     elif resto_2_DV == 0 and (codigo_uf == 1 or codigo_uf == 2):
         digito_2_DV = 1
     else:
         digito_2_DV = resto_2_DV
-
+ 
     if separado[10] != digito_1_DV or separado[11] != digito_2_DV:
         print("Título de eleitor inválido!")
         return False
-    
+ 
     return True

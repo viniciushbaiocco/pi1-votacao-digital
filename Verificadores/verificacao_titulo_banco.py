@@ -1,3 +1,4 @@
+
 def verificar_titulo_de_eleitor_banco(titulo):
     """
     Solicita o título validado para consulta no banco de dados.
@@ -14,13 +15,13 @@ def verificar_titulo_de_eleitor_banco(titulo):
     cursor = conexao.cursor()
     query = "SELECT COUNT(*) FROM eleitores WHERE titulo_eleitor = %s"
     cursor.execute(query, (titulo, ))
-
     resultado = cursor.fetchone()
-
+    
     cursor.close()
     conexao.close()
 
     return resultado
+# entender com o grupo se deixa o return no resultado com 0/1 ou mensagem
 
 
 # Teste da funcao
