@@ -25,10 +25,9 @@ def remocao_eleitores():
     print("\n--- 3 - Excluir Eleitores ---")
     print("\nOpção 1: Remover pelo CPF")
     print("\nOpção 2: Remover pelo Título de eleitor")
-    print("\nOpção 3: Voltar ao Menu de Gerenciamento de Eleitores")
 
     #enquanto a opção estiver fora do intervalo, continua pedindo um valor válido (min,max)
-    opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 3)
+    opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 2)
 
     #enquanto não for escolhido a opção voltar (3), a remoção continua disponível
     while opcao != 3:
