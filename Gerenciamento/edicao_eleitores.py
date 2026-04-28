@@ -27,12 +27,12 @@ def edicao_eleitores():
     eleitor = cursor.fetchone()
     if eleitor is None:
         return 'Eleitor não encontrado.'
-    id_eleitor = eleitor[0]
+    id_eleitor = eleitor['id']
 
     #edição dos dados do eleitor
     novo_nome = input('Digite o novo nome: ')
     novo_titulo = input('Digite o novo Título de Eleitor: ')
-    novo_mesario = ge.obter_entrada_inteira_valida('Digite o novo mesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 3)
+    novo_mesario = ge.obter_entrada_inteira_valida('Mesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 3)
     novo_cpf = input('Digite o novo CPF: ')
     status_votacao = 0
     
@@ -100,5 +100,6 @@ def edicao_eleitores():
     conexao.close()
     return '\n=== Eleitor Editado com Sucesso! === ' 
 
+edicao_eleitores()
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
