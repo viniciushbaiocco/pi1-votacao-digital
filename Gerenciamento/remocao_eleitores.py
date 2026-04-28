@@ -99,6 +99,5 @@ def remocao_eleitores():
     cursor.close()
     conexao.close()
 
-remocao_eleitores()
 #NEXT STEPS
 #substituir a verificação len() != 12 do título pela função validar_titulo quando ela for adicionada em Verificadores
