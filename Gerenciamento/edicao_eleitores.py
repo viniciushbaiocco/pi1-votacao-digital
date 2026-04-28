@@ -2,6 +2,8 @@ def edicao_eleitores():
     from database import conexao_banco as conect
     from Verificadores import gerenciador_de_entrada as ge
     from criptografia import criptografia as crip
+    from Verificadores import verificacao_cpf_banco as vercpf
+    from Verificadores import verificacao_titulo_banco as vertit
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor()
@@ -26,33 +28,47 @@ def edicao_eleitores():
 
     #edição dos dados do eleitor
     novo_nome = input('Digite o novo nome: ')
-    novo_cpf = input('Digite o novo CPF: ')
     novo_titulo = input('Digite o novo Título de Eleitor: ')
     novo_mesario = ge.obter_entrada_inteira_valida('Digite o novo mesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 3)
-    
+    novo_cpf = input('Digite o novo CPF: ')
+    status_votacao = 0
+
     #criptografar o cpf novamente para colocar no banco de dados
     novo_cpf = crip.criptografar_cpf(novo_cpf)
 
-    #verificar se o CPF ou Título é valido 
-    if len(novo_cpf) != 11:
-        return 'CPF Inválido'
-    if len(novo_titulo) != 12:
-        return 'Título de Eleitor Inválido'
-
-    #verificar unicidade do CPF
-    cursor.execute('SELECT id FROM eleitores WHERE cpf = %s AND id != %s', (novo_cpf, id_eleitor))
-    if cursor.fetchone():
-        return 'CPF já cadastrado.'
-
-    #verificar unicidade do Título de Eleitor
-    cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s AND id != %s', (novo_titulo, id_eleitor))
-    if cursor.fetchone():
-        return 'Título de Eleitor já cadastrado.'
+    #verificar unicidade do cpf
+    while vercpf.verificar_cpf_banco(novo_cpf)[0] == 1:
+        print('CPF já cadastrado.')
+        novo_cpf = input('Digite o novo CPF novamente: ')
+        novo_cpf = crip.criptografar_cpf(novo_cpf)
+    
+    #verificar unicidade do título
+    while vertit.verificar_titulo_de_eleitor_banco(novo_titulo)[0] == 1:
+        print('Título já cadastrado.')
+        novo_titulo = input('Digite o novo Título de Eleitor novamente: ')
     
     #listar o eleitor antes da edição
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
-    print('\n - Eleitor antes da edição - ')
-    print(cursor.fetchone())
+    eleitor = cursor.fetchone()
+    if eleitor['mesario'] == 1: 
+        mesario = 'Sim'
+    else:
+        mesario = 'Não'
+    if eleitor['status_votacao'] == 1:
+        status_votacao == 'Já Votou'
+    else:
+        status_votacao == 'Não Votou'
+
+    print('\n === Eleitor Antes da Edição === ')
+    print('=' * 50)
+    print(f'ID: {eleitor['id']}')
+    print(f'Nome: {eleitor['nome']}')
+    print(f'CPF: {eleitor['cpf']}')
+    print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
+    print(f'Mesário: {mesario}')
+    print(f'Status da Votação: {status_votacao}')
+    print('=' * 50)
+
 
     #atualizar BD
     cursor.execute(''' 
@@ -63,12 +79,28 @@ def edicao_eleitores():
 
     #listar o eleitor após edição
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
-    print('\n - Eleitor depois da edição - ')
-    print(cursor.fetchone())
+    eleitor = cursor.fetchone()
+    if eleitor['mesario'] == 1: 
+        mesario = 'Sim'
+    else:
+        mesario = 'Não'
+    if eleitor['status_votacao'] == 1:
+        status_votacao == 'Já Votou'
+    else:
+        status_votacao == 'Não Votou'
+    print('\n === Eleitor Depois da Edição === ')
+    print('=' * 50)
+    print(f'ID: {eleitor['id']}')
+    print(f'Nome: {eleitor['nome']}')
+    print(f'CPF: {eleitor['cpf']}')
+    print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
+    print(f'Mesário: {mesario}')
+    print(f'Status de Votação: {status_votacao}')
+    print('=' * 50)
 
     cursor.close()
     conexao.close()
-    return 'Eleitor editado com sucesso.'
+    return '\n=== Eleitor Editado com Sucesso! === ' 
 
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
