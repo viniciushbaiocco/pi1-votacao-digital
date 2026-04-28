@@ -91,12 +91,14 @@ def remocao_eleitores():
                 cursor.execute('DELETE FROM eleitores WHERE id = %s', (eleitor['id'],))
                 conexao.commit()
                 print("\nEleitor removido com sucesso.")
+                break
             else:
                 print("\nRemoção cancelada pelo usuário.")
-        break
+                break
 
     cursor.close()
     conexao.close()
 
+remocao_eleitores()
 #NEXT STEPS
 #substituir a verificação len() != 12 do título pela função validar_titulo quando ela for adicionada em Verificadores
