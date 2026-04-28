@@ -3,6 +3,7 @@ def edicao_eleitores():
     from Verificadores import gerenciador_de_entrada as ge
     from criptografia import criptografia as crip
     from Verificadores import validacao_cpf as val_cpf
+    from Verificadores import validacao_titulo as val_tit
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
@@ -13,13 +14,12 @@ def edicao_eleitores():
     match opcao:
         case 1:
             cpf = input('CPF: ')
-            valid = val_cpf.validacao_de_cpf(cpf)
-            while valid == False:
+            while val_cpf.validacao_de_cpf(cpf) == False:
                 cpf = input('CPF inválido, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
         case 2:
             tit = input('Título de Eleitor: ')
-            while len(tit) != 12:
+            while val_tit.validar_titulo(tit) == False:
                 tit = input('Título de eleitor inválido, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
 
@@ -35,6 +35,12 @@ def edicao_eleitores():
     novo_mesario = ge.obter_entrada_inteira_valida('Digite o novo mesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 3)
     novo_cpf = input('Digite o novo CPF: ')
     status_votacao = 0
+    
+    #validar o novo cpf e novo titulo
+    while val_cpf.validacao_de_cpf(novo_cpf) == False:
+        novo_cpf = input('Novo CPF inválido, digite novamente: ')
+    while val_tit.validar_titulo(novo_titulo) == False:
+        novo_titulo = input('Novo Título de Eleitor inválido, digite novamente: ')
 
     #criptografar o cpf novamente para colocar no banco de dados
     novo_cpf = crip.criptografar_cpf(novo_cpf)
