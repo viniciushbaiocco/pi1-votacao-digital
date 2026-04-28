@@ -25,12 +25,10 @@ def remocao_eleitores():
     print("\n--- 3 - Excluir Eleitores ---")
     print("\nOpção 1: Remover pelo CPF")
     print("\nOpção 2: Remover pelo Título de eleitor")
-    print("\nOpção 3: Voltar ao Menu de Gerenciamento de Eleitores")
 
     #enquanto a opção estiver fora do intervalo, continua pedindo um valor válido (min,max)
-    opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 3)
+    opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 2)
 
-    #enquanto não for escolhido a opção voltar (3), a remoção continua disponível
     while opcao != 3:
 
         #MUDANÇA: inicializo eleitor=none no começo do loop para reaproveitar o mesmo bloco de exibição/confirmação fora do match (evita duplicar código nos dois cases)
@@ -68,6 +66,7 @@ def remocao_eleitores():
                 else:
                     print("\nTítulo de Eleitor inválido. Por favor, refaça sua busca!")
 
+
         #se eleitor encontrado, exibe os dados e confirma a remoção
         if eleitor is not None:
 
@@ -92,15 +91,13 @@ def remocao_eleitores():
                 cursor.execute('DELETE FROM eleitores WHERE id = %s', (eleitor['id'],))
                 conexao.commit()
                 print("\nEleitor removido com sucesso.")
+                break
             else:
                 print("\nRemoção cancelada pelo usuário.")
+                break
 
     cursor.close()
     conexao.close()
-#usando esse if para poder rodar o teste dentro deste arquivo e nao na main.py
-
-if __name__ == "__main__":
-    remocao_eleitores()
 
 #NEXT STEPS
 #substituir a verificação len() != 12 do título pela função validar_titulo quando ela for adicionada em Verificadores

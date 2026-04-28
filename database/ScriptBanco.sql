@@ -5,9 +5,9 @@ CREATE TABLE eleitores (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) UNIQUE NOT NULL,
     titulo_eleitor CHAR(12) UNIQUE NOT NULL,
-    cpf CHAR(11) UNIQUE NOT NULL,
+    cpf CHAR(12) UNIQUE NOT NULL,
     mesario BOOLEAN DEFAULT FALSE,
-    chave_acesso CHAR(7) UNIQUE NOT NULL,
+    chave_acesso CHAR(8) UNIQUE NOT NULL,
     status_votacao BOOLEAN DEFAULT FALSE NOT NULL
 );
 
