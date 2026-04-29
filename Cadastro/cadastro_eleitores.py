@@ -5,7 +5,7 @@ from Verificadores import verificacao_titulo_banco
 from Verificadores import validacao_nome
 from database import conexao_banco
 from criptografia import criptografia as cripto
-import chave_acesso
+from Cadastro import chave_acesso
 
 
 def cadastrar_eleitor():
@@ -117,7 +117,3 @@ def cadastrar_eleitor():
 
 # Ajustes:
 # acertar nome só com espaco
-
-
-if __name__ == "__main__":
-    cadastrar_eleitor()
