@@ -40,7 +40,7 @@ def exibir_menu_principal():
         None
     """
     #executa uma limpeza do terminal cada opcao executada
-    os.system('cls' if os.name == 'nt' else 'clear')#cls foi usado pra nao atrapalhar minha vida e do leo, cls é do linux e clear é do windows
+    os.system('cls' if os.name == 'nt' else 'clear')#cls foi usado pra nao atrapalhar minha vida e do leo, clear é do linux e cls é do windows
     exibir_banner()
     print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
     print(Fore.LIGHTWHITE_EX + "║")
