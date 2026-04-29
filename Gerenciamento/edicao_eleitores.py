@@ -38,15 +38,13 @@ def edicao_eleitores():
     id_eleitor = eleitor['id']
 
     #edição dos dados do eleitor
-    novo_nome = input('\nDigite o novo nome: ')
+    novo_nome = val_nome.validar_nome()
     novo_titulo = input('\nDigite o novo Título de Eleitor: ')
     novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
     novo_cpf = input('\nDigite o novo CPF: ')
     status_votacao = 0
     
     #validar e verificar o novo cpf, novo titulo e novo nome
-    while val_nome.validar_nome(novo_nome) == False:
-        novo_nome = input('Novo Nome inválido, digite novamente: ')
     while val_cpf.validacao_de_cpf(novo_cpf) == False:
         novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
     while ver_cpf.verificar_cpf_banco(novo_cpf) == False:

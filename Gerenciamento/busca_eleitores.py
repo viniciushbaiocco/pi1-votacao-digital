@@ -13,7 +13,6 @@ def busca_eleitor():
 
     """
 
-    import Menu.sub_menus as sb
     import database.conexao_banco as conect
     import Verificadores. gerenciador_de_entrada as ge
     import Verificadores.validacao_cpf as val_cpf
@@ -75,11 +74,12 @@ def busca_eleitor():
                           f"\nNome eleitor: {nome}"
                           f"\nTítulo de eleitor: {titulo}"
                           f"\nMesário: {mesario}"
-                          f"\nStatus votação: {status_votacao}")
+                          f"\nStatus votação: {status_votacao}"
+                          "\n")
             # Se usuário não cadastrado, sugere cadastramento indicando o Menu correto
                 else:
                     print(
-                        "Eleitor não cadastrado. Realizar o cadastramento no Menu Gerenciamento de Eleitores.")
+                        "\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.")
 
             else:
                 print("\nPor favor, refaça sua busca!")
@@ -121,11 +121,13 @@ def busca_eleitor():
                           f"\nNome eleitor: {nome}"
                           f"\nTítulo de eleitor: {titulo}"
                           f"\nMesário: {mesario}"
-                          f"\nStatus votação: {status_votacao}")
+                          f"\nStatus votação: {status_votacao}"
+                          "\n")
+
                 # Se usuário não cadastrado, sugere cadastramento indicando o Menu correto
                 else:
                     print(
-                        "Eleitor não cadastrado. Realizar o cadastramento no Menu Gerenciamento de Eleitores.")
+                        "*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.\n")
 
             else:
                 print("\nPor favor, refaça sua busca!")
