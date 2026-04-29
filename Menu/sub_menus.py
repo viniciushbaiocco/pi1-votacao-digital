@@ -1,8 +1,16 @@
 from colorama import Fore, Style, init
 import os
 
+##PARA QUEM QUISER EDITAR: 
+##os comandos FORE mudam cor do texto(foreground)
+##os comandos STYLE mudam o estilo do texto(bright,normal,dim, reset_all(importante pq ele reseta as cores sem vazar pro proximo print))
+##ESTRUTURA DE COR DO TEXTO: Fore.Cor
+##ESTRUTURA DE ESTILO DO TEXTO: Style.estilo 
+##Backgrounds (nao usei ainda): segue a estrutura de cor de texto: Back.Cor (mesmas cores disponiveis)
+#pra vcs descobrirem as opçoes, digita a variavel Fore ou Style, e da um . (o "auto complete" mostra as opcoes)
 
 init(autoreset=True) #cada print reseta o estilo formatado pelo anterior
+
 
 largura = 36
 banner = "LAD.Py | Sistema de Votação Digital"
