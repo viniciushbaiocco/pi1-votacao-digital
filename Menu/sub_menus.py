@@ -1,5 +1,9 @@
-from colorama import Fore, Style, init
 import os
+
+if not os.environ.get('TERM'):
+    os.environ['TERM'] = 'xterm-256color'
+
+from colorama import Fore, Style, init
 
 ##PARA QUEM QUISER EDITAR: 
 ##os comandos FORE mudam cor do texto(foreground)
