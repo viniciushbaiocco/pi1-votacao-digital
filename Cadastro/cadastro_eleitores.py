@@ -9,6 +9,17 @@ from Cadastro import chave_acesso
 
 
 def cadastrar_eleitor():
+    """
+    Realiza o cadastro completo de um eleitor no sistema, validando nome,
+    CPF e título de eleitor antes de inserir os dados no banco.
+    
+    Args:
+        None
+    Return:
+        bool: Retorna True se o cadastro válido e False caso contrário
+
+    """
+
 
     nome_valido = False
     while not nome_valido:
