@@ -1,3 +1,5 @@
+from colorama import Fore, Style, init
+
 def obter_entrada_inteira_valida(mensagem, min_val, max_val):
     """
     Solicita uma entrada inteira ao usuário e valida se está dentro de um intervalo.
@@ -20,6 +22,6 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
                 executando_entrada = 1
                 return escolha
             else:
-                print(f"Opção inválida. Por favor, escolha uma opção entre {min_val} e {max_val}.")
+                print(f"{Fore.RED}{Style.BRIGHT}Erro: Opção inválida. Por favor, escolha uma opção entre {min_val} e {max_val}.{Style.RESET_ALL}")
         except ValueError:
-            print("Entrada inválida. Por favor, digite um número inteiro.")
+            print(f"{Fore.RED}{Style.BRIGHT}Erro: Entrada inválida. Por favor, digite um número inteiro.{Style.RESET_ALL}")
