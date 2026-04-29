@@ -34,7 +34,7 @@ def edicao_eleitores():
     #verificar a existência do eleitor no BD
     eleitor = cursor.fetchone()
     if eleitor is None:
-        return print('\nEleitor não encontrado.')
+        return input("\nEleitor não cadastrado\nPressione Enter para voltar ao menu...")
     id_eleitor = eleitor['id']
 
     #edição dos dados do eleitor
@@ -115,8 +115,10 @@ def edicao_eleitores():
 
     cursor.close()
     conexao.close()
-    return '\n--- Eleitor Editado com Sucesso! --- ' 
+    return input("\nEleitor editado com sucesso!\nPressione Enter para voltar ao menu...")
 
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
 #gerar nova chave de acesso (validacao_nome)
+
+edicao_eleitores()

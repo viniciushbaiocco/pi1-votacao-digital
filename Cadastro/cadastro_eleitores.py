@@ -95,12 +95,9 @@ def cadastrar_eleitor():
         print("Mesário:", retorno_mesario)
         print("Chave de acesso:", chave_acesso_original)
         print("\n")
+        input("\nPressione Enter para voltar ao menu...")
 
     else:
         print("*** Eleitor já cadastrado! *** \nVocê pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
-
+        input("\nPressione Enter para voltar ao menu...")
     return True
-
-
-if __name__ == "__main__":
-    cadastrar_eleitor()
