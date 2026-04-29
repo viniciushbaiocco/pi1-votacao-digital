@@ -6,54 +6,59 @@ def edicao_eleitores():
     from Verificadores import validacao_titulo as val_tit
     from Verificadores import verificacao_cpf_banco as ver_cpf
     from Verificadores import verificacao_titulo_banco as ver_tit
+    from Verificadores import validacao_nome as val_nome
+    from Cadastro import chave_acesso as chave
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 
     #utilizar entre CPF e Título para encontrar o eleitor no BD
-    print('Escolha um método para buscar o eleitor: \n 1 - CPF \n 2 - Título de Eleitor')
-    opcao = ge.obter_entrada_inteira_valida('Digite uma opção: ', 1, 2)
+    print('\n--- 2 - Edição de Eleitores --- \n\n Opção 1: Busca pelo CPF \n\n Opção 2: Busca pelo Título de Eleitor')
+    opcao = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 2)
     match opcao:
         case 1:
-            cpf = input('CPF: ')
+            cpf = input('\nCPF: ')
             while val_cpf.validacao_de_cpf(cpf) == False:
-                cpf = input('CPF inválido, digite novamente: ')
+                cpf = input('\nCPF inválido, digite novamente: ')
             while ver_cpf.verificar_cpf_banco(cpf) == False:
-                cpf = input('CPF já cadastrado, digite novamente: ')
+                cpf = input('\nCPF já cadastrado, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
         case 2:
-            tit = input('Título de Eleitor: ')
+            tit = input('\nTítulo de Eleitor: ')
             while val_tit.validar_titulo(tit) == False:
-                tit = input('Título de Eleitor inválido, digite novamente: ')
+                tit = input('\nTítulo de Eleitor inválido, digite novamente: ')
             while ver_tit.verificar_titulo_de_eleitor_banco(tit) == False:
-                tit = input('Título de Eleitor já cadastrado, digite novamente: ')
+                tit = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
 
     #verificar a existência do eleitor no BD
     eleitor = cursor.fetchone()
     if eleitor is None:
-        return 'Eleitor não encontrado.'
+        return print('\nEleitor não encontrado.')
     id_eleitor = eleitor['id']
 
     #edição dos dados do eleitor
-    novo_nome = input('Digite o novo nome: ')
-    novo_titulo = input('Digite o novo Título de Eleitor: ')
-    novo_mesario = ge.obter_entrada_inteira_valida('Mesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
-    novo_cpf = input('Digite o novo CPF: ')
+    novo_nome = input('\nDigite o novo nome: ')
+    novo_titulo = input('\nDigite o novo Título de Eleitor: ')
+    novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
+    novo_cpf = input('\nDigite o novo CPF: ')
     status_votacao = 0
     
-    #validar e verificar o novo cpf e novo titulo
+    #validar e verificar o novo cpf, novo titulo e novo nome
+    while val_nome.validar_nome(novo_nome) == False:
+        novo_nome = input('Novo Nome inválido, digite novamente: ')
     while val_cpf.validacao_de_cpf(novo_cpf) == False:
-        novo_cpf = input('Novo CPF inválido, digite novamente: ')
+        novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
     while ver_cpf.verificar_cpf_banco(novo_cpf) == False:
-        novo_cpf = input('CPF já cadastrado, digite novamente: ')
+        novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
     while val_tit.validar_titulo(novo_titulo) == False:
-        novo_titulo = input('Novo Título de Eleitor inválido, digite novamente: ')
+        novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
     while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == False:
-        novo_titulo = input('Título de Eleitor já cadastrado, digite novamente: ')
+        novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
 
-    #criptografar o cpf novamente para colocar no banco de dados
+    #criptografar o cpf e criar nova chave de acesso
     novo_cpf = crip.criptografar_cpf(novo_cpf)
+    chave_acesso = chave.geracao_chave_acesso(novo_nome)
 
     #listar o eleitor antes da edição
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
@@ -71,7 +76,7 @@ def edicao_eleitores():
     print('=' * 50)
     print(f'ID: {eleitor['id']}')
     print(f'Nome: {eleitor['nome']}')
-    print(f'CPF: {eleitor['cpf']}')
+    print(f'CPF: {cpf}')
     print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
     print(f'Mesário: {mesario}')
     print(f'Status da Votação: {status_votacao}')
@@ -81,9 +86,12 @@ def edicao_eleitores():
     #atualizar BD
     cursor.execute(''' 
         UPDATE eleitores SET nome = %s,
-        cpf = %s, titulo_eleitor = %s, mesario = %s WHERE id = %s
-    ''', (novo_nome, novo_cpf, novo_titulo, novo_mesario, id_eleitor))
+        cpf = %s, titulo_eleitor = %s, mesario = %s, chave_acesso = %s WHERE id = %s
+    ''', (novo_nome, novo_cpf, novo_titulo, novo_mesario, chave_acesso, id_eleitor))
     conexao.commit()
+
+    #descriptografar cpf para listagem após a edição
+    novo_cpf = crip.descriptografar_cpf(novo_cpf)
 
     #listar o eleitor após edição
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
@@ -100,15 +108,17 @@ def edicao_eleitores():
     print('=' * 50)
     print(f'ID: {eleitor['id']}')
     print(f'Nome: {eleitor['nome']}')
-    print(f'CPF: {eleitor['cpf']}')
+    print(f'CPF: {novo_cpf}')
     print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
     print(f'Mesário: {mesario}')
     print(f'Status de Votação: {status_votacao}')
+    print(f'Chave de Acesso: {chave_acesso}')
     print('=' * 50)
 
     cursor.close()
     conexao.close()
-    return '\n=== Eleitor Editado com Sucesso! === ' 
+    return '\n--- Eleitor Editado com Sucesso! --- ' 
 
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
+#gerar nova chave de acesso (validacao_nome)

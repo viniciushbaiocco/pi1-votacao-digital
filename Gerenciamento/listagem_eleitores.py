@@ -8,6 +8,8 @@ def listagem_eleitores ():
     cursor.execute('SELECT * FROM eleitores')
     total_eleitores = cursor.fetchall()
 
+    print('\n --- 5 - Listagem de Eleitores ---')
+
     for eleitores in (total_eleitores):
         print('=' * 50)
         print(f' ID: {eleitores['id']}')
