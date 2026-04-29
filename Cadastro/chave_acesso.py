@@ -23,7 +23,6 @@ def geracao_chave_acesso(nome):
 
     chave_acesso = iniciais_nome + inicial_sobrenome + str(numero)
 
-    print(f"Chave de acesso {chave_acesso} criada para o eleitor {nome}")
     return chave_acesso
 
 

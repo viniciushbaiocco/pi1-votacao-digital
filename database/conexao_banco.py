@@ -1,5 +1,7 @@
+import mysql.connector
+
 def conexao_banco():
-    import mysql.connector
+
     try:
         """
         Tenta estabelecer uma conexão com um banco de dados MySQL usando variáveis de ambiente.
@@ -13,14 +15,11 @@ def conexao_banco():
 
         conexao = mysql.connector.connect(
             host="localhost",
-            user="seu_usuario",
-            password="sua_senha",
-            database="seu_banco"
+            user="root",
+            password="141589",
+            database="projeto_integrador"
         )
-        print("Conexão bem sucedida!")
         return conexao
     except mysql.connector.Error as err:
         print(f"Erro de conexão: {err}")
         return None
-
-
