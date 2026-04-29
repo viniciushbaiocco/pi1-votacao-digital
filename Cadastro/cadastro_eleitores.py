@@ -19,38 +19,11 @@ def cadastrar_eleitor():
         bool: Retorna True se o cadastro válido e False caso contrário
 
     """
-
-    nome_valido = False
-    while not nome_valido:
-        nome = input("Nome completo: ")
-
-        if nome == "":
-            print("Nome não pode ser vazio.")
-
-        else:
-            tem_espaco = False
-            for i in nome:
-                if i == " ":
-                    tem_espaco = True
-
-            if tem_espaco == False:
-                print("Informe nome e sobrenome.")
-
-            else:
-                letras_validas = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ áàãâéêíóôõúüçÁÀÃÂÉÊÍÓÔÕÚÜÇ-'"
-                nome_invalido = False
-                for i in nome:
-                    if i not in letras_validas:
-                        nome_invalido = True
-
-                if nome_invalido:
-                    print("Nome inválido.")
-                else:
-                    nome_valido = True
+    nome_valido = validacao_nome.validar_nome()
 
     cpf_valido = False
     while not cpf_valido:
-        cpf = input("CPF: ")
+        cpf = input("Digite o CPF do eleitor: ")
 
         cpf_matematicamente_valido = validacao_cpf.validacao_de_cpf(cpf)
         if cpf_matematicamente_valido == False:
@@ -69,7 +42,7 @@ def cadastrar_eleitor():
 
     titulo_valido = False
     while not titulo_valido:
-        titulo_eleitor = input("Título de eleitor: ")
+        titulo_eleitor = input("Digite o Título de eleitor: ")
         titulo_validado = validacao_titulo.validar_titulo(titulo_eleitor)
         titulo_verificado = verificacao_titulo_banco.verificar_titulo_de_eleitor_banco(
             titulo_validado)
@@ -83,7 +56,7 @@ def cadastrar_eleitor():
 
     mesario_valido = False
     while not mesario_valido:
-        resposta = input("Será mesário? (S/N): ").upper()
+        resposta = input("Eleitor será mesário? (S/N): ").upper()
 
         if resposta not in ("S", "SIM", "N", "NÃO", "NAO"):
             print("Resposta inválida. Digite SIM ou NÃO.")
@@ -98,7 +71,7 @@ def cadastrar_eleitor():
         mesario = False
         retorno_mesario = 'Não'
 
-    chave_acesso_original = chave_acesso.geracao_chave_acesso(nome)
+    chave_acesso_original = chave_acesso.geracao_chave_acesso(nome_valido)
     chave_criptografada = cripto.criptografar_chave_acesso(
         chave_acesso_original)
 
@@ -111,7 +84,7 @@ def cadastrar_eleitor():
         VALUES (%s, %s, %s, %s, %s, %s)
     """
 
-    cursor.execute(sql, (nome, titulo_eleitor, cpf_criptografado, mesario,
+    cursor.execute(sql, (nome_valido, titulo_eleitor, cpf_criptografado, mesario,
                    chave_criptografada, False))
     conexao.commit()
 
@@ -119,7 +92,7 @@ def cadastrar_eleitor():
     conexao.close()
 
     print("\n ***** Cadastro realizado com sucesso! *****")
-    print("\nNome:", nome)
+    print("\nNome:", nome_valido)
     print("CPF:", cpf)
     print("Título:", titulo_eleitor)
     print("Mesário:", retorno_mesario)
@@ -127,10 +100,3 @@ def cadastrar_eleitor():
     print("\n")
 
     return True
-
-# Ajustes:
-# acertar nome só com espaco
-
-
-if __name__ == "__main__":
-    cadastrar_eleitor()
