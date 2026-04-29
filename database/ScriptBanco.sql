@@ -3,7 +3,7 @@ USE projeto_integrador;
 
 CREATE TABLE eleitores ( 
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) UNIQUE NOT NULL,
+    nome VARCHAR(100) NOT NULL,
     titulo_eleitor CHAR(12) UNIQUE NOT NULL,
     cpf CHAR(12) UNIQUE NOT NULL,
     mesario BOOLEAN DEFAULT FALSE,
@@ -13,7 +13,7 @@ CREATE TABLE eleitores (
 
 CREATE TABLE candidatos (
 	id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) UNIQUE NOT NULL,
+    nome VARCHAR(100) NOT NULL,
     partido VARCHAR(50) NOT NULL,
     sigla_partido VARCHAR(6) NOT NULL,
     numero_votacao CHAR(2) UNIQUE NOT NULL
