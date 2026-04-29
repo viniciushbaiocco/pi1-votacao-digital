@@ -32,6 +32,8 @@ def listagem_eleitores ():
     print('=' *50)
     print(f' Total de Eleitores Cadastrados: {len(total_eleitores)}')
 
+    input("\nPressione Enter para voltar ao menu...")
+
     cursor.close()
     conexao.close()
 

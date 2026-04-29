@@ -130,6 +130,9 @@ def busca_eleitor():
             else:
                 print("\nPor favor, refaça sua busca!")
         break
+
+    input("\nPressione Enter para voltar ao menu...")
+
     cursor.close()
     conexao.close()
 
