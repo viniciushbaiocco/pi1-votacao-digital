@@ -118,5 +118,3 @@ def edicao_eleitores():
 #NEXT STEPS
 #tentar otimizar mais de algum jeito
 #gerar nova chave de acesso (validacao_nome)
-
-edicao_eleitores()
