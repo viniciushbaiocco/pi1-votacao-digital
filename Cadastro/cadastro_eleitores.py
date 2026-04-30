@@ -40,6 +40,7 @@ def cadastrar_eleitor():
         titulo_valido = False
         while not titulo_valido:
             titulo_eleitor = input("Digite o Título de eleitor: ")
+            titulo_eleitor = ''.join(filter(str.isdigit, titulo_eleitor))
             titulo_validado = validacao_titulo.validar_titulo(titulo_eleitor)
             titulo_verificado = verificacao_titulo_banco.verificar_titulo_de_eleitor_banco(
                 titulo_eleitor)

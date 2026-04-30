@@ -9,7 +9,7 @@ Returns:
     bool: Retorna True se o CPF for válido, False caso contrário.
     """
     #Verificação do (1º dígito verificador)
-    arrumando = cpf_digitado_usuario.replace(".", "").replace("-", "")
+    arrumando = cpf_digitado_usuario.replace(".", "").replace("-", "").replace(" ", "")
 
     #Verificação de tamanho do CPF
     if len(arrumando) != 11:

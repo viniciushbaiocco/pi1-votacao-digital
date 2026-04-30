@@ -275,7 +275,7 @@ def criptografar_cpf(cpf: str):
     Returns:
         str: CPF criptografado.
     """
-    cpf_limpo = cpf.replace(".", "").replace("-", "")
+    cpf_limpo = cpf.replace(".", "").replace("-", "").replace(" ", "")
     return criptografar(cpf_limpo)
 
 
