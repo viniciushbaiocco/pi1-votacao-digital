@@ -15,9 +15,9 @@ def conexao_banco():
 
         conexao = mysql.connector.connect(
             host="localhost",
-            user="seu_usuario",
-            password="sua_senha",
-            database="seu_banco"
+            user="root",
+            password="141589",
+            database="projeto_integrador"
         )
         return conexao
     except mysql.connector.Error as err:

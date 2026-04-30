@@ -8,6 +8,7 @@ def edicao_eleitores():
     from Verificadores import verificacao_titulo_banco as ver_tit
     from Verificadores import validacao_nome as val_nome
     from Cadastro import chave_acesso as chave
+    from colorama import Fore, Style, init
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
@@ -30,7 +31,8 @@ def edicao_eleitores():
     #verificar a existência do eleitor no BD
     eleitor = cursor.fetchone()
     if eleitor is None:
-        return input("\nEleitor não cadastrado\nPressione Enter para voltar ao menu...")
+        print(Fore.YELLOW + Style.BRIGHT + "\nEleitor não cadastrado")
+        return input("Pressione Enter para voltar ao menu...")
     id_eleitor = eleitor['id']
 
     # listar o eleitor antes da edição
@@ -65,7 +67,7 @@ def edicao_eleitores():
             while val_tit.validar_titulo(novo_titulo) == False:
                 novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
             while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
-                novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
+                novo_titulo = input(Fore.YELLOW + Style.BRIGHT + '\nTítulo de Eleitor já cadastrado, digite novamente: ')
             novo_titulo_verificado = ''.join(filter(str.isdigit, novo_titulo))
 
 
@@ -74,7 +76,7 @@ def edicao_eleitores():
             while val_cpf.validacao_de_cpf(novo_cpf) == False:
                 novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
             while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
-                novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
+                novo_cpf = input(Fore.YELLOW + Style.BRIGHT + '\nCPF já cadastrado, digite novamente: ')
                 novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
 
             novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)

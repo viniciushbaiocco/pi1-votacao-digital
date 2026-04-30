@@ -6,6 +6,7 @@ from Verificadores import validacao_nome
 from database import conexao_banco
 from criptografia import criptografia as cripto
 from Cadastro import chave_acesso
+from colorama import Fore, Style, init
 
 
 def cadastrar_eleitor():
@@ -48,7 +49,7 @@ def cadastrar_eleitor():
             if titulo_validado == False:
                 print()
             elif titulo_verificado == (1,):
-                print( "*** Eleitor já cadastrado! *** \n"
+                print(Fore.YELLOW + Style.BRIGHT + "*** Eleitor já cadastrado! *** \n"
                        "Você pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
                 input("\nPressione Enter para voltar ao menu...")
                 return True
@@ -62,7 +63,7 @@ def cadastrar_eleitor():
             resposta = input("Eleitor será mesário? (S/N): ").upper()
 
             if resposta not in ("S", "SIM", "N", "NÃO", "NAO"):
-                print("Resposta inválida. Digite SIM ou NÃO.")
+                print(Fore.RED + Style.BRIGHT + "Resposta inválida. Digite SIM ou NÃO.")
 
             else:
                 mesario_valido = True
@@ -104,6 +105,7 @@ def cadastrar_eleitor():
         input("\nPressione Enter para voltar ao menu...")
 
     else:
-        print("*** Eleitor já cadastrado! *** \nVocê pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
+        print(Fore.YELLOW + Style.BRIGHT + "*** Eleitor já cadastrado! *** \nVocê pode consultar os dados deste "
+                                           "eleitor pelo Menu Gerenciamento de Eleitores.")
         input("\nPressione Enter para voltar ao menu...")
     return True

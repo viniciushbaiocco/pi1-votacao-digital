@@ -22,10 +22,3 @@ def verificar_titulo_de_eleitor_banco(titulo):
 
     return resultado
 # entender com o grupo se deixa o return no resultado com 0/1 ou mensagem
-
-
-# Teste da funcao
-if __name__ == "__main__":
-    titulo_eleitor = str(input("Título de eleitor: "))
-    result = verificar_titulo_de_eleitor_banco(titulo_eleitor)
-    print(result)

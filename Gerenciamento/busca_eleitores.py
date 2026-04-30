@@ -1,3 +1,11 @@
+import database.conexao_banco as conect
+import Verificadores. gerenciador_de_entrada as ge
+import Verificadores.validacao_cpf as val_cpf
+import Verificadores.validacao_titulo as val_titulo
+import Verificadores.verificacao_cpf_banco as ver_cpf
+import Verificadores.verificacao_titulo_banco as ver_titulo
+import criptografia.criptografia as cripto
+from colorama import Fore, Style, init
 
 def busca_eleitor():
     """
@@ -13,13 +21,6 @@ def busca_eleitor():
 
     """
 
-    import database.conexao_banco as conect
-    import Verificadores. gerenciador_de_entrada as ge
-    import Verificadores.validacao_cpf as val_cpf
-    import Verificadores.validacao_titulo as val_titulo
-    import Verificadores.verificacao_cpf_banco as ver_cpf
-    import Verificadores.verificacao_titulo_banco as ver_titulo
-    import criptografia.criptografia as cripto
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor()
@@ -79,10 +80,11 @@ def busca_eleitor():
             # Se usuário não cadastrado, sugere cadastramento indicando o Menu correto
                 else:
                     print(
-                        "\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.")
+                        Fore.YELLOW + Style.BRIGHT + "\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no "
+                                                     "Menu Gerenciamento de Eleitores.")
 
             else:
-                print("\nPor favor, refaça sua busca!")
+                print(Fore.YELLOW + Style.BRIGHT + "\nPor favor, refaça sua busca!")
 
         if opcao == 2:
             # Valida o título de eleitor digitado
@@ -127,10 +129,11 @@ def busca_eleitor():
                 # Se usuário não cadastrado, sugere cadastramento indicando o Menu correto
                 else:
                     print(
-                        "*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.\n")
+                        Fore.YELLOW + Style.BRIGHT + "*** Eleitor não cadastrado! *** \nRealizar o cadastramento no "
+                                                  "Menu Gerenciamento de Eleitores.\n")
 
             else:
-                print("\nPor favor, refaça sua busca!")
+                print(Fore.YELLOW + Style.BRIGHT + "\nPor favor, refaça sua busca!")
         break
 
     input("\nPressione Enter para voltar ao menu...")

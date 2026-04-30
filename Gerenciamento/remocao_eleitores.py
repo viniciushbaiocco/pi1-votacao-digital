@@ -1,3 +1,5 @@
+from colorama import Fore, Style, init
+
 def remocao_eleitores():
     """
     A função exibe opções para receber valores str de cpf ou titulo de eleitor para remoção do eleitor no banco de dados.
@@ -48,9 +50,9 @@ def remocao_eleitores():
 
                     #se eleitor não cadastrado, avisa o usuário
                     if eleitor is None:
-                        print("\nEleitor não cadastrado.")
+                        print(Fore.YELLOW + Style.BRIGHT + "\nEleitor não cadastrado.")
                 else:
-                    print("\nPor favor, refaça sua busca!")
+                    print(Fore.YELLOW + Style.BRIGHT + "\nPor favor, refaça sua busca!")
 
             case 2:
                 #valida o tamanho do título de eleitor digitado
@@ -62,9 +64,9 @@ def remocao_eleitores():
 
                     #se eleitor não cadastrado, avisa o usuário
                     if eleitor is None:
-                        print("\nEleitor não cadastrado.")
+                        print(Fore.YELLOW + Style.BRIGHT + "\nEleitor não cadastrado.")
                 else:
-                    print("\nTítulo de Eleitor inválido. Por favor, refaça sua busca!")
+                    print(Fore.RED + Style.BRIGHT + "\nTítulo de Eleitor inválido. Por favor, refaça sua busca!")
 
 
         #se eleitor encontrado, exibe os dados e confirma a remoção
