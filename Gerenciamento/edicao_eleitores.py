@@ -66,7 +66,7 @@ def edicao_eleitores():
                 novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
             while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
                 novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
-            novo_titulo_verificado = novo_titulo
+            novo_titulo_verificado = ''.join(filter(str.isdigit, novo_titulo))
 
 
             novo_cpf = input('\nDigite o novo CPF: ')
