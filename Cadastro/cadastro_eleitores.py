@@ -107,5 +107,3 @@ def cadastrar_eleitor():
         print("*** Eleitor já cadastrado! *** \nVocê pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
         input("\nPressione Enter para voltar ao menu...")
     return True
-
-cadastrar_eleitor()

@@ -106,5 +106,5 @@ def menu_completo():
                     executando_menu_votacao = 0
 
         elif escolha_principal == 3:  # Sair
-            print("Saindo...")
+            print("Sistema Finalizado")
             executando_menu_principal = 0

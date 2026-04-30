@@ -50,7 +50,7 @@ def exibir_menu_principal():
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Gerenciamento")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Votação")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[3]  Sair")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[3]  Finalizar Sistema")
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
 
