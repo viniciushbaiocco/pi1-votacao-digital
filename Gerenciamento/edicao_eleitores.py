@@ -66,6 +66,7 @@ def edicao_eleitores():
                 novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
             while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
                 novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
+            novo_titulo_verificado = novo_titulo
 
 
             novo_cpf = input('\nDigite o novo CPF: ')
@@ -87,7 +88,7 @@ def edicao_eleitores():
             cursor.execute('''
                            UPDATE eleitores SET nome = %s,
                                                 cpf = %s, titulo_eleitor = %s, mesario = %s, chave_acesso = %s WHERE id = %s
-                           ''', (novo_nome, novo_cpf_criptografado, novo_titulo, novo_mesario, chave_acesso, id_eleitor))
+                           ''', (novo_nome, novo_cpf_criptografado, novo_titulo_verificado, novo_mesario, chave_acesso, id_eleitor))
             conexao.commit()
 
             #listar o eleitor após edição

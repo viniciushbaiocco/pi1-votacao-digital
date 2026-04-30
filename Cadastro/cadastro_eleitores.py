@@ -42,14 +42,19 @@ def cadastrar_eleitor():
             titulo_eleitor = input("Digite o Título de eleitor: ")
             titulo_validado = validacao_titulo.validar_titulo(titulo_eleitor)
             titulo_verificado = verificacao_titulo_banco.verificar_titulo_de_eleitor_banco(
-                titulo_validado)
+                titulo_eleitor)
 
             if titulo_validado == False:
                 print()
-            elif titulo_verificado[0] == 1:
-                print("Título de eleitor já cadastrado")
+            elif titulo_verificado == (1,):
+                print( "*** Eleitor já cadastrado! *** \n"
+                       "Você pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
+                input("\nPressione Enter para voltar ao menu...")
+                return True
+
             else:
                 titulo_valido = True
+
 
         mesario_valido = False
         while not mesario_valido:
@@ -101,3 +106,5 @@ def cadastrar_eleitor():
         print("*** Eleitor já cadastrado! *** \nVocê pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
         input("\nPressione Enter para voltar ao menu...")
     return True
+
+cadastrar_eleitor()
