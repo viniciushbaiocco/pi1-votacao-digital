@@ -20,15 +20,11 @@ def edicao_eleitores():
             cpf = input('\nCPF: ')
             while val_cpf.validacao_de_cpf(cpf) == False:
                 cpf = input('\nCPF inválido, digite novamente: ')
-            while ver_cpf.verificar_cpf_banco(cpf) == False:
-                cpf = input('\nCPF já cadastrado, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
         case 2:
             tit = input('\nTítulo de Eleitor: ')
             while val_tit.validar_titulo(tit) == False:
                 tit = input('\nTítulo de Eleitor inválido, digite novamente: ')
-            while ver_tit.verificar_titulo_de_eleitor_banco(tit) == False:
-                tit = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
 
     #verificar a existência do eleitor no BD
@@ -37,95 +33,77 @@ def edicao_eleitores():
         return input("\nEleitor não cadastrado\nPressione Enter para voltar ao menu...")
     id_eleitor = eleitor['id']
 
-    #confirmar se o usuário quer editar
-    print('\n Deseja realmente editar esse eleitor? \n1 - Sim \n2 - Não')
+    # listar o eleitor antes da edição
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
     eleitor = cursor.fetchone()
-    if eleitor['mesario'] == 1: 
+    if eleitor['mesario'] == 1:
         mesario = 'Sim'
     else:
         mesario = 'Não'
-    if eleitor['status_votacao'] == 1:
-        status_votacao == 'Já Votou'
-    else:
-        status_votacao == 'Não Votou'
+
+    print('\n === Eleitor a Ser Editado === ')
+    print('=' * 50)
+    print(f'ID: {eleitor['id']}')
+    print(f'Nome: {eleitor['nome']}')
+    cpf = eleitor['cpf']
+    cpf_desc_print = crip.descriptografar_cpf(cpf)
+    print(f'CPF: {cpf_desc_print}')
+    print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
+    print(f'Mesário: {mesario}')
+    print('=' * 50)
+
+    # confirmar se o usuário quer editar
+    print('\n Deseja realmente editar esse eleitor? \n1 - Sim \n2 - Não')
     opcao2 = ge.obter_entrada_inteira_valida('\n Digite uma opção; ',1 ,2)
 
     match opcao2:
         case 1:
             #edição dos dados do eleitor
             novo_nome = val_nome.validar_nome()
+
             novo_titulo = input('\nDigite o novo Título de Eleitor: ')
-            novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
-            novo_cpf = input('\nDigite o novo CPF: ')
-            status_votacao = 0
-            
-            #validar e verificar o novo cpf, novo titulo e novo nome
-            novo_cpf = crip.criptografar_cpf(novo_cpf)
-            while val_cpf.validacao_de_cpf(novo_cpf) == False:
-                novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
-            while ver_cpf.verificar_cpf_banco(novo_cpf) == False:
-                novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
             while val_tit.validar_titulo(novo_titulo) == False:
                 novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
-            while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == False:
+            while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
                 novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
+
+
+            novo_cpf = input('\nDigite o novo CPF: ')
+            novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
+            while val_cpf.validacao_de_cpf(novo_cpf) == False:
+                novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
+            while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
+                novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
+                novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
+
+            novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
+
+            novo_cpf_descriptografado =  novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
 
             #criar nova chave de acesso
             chave_acesso = chave.geracao_chave_acesso(novo_nome)
 
-            #listar o eleitor antes da edição
-            cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
-            eleitor = cursor.fetchone()
-            if eleitor['mesario'] == 1: 
-                mesario = 'Sim'
-            else:
-                mesario = 'Não'
-            if eleitor['status_votacao'] == 1:
-                status_votacao == 'Já Votou'
-            else:
-                status_votacao == 'Não Votou'
-
-            print('\n === Eleitor Antes da Edição === ')
-            print('=' * 50)
-            print(f'ID: {eleitor['id']}')
-            print(f'Nome: {eleitor['nome']}')
-            print(f'CPF: {cpf}')
-            print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
-            print(f'Mesário: {mesario}')
-            print(f'Status da Votação: {status_votacao}')
-            print('=' * 50)
-
-
             #atualizar BD
-            cursor.execute(''' 
-                UPDATE eleitores SET nome = %s,
-                cpf = %s, titulo_eleitor = %s, mesario = %s, chave_acesso = %s WHERE id = %s
-            ''', (novo_nome, novo_cpf, novo_titulo, novo_mesario, chave_acesso, id_eleitor))
+            cursor.execute('''
+                           UPDATE eleitores SET nome = %s,
+                                                cpf = %s, titulo_eleitor = %s, mesario = %s, chave_acesso = %s WHERE id = %s
+                           ''', (novo_nome, novo_cpf_criptografado, novo_titulo, novo_mesario, chave_acesso, id_eleitor))
             conexao.commit()
-
-            #descriptografar cpf para listagem após a edição
-            novo_cpf = crip.descriptografar_cpf(novo_cpf)
 
             #listar o eleitor após edição
             cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
             eleitor = cursor.fetchone()
-            if eleitor['mesario'] == 1: 
+            if eleitor['mesario'] == 1:
                 mesario = 'Sim'
             else:
                 mesario = 'Não'
-            if eleitor['status_votacao'] == 1:
-                status_votacao == 'Já Votou'
-            else:
-                status_votacao == 'Não Votou'
             print('\n === Eleitor Depois da Edição === ')
             print('=' * 50)
             print(f'ID: {eleitor['id']}')
             print(f'Nome: {eleitor['nome']}')
-            print(f'CPF: {novo_cpf}')
+            print(f'CPF: {novo_cpf_descriptografado}')
             print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
             print(f'Mesário: {mesario}')
-            print(f'Status de Votação: {status_votacao}')
             print(f'Chave de Acesso: {chave_acesso}')
             print('=' * 50)
 
