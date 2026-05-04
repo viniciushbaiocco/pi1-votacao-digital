@@ -1,7 +1,6 @@
 import os
 from datetime import datetime
 from colorama import Fore, Style
-import os
 
 def ocorrencia_voto_duplo():
     try:

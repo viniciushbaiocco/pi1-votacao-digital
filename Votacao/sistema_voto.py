@@ -1,0 +1,2 @@
+def sistema_voto ():
+    
