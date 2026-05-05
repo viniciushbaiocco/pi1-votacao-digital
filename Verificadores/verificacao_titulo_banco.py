@@ -1,14 +1,14 @@
 
 def verificar_titulo_de_eleitor_banco(titulo):
     """
-    Solicita o título validado para consulta no banco de dados.
+    Verifica a existência de um título de eleitor no banco de dados.
 
     Args:
-        mensagem(str): entrar com um título validado.
+        titulo(str): O título de eleitor validado a ser consultado no banco de dados.
 
     Returns:
-        mensagem(str): Retorna se há eleitor cadastrado com o título no banco de dados ou não.
-
+        tuple: Uma tupla contendo a contagem de eleitores encontrados com o título fornecido.
+               Retorna (1,) se o título for encontrado, (0,) caso contrário.
     """
     from database import conexao_banco
     conexao = conexao_banco.conexao_banco()
@@ -21,11 +21,5 @@ def verificar_titulo_de_eleitor_banco(titulo):
     conexao.close()
 
     return resultado
-# entender com o grupo se deixa o return no resultado com 0/1 ou mensagem
 
 
-# Teste da funcao
-if __name__ == "__main__":
-    titulo_eleitor = str(input("Título de eleitor: "))
-    result = verificar_titulo_de_eleitor_banco(titulo_eleitor)
-    print(result)

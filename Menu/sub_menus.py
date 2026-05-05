@@ -22,6 +22,15 @@ largura_banner = len(banner) + 8
 
 
 def exibir_banner():
+    """
+        Exibe o banner para estética do menu.
+
+        Args:
+            None
+
+        Returns:
+            None
+        """
     espacos = "    " #4 espaços
     print(Fore.GREEN + "╔" + "═" * largura_banner + "╗")
     print(Fore.GREEN + "║" + Fore.YELLOW + Style.BRIGHT + espacos + banner + espacos + Style.RESET_ALL + Fore.GREEN + "║")

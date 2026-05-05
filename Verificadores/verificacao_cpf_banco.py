@@ -1,14 +1,14 @@
 
 def verificar_cpf_banco(cpf_criptografado):
     """
-    Solicita o CPF validado e criptografado para consulta no banco de dados.
+    Verifica a existência de um cpf já criptografado e validado do eleitor no banco de dados.
 
     Args:
-        mensagem(str): entrar com um CPF validado e criptografado.
+        cpf(str): O cpf criptografado e validado a ser consultado no banco de dados.
 
     Returns:
-        mensagem(str): Retorna se há eleitor cadastrado com o CPF no banco de dados ou não.
-
+        tupla: Uma tupla contendo a contagem de eleitores encontrados com o cpf fornecido.
+               Retorna (1,) se o título for encontrado, (0,) caso contrário.
     """
     from database import conexao_banco
     conexao = conexao_banco.conexao_banco()
@@ -21,5 +21,5 @@ def verificar_cpf_banco(cpf_criptografado):
     conexao.close()
 
     return resultado
-# entender com o grupo se deixa o return no resultado com 0/1 ou mensagem
+
 

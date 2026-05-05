@@ -9,8 +9,9 @@ def conexao_banco():
         Args:
             None
 
-        Returns: Retorna um objeto de conexão MySQL se a conexão for bem-sucedida,
-                caso contrário, retorna None.
+        Returns: 
+            Retorna um objeto de conexão MySQL se a conexão for bem-sucedida,      
+            caso contrário, retorna None.
         """
 
         conexao = mysql.connector.connect(
