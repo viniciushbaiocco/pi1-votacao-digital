@@ -165,7 +165,8 @@ def exibir_menu_votacao():
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Abrir Sistema De Votação")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Resultados Da Votação")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[3]  Voltar")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Ocorrências")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[4]  Voltar")
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
 
@@ -219,5 +220,32 @@ def exibir_menu_restultados_votacao():
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Votos Por Partido")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[4]" + Fore.WHITE + "  Validação De Integridade")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[5]  Voltar")
+    print(Fore.LIGHTWHITE_EX + "║")
+    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+
+def exibir_menu_ocorrencias():
+    """
+    Exibe o menu de ocorrências.
+
+    Args:
+        None
+
+    Returns:
+        None
+    """
+    os.system('cls' if os.name == 'nt' else 'clear')
+    exibir_banner()
+    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
+    print(Fore.LIGHTWHITE_EX + "║")
+    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "OCORRÊNCIAS".center(largura))
+    print(Fore.LIGHTWHITE_EX + "║")
+    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
+    print(Fore.LIGHTWHITE_EX + "║")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Abertura de Urna")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Acesso Negado")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Encerramento de Urna")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[4]" + Fore.WHITE + "  Voto Computado")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[5]" + Fore.WHITE + "  Voto Duplo")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[6]  Voltar")
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)

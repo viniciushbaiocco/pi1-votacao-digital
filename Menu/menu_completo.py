@@ -70,7 +70,7 @@ def menu_completo():
             executando_menu_votacao = 1
             while executando_menu_votacao == 1:
                 sm.exibir_menu_votacao()
-                escolha_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
+                escolha_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 4)
 
                 if escolha_votacao == 1:  # Abrir Sistema De Votação
                     executando_menu_sistema_votacao = 1
@@ -83,8 +83,8 @@ def menu_completo():
                                 print("Em desenvolvimento...")
                             case 2:
                                 print("Em desenvolvimento...")
-                            case 3:  # Voltar
-                                executando_menu_sistema_votacao = 0
+                            case 3:
+                                executando_menu_sistema_votacao = 0 # Voltar
                 elif escolha_votacao == 2:  # Resultados Da Votação
                     executando_menu_resultados_votacao = 1
                     while executando_menu_resultados_votacao == 1:
@@ -102,7 +102,26 @@ def menu_completo():
                                 print("Em desenvolvimento...")
                             case 5:  # Voltar
                                 executando_menu_resultados_votacao = 0
-                elif escolha_votacao == 3:  # Voltar
+                elif escolha_votacao == 3:
+                    executando_menu_ocorrencias = 1
+                    while executando_menu_ocorrencias == 1:
+                        sm.exibir_menu_ocorrencias()
+                        escolha_ocorrencia = ge.obter_entrada_inteira_valida("Escolha uma opção: ",1, 6)
+
+                        match escolha_ocorrencia:
+                            case 1:
+                                print("Em desenvolvimento...")
+                            case 2:
+                                print("Em desenvolvimento...")
+                            case 3:
+                                print("Em desenvolvimento...")
+                            case 4:
+                                print("Em desenvolvimento...")
+                            case 5:
+                                print("Em desenvolvimento...")
+                            case 6:
+                                executando_menu_ocorrencias = 0 # Voltar
+                elif escolha_votacao == 4:  # Voltar
                     executando_menu_votacao = 0
 
         elif escolha_principal == 3:  # Sair
