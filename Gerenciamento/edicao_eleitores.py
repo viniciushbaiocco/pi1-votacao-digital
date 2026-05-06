@@ -1,32 +1,42 @@
+from database import conexao_banco as conect
+from Verificadores import gerenciador_de_entrada as ge
+from criptografia import criptografia as crip
+from Verificadores import validacao_cpf as val_cpf
+from Verificadores import validacao_titulo as val_tit
+from Verificadores import verificacao_cpf_banco as ver_cpf
+from Verificadores import verificacao_titulo_banco as ver_tit
+from Verificadores import validacao_nome as val_nome
+from Cadastro import chave_acesso as chave
+from Verificadores import confirmacao
+from colorama import Fore, Style, init
+
+init(autoreset=True)
+
 def edicao_eleitores():
-    from database import conexao_banco as conect
-    from Verificadores import gerenciador_de_entrada as ge
-    from criptografia import criptografia as crip
-    from Verificadores import validacao_cpf as val_cpf
-    from Verificadores import validacao_titulo as val_tit
-    from Verificadores import verificacao_cpf_banco as ver_cpf
-    from Verificadores import verificacao_titulo_banco as ver_tit
-    from Verificadores import validacao_nome as val_nome
-    from Cadastro import chave_acesso as chave
-    from Verificadores import confirmacao
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 
     #utilizar entre CPF e Título para encontrar o eleitor no BD
-    print('\n--- 2 - Edição de Eleitores --- \n\n Opção 1: Busca pelo CPF \n\n Opção 2: Busca pelo Título de Eleitor')
+    print(Fore.WHITE + Style.BRIGHT + '\n--- 2 - Edição de Eleitores --- \n\n Opção 1: Busca pelo CPF \n\n Opção 2: Busca pelo Título de Eleitor')
     opcao = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 2)
     match opcao:
         case 1:
-            cpf = input('\nCPF: ')
+            cpf = input(Fore.WHITE + Style.BRIGHT + '\nCPF: ')
             while val_cpf.validacao_de_cpf(cpf) == False:
-                cpf = input('\nCPF inválido, digite novamente: ')
+                cpf = input(Fore.WHITE + Style.BRIGHT + '\nCPF inválido, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
+            if ver_cpf.verificar_cpf_banco(crip.criptografar_cpf(cpf)) == (0,):
+                print(Fore.YELLOW + Style.BRIGHT +
+                      "\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.")
         case 2:
-            tit = input('\nTítulo de Eleitor: ')
+            tit = input(Fore.WHITE + Style.BRIGHT + '\nTítulo de Eleitor: ')
             while val_tit.validar_titulo(tit) == False:
-                tit = input('\nTítulo de Eleitor inválido, digite novamente: ')
+                tit = input(Fore.WHITE + Style.BRIGHT + '\nTítulo de Eleitor inválido, digite novamente: ')
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
+            if ver_cpf.verificar_cpf_banco(tit) == (0,):
+                print(Fore.YELLOW + Style.BRIGHT +
+                      "\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.")
 
     #verificar a existência do eleitor no BD
     eleitor = cursor.fetchone()
@@ -38,47 +48,48 @@ def edicao_eleitores():
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
     eleitor = cursor.fetchone()
     if eleitor['mesario'] == 1:
-        mesario = 'Sim'
+        mesario = Fore.WHITE + Style.BRIGHT + 'Sim'
     else:
-        mesario = 'Não'
+        mesario = Fore.WHITE + Style.BRIGHT + 'Não'
 
-    print('\n === Eleitor a Ser Editado === ')
-    print('=' * 50)
-    print(f'ID: {eleitor['id']}')
-    print(f'Nome: {eleitor['nome']}')
+    print(Fore.WHITE + Style.BRIGHT + '\n === Eleitor a Ser Editado === ')
+    print(Fore.WHITE + Style.BRIGHT + '=' * 50)
+    print(Fore.WHITE + Style.BRIGHT + f'ID: {eleitor['id']}')
+    print(Fore.WHITE + Style.BRIGHT + f'Nome: {eleitor['nome']}')
     cpf = eleitor['cpf']
     cpf_desc_print = crip.descriptografar_cpf(cpf)
-    print(f'CPF: {cpf_desc_print}')
-    print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
-    print(f'Mesário: {mesario}')
-    print('=' * 50)
+    print(Fore.WHITE + Style.BRIGHT + f'CPF: {cpf_desc_print}')
+    print(Fore.WHITE + Style.BRIGHT + f'Título de Eleitor: {eleitor['titulo_eleitor']}')
+    print(Fore.WHITE + Style.BRIGHT + f'Mesário: {mesario}')
+    print(Fore.WHITE + Style.BRIGHT + '=' * 50)
 
     # confirmar se o usuário quer editar
-    print('\n Deseja realmente editar esse eleitor? \n1 - Sim \n2 - Não')
-    opcao2 = ge.obter_entrada_inteira_valida('\n Digite uma opção; ',1 ,2)
+    print(Fore.WHITE + Style.BRIGHT + '\n Deseja realmente editar esse eleitor? \n1 - Sim \n2 - Não')
+    opcao2 = ge.obter_entrada_inteira_valida('\nDigite uma opção: ',1 ,2)
 
     match opcao2:
         case 1:
             #edição dos dados do eleitor
             novo_nome = val_nome.validar_nome()
 
-            novo_titulo = input('\nDigite o novo Título de Eleitor: ')
+            novo_titulo = input(Fore.WHITE + Style.BRIGHT + '\nDigite o novo Título de Eleitor: ')
             while val_tit.validar_titulo(novo_titulo) == False:
-                novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
+                novo_titulo = input(Fore.WHITE + Style.BRIGHT + '\nNovo Título de Eleitor inválido, digite novamente: ')
             while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
-                novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
+                novo_titulo = input(Fore.YELLOW + Style.BRIGHT + '\nTítulo de Eleitor já cadastrado, digite novamente: ')
             novo_titulo_verificado = novo_titulo
 
 
-            novo_cpf = input('\nDigite o novo CPF: ')
+            novo_cpf = input(Fore.WHITE + Style.BRIGHT + '\nDigite o novo CPF: ')
             novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
             while val_cpf.validacao_de_cpf(novo_cpf) == False:
-                novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
+                novo_cpf = input(Fore.WHITE + Style.BRIGHT + '\nNovo CPF inválido, digite novamente: ')
             while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
-                novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
+                novo_cpf = input(Fore.YELLOW + Style.BRIGHT + '\nCPF já cadastrado, digite novamente: ')
                 novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
 
-            novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
+            novo_mesario = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT +
+                                                    '\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
 
             novo_cpf_descriptografado =  novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
 
@@ -96,18 +107,18 @@ def edicao_eleitores():
             cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
             eleitor = cursor.fetchone()
             if eleitor['mesario'] == 1:
-                mesario = 'Sim'
+                mesario = Fore.WHITE + Style.BRIGHT + 'Sim'
             else:
-                mesario = 'Não'
-            print('\n === Eleitor Depois da Edição === ')
-            print('=' * 50)
-            print(f'ID: {eleitor['id']}')
-            print(f'Nome: {eleitor['nome']}')
-            print(f'CPF: {novo_cpf_descriptografado}')
-            print(f'Título de Eleitor: {eleitor['titulo_eleitor']}')
-            print(f'Mesário: {mesario}')
-            print(f'Chave de Acesso: {chave_acesso}')
-            print('=' * 50)
+                mesario = Fore.WHITE + Style.BRIGHT + 'Não'
+            print(Fore.WHITE + Style.BRIGHT + '\n === Eleitor Depois da Edição === ')
+            print(Fore.WHITE + Style.BRIGHT + '=' * 50)
+            print(Fore.WHITE + Style.BRIGHT + f'ID: {eleitor['id']}')
+            print(Fore.WHITE + Style.BRIGHT + f'Nome: {eleitor['nome']}')
+            print(Fore.WHITE + Style.BRIGHT + f'CPF: {novo_cpf_descriptografado}')
+            print(Fore.WHITE + Style.BRIGHT + f'Título de Eleitor: {eleitor['titulo_eleitor']}')
+            print(Fore.WHITE + Style.BRIGHT + f'Mesário: {mesario}')
+            print(Fore.WHITE + Style.BRIGHT + f'Chave de Acesso: {chave_acesso}')
+            print(Fore.WHITE + Style.BRIGHT + '=' * 50)
 
             cursor.close()
             conexao.close()
