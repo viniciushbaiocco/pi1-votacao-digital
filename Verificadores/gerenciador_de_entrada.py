@@ -1,4 +1,4 @@
-from colorama import Fore, Style, init
+from colorama import Fore, Style
 
 def obter_entrada_inteira_valida(mensagem, min_val, max_val):
     """
@@ -17,7 +17,7 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
     executando_entrada = 0
     while (executando_entrada == 0):
         try:
-            escolha = int(input("\n"+mensagem))
+            escolha = int(input(Fore.WHITE + Style.BRIGHT + "\n"+mensagem))
             if min_val <= escolha <= max_val:
                 executando_entrada = 1
                 return escolha
