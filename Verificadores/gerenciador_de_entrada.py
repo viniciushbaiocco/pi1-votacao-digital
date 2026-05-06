@@ -1,4 +1,6 @@
-from colorama import Fore, Style
+from colorama import Fore, Style, init
+
+init(autoreset=True)
 
 def obter_entrada_inteira_valida(mensagem, min_val, max_val):
     """

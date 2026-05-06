@@ -3,6 +3,7 @@ from Verificadores import verificacao_cpf_banco
 from Verificadores import validacao_titulo
 from Verificadores import verificacao_titulo_banco
 from Verificadores import validacao_nome
+from Verificadores import confirmacao
 from database import conexao_banco
 from criptografia import criptografia as cripto
 from Cadastro import chave_acesso
@@ -101,9 +102,9 @@ def cadastrar_eleitor():
         print("Mesário:", retorno_mesario)
         print("Chave de acesso:", chave_acesso_original)
         print("\n")
-        input("\nPressione Enter para voltar ao menu...")
+        confirmacao.confirmacao()
 
     else:
         print("*** Eleitor já cadastrado! *** \nVocê pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
-        input("\nPressione Enter para voltar ao menu...")
+        confirmacao.confirmacao()
     return True

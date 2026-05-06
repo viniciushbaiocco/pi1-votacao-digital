@@ -2,6 +2,8 @@ from Menu import sub_menus as sm
 from Verificadores import gerenciador_de_entrada as ge
 from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
 from Cadastro import cadastro_eleitores
+from Ocorrencias import acesso_negado, voto_computado, voto_duplo
+
 def menu_completo():
     """
     Gerencia a navegação completa entre os menus da aplicação (principal, gerenciamento e votação).
@@ -112,13 +114,13 @@ def menu_completo():
                             case 1:
                                 print("Em desenvolvimento...")
                             case 2:
-                                print("Em desenvolvimento...")
+                                acesso_negado.imprimir_ocorrencia_acesso_negado()
                             case 3:
                                 print("Em desenvolvimento...")
                             case 4:
-                                print("Em desenvolvimento...")
+                                voto_computado.imprimir_voto_computado()
                             case 5:
-                                print("Em desenvolvimento...")
+                                voto_duplo.imprimir_voto_duplo()
                             case 6:
                                 executando_menu_ocorrencias = 0 # Voltar
                 elif escolha_votacao == 4:  # Voltar

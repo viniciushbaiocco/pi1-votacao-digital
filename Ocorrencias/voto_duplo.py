@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 from colorama import Fore, Style
+from Verificadores import confirmacao
 
 def ocorrencia_voto_duplo():
     """
@@ -35,10 +36,13 @@ def imprimir_voto_duplo():
         with open("Voto_Duplo.txt", "r", encoding="utf-8") as arq:
             conteudo = arq.read()
             print(conteudo)
+            confirmacao.confirmacao()
     except FileNotFoundError:
         print(Fore.YELLOW + Style.BRIGHT +"\nNenhum Log de Voto Duplo Registrado")
+        confirmacao.confirmacao()
     except Exception as e:
         print(Fore.RED + Style.BRIGHT + f"\nErro ao ler o log de Voto Duplo {e}")
+        confirmacao.confirmacao()
 
 def excluir_arquivo_voto_duplo():
     """
