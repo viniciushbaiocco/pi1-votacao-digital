@@ -1,5 +1,6 @@
 def listagem_eleitores ():
     from database import conexao_banco as conect
+    from Verificadores import confirmacao
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
@@ -32,7 +33,7 @@ def listagem_eleitores ():
     print('=' *50)
     print(f' Total de Eleitores Cadastrados: {len(total_eleitores)}')
 
-    input("\nPressione Enter para voltar ao menu...")
+    confirmacao.confirmacao()
 
     cursor.close()
     conexao.close()

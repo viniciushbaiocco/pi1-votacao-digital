@@ -8,6 +8,7 @@ def edicao_eleitores():
     from Verificadores import verificacao_titulo_banco as ver_tit
     from Verificadores import validacao_nome as val_nome
     from Cadastro import chave_acesso as chave
+    from Verificadores import confirmacao
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
@@ -30,7 +31,7 @@ def edicao_eleitores():
     #verificar a existência do eleitor no BD
     eleitor = cursor.fetchone()
     if eleitor is None:
-        return input("\nEleitor não cadastrado\nPressione Enter para voltar ao menu...")
+        return confirmacao.confirmacao()
     id_eleitor = eleitor['id']
 
     # listar o eleitor antes da edição
@@ -110,9 +111,9 @@ def edicao_eleitores():
 
             cursor.close()
             conexao.close()
-            return input('\nEleitor editado com sucesso!\nPressione Enter para voltar ao menu...')
+            return confirmacao.confirmacao()
         case 2:
-            return input('\nAbortando operação...\nPressione Enter para voltar ao menu...')
+            return confirmacao.confirmacao()
         
 
 #NEXT STEPS

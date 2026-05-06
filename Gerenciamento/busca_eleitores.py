@@ -20,6 +20,7 @@ def busca_eleitor():
     import Verificadores.verificacao_cpf_banco as ver_cpf
     import Verificadores.verificacao_titulo_banco as ver_titulo
     import criptografia.criptografia as cripto
+    from Verificadores import confirmacao
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor()
@@ -133,7 +134,7 @@ def busca_eleitor():
                 print("\nPor favor, refaça sua busca!")
         break
 
-    input("\nPressione Enter para voltar ao menu...")
+    confirmacao.confirmacao()
 
     cursor.close()
     conexao.close()

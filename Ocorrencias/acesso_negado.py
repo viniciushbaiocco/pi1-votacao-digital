@@ -1,5 +1,6 @@
 from colorama import Fore,Style
 from datetime import datetime
+from Verificadores import confirmacao
 import os
 
 def ocorrencia_acesso_negado():
@@ -31,10 +32,13 @@ def imprimir_ocorrencia_acesso_negado():
         with open("Acesso_Negado.txt", "r", encoding="utf-8") as arq:
             conteudo = arq.read()
             print(conteudo)
+            confirmacao.confirmacao()
     except FileNotFoundError:
         print(Fore.YELLOW + Style.BRIGHT +"\nNenhum Log de Acesso Negado Registrado")
+        confirmacao.confirmacao()
     except Exception as e:
         print(Fore.RED + Style.BRIGHT + f"\nErro ao ler o log de Acesso Negado {e}")
+        confirmacao.confirmacao()
 
 def excluir_ocorrencia_acesso_negado():
     """
