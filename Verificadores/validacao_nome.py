@@ -1,3 +1,7 @@
+from colorama import Fore,Style, init
+
+init(autoreset=True)
+
 def validar_nome():
     """
     A função solicita o nome do usuário e faz validacoes necessárias, de acordo com as regras do programa.
@@ -13,7 +17,7 @@ def validar_nome():
     nome_validado = False
     while not nome_validado:
 
-        nome = input("Digite o nome: ")
+        nome = input(Fore.WHITE + Style.BRIGHT + "Digite o nome: ")
 
         nome_ajustado = nome.split()
 
@@ -27,23 +31,23 @@ def validar_nome():
                 nome_letras = False
 
         if nome_letras == False:
-            print("O nome não pode ser espaço vazio e deve conter apenas letras!")
+            print(Fore.YELLOW + Style.BRIGHT + "O nome não pode ser espaço vazio e deve conter apenas letras!")
         else:
             if len(nome_ajustado) < 2:
                 nome_validado = False
                 print(
-                    "Nome inválido! Necessário nome completo (nome e sobrenome).")
+                    Fore.RED + Style.BRIGHT + "Nome inválido! Necessário nome completo (nome e sobrenome).")
             else:
 
                 if len(nome_ajustado[0]) < 2:
                     nome_validado = False
                     print(
-                        "Nome inválido! Primeiro nome precisa ter mínimo de 3 letras.")
+                        Fore.RED + Style.BRIGHT + "Nome inválido! Primeiro nome precisa ter mínimo de 3 letras.")
                 else:
                     if len(nome_ajustado[1]) < 1:
                         nome_validado = False
                         print(
-                            "Sobrenome inválido! Sobrenome precisa ter mínimo de 2 letras.")
+                            Fore.RED + Style.BRIGHT + "Sobrenome inválido! Sobrenome precisa ter mínimo de 2 letras.")
                     else:
                         nome_validado = True
 

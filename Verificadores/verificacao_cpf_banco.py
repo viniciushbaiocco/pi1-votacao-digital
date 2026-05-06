@@ -8,7 +8,7 @@ def verificar_cpf_banco(cpf_criptografado):
 
     Returns:
         tupla: Uma tupla contendo a contagem de eleitores encontrados com o cpf fornecido.
-               Retorna (1,) se o título for encontrado, (0,) caso contrário.
+               Retorna (1,) se o cpf for encontrado, (0,) caso contrário.
     """
     from database import conexao_banco
     conexao = conexao_banco.conexao_banco()
@@ -22,4 +22,5 @@ def verificar_cpf_banco(cpf_criptografado):
 
     return resultado
 
+print(verificar_cpf_banco("PBLYS725RH1Z"))
 

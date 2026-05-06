@@ -4,7 +4,7 @@ def validacao_voto():
     executando_entrada = 0
     while (executando_entrada == 0):
         try:
-            voto = int(input('\n Digite o número eleitoral do candidato que deseja votar: '))
+            voto = int(input(Fore.WHITE + Style.BRIGHT + '\n Digite o número eleitoral do candidato que deseja votar: '))
             if voto <0:
                 print(f'{Fore.RED}{Style.BRIGHT}Erro: Opção inválida. Por favor, escolha uma opção positiva. {Style.RESET_ALL}')
             else:

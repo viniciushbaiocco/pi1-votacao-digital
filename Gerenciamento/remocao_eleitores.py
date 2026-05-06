@@ -1,3 +1,12 @@
+from database import conexao_banco as conect
+from Verificadores import gerenciador_de_entrada as ge
+from Verificadores import validacao_cpf as val_cpf
+from Verificadores import confirmacao as conf
+from criptografia import criptografia as crip
+from colorama import Fore, Style, init
+
+init(autoreset=True)
+
 def remocao_eleitores():
     """
     A função exibe opções para receber valores str de cpf ou titulo de eleitor para remoção do eleitor no banco de dados.
@@ -13,18 +22,13 @@ def remocao_eleitores():
 
     """
 
-    import Menu.sub_menus as sb
-    from database import conexao_banco as conect
-    from Verificadores import gerenciador_de_entrada as ge
-    from Verificadores import validacao_cpf as val_cpf
-    from criptografia import criptografia as crip
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 
-    print("\n--- 3 - Excluir Eleitores ---")
-    print("\nOpção 1: Remover pelo CPF")
-    print("\nOpção 2: Remover pelo Título de eleitor")
+    print(Fore.WHITE + Style.BRIGHT + "\n--- 3 - Excluir Eleitores ---")
+    print(Fore.WHITE + Style.BRIGHT + "\nOpção 1: Remover pelo CPF")
+    print(Fore.WHITE + Style.BRIGHT + "\nOpção 2: Remover pelo Título de eleitor")
 
     #enquanto a opção estiver fora do intervalo, continua pedindo um valor válido (min,max)
     opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 2)
@@ -37,7 +41,7 @@ def remocao_eleitores():
         match opcao:
             case 1:
                 #valida o CPF digitado
-                cpf = str(input("\nDigite o número do CPF a ser removido: "))
+                cpf = str(input(Fore.WHITE + Style.BRIGHT + "\nDigite o número do CPF a ser removido: "))
                 validacao_cpf = val_cpf.validacao_de_cpf(cpf)
 
                 if validacao_cpf == True:
@@ -48,13 +52,13 @@ def remocao_eleitores():
 
                     #se eleitor não cadastrado, avisa o usuário
                     if eleitor is None:
-                        print("\nEleitor não cadastrado.")
+                        print(Fore.YELLOW + Style.BRIGHT + "\nEleitor não cadastrado.")
                 else:
-                    print("\nPor favor, refaça sua busca!")
+                    print(Fore.YELLOW + Style.BRIGHT + "\nPor favor, refaça sua busca!")
 
             case 2:
                 #valida o tamanho do título de eleitor digitado
-                titulo_eleitor = str(input("\nDigite o número do Título de Eleitor a ser removido: "))
+                titulo_eleitor = str(input(Fore.WHITE + Style.BRIGHT + "\nDigite o número do Título de Eleitor a ser removido: "))
 
                 if len(titulo_eleitor) == 12:
                     cursor.execute('SELECT * FROM eleitores WHERE titulo_eleitor = %s', (titulo_eleitor,))
@@ -62,38 +66,40 @@ def remocao_eleitores():
 
                     #se eleitor não cadastrado, avisa o usuário
                     if eleitor is None:
-                        print("\nEleitor não cadastrado.")
+                        print(Fore.YELLOW + Style.BRIGHT + "\nEleitor não cadastrado.")
                 else:
-                    print("\nTítulo de Eleitor inválido. Por favor, refaça sua busca!")
+                    print(Fore.WHITE + Style.BRIGHT + "\nTítulo de Eleitor inválido. Por favor, refaça sua busca!")
 
 
         #se eleitor encontrado, exibe os dados e confirma a remoção
         if eleitor is not None:
 
             #exibe os dados do eleitor
-            print('=' * 50)
-            print(' - Eleitor a ser removido - ')
-            print('=' * 50)
-            print(f' ID: {eleitor['id']}')
-            print(f' Nome: {eleitor['nome']}')
+            print(Fore.WHITE + Style.BRIGHT + '=' * 50)
+            print(Fore.WHITE + Style.BRIGHT + ' - Eleitor a ser removido - ')
+            print(Fore.WHITE + Style.BRIGHT + '=' * 50)
+            print(Fore.WHITE + Style.BRIGHT + f' ID: {eleitor['id']}')
+            print(Fore.WHITE + Style.BRIGHT + f' Nome: {eleitor['nome']}')
             #MUDANÇA: o CPF está cifrado no banco; descriptografo antes de exibir para o usuário ver o CPF real (a listagem_eleitores ainda mostra o cifrado)
-            print(f' CPF: {crip.descriptografar_cpf(eleitor['cpf'])}')
-            print(f' Título de Eleitor: {eleitor['titulo_eleitor']}')
-            print(f' Mesário: {eleitor['mesario']}')
-            print(f' Status de Votação: {eleitor['status_votacao']}')
-            print('=' * 50)
+            print(Fore.WHITE + Style.BRIGHT + f' CPF: {crip.descriptografar_cpf(eleitor['cpf'])}')
+            print(Fore.WHITE + Style.BRIGHT + f' Título de Eleitor: {eleitor['titulo_eleitor']}')
+            print(Fore.WHITE + Style.BRIGHT + f' Mesário: {eleitor['mesario']}')
+            print(Fore.WHITE + Style.BRIGHT + f' Status de Votação: {eleitor['status_votacao']}')
+            print(Fore.WHITE + Style.BRIGHT + '=' * 50)
 
             #MUDANÇA: passo extra de confirmação antes do DELETE para evitar exclusão acidental (não existe no busca_eleitores pq lá não tem operação destrutiva)
-            print("\nDeseja realmente remover este eleitor? \n 1 - Sim \n 2 - Não")
+            print(Fore.WHITE + Style.BRIGHT + "\nDeseja realmente remover este eleitor? \n 1 - Sim \n 2 - Não")
             confirmacao = ge.obter_entrada_inteira_valida("Opção escolhida: ", 1, 2)
 
             if confirmacao == 1:
                 cursor.execute('DELETE FROM eleitores WHERE id = %s', (eleitor['id'],))
                 conexao.commit()
-                print("\nEleitor removido com sucesso.")
+                print(Fore.WHITE + Style.BRIGHT + "\nEleitor removido com sucesso.")
+                conf.confirmacao()
                 break
             else:
-                print("\nRemoção cancelada pelo usuário.")
+                print(Fore.YELLOW + Style.BRIGHT + "\nRemoção cancelada pelo usuário.")
+                conf.confirmacao()
                 break
 
     cursor.close()

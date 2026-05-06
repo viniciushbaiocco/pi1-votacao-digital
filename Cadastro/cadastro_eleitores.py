@@ -7,7 +7,9 @@ from Verificadores import confirmacao
 from database import conexao_banco
 from criptografia import criptografia as cripto
 from Cadastro import chave_acesso
+from colorama import Fore, Style, init
 
+init(autoreset=True)
 
 def cadastrar_eleitor():
     """
@@ -22,7 +24,7 @@ def cadastrar_eleitor():
     """
     cpf_valido = False
     while not cpf_valido:
-        cpf = input("Digite o CPF do eleitor: ")
+        cpf = input(Fore.WHITE + Style.BRIGHT + "Digite o CPF do eleitor: ")
 
         cpf_matematicamente_valido = validacao_cpf.validacao_de_cpf(cpf)
         if cpf_matematicamente_valido == False:
@@ -40,7 +42,7 @@ def cadastrar_eleitor():
 
         titulo_valido = False
         while not titulo_valido:
-            titulo_eleitor = input("Digite o Título de eleitor: ")
+            titulo_eleitor = input(Fore.WHITE + Style.BRIGHT + "Digite o Título de eleitor: ")
             titulo_eleitor = ''.join(filter(str.isdigit, titulo_eleitor))
             titulo_validado = validacao_titulo.validar_titulo(titulo_eleitor)
             titulo_verificado = verificacao_titulo_banco.verificar_titulo_de_eleitor_banco(
@@ -49,9 +51,9 @@ def cadastrar_eleitor():
             if titulo_validado == False:
                 print()
             elif titulo_verificado == (1,):
-                print( "*** Eleitor já cadastrado! *** \n"
+                print( Fore.YELLOW + Style.BRIGHT + "*** Eleitor já cadastrado! *** \n"
                        "Você pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
-                input("\nPressione Enter para voltar ao menu...")
+                confirmacao.confirmacao()
                 return True
 
             else:
@@ -60,20 +62,20 @@ def cadastrar_eleitor():
 
         mesario_valido = False
         while not mesario_valido:
-            resposta = input("Eleitor será mesário? (S/N): ").upper()
+            resposta = input(Fore.WHITE + Style.BRIGHT + "Eleitor será mesário? (S/N): ").upper()
 
             if resposta not in ("S", "SIM", "N", "NÃO", "NAO"):
-                print("Resposta inválida. Digite SIM ou NÃO.")
+                print(Fore.RED + Style.BRIGHT + "Resposta inválida. Digite SIM ou NÃO.")
 
             else:
                 mesario_valido = True
 
         if resposta in ("S", "SIM"):
             mesario = True
-            retorno_mesario = 'Sim'
+            retorno_mesario = Fore.WHITE + Style.BRIGHT + 'Sim'
         else:
             mesario = False
-            retorno_mesario = 'Não'
+            retorno_mesario = Fore.WHITE + Style.BRIGHT + 'Não'
 
         chave_acesso_original = chave_acesso.geracao_chave_acesso(nome_valido)
         chave_criptografada = cripto.criptografar_chave_acesso(
@@ -95,16 +97,16 @@ def cadastrar_eleitor():
         cursor.close()
         conexao.close()
 
-        print("\n ***** Cadastro realizado com sucesso! *****")
-        print("\nNome:", nome_valido)
-        print("CPF:", cpf)
-        print("Título:", titulo_eleitor)
-        print("Mesário:", retorno_mesario)
-        print("Chave de acesso:", chave_acesso_original)
+        print(Fore.WHITE + Style.BRIGHT + "\n ***** Cadastro realizado com sucesso! *****")
+        print(Fore.WHITE + Style.BRIGHT + "\nNome:", nome_valido)
+        print(Fore.WHITE + Style.BRIGHT + "CPF:", cpf)
+        print(Fore.WHITE + Style.BRIGHT + "Título:", titulo_eleitor)
+        print(Fore.WHITE + Style.BRIGHT + "Mesário:", retorno_mesario)
+        print(Fore.WHITE + Style.BRIGHT + "Chave de acesso:", chave_acesso_original)
         print("\n")
         confirmacao.confirmacao()
 
     else:
-        print("*** Eleitor já cadastrado! *** \nVocê pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
+        print(Fore.YELLOW + Style.BRIGHT + "*** Eleitor já cadastrado! *** \nVocê pode consultar os dados deste eleitor pelo Menu Gerenciamento de Eleitores.")
         confirmacao.confirmacao()
     return True
