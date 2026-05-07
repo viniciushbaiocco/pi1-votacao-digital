@@ -1,6 +1,6 @@
 from colorama import Fore,Style
 from datetime import datetime
-from Verificadores import confirmacao
+from Validadores import confirmacao
 import os
 
 def ocorrencia_acesso_negado():

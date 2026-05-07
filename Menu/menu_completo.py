@@ -1,5 +1,5 @@
 from Menu import sub_menus as sm
-from Verificadores import gerenciador_de_entrada as ge
+from Validadores import gerenciador_de_entrada as ge
 from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
 from Cadastro import cadastro_eleitores
 from Ocorrencias import acesso_negado, voto_computado, voto_duplo

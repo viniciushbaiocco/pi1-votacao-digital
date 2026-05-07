@@ -1,5 +1,5 @@
 from database import conexao_banco as conect
-from Verificadores import confirmacao
+from Validadores import confirmacao
 from colorama import Fore, Style, init
 
 init(autoreset=True)

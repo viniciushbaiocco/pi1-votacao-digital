@@ -1,7 +1,7 @@
 from database import conexao_banco as conect
-from Ocorrencias import voto_computado, voto_duplo
-from colorama import Fore,Style
-from Verificadores import validacao_voto as val_voto, gerenciador_de_entrada as ge
+from Ocorrencias import voto_computado
+from Validadores import gerenciador_de_entrada as ge, validacao_voto as val_voto
+
 
 #futuros imports pras outras ocorrências
 

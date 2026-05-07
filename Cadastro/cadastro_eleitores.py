@@ -1,9 +1,6 @@
-from Verificadores import validacao_cpf
 from Verificadores import verificacao_cpf_banco
-from Verificadores import validacao_titulo
 from Verificadores import verificacao_titulo_banco
-from Verificadores import validacao_nome
-from Verificadores import confirmacao
+from Validadores import confirmacao, validacao_cpf, validacao_nome, validacao_titulo
 from database import conexao_banco
 from criptografia import criptografia as cripto
 from Cadastro import chave_acesso

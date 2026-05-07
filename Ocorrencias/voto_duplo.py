@@ -1,7 +1,8 @@
 import os
 from datetime import datetime
 from colorama import Fore, Style
-from Verificadores import confirmacao
+from Validadores import confirmacao
+
 
 def ocorrencia_voto_duplo():
     """

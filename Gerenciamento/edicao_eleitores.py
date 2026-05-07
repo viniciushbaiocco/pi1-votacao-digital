@@ -1,13 +1,10 @@
 from database import conexao_banco as conect
-from Verificadores import gerenciador_de_entrada as ge
 from criptografia import criptografia as crip
-from Verificadores import validacao_cpf as val_cpf
-from Verificadores import validacao_titulo as val_tit
 from Verificadores import verificacao_cpf_banco as ver_cpf
 from Verificadores import verificacao_titulo_banco as ver_tit
-from Verificadores import validacao_nome as val_nome
 from Cadastro import chave_acesso as chave
-from Verificadores import confirmacao
+from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf as val_cpf, validacao_nome as val_nome, \
+    validacao_titulo as val_tit
 from colorama import Fore, Style, init
 
 init(autoreset=True)

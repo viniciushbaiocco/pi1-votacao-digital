@@ -1,7 +1,5 @@
 from database import conexao_banco as conect
-from Verificadores import gerenciador_de_entrada as ge
-from Verificadores import validacao_cpf as val_cpf
-from Verificadores import confirmacao as conf
+from Validadores import confirmacao as conf, gerenciador_de_entrada as ge, validacao_cpf as val_cpf
 from criptografia import criptografia as crip
 from colorama import Fore, Style, init
 
