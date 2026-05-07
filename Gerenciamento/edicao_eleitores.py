@@ -13,6 +13,17 @@ from colorama import Fore, Style, init
 init(autoreset=True)
 
 def edicao_eleitores():
+    
+    """
+    A função exibe opções para receber valores str de cpf ou titulo de eleitor para editar um eleitor.
+
+    Args:
+        None
+
+    Returns:
+        O eleitor editado
+
+    """
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)

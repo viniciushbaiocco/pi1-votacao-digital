@@ -46,7 +46,7 @@ def imprimir_voto_duplo():
 
 def excluir_arquivo_voto_duplo():
     """
-        Exclui o arquivo de voto dupo caso houver.
+        Exclui o arquivo de voto duplo caso houver.
 
         Args:
             None

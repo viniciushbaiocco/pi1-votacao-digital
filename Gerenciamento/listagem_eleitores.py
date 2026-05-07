@@ -6,6 +6,17 @@ init(autoreset=True)
 
 def listagem_eleitores ():
 
+    """
+    A função lista todos os eleitores da tabela eleitores.
+
+    Args:
+        None
+
+    Returns:
+        Os eleitores da tabela eleitores
+
+    """
+
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 

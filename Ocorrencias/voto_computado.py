@@ -4,6 +4,15 @@ from colorama import Fore, Style
 from Verificadores import confirmacao
 
 def voto_computado():
+    """
+        Cria o arquivo que armazena os logs de voto computado e insere os logs nele.
+        
+        Args:
+            None
+
+        Returns:
+            None
+    """
     try:
         with open("Voto_Computado.txt", "a", encoding="utf-8") as arq:
             agora = datetime.now()
@@ -14,6 +23,15 @@ def voto_computado():
             arq.write(Fore.GREEN + Style.BRIGHT + f"\n[{sem_milisegundos}] Voto Computado!")
 
 def imprimir_voto_computado():
+    """
+        Faz a leitura do arquivo de voto computado caso houver.
+
+        Args:
+            None
+
+        Returns:
+            None
+    """
     try:
         with open("Voto_Computado.txt", "r", encoding="utf-8") as arq:
             conteudo = arq.read()
@@ -27,5 +45,14 @@ def imprimir_voto_computado():
         confirmacao.confirmacao()
 
 def excluir_arquivo_voto_computado():
+    """
+        Exclui o arquivo de voto computado caso houver.
+
+        Args:
+            None
+
+        Returns:
+            None
+    """
     arquivo = "Voto_Computado.txt"
     os.remove(arquivo)
