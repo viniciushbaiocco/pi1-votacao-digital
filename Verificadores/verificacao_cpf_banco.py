@@ -22,5 +22,5 @@ def verificar_cpf_banco(cpf_criptografado):
 
     return resultado
 
-print(verificar_cpf_banco("PBLYS725RH1Z"))
+
 
