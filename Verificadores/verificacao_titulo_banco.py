@@ -1,3 +1,4 @@
+from database import conexao_banco
 
 def verificar_titulo_de_eleitor_banco(titulo):
     """
@@ -10,7 +11,6 @@ def verificar_titulo_de_eleitor_banco(titulo):
         tuple: Uma tupla contendo a contagem de eleitores encontrados com o título fornecido.
                Retorna (1,) se o título for encontrado, (0,) caso contrário.
     """
-    from database import conexao_banco
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor()
     query = "SELECT COUNT(*) FROM eleitores WHERE titulo_eleitor = %s"

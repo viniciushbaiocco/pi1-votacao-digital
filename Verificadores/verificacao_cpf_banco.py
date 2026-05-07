@@ -1,3 +1,4 @@
+from database import conexao_banco
 
 def verificar_cpf_banco(cpf_criptografado):
     """
@@ -10,7 +11,6 @@ def verificar_cpf_banco(cpf_criptografado):
         tupla: Uma tupla contendo a contagem de eleitores encontrados com o cpf fornecido.
                Retorna (1,) se o cpf for encontrado, (0,) caso contrário.
     """
-    from database import conexao_banco
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor()
     query = "SELECT COUNT(*) FROM eleitores WHERE cpf = %s"
