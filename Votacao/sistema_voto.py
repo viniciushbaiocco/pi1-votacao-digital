@@ -12,7 +12,6 @@ from Validadores import validacao_cpf_votacao as val_cpf_vot, validacao_chave_ac
 
 def sistema_voto ():
     print('--- Eleição 2026 ---')
-    print('--- Candidatos ---')
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
