@@ -17,9 +17,9 @@ def validar_chave_acesso(chave_acesso):
     """
 
     # Verifica se a chave de acesso possui 6 dígitos
-    if len(chave_acesso) != 6:
+    if len(chave_acesso) != 7:
         print(Fore.RED + Style.BRIGHT + "Chave de Acesso INVÁLIDA")
-        print(Fore.YELLOW+ Style.BRIGHT + "Chave de Acesso deve conter 6 dígitos")
+        print(Fore.YELLOW+ Style.BRIGHT + "Chave de Acesso deve conter 7 dígitos")
         print(Fore.YELLOW + Style.BRIGHT + "Não utilize espaços ou pontuações")
         return False
 
@@ -30,7 +30,7 @@ def validar_chave_acesso(chave_acesso):
         return False
 
     # Verifica se os quatro últimos caracteres são números
-    if not chave_acesso[2:6].isdigit():
+    if not chave_acesso[3:7].isdigit():
         print(Fore.RED + Style.BRIGHT + "Chave de Acesso INVÁLIDA")
         print(Fore.YELLOW + Style.BRIGHT + "Os quatro últimos dígitos devem ser NÚMEROS")
         return False
