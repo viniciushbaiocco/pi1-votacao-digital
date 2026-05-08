@@ -24,9 +24,9 @@ def validar_chave_acesso(chave_acesso):
         return False
 
     # Verifica se os dois primeiros caracteres são letras
-    if not chave_acesso[0:2].isalpha():
+    if not chave_acesso[0:3].isalpha():
         print(Fore.RED + Style.BRIGHT + "Chave de Acesso INVÁLIDA")
-        print(Fore.YELLOW + Style.BRIGHT + "Os dois primeiros dígitos devem ser LETRAS")
+        print(Fore.YELLOW + Style.BRIGHT + "Os três primeiros dígitos devem ser LETRAS")
         return False
 
     # Verifica se os quatro últimos caracteres são números
