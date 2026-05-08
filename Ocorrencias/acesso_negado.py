@@ -3,6 +3,9 @@ from datetime import datetime
 from Validadores import confirmacao
 import os
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CAMINHO_ARQUIVO = os.path.join(BASE_DIR, "Acesso_Negado.txt")
+
 def ocorrencia_acesso_negado():
     '''
     Cria o log de ocorrencia para acesso negado do mesário, e insere informações nele
@@ -12,12 +15,12 @@ def ocorrencia_acesso_negado():
     Returns: None
     '''
     try:
-        with open("Acesso_Negado.txt", "a", encoding="utf-8") as arq:
+        with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
             agora = datetime.now()
             sem_milisegundos = agora.replace(microsecond=0)
             arq.write(Fore.RED + Style.BRIGHT + f"\n[{sem_milisegundos}] ALERTA: Validação do mesário negado")
     except FileNotFoundError:
-        with open("Acesso_Negado.txt", "a", encoding="utf-8") as arq:
+        with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
             arq.write(Fore.RED + Style.BRIGHT + f"\n[{sem_milisegundos}] ALERTA: Validação do mesário negado")
 
 def imprimir_ocorrencia_acesso_negado():
@@ -29,7 +32,7 @@ def imprimir_ocorrencia_acesso_negado():
     Returns: None
     """
     try:
-        with open("Acesso_Negado.txt", "r", encoding="utf-8") as arq:
+        with open(CAMINHO_ARQUIVO, "r", encoding="utf-8") as arq:
             conteudo = arq.read()
             print(conteudo)
             confirmacao.confirmacao()
@@ -48,5 +51,5 @@ def excluir_ocorrencia_acesso_negado():
 
     Returns: None
     """
-    arquivo = "Acesso_Negado.txt"
+    arquivo = CAMINHO_ARQUIVO
     os.remove(arquivo)
