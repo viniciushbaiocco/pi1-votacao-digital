@@ -2,8 +2,21 @@ import os
 from datetime import datetime
 from colorama import Fore, Style
 from Validadores import confirmacao
+
+# pasta do arquivo atual
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CAMINHO_ARQUIVO = os.path.join(BASE_DIR, "Voto_Computado.txt")
+
+# cria o caminho da pasta Armazenamento
+PASTA_ARMAZENAMENTO = os.path.join(BASE_DIR, "Armazenamento")
+
+# cria a pasta caso ela não exista
+os.makedirs(PASTA_ARMAZENAMENTO, exist_ok=True)
+
+# caminho completo do arquivo
+CAMINHO_ARQUIVO = os.path.join(
+    PASTA_ARMAZENAMENTO,
+    "Voto_Computado.txt"
+)
 
 def voto_computado():
     """
