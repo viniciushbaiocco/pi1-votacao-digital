@@ -19,19 +19,20 @@ def sistema_voto ():
     total_candidatos = cursor.fetchall()
 
     #recolher os dados do eleitor e validar
-    cpf_4 = int(input('\n Digite os 4 primeiros digitos de seu CPF: '))
-    chave_acesso = input('\n Digite sua chave de acesso: ')
-    while val_cpf_vot(cpf_4) == False:
-        cpf_4 = int(input('\n Digite os 4 primeiros digitos de seu CPF novamente: '))
-    while val_chave(chave_acesso) == False:
-        chave_acesso = input('\n Digite sua chave de acesso novamente: ')
+    cpf_4 = input('\n''Digite os 4 primeiros digitos de seu CPF: ')
+    while val_cpf_vot.validar_cpf_voto(cpf_4) == False:
+        cpf_4 = input('\n''Digite os 4 primeiros digitos de seu CPF novamente: ')
+
+    chave_acesso = input('\nDigite sua chave de acesso: ')
+    while val_chave.validar_chave_acesso(chave_acesso) == False:
+        chave_acesso = input('\nDigite sua chave de acesso novamente: ')
 
     #criptografar, encontrar no BD e verificar se ja votou 
     cpf_4 = crip.criptografar_cpf(cpf_4)
     chave_acesso = crip.criptografar_chave_acesso(chave_acesso)
-    ver_votou = ver_eleit_vot(chave_acesso)
+    ver_votou = ver_eleit_vot.verificacao_eleitor_voto(chave_acesso)
         
-    if ver_cpf_vot(cpf_4) == (1,) and ver_chave(chave_acesso) == (1,) and ver_votou == (0,):
+    if ver_cpf_vot.verificar_cpf_voto(cpf_4) == (1,) and ver_chave.verificar_chave_acesso_banco(chave_acesso) == (1,) and ver_votou == (0,):
         #listagem de todos os candidatos do banco de dados para o usuário escolher entre eles
         print('\n --- Listagem de Candidatos ---')
         for candidatos in (total_candidatos):
@@ -43,7 +44,7 @@ def sistema_voto ():
         print(f' Total de Candidatos Cadastrados: {len(total_candidatos)}')
 
         #verificação pro voto 
-        voto = val_voto()
+        voto = val_voto.validacao_voto()
 
         #verificação do número eleitoral no banco de dados
         query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
@@ -51,7 +52,7 @@ def sistema_voto ():
         resultado = cursor.fetchone()
         if resultado == (0,):
             print('Você digitou um candidato inexistente, caso erre novamente o voto será considerado nulo.')
-            voto = val_voto()
+            voto = val_voto.validacao_voto()
         else:
             #listar o candidato para confirmação do voto
             cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
@@ -65,9 +66,11 @@ def sistema_voto ():
             match opcao:
                 case 1:
                     print('Voto Computado!')
-                    voto_computado()
+                    voto_computado.voto_computado()
     else:
         print('\n Erro, eleitor não encontrado ou já votou.')
 
     cursor.close()
     conexao.close()
+
+sistema_voto()
