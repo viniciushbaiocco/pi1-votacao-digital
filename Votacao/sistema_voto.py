@@ -77,6 +77,8 @@ def sistema_voto ():
         else:
             print('\nErro, tentativa de voto duplo.')
             voto_duplo.ocorrencia_voto_duplo()
+    else: 
+        print('Erro ao verificar CPF ou chave de acesso do eleitor.')
 
 
     cursor.close()
