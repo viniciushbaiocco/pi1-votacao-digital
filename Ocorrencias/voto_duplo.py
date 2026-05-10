@@ -71,5 +71,3 @@ def excluir_arquivo_voto_duplo():
     """
     arquivo = CAMINHO_ARQUIVO
     os.remove(arquivo)
-
-ocorrencia_voto_duplo()
