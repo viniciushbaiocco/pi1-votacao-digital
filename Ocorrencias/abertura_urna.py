@@ -66,10 +66,5 @@ def excluir_ocorrencia_abertura_urna():
 
     Returns: None
     """
-    if os.path.exists(CAMINHO_ARQUIVO):
-        os.remove(CAMINHO_ARQUIVO)
-        print(Fore.GREEN + Style.BRIGHT + f"\nArquivos removidos com sucesso!")
-    else:
-        print(Fore.RED + Style.BRIGHT +
-              f"\nNão há arquivos para serem removidos!")
-    confirmacao.confirmacao()
+    arquivo = CAMINHO_ARQUIVO
+    os.remove(arquivo)
