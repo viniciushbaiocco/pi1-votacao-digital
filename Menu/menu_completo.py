@@ -2,7 +2,8 @@ from Menu import sub_menus as sm
 from Validadores import gerenciador_de_entrada as ge
 from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
 from Cadastro import cadastro_eleitores
-from Ocorrencias import acesso_negado, voto_computado, voto_duplo
+from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna
+
 
 def menu_completo():
     """
@@ -112,7 +113,7 @@ def menu_completo():
 
                         match escolha_ocorrencia:
                             case 1:
-                                print("Em desenvolvimento...")
+                                abertura_urna.imprimir_ocorrencia_abertura_urna()
                             case 2:
                                 acesso_negado.imprimir_ocorrencia_acesso_negado()
                             case 3:
