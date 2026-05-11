@@ -67,7 +67,7 @@ def sistema_voto ():
                 print(f' Partido: {candidato['partido']}')
                 print(f' Número Eleitoral: {candidato['numero_votacao']}')
                 print('=' *50)
-                opcao = ge.obter_entrada_inteira_valida('\nCerteza que deseja votar nesse candidato? \n 1 - Sim \n 2 - Não ', 1, 2)
+                opcao = ge.obter_entrada_inteira_valida('\nCerteza que deseja votar nesse candidato? \n1 - Sim \n2 - Não \nDigite uma opção: ', 1, 2)
                 match opcao:
                     case 1:
                         print('Voto Computado!')
@@ -112,7 +112,7 @@ def sistema_voto ():
         #atualizar no BD o eleitor para já votou
         if votou == 1:
             #gerar protocolo e computar voto
-            protocolo = prot_vot.gerar_protocolo_votacao()
+            protocolo = prot_vot.gerar_protocolo_votacao(voto)
             protocolo = crip.criptografar_protocolo(protocolo)
             voto_computado.voto_computado()
 
