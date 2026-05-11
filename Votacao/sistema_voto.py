@@ -55,9 +55,6 @@ def sistema_voto ():
             cursor.execute(query, (voto, ))
             resultado = cursor.fetchone()
 
-            #gerar um protocolo de votação unico
-            protocolo = prot_vot()
-
             if resultado == (0,):
                 print('Você digitou um candidato inexistente, caso erre novamente o voto será considerado nulo.')
             else:
@@ -75,10 +72,6 @@ def sistema_voto ():
                     case 1:
                         print('Voto Computado!')
                         votou = 1
-                        query_voto = 'INSERT INTO votos (id_candidato, data_hora, protocolo_votacao) VALUES (%s, NOW(), %s)'
-                        cursor.execute(query_voto, (id_candidato, protocolo))
-                        conexao.commit()
-                        voto_computado.voto_computado()
                     case 2:
                         print('Encerrando operação...')
             #segunda tentativa de votação
@@ -92,17 +85,13 @@ def sistema_voto ():
                 if resultado == (0,):
                     print('Você digitou um candidato inexistente novamente, o voto será considerado nulo.')
                     votou = 1
-                    query_voto = 'INSERT INTO votos (id_candidato, data_hora, protocolo_votacao) VALUES (%s, NOW(), %s)'
-                    cursor.execute(query_voto, (0, protocolo))
-                    conexao.commit()
-                    voto_computado.voto_computado()
 
                 #se a segunda tentativa for sucesso
                 else:
                     #listar o candidato para confirmação do voto
                     cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                     candidato = cursor.fetchone()
-                    id_candidato = candidato['id']
+                    
                     print('=' * 50)
                     print(f' Nome: {candidato['nome']}')
                     print(f' Partido: {candidato['partido']}')
@@ -113,10 +102,6 @@ def sistema_voto ():
                         case 1:
                             print('Voto Computado!')
                             votou = 1
-                            query_voto = 'INSERT INTO votos (id_candidato, data_hora, protocolo_votacao) VALUES (%s, NOW(), %s)'
-                            cursor.execute(query_voto, (id_candidato, protocolo))
-                            conexao.commit()
-                            voto_computado.voto_computado()
                         case 2:
                             print('Encerrando operação...')
         #encerrar processo caso eleitor ja tenha votado    
@@ -126,8 +111,20 @@ def sistema_voto ():
         
         #atualizar no BD o eleitor para já votou
         if votou == 1:
+            #gerar protocolo e computar voto
+            protocolo = prot_vot.gerar_protocolo_votacao()
+            protocolo = crip.criptografar_protocolo(protocolo)
+            voto_computado.voto_computado()
+
+            #inserir o voto no BD
+            query_voto = 'INSERT INTO votos (id_candidato, data_hora, protocolo_votacao) VALUES (%s, NOW(), %s)'
+            cursor.execute(query_voto, (id_candidato, protocolo))
+
+            #atualizar o BD
             query = 'UPDATE eleitores SET status_votacao = %s WHERE chave_acesso = %s'
             cursor.execute(query, (votou), (chave_acesso, ))
+
+            conexao.commit()
     else: 
         print('Erro ao verificar CPF ou chave de acesso do eleitor.')
 
