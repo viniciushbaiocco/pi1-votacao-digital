@@ -54,7 +54,6 @@ def sistema_voto ():
             query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
             cursor.execute(query, (voto, ))
             resultado = cursor.fetchone()
-            id_candidato = cursor.fetchone()['id']
 
             #gerar um protocolo de votação unico
             protocolo = prot_vot()
@@ -65,6 +64,7 @@ def sistema_voto ():
                 #listar o candidato para confirmação do voto
                 cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                 candidato = cursor.fetchone()
+                id_candidato = candidato['id']
                 print('=' * 50)
                 print(f' Nome: {candidato['nome']}')
                 print(f' Partido: {candidato['partido']}')
@@ -102,6 +102,7 @@ def sistema_voto ():
                     #listar o candidato para confirmação do voto
                     cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                     candidato = cursor.fetchone()
+                    id_candidato = candidato['id']
                     print('=' * 50)
                     print(f' Nome: {candidato['nome']}')
                     print(f' Partido: {candidato['partido']}')
