@@ -9,6 +9,7 @@ from Verificadores import verificacao_eleitor_voto as ver_eleit_vot
 from Verificadores import verificacao_chave_acesso_banco as ver_chave
 from Validadores import validacao_cpf_votacao as val_cpf_vot, validacao_chave_acesso as val_chave
 from Votacao import protoco_votacao as prot_vot
+from datetime import datetime
 
 def sistema_voto ():
     print('--- Eleição 2026 ---')
@@ -32,6 +33,7 @@ def sistema_voto ():
     cpf_4 = crip.criptografar_cpf(cpf_4)
     chave_acesso = crip.criptografar_chave_acesso(chave_acesso)
     ver_votou = ver_eleit_vot.verificacao_eleitor_voto(chave_acesso)
+    votou = 0
         
     if ver_cpf_vot.verificar_cpf_voto(cpf_4) == (1,) and ver_chave.verificar_chave_acesso_banco(chave_acesso) == (1,):
         #iniciar processo de votação apenas se o eleitor não votou
@@ -48,8 +50,7 @@ def sistema_voto ():
 
             #verificação pro voto e variavel para atualizar o eleitor depois de votar
             voto = val_voto.validacao_voto()
-            votou = 0
-
+            
             #verificação do número eleitoral no banco de dados e pegar o id
             query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
             cursor.execute(query, (voto, ))
@@ -115,14 +116,16 @@ def sistema_voto ():
             protocolo = prot_vot.gerar_protocolo_votacao(voto)
             protocolo = crip.criptografar_protocolo(protocolo)
             voto_computado.voto_computado()
+            data_hora = datetime.now()
+            sem_milissegundos = data_hora.replace(microsecond = 0)
 
             #inserir o voto no BD
-            query_voto = 'INSERT INTO votos (id_candidato, data_hora, protocolo_votacao) VALUES (%s, NOW(), %s)'
-            cursor.execute(query_voto, (id_candidato, protocolo))
+            query_voto = 'INSERT INTO votos (id_candidato, data_hora, protocolo_votacao) VALUES (%s, %s, %s)'
+            cursor.execute(query_voto, (id_candidato, sem_milissegundos, protocolo))
 
             #atualizar o BD
             query = 'UPDATE eleitores SET status_votacao = %s WHERE chave_acesso = %s'
-            cursor.execute(query, (votou), (chave_acesso, ))
+            cursor.execute(query, (votou, chave_acesso))
 
             conexao.commit()
     else: 
@@ -134,3 +137,4 @@ def sistema_voto ():
 
 #NEXT STEPS
 #otimizar essa logica de programação lixosa q eu tive
+#ARRRUMAR LINHA 53
