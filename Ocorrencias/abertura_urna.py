@@ -15,26 +15,27 @@ os.makedirs(PASTA_ARMAZENAMENTO, exist_ok=True)
 # caminho completo do arquivo
 CAMINHO_ARQUIVO = os.path.join(
     PASTA_ARMAZENAMENTO,
-    "Acesso_Negado.txt"
+    "Abertura_Urna.txt"
 )
 
 
-def ocorrencia_acesso_negado():
+def ocorrencia_abertura_urna():
     '''
-    Cria o log de ocorrencia para acesso negado do mesário, e insere informações nele
+    Cria o log de ocorrencia para abertura de urna após Zerézima, e insere informações nele
 
     Args: None
 
     Returns: None
     '''
+
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.RED + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] ALERTA: Validação do mesário negado")
+                  f"\n[{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
-def imprimir_ocorrencia_acesso_negado():
+def imprimir_ocorrencia_abertura_urna():
     """
     Imprime o log de ocorrencia no terminal
 
@@ -49,17 +50,17 @@ def imprimir_ocorrencia_acesso_negado():
             confirmacao.confirmacao()
     except FileNotFoundError:
         print(Fore.YELLOW + Style.BRIGHT +
-              "\nNenhum Log de Acesso Negado Registrado")
+              "\nNenhum Log de Abertura de Urna Registrado")
         confirmacao.confirmacao()
     except Exception as e:
         print(Fore.RED + Style.BRIGHT +
-              f"\nErro ao ler o log de Acesso Negado {e}")
+              f"\nErro ao ler o log de Abertura de Urna {e}")
         confirmacao.confirmacao()
 
 
-def excluir_ocorrencia_acesso_negado():
+def excluir_ocorrencia_abertura_urna():
     """
-    Exclui o log de ocorrencia de acesso negado
+    Exclui o log de ocorrencia de abertura de urna
 
     Args: None
 
