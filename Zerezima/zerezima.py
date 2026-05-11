@@ -56,6 +56,3 @@ def zerezima():
 
     cursor.close()
     conexao.close()
-
-
-zerezima()
