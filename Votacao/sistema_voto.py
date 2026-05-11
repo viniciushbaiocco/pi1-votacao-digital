@@ -46,8 +46,9 @@ def sistema_voto ():
             print('=' *50)
             print(f' Total de Candidatos Cadastrados: {len(total_candidatos)}')
 
-            #verificação pro voto 
+            #verificação pro voto e variavel para atualizar o eleitor depois de votar
             voto = val_voto.validacao_voto()
+            votou = 0
 
             #verificação do número eleitoral no banco de dados
             query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
@@ -68,6 +69,7 @@ def sistema_voto ():
                 match opcao:
                     case 1:
                         print('Voto Computado!')
+                        votou = 1
                         voto_computado.voto_computado()
                     case 2:
                         print('Encerrando operação...')
@@ -77,12 +79,15 @@ def sistema_voto ():
                 query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
                 cursor.execute(query, (voto, ))
                 resultado = cursor.fetchone()
-                #segunda tentativa falha, voto será nulo
+
+                #se a segunda tentativa foi falha, voto será nulo
                 if resultado == (0,):
                     print('Você digitou um candidato inexistente novamente, o voto será considerado nulo.')
-                    #adicionar futuramente o voto nulo
+                    votou = 1
+                    voto = 0
                     voto_computado.voto_computado()
-                #segunda tentativa sucesso
+
+                #se a segunda tentativa for sucesso
                 else:
                     #listar o candidato para confirmação do voto
                     cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
@@ -96,6 +101,7 @@ def sistema_voto ():
                     match opcao:
                         case 1:
                             print('Voto Computado!')
+                            votou = 1
                             voto_computado.voto_computado()
                         case 2:
                             print('Encerrando operação...')
@@ -103,6 +109,11 @@ def sistema_voto ():
         else:
             print('\nErro, tentativa de voto duplo.')
             voto_duplo.ocorrencia_voto_duplo()
+        
+        #atualizar no BD o eleitor para já votou
+        if votou == 1:
+            query = 'UPDATE eleitores SET status_votacao = %s WHERE chave_acesso = %s'
+            cursor.execute(query, (votou), (chave_acesso, ))
     else: 
         print('Erro ao verificar CPF ou chave de acesso do eleitor.')
 
@@ -111,7 +122,4 @@ def sistema_voto ():
     conexao.close()
 
 #NEXT STEPS
-#ver como irei fazer para computar o voto nulo (suposição: considerar a variavel voto = 0 - provavel numero do candidato nulo na tabela)
-#ver se preciso usar a função de acesso negado
-#implementar mais coisa quando o restante do grupo acabar a parte deles
 #otimizar essa logica de programação lixosa q eu tive
