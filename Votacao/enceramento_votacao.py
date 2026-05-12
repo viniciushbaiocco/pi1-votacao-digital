@@ -1,5 +1,5 @@
 from Verificadores import verificacao_chave_acesso_banco
-from Validadores import validacao_chave_acesso
+from Validadores import validacao_chave_acesso, confirmacao
 from database import conexao_banco
 from Votacao import autenticacao_mesario
 from criptografia import criptografia as cripto
@@ -17,13 +17,10 @@ def encerrar_sistema_votacao():
         bool: True se o encerramento for realizado com sucesso, False caso contrário.
     """
     if autenticacao_mesario.autenticar_mesario() == False:
+        confirmacao.confirmacao()
         return False
 
     conexao = conexao_banco.conexao_banco() #mudei o import pq o nome tava diferente
-
-    if conexao == False:
-        print("Erro ao conectar ao banco de dados.")
-        return False
 
     try:
         cursor = conexao.cursor()
@@ -32,23 +29,28 @@ def encerrar_sistema_votacao():
 
         if resposta.lower() != "sim":
             print("Encerramento cancelado.") #mudei a msg aqui
+            confirmacao.confirmacao()
             return False
 
         confirmacao_chave = input("Confirme sua chave de acesso pessoal: ")
 
         if validacao_chave_acesso.validar_chave_acesso(confirmacao_chave) == False:
             print("Encerramento cancelado.")
+            confirmacao.confirmacao()
             return False
 
         confirmacao_chave_criptografada = cripto.criptografar_chave_acesso(confirmacao_chave)
 
         if verificacao_chave_acesso_banco.verificar_chave_acesso_banco(confirmacao_chave_criptografada) == (0,):
             print("Chave de acesso não confere. Encerramento cancelado.")
+            confirmacao.confirmacao()
             return False
 
         print("Sistema de votação encerrado.")
 
         encerramento_urna.ocorrencia_encerramento_urna()
+
+        confirmacao.confirmacao()
 
         return True
 

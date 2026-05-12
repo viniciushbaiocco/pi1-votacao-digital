@@ -31,7 +31,7 @@ def zerezima():
     print(Fore.YELLOW + Style.BRIGHT +
           "\nAtualizando status de votação de eleitores para 'Não'...")
 
-    print(Fore.WHITE + Style.BRIGHT + "\nZerézima finalizada!")
+    print(Fore.GREEN + Style.BRIGHT + "\nZerézima finalizada!")
 
     # exibir lista de eleitores
     comando3 = ("SELECT candidatos.nome, candidatos.sigla_partido, COUNT(votos.id) AS total_votos FROM candidatos LEFT JOIN votos ON candidatos.id = votos.id_candidato GROUP BY candidatos.id;")
@@ -50,6 +50,8 @@ def zerezima():
               f"{nome:<20} | {partido:<10} | {votos:<5}")
 
     print(Fore.WHITE + Style.BRIGHT + "="*50)
+
+    input(Fore.WHITE + Style.BRIGHT + "Pressione Enter para continuar...")
 
     cursor.close()
     conexao.close()
