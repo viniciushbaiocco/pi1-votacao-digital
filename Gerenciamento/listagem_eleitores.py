@@ -1,8 +1,6 @@
 from database import conexao_banco as conect
 from Validadores import confirmacao
-from colorama import Fore, Style, init
-
-init(autoreset=True)
+from colorama import Fore, Style
 
 def listagem_eleitores ():
 

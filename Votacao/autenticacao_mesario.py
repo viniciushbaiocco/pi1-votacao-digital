@@ -1,12 +1,10 @@
-from colorama import Fore, Style, init
+from colorama import Fore, Style
 from Validadores import validacao_titulo as val_tit
 from Validadores import validacao_cpf_votacao as val_cpf_vot
 from Validadores import validacao_chave_acesso as val_chave
 from Verificadores import verificacao_mesario_banco as ver_mes
 from Ocorrencias import acesso_negado
 from criptografia import criptografia as crip
-
-init(autoreset=True)
 
 def autenticar_mesario():
     """

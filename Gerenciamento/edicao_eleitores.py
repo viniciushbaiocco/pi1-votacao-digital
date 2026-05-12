@@ -5,9 +5,7 @@ from Verificadores import verificacao_titulo_banco as ver_tit
 from Cadastro import chave_acesso as chave
 from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf as val_cpf, validacao_nome as val_nome, \
     validacao_titulo as val_tit
-from colorama import Fore, Style, init
-
-init(autoreset=True)
+from colorama import Fore, Style
 
 def edicao_eleitores():
     

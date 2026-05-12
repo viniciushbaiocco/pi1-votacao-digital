@@ -1,8 +1,5 @@
 from database import conexao_banco as cb
-from colorama import Fore, Style, init
-
-init(autoreset=True)
-
+from colorama import Fore, Style
 
 def zerezima():
     """Função de zerezima para zerar todos os votos registados na tabela de votos.

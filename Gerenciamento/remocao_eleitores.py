@@ -1,9 +1,7 @@
 from database import conexao_banco as conect
 from Validadores import confirmacao as conf, gerenciador_de_entrada as ge, validacao_cpf as val_cpf
 from criptografia import criptografia as crip
-from colorama import Fore, Style, init
-
-init(autoreset=True)
+from colorama import Fore, Style
 
 def remocao_eleitores():
     """

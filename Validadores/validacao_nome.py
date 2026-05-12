@@ -1,6 +1,4 @@
-from colorama import Fore,Style, init
-
-init(autoreset=True)
+from colorama import Fore,Style
 
 def validar_nome():
     """

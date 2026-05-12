@@ -6,9 +6,7 @@ import Verificadores.verificacao_cpf_banco as ver_cpf
 import Verificadores.verificacao_titulo_banco as ver_titulo
 import criptografia.criptografia as cripto
 from Validadores import confirmacao
-from colorama import Fore, Style, init
-
-init(autoreset=True)
+from colorama import Fore, Style
 
 def busca_eleitor():
 

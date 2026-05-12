@@ -3,7 +3,7 @@ import os
 if not os.environ.get('TERM'):
     os.environ['TERM'] = 'xterm-256color'
 
-from colorama import Fore, Style, init
+from colorama import Fore, Style
 
 ##PARA QUEM QUISER EDITAR: 
 ##os comandos FORE mudam cor do texto(foreground)
@@ -12,9 +12,6 @@ from colorama import Fore, Style, init
 ##ESTRUTURA DE ESTILO DO TEXTO: Style.estilo 
 ##Backgrounds (nao usei ainda): segue a estrutura de cor de texto: Back.Cor (mesmas cores disponiveis)
 #pra vcs descobrirem as opçoes, digita a variavel Fore ou Style, e da um . (o "auto complete" mostra as opcoes)
-
-init(autoreset=True) #cada print reseta o estilo formatado pelo anterior
-
 
 largura = 36
 banner = "LAD.Py | Sistema de Votação Digital"

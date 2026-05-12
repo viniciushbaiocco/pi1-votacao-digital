@@ -4,9 +4,7 @@ from Validadores import confirmacao, validacao_cpf, validacao_nome, validacao_ti
 from database import conexao_banco
 from criptografia import criptografia as cripto
 from Cadastro import chave_acesso
-from colorama import Fore, Style, init
-
-init(autoreset=True)
+from colorama import Fore, Style
 
 def cadastrar_eleitor():
     """
