@@ -27,8 +27,9 @@ def encerrar_sistema_votacao():
         cursor = conexao.cursor()
 
         resposta = input(Fore.WHITE + Style.BRIGHT + "Deseja realmente encerrar a votação? (Sim/Não): ")
+        resposta_sem_espaco = resposta.replace(" ", "")
 
-        if resposta.lower() != "sim":
+        if resposta_sem_espaco.lower() != "sim":
             print(Fore.YELLOW + Style.BRIGHT + "Encerramento cancelado.") #mudei a msg aqui
             confirmacao.confirmacao()
             return False
