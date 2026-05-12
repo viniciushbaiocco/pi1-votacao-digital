@@ -3,7 +3,8 @@ from Validadores import gerenciador_de_entrada as ge
 from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
 from Cadastro import cadastro_eleitores
 from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna
-from Votacao import abertura_votacao
+from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
+
 
 
 def menu_completo():
@@ -80,15 +81,15 @@ def menu_completo():
                     executando_menu_sistema_votacao = 1
                     while executando_menu_sistema_votacao == 1:
                         sm.exibir_menu_sistema_votacao()
-                        escolha_sistema_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
+                        escolha_sistema_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
 
                         match escolha_sistema_votacao:
                             case 1:
-                                print("Em desenvolvimento...")
+                                sistema_voto.sistema_voto()
                             case 2:
-                                print("Em desenvolvimento...")
-                            case 3:
-                                executando_menu_sistema_votacao = 0 # Voltar
+                                if enceramento_votacao.encerrar_sistema_votacao():
+                                    executando_menu_sistema_votacao = 0
+
                 elif escolha_votacao == 2:  # Resultados Da Votação
                     executando_menu_resultados_votacao = 1
                     while executando_menu_resultados_votacao == 1:

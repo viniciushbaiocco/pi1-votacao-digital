@@ -191,7 +191,6 @@ def exibir_menu_sistema_votacao():
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Votar")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Encerrar Sistema De Votação")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[3]  Voltar")
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
 
