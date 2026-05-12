@@ -51,7 +51,7 @@ def zerezima():
 
     print(Fore.WHITE + Style.BRIGHT + "="*50)
 
-    input(Fore.WHITE + Style.BRIGHT + "Pressione Enter para continuar...")
+    input(Fore.WHITE + Style.BRIGHT + "\nPressione Enter para continuar...")
 
     cursor.close()
     conexao.close()

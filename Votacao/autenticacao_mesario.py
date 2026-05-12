@@ -2,6 +2,7 @@ from colorama import Fore, Style
 from Validadores import validacao_titulo as val_tit
 from Validadores import validacao_cpf_votacao as val_cpf_vot
 from Validadores import validacao_chave_acesso as val_chave
+from Validadores import confirmacao
 from Verificadores import verificacao_mesario_banco as ver_mes
 from Ocorrencias import acesso_negado
 from criptografia import criptografia as crip
@@ -42,8 +43,10 @@ def autenticar_mesario():
 
     if resultado == (1,):
         print(Fore.GREEN + Style.BRIGHT + '\nMesário validado com sucesso!')
+        input(Fore.WHITE + Style.BRIGHT + "\nPressione Enter para continuar...")
         return True
     else:
         print(Fore.RED + Style.BRIGHT + '\nDados inválidos. Acesso negado.')
+        confirmacao.confirmacao()
         acesso_negado.ocorrencia_acesso_negado()
         return False

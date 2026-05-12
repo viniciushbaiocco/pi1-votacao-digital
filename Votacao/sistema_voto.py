@@ -13,7 +13,7 @@ from colorama import Fore, Style
 
 
 def sistema_voto():
-    print(Fore.CYAN + Style.BRIGHT + '--- Eleição 2026 ---')
+    print(Fore.CYAN + Style.BRIGHT + '\n--- Eleição 2026 ---')
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
@@ -73,11 +73,11 @@ def sistema_voto():
                     '\nCerteza que deseja votar nesse candidato? \n1 - Sim \n2 - Não \nDigite uma opção: ', 1, 2)
                 match opcao:
                     case 1:
-                        print(Fore.GREEN + Style.BRIGHT + 'Voto Computado!')
+                        print(Fore.GREEN + Style.BRIGHT + '\nVoto Computado!')
                         votou = 1
                         confirmacao.confirmacao()
                     case 2:
-                        print(Fore.YELLOW + Style.BRIGHT + 'Encerrando operação...')
+                        print(Fore.YELLOW + Style.BRIGHT + '\nEncerrando operação...')
                         confirmacao.confirmacao()
             # segunda tentativa de votação
             if resultado == {'COUNT(*)': 0}:
@@ -110,11 +110,11 @@ def sistema_voto():
                         '\nCerteza que deseja votar nesse candidato? \n 1 - Sim \n 2 - Não \nDigite uma opção: ', 1, 2)
                     match opcao:
                         case 1:
-                            print(Fore.GREEN + Style.BRIGHT + 'Voto Computado!')
+                            print(Fore.GREEN + Style.BRIGHT + '\nVoto Computado!')
                             votou = 1
                             confirmacao.confirmacao()
                         case 2:
-                            print(Fore.YELLOW + Style.BRIGHT + 'Encerrando operação...')
+                            print(Fore.YELLOW + Style.BRIGHT + '\nEncerrando operação...')
                             confirmacao.confirmacao()
         # encerrar processo caso eleitor ja tenha votado
         else:

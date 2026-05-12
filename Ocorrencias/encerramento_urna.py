@@ -43,7 +43,7 @@ def ocorrencia_encerramento_urna():
 
         sem_milisegundos = agora.replace(microsecond=0)
 
-        arq.write(Fore.RED + Style.BRIGHT +
+        arq.write(Fore.GREEN + Style.BRIGHT +
 
                   f"\n[{sem_milisegundos}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
 
