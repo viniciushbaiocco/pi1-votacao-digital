@@ -1,0 +1,66 @@
+from Verificadores import verificacao_chave_acesso_banco
+from Validadores import validacao_chave_acesso
+from database import conexao_banco
+from Votacao import autenticacao_mesario
+from criptografia import criptografia as cripto
+from Ocorrencias import encerramento_urna
+
+
+def encerrar_sistema_votacao():
+    """
+    Realiza o encerramento oficial do sistema de votação.
+
+    Args:
+        Nenhum.
+
+    Returns:
+        bool: True se o encerramento for realizado com sucesso, False caso contrário.
+    """
+    if autenticacao_mesario.autenticar_mesario() == False:
+        return False
+
+    conexao = conexao_banco.conexao_banco() #mudei o import pq o nome tava diferente
+
+    if conexao == False:
+        print("Erro ao conectar ao banco de dados.")
+        return False
+
+    try:
+        cursor = conexao.cursor()
+
+        resposta = input("Deseja realmente encerrar a votação? (Sim/Não): ")
+
+        if resposta.lower() != "sim":
+            print("Encerramento cancelado.") #mudei a msg aqui
+            return False
+
+        confirmacao_chave = input("Confirme sua chave de acesso pessoal: ")
+
+        if validacao_chave_acesso.validar_chave_acesso(confirmacao_chave) == False:
+            print("Encerramento cancelado.")
+            return False
+
+        confirmacao_chave_criptografada = cripto.criptografar_chave_acesso(confirmacao_chave)
+
+        if verificacao_chave_acesso_banco.verificar_chave_acesso_banco(confirmacao_chave_criptografada) == (0,):
+            print("Chave de acesso não confere. Encerramento cancelado.")
+            return False
+
+        print("Sistema de votação encerrado.")
+
+        encerramento_urna.ocorrencia_encerramento_urna()
+
+        return True
+
+    except:
+        print("Erro ao registrar encerramento.")
+        if conexao:
+            conexao.rollback()
+        return False
+
+    finally:
+        if conexao:
+            cursor.close()
+            conexao.close()
+
+encerrar_sistema_votacao()
