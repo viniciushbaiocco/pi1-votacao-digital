@@ -31,7 +31,7 @@ def ocorrencia_abertura_urna():
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(Fore.RED + Style.BRIGHT +
+        arq.write(Fore.GREEN + Style.BRIGHT +
                   f"\n[{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
