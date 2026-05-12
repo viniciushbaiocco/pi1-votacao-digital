@@ -131,4 +131,9 @@ def menu_completo():
 
         elif escolha_principal == 3:  # Sair
             print("Sistema Finalizado")
+            acesso_negado.excluir_ocorrencia_acesso_negado()
+            abertura_urna.excluir_ocorrencia_abertura_urna()
+            encerramento_urna.excluir_ocorrencia_encerramento_urna()
+            voto_computado.excluir_arquivo_voto_computado()
+            voto_duplo.excluir_arquivo_voto_duplo()
             executando_menu_principal = 0

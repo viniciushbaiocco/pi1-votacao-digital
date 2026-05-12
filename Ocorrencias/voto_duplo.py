@@ -73,4 +73,5 @@ def excluir_arquivo_voto_duplo():
             None
     """
     arquivo = CAMINHO_ARQUIVO
-    os.remove(arquivo)
+    if os.path.exists(arquivo):
+        os.remove(arquivo)

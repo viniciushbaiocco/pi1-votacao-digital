@@ -66,4 +66,5 @@ def excluir_ocorrencia_acesso_negado():
     Returns: None
     """
     arquivo = CAMINHO_ARQUIVO
-    os.remove(arquivo)
+    if os.path.exists(arquivo):
+        os.remove(arquivo)
