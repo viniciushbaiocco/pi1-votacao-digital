@@ -4,6 +4,7 @@ from database import conexao_banco
 from Votacao import autenticacao_mesario
 from criptografia import criptografia as cripto
 from Ocorrencias import encerramento_urna
+from colorama import Fore, Style
 
 
 def encerrar_sistema_votacao():
@@ -25,28 +26,28 @@ def encerrar_sistema_votacao():
     try:
         cursor = conexao.cursor()
 
-        resposta = input("Deseja realmente encerrar a votação? (Sim/Não): ")
+        resposta = input(Fore.WHITE + Style.BRIGHT + "Deseja realmente encerrar a votação? (Sim/Não): ")
 
         if resposta.lower() != "sim":
-            print("Encerramento cancelado.") #mudei a msg aqui
+            print(Fore.YELLOW + Style.BRIGHT + "Encerramento cancelado.") #mudei a msg aqui
             confirmacao.confirmacao()
             return False
 
-        confirmacao_chave = input("Confirme sua chave de acesso pessoal: ")
+        confirmacao_chave = input(Fore.WHITE + Style.BRIGHT + "Confirme sua chave de acesso pessoal: ")
 
         if validacao_chave_acesso.validar_chave_acesso(confirmacao_chave) == False:
-            print("Encerramento cancelado.")
+            print(Fore.YELLOW + Style.BRIGHT + "Encerramento cancelado.")
             confirmacao.confirmacao()
             return False
 
         confirmacao_chave_criptografada = cripto.criptografar_chave_acesso(confirmacao_chave)
 
         if verificacao_chave_acesso_banco.verificar_chave_acesso_banco(confirmacao_chave_criptografada) == (0,):
-            print("Chave de acesso não confere. Encerramento cancelado.")
+            print(Fore.YELLOW + Style.BRIGHT + "Chave de acesso não confere. Encerramento cancelado.")
             confirmacao.confirmacao()
             return False
 
-        print("Sistema de votação encerrado.")
+        print(Fore.GREEN + Style.BRIGHT + "Sistema de votação encerrado.")
 
         encerramento_urna.ocorrencia_encerramento_urna()
 
@@ -55,7 +56,7 @@ def encerrar_sistema_votacao():
         return True
 
     except:
-        print("Erro ao registrar encerramento.")
+        print(Fore.RED+ Style.BRIGHT + "Erro ao registrar encerramento.")
         if conexao:
             conexao.rollback()
         return False

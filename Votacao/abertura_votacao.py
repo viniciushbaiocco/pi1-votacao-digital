@@ -1,6 +1,6 @@
 from Zerezima import zerezima
 from Votacao import autenticacao_mesario
-
+from colorama import Fore, Style
 
 def abrir_sistema_votacao():
     """
@@ -16,8 +16,8 @@ def abrir_sistema_votacao():
     autenticado = autenticacao_mesario.autenticar_mesario()
 
     if not autenticado:
-        print("\n  [ERRO] Validação falhou.")
-        print("Confirme se o eleitor possui perfil de mesário")
+        print(Fore.RED + Style.BRIGHT + "\n  [ERRO] Validação falhou.")
+        print(Fore.YELLOW + Style.BRIGHT + "Confirme se o eleitor possui perfil de mesário")
         return False
 
     zerezima.zerezima()
