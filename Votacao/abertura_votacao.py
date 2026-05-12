@@ -1,6 +1,7 @@
 from Zerezima import zerezima
 from Votacao import autenticacao_mesario
 from colorama import Fore, Style
+from Ocorrencias import abertura_urna
 
 def abrir_sistema_votacao():
     """
@@ -21,4 +22,5 @@ def abrir_sistema_votacao():
         return False
 
     zerezima.zerezima()
+    abertura_urna.ocorrencia_abertura_urna()
     return True
