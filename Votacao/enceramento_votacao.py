@@ -62,5 +62,3 @@ def encerrar_sistema_votacao():
         if conexao:
             cursor.close()
             conexao.close()
-
-encerrar_sistema_votacao()
