@@ -97,7 +97,7 @@ def edicao_eleitores():
             novo_mesario = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT +
                                                     '\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ',1, 2)
 
-            novo_cpf_descriptografado =  novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
+            novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
 
             #criar nova chave de acesso
             chave_acesso = chave.geracao_chave_acesso(novo_nome)
