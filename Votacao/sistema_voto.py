@@ -86,6 +86,7 @@ def sistema_voto ():
                 if resultado == (0,):
                     print('Você digitou um candidato inexistente novamente, o voto será considerado nulo.')
                     votou = 1
+                    voto = 0
 
                 #se a segunda tentativa for sucesso
                 else:
@@ -137,4 +138,4 @@ def sistema_voto ():
 
 #NEXT STEPS
 #otimizar essa logica de programação lixosa q eu tive
-#ARRRUMAR LINHA 53
+#ARRRUMAR LINHA 54
