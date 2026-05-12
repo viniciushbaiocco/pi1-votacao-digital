@@ -43,7 +43,7 @@ def autenticar_mesario():
     resultado = ver_mes.verificar_mesario(titulo, cpf_4_criptografado, chave_acesso_criptografada)
 
     if resultado == (1,):
-        print(Fore.GREEN + Style.BRIGHT + '\nMesário validado com sucesso! Sistema de votação aberto.')
+        print(Fore.GREEN + Style.BRIGHT + '\nMesário validado com sucesso!')
         return True
     else:
         print(Fore.RED + Style.BRIGHT + '\nDados inválidos. Acesso negado.')
