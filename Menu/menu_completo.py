@@ -81,7 +81,8 @@ def menu_completo():
                 escolha_votacao = ge.obter_entrada_inteira_valida(
                     "Escolha uma opção: ", 1, 4)
 
-                if escolha_votacao == 1 and abertura_votacao.abrir_sistema_votacao():  # Abrir Sistema De Votação
+                id_sessao = geral.gerar_novo_id_sessao()
+                if escolha_votacao == 1 and abertura_votacao.abrir_sistema_votacao(id_sessao):  # Abrir Sistema De Votação
                     executando_menu_sistema_votacao = 1
                     while executando_menu_sistema_votacao == 1:
                         sm.exibir_menu_sistema_votacao()
@@ -90,9 +91,9 @@ def menu_completo():
 
                         match escolha_sistema_votacao:
                             case 1:
-                                sistema_voto.sistema_voto()
+                                sistema_voto.sistema_voto(id_sessao)
                             case 2:
-                                if enceramento_votacao.encerrar_sistema_votacao():
+                                if enceramento_votacao.encerrar_sistema_votacao(id_sessao):
                                     executando_menu_sistema_votacao = 0
 
                 elif escolha_votacao == 2:  # Resultados Da Votação

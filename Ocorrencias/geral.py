@@ -18,22 +18,24 @@ CAMINHO_ARQUIVO = os.path.join(
     "Geral.txt"
 )
 
-def ocorrencia_abertura_urna():
+def gerar_novo_id_sessao() -> str:
+    """Gera um novo ID de sessão único baseado em timestamp e PID."""
+    return f"{datetime.now().strftime('%Y%m%d%H%M%S%f')}-{os.getpid()}"
+
+def ocorrencia_abertura_urna(sessao_id):
     '''
     Cria o log de ocorrencia para abertura de urna após Zerézima, e insere informações nele
 
-    Args: None
+    Args:
+        sessao_id (str): O ID único da sessão de urna atual.
 
     Returns: None
     '''
-
-    session_id = f"{datetime.now().strftime('%Y%m%d%H%M%S%f')}-{os.getpid()}" # Gera um ID único baseado em timestamp e PID
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] [SESSAO: {session_id}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
-    return session_id # Retorna o ID da sessão para ser usado em outros logs
+                  f"\n[{sem_milisegundos}] [SESSAO: {sessao_id}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 def ocorrencia_acesso_negado(sessao_id):
     '''
@@ -69,7 +71,7 @@ def ocorrencia_encerramento_urna(sessao_id):
         arq.write(Fore.GREEN + Style.BRIGHT +
                   f"\n[{sem_milisegundos}] [SESSAO: {sessao_id}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
 
-def ocorrecia_voto_computado(sessao_id):
+def ocorrencia_voto_computado(sessao_id):
     """
         Cria o arquivo que armazena os logs de voto computado e insere os logs nele.
 
@@ -116,11 +118,10 @@ def imprimir_ocorrencias_gerais():
     """
     try:
         with open(CAMINHO_ARQUIVO, "r", encoding="utf-8") as arq:
-            # Exemplo de como você poderia ler e agrupar por sessão (requer mais lógica)
             logs_por_sessao = {}
             for linha in arq:
                 if "[SESSAO:" in linha:
-                    # Extrai o ID da sessão (exemplo simplificado)
+                    # Extrai o ID da sessão
                     start = linha.find("[SESSAO:") + len("[SESSAO:")
                     end = linha.find("]", start)
                     session_id = linha[start:end].strip()
@@ -148,7 +149,7 @@ def imprimir_ocorrencias_gerais():
               f"\nErro ao ler o log de Ocorrência {e}")
         confirmacao.confirmacao()
 
-def excluir_arquivo_ocorrências_gerais():
+def excluir_arquivo_ocorrencias_gerais():
     """
         Exclui o arquivo de voto duplo caso houver.
 

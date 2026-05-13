@@ -4,16 +4,16 @@ from Validadores import validacao_cpf_votacao as val_cpf_vot
 from Validadores import validacao_chave_acesso as val_chave
 from Validadores import confirmacao
 from Verificadores import verificacao_mesario_banco as ver_mes
-from Ocorrencias import acesso_negado
+from Ocorrencias import acesso_negado, geral
 from criptografia import criptografia as crip
 
-def autenticar_mesario():
+def autenticar_mesario(id_sessao: str):
     """
     Solicita e valida os dados do mesário para abertura da votação:
     título de eleitor, 4 primeiros dígitos do CPF e chave de acesso.
 
     Args:
-        None
+        id_sessao (str): O ID único da sessão de urna atual (ou tentativa de sessão).
 
     Returns:
         bool: True se o mesário for validado com sucesso, False caso contrário.
@@ -48,5 +48,6 @@ def autenticar_mesario():
     else:
         print(Fore.RED + Style.BRIGHT + '\nDados inválidos. Acesso negado.')
         confirmacao.confirmacao()
-        acesso_negado.ocorrencia_acesso_negado()
+        geral.ocorrencia_acesso_negado(id_sessao)
+        acesso_negado.ocorrencia_acesso_negado(id_sessao)  # Passa o ID da sessão
         return False
