@@ -191,5 +191,3 @@ def sistema_voto():
 
 # NEXT STEPS
 # otimizar o codigo
-
-sistema_voto()
