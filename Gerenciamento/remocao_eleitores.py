@@ -1,5 +1,5 @@
 from database import conexao_banco as conect
-from Validadores import confirmacao as conf, gerenciador_de_entrada as ge, validacao_cpf as val_cpf
+from Validadores import confirmacao as conf, gerenciador_de_entrada as ge, validacao_cpf as val_cpf, validacao_titulo as val_tit
 from criptografia import criptografia as crip
 from colorama import Fore, Style
 
@@ -53,10 +53,10 @@ def remocao_eleitores():
                     print(Fore.YELLOW + Style.BRIGHT + "\nPor favor, refaça sua busca!")
 
             case 2:
-                #valida o tamanho do título de eleitor digitado
+                #valida o título de eleitor digitado
                 titulo_eleitor = str(input(Fore.WHITE + Style.BRIGHT + "\nDigite o número do Título de Eleitor a ser removido: "))
 
-                if len(titulo_eleitor) == 12:
+                if val_tit.validar_titulo(titulo_eleitor):
                     cursor.execute('SELECT * FROM eleitores WHERE titulo_eleitor = %s', (titulo_eleitor,))
                     eleitor = cursor.fetchone()
 
@@ -76,11 +76,18 @@ def remocao_eleitores():
             print(Fore.WHITE + Style.BRIGHT + '=' * 50)
             print(Fore.WHITE + Style.BRIGHT + f' ID: {eleitor['id']}')
             print(Fore.WHITE + Style.BRIGHT + f' Nome: {eleitor['nome']}')
-            #MUDANÇA: o CPF está cifrado no banco; descriptografo antes de exibir para o usuário ver o CPF real (a listagem_eleitores ainda mostra o cifrado)
-            print(Fore.WHITE + Style.BRIGHT + f' CPF: {crip.descriptografar_cpf(eleitor['cpf'])}')
-            print(Fore.WHITE + Style.BRIGHT + f' Título de Eleitor: {eleitor['titulo_eleitor']}')
-            print(Fore.WHITE + Style.BRIGHT + f' Mesário: {eleitor['mesario']}')
-            print(Fore.WHITE + Style.BRIGHT + f' Status de Votação: {eleitor['status_votacao']}')
+            print(Fore.WHITE + Style.BRIGHT + f' CPF: {crip.descriptografar_cpf(eleitor["cpf"])}')
+            print(Fore.WHITE + Style.BRIGHT + f' Título de Eleitor: {eleitor["titulo_eleitor"]}')
+            if eleitor['mesario'] == 1:
+                mesario = 'Sim'
+            else:
+                mesario = 'Não'
+            if eleitor['status_votacao'] == 1:
+                status_votacao = 'Já Votou'
+            else:
+                status_votacao = 'Não Votou'
+            print(Fore.WHITE + Style.BRIGHT + f' Mesário: {mesario}')
+            print(Fore.WHITE + Style.BRIGHT + f' Status de Votação: {status_votacao}')
             print(Fore.WHITE + Style.BRIGHT + '=' * 50)
 
             #MUDANÇA: passo extra de confirmação antes do DELETE para evitar exclusão acidental (não existe no busca_eleitores pq lá não tem operação destrutiva)
@@ -100,6 +107,3 @@ def remocao_eleitores():
 
     cursor.close()
     conexao.close()
-
-#NEXT STEPS
-#substituir a verificação len() != 12 do título pela função validar_titulo quando ela for adicionada em Verificadores
