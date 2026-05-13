@@ -2,7 +2,7 @@ from Menu import sub_menus as sm
 from Validadores import gerenciador_de_entrada as ge
 from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
 from Cadastro import cadastro_eleitores
-from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna
+from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna, geral
 from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
 
 
@@ -118,7 +118,7 @@ def menu_completo():
                     while executando_menu_ocorrencias == 1:
                         sm.exibir_menu_ocorrencias()
                         escolha_ocorrencia = ge.obter_entrada_inteira_valida(
-                            "Escolha uma opção: ", 1, 6)
+                            "Escolha uma opção: ", 1, 7)
 
                         match escolha_ocorrencia:
                             case 1:
@@ -132,6 +132,8 @@ def menu_completo():
                             case 5:
                                 voto_duplo.imprimir_voto_duplo()
                             case 6:
+                                geral.imprimir_ocorrencias_gerais()
+                            case 7:
                                 executando_menu_ocorrencias = 0  # Voltar
                 elif escolha_votacao == 4:  # Voltar
                     executando_menu_votacao = 0
