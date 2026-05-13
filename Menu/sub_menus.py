@@ -34,11 +34,17 @@ def exibir_banner():
         Returns:
             None
         """
-    # PASSO 1: gera o "LAD.Py" em letras grandes usando pyfiglet
-    # a caixa ╔═╗ saiu por enquanto (vai voltar como Panel do rich no Passo 4)
-    arte_lad_py = pyfiglet.figlet_format("LAD . PY", font="big")
-    print(Fore.WHITE + Style.BRIGHT + arte_lad_py)
-    print(Fore.GREEN + Style.BRIGHT + "        " + subtitulo_banner)
+    # PASSO 1: gera o "LAD.PY" em letras grandes e centraliza pela largura real do terminal
+    largura_terminal = os.get_terminal_size().columns  # retorna columns e lines, nos só pegamos columns (largura)
+    arte_lad_py = pyfiglet.figlet_format("LAD.PY", font="big")
+
+    print(Fore.CYAN + Style.BRIGHT + ("═" * largura_terminal))
+    print()
+    for linha in arte_lad_py.split('\n'): #\n é porque a arte_ladpy é realizada com barras e um divisor \n, ele pega cada linha até \n e junta em uma lista que printa linha por linha em baixo da outra, e centraliza
+        print(Fore.WHITE + Style.BRIGHT + linha.center(largura_terminal))
+    print(Fore.WHITE + Style.BRIGHT + subtitulo_banner.center(largura_terminal))
+    print()
+    print(Fore.CYAN + Style.BRIGHT + ("═" * largura_terminal))
     print()
 
 
