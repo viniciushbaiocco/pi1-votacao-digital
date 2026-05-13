@@ -4,18 +4,24 @@ if not os.environ.get('TERM'):
     os.environ['TERM'] = 'xterm-256color'
 
 from colorama import Fore, Style
+import pyfiglet  # PASSO 1: biblioteca nova que gera texto em letras grandes (ASCII art)
 
-##PARA QUEM QUISER EDITAR: 
+##PARA QUEM QUISER EDITAR:
 ##os comandos FORE mudam cor do texto(foreground)
 ##os comandos STYLE mudam o estilo do texto(bright,normal,dim, reset_all(importante pq ele reseta as cores sem vazar pro proximo print))
 ##ESTRUTURA DE COR DO TEXTO: Fore.Cor
-##ESTRUTURA DE ESTILO DO TEXTO: Style.estilo 
+##ESTRUTURA DE ESTILO DO TEXTO: Style.estilo
 ##Backgrounds (nao usei ainda): segue a estrutura de cor de texto: Back.Cor (mesmas cores disponiveis)
 #pra vcs descobrirem as opçoes, digita a variavel Fore ou Style, e da um . (o "auto complete" mostra as opcoes)
 
+##SOBRE O PYFIGLET (PASSO 1):
+##pyfiglet.figlet_format(texto, font="nome_fonte") devolve uma STRING com o texto desenhado em letras grandes feitas de caracteres
+##usamos a fonte "slant" (letras inclinadas, estilo técnico). outras fontes legais: "big", "block", "standard", "doom"
+##pra ver todas: python3 -c "import pyfiglet; print(pyfiglet.FigletFont.getFonts())"
+##a string retornada tem várias linhas — basta dar print() nela e o Python já quebra as linhas certinho
+
 largura = 36
-banner = "LAD.Py | Sistema de Votação Digital"
-largura_banner = len(banner) + 8
+subtitulo_banner = "Sistema de Votação Digital"
 
 
 def exibir_banner():
@@ -28,10 +34,11 @@ def exibir_banner():
         Returns:
             None
         """
-    espacos = "    " #4 espaços
-    print(Fore.GREEN + "╔" + "═" * largura_banner + "╗")
-    print(Fore.GREEN + "║" + Fore.YELLOW + Style.BRIGHT + espacos + banner + espacos + Style.RESET_ALL + Fore.GREEN + "║")
-    print(Fore.GREEN + "╚" + "═" * largura_banner + "╝")
+    # PASSO 1: gera o "LAD.Py" em letras grandes usando pyfiglet
+    # a caixa ╔═╗ saiu por enquanto (vai voltar como Panel do rich no Passo 4)
+    arte_lad_py = pyfiglet.figlet_format("LAD . PY", font="big")
+    print(Fore.WHITE + Style.BRIGHT + arte_lad_py)
+    print(Fore.GREEN + Style.BRIGHT + "        " + subtitulo_banner)
     print()
 
 
