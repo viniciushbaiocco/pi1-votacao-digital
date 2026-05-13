@@ -59,7 +59,20 @@ def sistema_voto():
 
             if resultado == {'COUNT(*)': 0}:
                 print(Fore.YELLOW + Style.BRIGHT +
-                      ' Você digitou um candidato inexistente, caso erre novamente o voto será considerado nulo.')
+                      'Atenção: Número não cadastrado. Se confirmar, o voto será considerado nulo. Deseja prosseguir?'
+                      '\n[1] Sim \n[2] Não \nDigite uma opção: ')
+                voto_nulo_opcao = ge.obter_entrada_inteira_valida('\n1 - Sim \n2 - Não \nDigite uma opção: ', 1, 2)
+                match voto_nulo_opcao:
+                    case 1:
+                        voto = 0
+                        votou = 1
+                        print(Fore.GREEN + Style.BRIGHT +
+                                  '\nVoto Computado!')
+                        query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
+                        cursor.execute(query, (voto,))
+                        resultado = cursor.fetchone()
+                    case 2:
+                        print('')
             else:
                 # listar o candidato para confirmação do voto
                 cursor.execute(
