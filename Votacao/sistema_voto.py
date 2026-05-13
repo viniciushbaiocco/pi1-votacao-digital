@@ -7,6 +7,8 @@ from Verificadores import verificacao_cpf_votacao as ver_cpf_vot
 from Verificadores import verificacao_eleitor_voto as ver_eleit_vot
 from Verificadores import verificacao_chave_acesso_banco as ver_chave
 from Validadores import validacao_cpf_votacao as val_cpf_vot, validacao_chave_acesso as val_chave, confirmacao
+from Validadores import validacao_titulo as val_tit
+from Verificadores import verificacao_titulo_banco as ver_tit
 from Votacao import protoco_votacao as prot_vot
 from datetime import datetime
 from colorama import Fore, Style
@@ -18,15 +20,18 @@ def sistema_voto():
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 
-    cursor.execute('SELECT * FROM candidatos')
-    total_candidatos = cursor.fetchall()
-
     # recolher os dados do eleitor e validar
     cpf_4 = input(Fore.WHITE + Style.BRIGHT +
                   '\n''Digite os 4 primeiros digitos de seu CPF: ')
     while val_cpf_vot.validar_cpf_voto(cpf_4) == False:
         cpf_4 = input(Fore.WHITE + Style.BRIGHT +
                       '\n''Digite os 4 primeiros digitos de seu CPF novamente: ')
+        
+    titulo = input(Fore.WHITE + Style.BRIGHT +
+                   '\n''Digite seu título de eleitor: ')
+    while val_tit.validar_titulo(titulo) == False:
+        titulo = input(Fore.WHITE + Style.BRIGHT +
+                       '\n''Digite seu título de eleitor novamente: ')
 
     chave_acesso = input(Fore.WHITE + Style.BRIGHT +
                          '\nDigite sua chave de acesso: ').upper()
@@ -40,24 +45,10 @@ def sistema_voto():
     ver_votou = ver_eleit_vot.verificacao_eleitor_voto(chave_acesso)
     votou = 0
 
-    if ver_cpf_vot.verificar_cpf_voto(cpf_4) == (1,) and ver_chave.verificar_chave_acesso_banco(chave_acesso) == (1,):
+    if ver_cpf_vot.verificar_cpf_voto(cpf_4) == (1,) and ver_chave.verificar_chave_acesso_banco(chave_acesso) == (1,) and ver_tit.verificar_titulo_de_eleitor_banco(titulo) == (1,):
         # iniciar processo de votação apenas se o eleitor não votou
         if ver_votou == (0,):
-            # listagem de todos os candidatos do banco de dados para o usuário escolher entre eles
-            print(Fore.WHITE + Style.BRIGHT +
-                  '\n --- Listagem de Candidatos ---')
-            for candidatos in (total_candidatos):
-                print(Fore.WHITE + Style.BRIGHT + '=' * 50)
-                print(Fore.WHITE + Style.BRIGHT +
-                      f' Nome: {candidatos['nome']}')
-                print(Fore.WHITE + Style.BRIGHT +
-                      f' Partido: {candidatos['partido']}')
-                print(Fore.WHITE + Style.BRIGHT +
-                      f' Número Eleitoral: {candidatos['numero_votacao']}')
-            print(Fore.WHITE + Style.BRIGHT + '=' * 50)
-            print(Fore.WHITE + Style.BRIGHT +
-                  f' Total de Candidatos Cadastrados: {len(total_candidatos)}')
-
+            
             # verificação pro voto e variavel para atualizar o eleitor depois de votar
             voto = val_voto.validacao_voto()
 
