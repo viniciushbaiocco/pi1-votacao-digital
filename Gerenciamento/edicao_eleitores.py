@@ -7,6 +7,12 @@ from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf
     validacao_titulo as val_tit
 from colorama import Fore, Style
 
+def format_mesario(valor):
+    if valor == 1:
+        return Fore.WHITE + Style.BRIGHT + 'Sim'
+    else:
+        return Fore.WHITE + Style.BRIGHT + 'Não'
+
 def edicao_eleitores():
     
     """
@@ -53,10 +59,7 @@ def edicao_eleitores():
     # listar o eleitor antes da edição
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
     eleitor = cursor.fetchone()
-    if eleitor['mesario'] == 1:
-        mesario = Fore.WHITE + Style.BRIGHT + 'Sim'
-    else:
-        mesario = Fore.WHITE + Style.BRIGHT + 'Não'
+    mesario = format_mesario(eleitor['mesario'])
 
     print(Fore.WHITE + Style.BRIGHT + '\n === Eleitor a Ser Editado === ')
     print(Fore.WHITE + Style.BRIGHT + '=' * 50)
@@ -112,10 +115,7 @@ def edicao_eleitores():
             #listar o eleitor após edição
             cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
             eleitor = cursor.fetchone()
-            if eleitor['mesario'] == 1:
-                mesario = Fore.WHITE + Style.BRIGHT + 'Sim'
-            else:
-                mesario = Fore.WHITE + Style.BRIGHT + 'Não'
+            mesario = format_mesario(eleitor['mesario'])
             print(Fore.WHITE + Style.BRIGHT + '\n === Eleitor Depois da Edição === ')
             print(Fore.WHITE + Style.BRIGHT + '=' * 50)
             print(Fore.WHITE + Style.BRIGHT + f'ID: {eleitor['id']}')
@@ -131,9 +131,3 @@ def edicao_eleitores():
             return confirmacao.confirmacao()
         case 2:
             return confirmacao.confirmacao()
-        
-
-#NEXT STEPS
-#tentar otimizar mais de algum jeito
-#gerar nova chave de acesso (validacao_nome)
-
