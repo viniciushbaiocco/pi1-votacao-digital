@@ -3,7 +3,7 @@ from Validadores import validacao_chave_acesso, confirmacao
 from database import conexao_banco
 from Votacao import autenticacao_mesario
 from criptografia import criptografia as cripto
-from Ocorrencias import encerramento_urna
+from Ocorrencias import encerramento_urna, geral
 from colorama import Fore, Style
 
 
@@ -18,7 +18,6 @@ def encerrar_sistema_votacao():
         bool: True se o encerramento for realizado com sucesso, False caso contrário.
     """
     if autenticacao_mesario.autenticar_mesario() == False:
-        confirmacao.confirmacao()
         return False
 
     conexao = conexao_banco.conexao_banco() #mudei o import pq o nome tava diferente
@@ -51,7 +50,7 @@ def encerrar_sistema_votacao():
         print(Fore.GREEN + Style.BRIGHT + "\nSistema de votação encerrado.")
 
         encerramento_urna.ocorrencia_encerramento_urna()
-
+        geral.ocorrencia_encerramento_urna()
         confirmacao.confirmacao()
 
         return True
