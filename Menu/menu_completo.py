@@ -6,7 +6,6 @@ from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna
 from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
 
 
-
 def menu_completo():
     """
     Gerencia a navegação completa entre os menus da aplicação (principal, gerenciamento e votação).
@@ -22,19 +21,22 @@ def menu_completo():
     executando_menu_principal = 1
     while executando_menu_principal:
         sm.exibir_menu_principal()
-        escolha_principal = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
+        escolha_principal = ge.obter_entrada_inteira_valida(
+            "Escolha uma opção: ", 1, 3)
 
         if escolha_principal == 1:  # Gerenciamento
             executando_menu_gerenciamento = 1
             while executando_menu_gerenciamento == 1:
                 sm.exibir_menu_gerenciamento()
-                escolha_gerenciamento = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
+                escolha_gerenciamento = ge.obter_entrada_inteira_valida(
+                    "Escolha uma opção: ", 1, 3)
 
                 if escolha_gerenciamento == 1:  # Eleitores
                     executando_menu_eleitores = 1
                     while executando_menu_eleitores:
                         sm.exibir_menu_eleitores()
-                        escolha_eleitor = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 6)
+                        escolha_eleitor = ge.obter_entrada_inteira_valida(
+                            "Escolha uma opção: ", 1, 6)
 
                         match escolha_eleitor:
                             case 1:
@@ -53,7 +55,8 @@ def menu_completo():
                     executando_menu_candidatos = 1
                     while executando_menu_candidatos == 1:
                         sm.exibir_menu_candidatos()
-                        escolha_candidato = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 6)
+                        escolha_candidato = ge.obter_entrada_inteira_valida(
+                            "Escolha uma opção: ", 1, 6)
 
                         match escolha_candidato:
                             case 1:
@@ -75,13 +78,15 @@ def menu_completo():
             executando_menu_votacao = 1
             while executando_menu_votacao == 1:
                 sm.exibir_menu_votacao()
-                escolha_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 4)
+                escolha_votacao = ge.obter_entrada_inteira_valida(
+                    "Escolha uma opção: ", 1, 4)
 
                 if escolha_votacao == 1 and abertura_votacao.abrir_sistema_votacao():  # Abrir Sistema De Votação
                     executando_menu_sistema_votacao = 1
                     while executando_menu_sistema_votacao == 1:
                         sm.exibir_menu_sistema_votacao()
-                        escolha_sistema_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
+                        escolha_sistema_votacao = ge.obter_entrada_inteira_valida(
+                            "Escolha uma opção: ", 1, 2)
 
                         match escolha_sistema_votacao:
                             case 1:
@@ -94,7 +99,8 @@ def menu_completo():
                     executando_menu_resultados_votacao = 1
                     while executando_menu_resultados_votacao == 1:
                         sm.exibir_menu_restultados_votacao()
-                        escolha_resultado_votacao = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 5)
+                        escolha_resultado_votacao = ge.obter_entrada_inteira_valida(
+                            "Escolha uma opção: ", 1, 5)
 
                         match escolha_resultado_votacao:
                             case 1:
@@ -111,7 +117,8 @@ def menu_completo():
                     executando_menu_ocorrencias = 1
                     while executando_menu_ocorrencias == 1:
                         sm.exibir_menu_ocorrencias()
-                        escolha_ocorrencia = ge.obter_entrada_inteira_valida("Escolha uma opção: ",1, 6)
+                        escolha_ocorrencia = ge.obter_entrada_inteira_valida(
+                            "Escolha uma opção: ", 1, 6)
 
                         match escolha_ocorrencia:
                             case 1:
@@ -125,7 +132,7 @@ def menu_completo():
                             case 5:
                                 voto_duplo.imprimir_voto_duplo()
                             case 6:
-                                executando_menu_ocorrencias = 0 # Voltar
+                                executando_menu_ocorrencias = 0  # Voltar
                 elif escolha_votacao == 4:  # Voltar
                     executando_menu_votacao = 0
 
@@ -134,6 +141,4 @@ def menu_completo():
             acesso_negado.excluir_ocorrencia_acesso_negado()
             abertura_urna.excluir_ocorrencia_abertura_urna()
             encerramento_urna.excluir_ocorrencia_encerramento_urna()
-            voto_computado.excluir_arquivo_voto_computado()
-            voto_duplo.excluir_arquivo_voto_duplo()
             executando_menu_principal = 0

@@ -1,5 +1,7 @@
 from database import conexao_banco as cb
 from colorama import Fore, Style
+from Ocorrencias import voto_computado, voto_duplo
+
 
 def zerezima():
     """Função de zerezima para zerar todos os votos registados na tabela de votos.
@@ -50,6 +52,8 @@ def zerezima():
               f"{nome:<20} | {partido:<10} | {votos:<5}")
 
     print(Fore.WHITE + Style.BRIGHT + "="*50)
+    voto_computado.excluir_arquivo_voto_computado()
+    voto_duplo.excluir_arquivo_voto_duplo()
 
     input(Fore.WHITE + Style.BRIGHT + "\nPressione Enter para continuar...")
 
