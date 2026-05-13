@@ -71,6 +71,11 @@ def sistema_voto():
                         query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
                         cursor.execute(query, (voto,))
                         resultado = cursor.fetchone()
+                        cursor.execute(
+                        
+                        'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
+                        candidato = cursor.fetchone()
+                        id_candidato = candidato['id']
                     case 2:
                         print('')
             else:
