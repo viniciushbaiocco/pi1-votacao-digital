@@ -4,6 +4,7 @@ from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores,
 from Cadastro import cadastro_eleitores
 from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna
 from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
+from Resultados import boletim_urna
 
 
 
@@ -98,7 +99,7 @@ def menu_completo():
 
                         match escolha_resultado_votacao:
                             case 1:
-                                print("Em desenvolvimento...")
+                                boletim_urna.exibir_boletim_urna()
                             case 2:
                                 print("Em desenvolvimento...")
                             case 3:
