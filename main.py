@@ -3,6 +3,7 @@ import os
 from Menu import menu_completo
 from colorama import init, Fore, Style
 import pyfiglet  # PASSO 2: mesmo pyfiglet do banner, usado aqui na splash screen
+from rich.console import Console
 
 # PASSO 2: splash screen exibida UMA VEZ só na inicialização do sistema
 def exibir_splash():
@@ -30,4 +31,5 @@ def exibir_splash():
 if __name__ == "__main__":
     init(autoreset=True)
     exibir_splash()
+    console = Console(highlight=False)
     menu_completo.menu_completo()
