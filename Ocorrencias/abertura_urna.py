@@ -19,20 +19,21 @@ CAMINHO_ARQUIVO = os.path.join(
 )
 
 
-def ocorrencia_abertura_urna():
+def ocorrencia_abertura_urna(id_sessao):
     '''
     Cria o log de ocorrencia para abertura de urna após Zerézima, e insere informações nele
 
     Args: None
 
-    Returns: None
+    Returns:
+        None
     '''
 
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+                  f"\n[{sem_milisegundos}] [SESSAO: {id_sessao}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
 def imprimir_ocorrencia_abertura_urna():

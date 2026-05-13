@@ -1,7 +1,7 @@
 from Zerezima import zerezima
 from Votacao import autenticacao_mesario
 from colorama import Fore, Style
-from Ocorrencias import abertura_urna
+from Ocorrencias import abertura_urna, geral
 
 def abrir_sistema_votacao():
     """
@@ -21,6 +21,8 @@ def abrir_sistema_votacao():
         print(Fore.YELLOW + Style.BRIGHT + "Confirme se o eleitor possui perfil de mesário")
         return False
 
+    id_sessao = geral.ocorrencia_abertura_urna() # Captura o ID da sessão gerado
+    abertura_urna.ocorrencia_abertura_urna(id_sessao) # Passa o ID da sessão
     zerezima.zerezima()
-    abertura_urna.ocorrencia_abertura_urna()
     return True
+

@@ -19,11 +19,12 @@ CAMINHO_ARQUIVO = os.path.join(
 )
 
 
-def ocorrencia_acesso_negado():
+def ocorrencia_acesso_negado(id_sessao):
     '''
     Cria o log de ocorrencia para acesso negado do mesário, e insere informações nele
 
-    Args: None
+    Args:
+        id_sessao (str): O ID único da sessão de urna atual.
 
     Returns: None
     '''
@@ -31,7 +32,7 @@ def ocorrencia_acesso_negado():
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.RED + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] ALERTA: Validação do mesário negado")
+                  f"\n[{sem_milisegundos}] [SESSAO: {id_sessao}] ALERTA: Validação do mesário negado")
 
 
 def imprimir_ocorrencia_acesso_negado():

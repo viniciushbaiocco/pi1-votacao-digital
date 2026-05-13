@@ -19,12 +19,12 @@ CAMINHO_ARQUIVO = os.path.join(
 )
 
 
-def ocorrencia_voto_duplo():
+def ocorrencia_voto_duplo(id_sessao: str):
     """
         Cria o arquivo que armazena os logs de voto duplo e insere os logs nele.
 
         Args:
-            None
+            id_sessao (str): O ID único da sessão de urna atual.
 
         Returns:
             None
@@ -34,7 +34,7 @@ def ocorrencia_voto_duplo():
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.RED + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] ALERTA: Tentativa de Voto Duplo")
+                  f"\n[{sem_milisegundos}] [SESSAO: {id_sessao}] ALERTA: Tentativa de Voto Duplo")
 
 
 def imprimir_voto_duplo():
@@ -64,7 +64,7 @@ def imprimir_voto_duplo():
 
 def excluir_arquivo_voto_duplo():
     """
-        Exclui o arquivo de voto duplo caso houver.
+        Exclui o arquivo de voto computado caso houver.
 
         Args:
             None
@@ -75,3 +75,4 @@ def excluir_arquivo_voto_duplo():
     arquivo = CAMINHO_ARQUIVO
     if os.path.exists(arquivo):
         os.remove(arquivo)
+
