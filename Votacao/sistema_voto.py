@@ -1,6 +1,6 @@
 from database import conexao_banco as conect
 from Ocorrencias import voto_computado
-from Ocorrencias import voto_duplo
+from Ocorrencias import voto_duplo, geral
 from Validadores import gerenciador_de_entrada as ge, validacao_voto as val_voto
 from criptografia import criptografia as crip
 from Verificadores import verificacao_cpf_votacao as ver_cpf_vot
@@ -157,8 +157,9 @@ def sistema_voto():
             else:
                 print(Fore.RED + Style.BRIGHT + '\nErro, tentativa de voto duplo.')
                 voto_duplo.ocorrencia_voto_duplo()
+                geral.ocorrencia_voto_duplo()
                 confirmacao.confirmacao()
-
+                opcao = 1
             # atualizar no BD o eleitor para já votou
             if votou == 1:
                 # gerar protocolo e computar voto
@@ -168,6 +169,7 @@ def sistema_voto():
                 confirmacao.confirmacao()
                 protocolo = crip.criptografar_protocolo(protocolo)
                 voto_computado.voto_computado()
+                geral.ocorrecia_voto_computado()
                 data_hora = datetime.now()
                 sem_milissegundos = data_hora.replace(microsecond=0)
 
