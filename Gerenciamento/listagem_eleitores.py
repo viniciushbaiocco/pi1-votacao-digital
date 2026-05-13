@@ -50,8 +50,8 @@ def listagem_eleitores ():
             print(Fore.WHITE + Style.BRIGHT + '=' * 50)
             print(Fore.WHITE + Style.BRIGHT + f' Total de Eleitores Cadastrados: {len(total_eleitores)}')
 
-    except Exception as e:
-        print(Fore.RED + Style.BRIGHT + f'\n Erro ao listar eleitores: {e}')
+    except Exception as erro:
+        print(Fore.RED + Style.BRIGHT + f'\n Erro ao listar eleitores: {erro}')
 
     confirmacao.confirmacao()
 
