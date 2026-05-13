@@ -5,20 +5,15 @@ if not os.environ.get('TERM'):
 
 from colorama import Fore, Style
 import pyfiglet  # PASSO 1: biblioteca nova que gera texto em letras grandes (ASCII art)
+from rich.console import Console  # PASSO 3: Console do rich substitui print+colorama só no banner
 
-##PARA QUEM QUISER EDITAR:
-##os comandos FORE mudam cor do texto(foreground)
-##os comandos STYLE mudam o estilo do texto(bright,normal,dim, reset_all(importante pq ele reseta as cores sem vazar pro proximo print))
-##ESTRUTURA DE COR DO TEXTO: Fore.Cor
-##ESTRUTURA DE ESTILO DO TEXTO: Style.estilo
-##Backgrounds (nao usei ainda): segue a estrutura de cor de texto: Back.Cor (mesmas cores disponiveis)
-#pra vcs descobrirem as opçoes, digita a variavel Fore ou Style, e da um . (o "auto complete" mostra as opcoes)
+console = Console(highlight=False)  # PASSO 3: highlight=False impede o rich de colorir automaticamente numeros e simbolos
 
-##SOBRE O PYFIGLET (PASSO 1):
+##SOBRE O PYFIGLET:
 ##pyfiglet.figlet_format(texto, font="nome_fonte") devolve uma STRING com o texto desenhado em letras grandes feitas de caracteres
-##usamos a fonte "slant" (letras inclinadas, estilo técnico). outras fontes legais: "big", "block", "standard", "doom"
+##usamos a fonte "big". outras fontes legais: "slant", "standard", "doom"
 ##pra ver todas: python3 -c "import pyfiglet; print(pyfiglet.FigletFont.getFonts())"
-##a string retornada tem várias linhas — basta dar print() nela e o Python já quebra as linhas certinho
+##a string retornada tem várias linhas basta dar print() nela e o Python já quebra as linhas certinho
 
 largura = 36
 subtitulo_banner = "Sistema de Votação Digital"
@@ -35,18 +30,18 @@ def exibir_banner():
             None
         """
     # PASSO 1: gera o "LAD.PY" em letras grandes e centraliza pela largura real do terminal
-    largura_terminal = os.get_terminal_size().columns  # retorna columns e lines, nos só pegamos columns (largura)
+    # PASSO 3: trocamos print+colorama por console.print do rich — estilo fica em style="bold cyan" etc.
+    largura_terminal = os.get_terminal_size().columns
     arte_lad_py = pyfiglet.figlet_format("LAD.PY", font="big")
 
-    print(Fore.CYAN + Style.BRIGHT + ("═" * largura_terminal))
-    print()
-    for linha in arte_lad_py.split('\n'): #\n é porque a arte_ladpy é realizada com barras e um divisor \n, ele pega cada linha até \n e junta em uma lista que printa linha por linha em baixo da outra, e centraliza
-        print(Fore.WHITE + Style.BRIGHT + linha.center(largura_terminal))
-    print(Fore.WHITE + Style.BRIGHT + subtitulo_banner.center(largura_terminal))
-    print()
-    print(Fore.CYAN + Style.BRIGHT + ("═" * largura_terminal))
-    print()
-
+    console.print("═" * largura_terminal, style="bold cyan")
+    console.print()
+    for linha in arte_lad_py.split('\n'):
+        console.print(linha.center(largura_terminal), style="bold white")
+    console.print(subtitulo_banner.center(largura_terminal), style="bold white")
+    console.print()
+    console.print("═" * largura_terminal, style="bold cyan")
+    console.print()
 
 def exibir_menu_principal():
     """
