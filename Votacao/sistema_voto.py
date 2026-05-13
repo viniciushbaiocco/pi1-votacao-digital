@@ -46,7 +46,7 @@ def sistema_voto():
     votou = 0
     opcao = 2
 
-    while opcao = 2:
+    while opcao == 2:
         if ver_cpf_vot.verificar_cpf_voto(cpf_4) == (1,) and ver_chave.verificar_chave_acesso_banco(chave_acesso) == (1,) and ver_tit.verificar_titulo_de_eleitor_banco(titulo) == (1,):
             # iniciar processo de votação apenas se o eleitor não votou
             if ver_votou == (0,):
@@ -191,3 +191,5 @@ def sistema_voto():
 
 # NEXT STEPS
 # otimizar o codigo
+
+sistema_voto()
