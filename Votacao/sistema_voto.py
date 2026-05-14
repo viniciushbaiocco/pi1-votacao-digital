@@ -78,6 +78,7 @@ def sistema_voto(id_sessao):
                             'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                             candidato = cursor.fetchone()
                             id_candidato = candidato['id']
+                            opcao = 1
                         case 2:
                             print('')
 
@@ -118,7 +119,7 @@ def sistema_voto(id_sessao):
                             'Você digitou um candidato inexistente novamente, o voto será considerado nulo.')
                         votou = 1
                         voto = 0
-
+                        opcao = 1
                         #pegar o id do candidato
                         cursor.execute(
                             'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
@@ -193,3 +194,5 @@ def sistema_voto(id_sessao):
 
 # NEXT STEPS
 # otimizar o codigo
+
+sistema_voto(1)
