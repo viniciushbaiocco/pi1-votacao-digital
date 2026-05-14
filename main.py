@@ -11,7 +11,7 @@ def exibir_splash():
 
     largura_terminal = os.get_terminal_size().columns
 
-    arte = pyfiglet.figlet_format("LAD.PY", font="big")
+    arte = pyfiglet.figlet_format("LAD.PY", font="standard")
 
     print(Fore.CYAN + Style.BRIGHT + ("═" * largura_terminal))
     print()
