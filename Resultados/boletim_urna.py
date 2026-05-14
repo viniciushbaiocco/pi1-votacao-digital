@@ -2,14 +2,13 @@ import time
 
 from Menu import sub_menus
 from database import conexao_banco
-from colorama import Fore, Style
 from Validadores import confirmacao, gerenciador_de_entrada
-import os
-from time import sleep
 from Visual import visual
+from rich.console import Console
+from rich.table import Table
+from rich import box, style
 
-COR_BRANCA = Fore.WHITE + Style.BRIGHT
-COR_AMARELA = Fore.YELLOW + Style.BRIGHT
+console = Console(highlight=False)
 
 def exibir_boletim_urna():
     """
@@ -33,6 +32,19 @@ def exibir_boletim_urna():
             sub_menus.exibir_menu_boletim_urna()
             escolha = gerenciador_de_entrada.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
 
+            tabela = Table(
+                title="Listagem de Eleitores",
+                box=box.DOUBLE,
+                border_style="bold sandy_brown",
+                title_style="bold bright_white",
+                header_style="bold sandy_brown",
+                show_lines=True
+            )
+
+            tabela.add_column("Nome", style="bright_white")
+            tabela.add_column("Partido", style="bright_white")
+            tabela.add_column("Total de Votos", justify="center")
+
             match escolha:
                 # Opção 1: Listar todos os candidatos com seus votos
                 case 1:
@@ -46,17 +58,17 @@ def exibir_boletim_urna():
 
                     cursor.execute(query_listagem_candidatos)
                     total_candidatos = cursor.fetchall()
-                    print("Listando Candidatos...")
-                    time.sleep(3)
-                    print(COR_BRANCA + '\n --- Listagem de Candidatos ---')
-                    for candidatos in (total_candidatos):
-                        print(COR_BRANCA + '=' * 50)
-                        print(COR_BRANCA + f' Nome: {candidatos['nome']}')
-                        print(COR_BRANCA + f' Partido: {candidatos['partido']}')
-                        print(COR_BRANCA + f' Total de Votos: {candidatos['total_votos']}')
-                    print(COR_BRANCA + '=' * 50)
-                    print(COR_BRANCA + f' Total de Candidatos Cadastrados: {len(total_candidatos)}')
 
+                    for candidatos in (total_candidatos):
+                        tabela.add_row(
+                            candidatos['nome'],
+                            candidatos['partido'],
+                            str(candidatos['total_votos'])
+                        )
+
+                    visual.carregar_pontos_loop(3, "Listando Candidatos") # implementar cor com o rich
+                    time.sleep(1)
+                    console.print(tabela)
                     confirmacao.confirmacao()
                     visual.limpar_tela()
 
@@ -67,10 +79,12 @@ def exibir_boletim_urna():
                     verificar_tabela = cursor.fetchall()
 
                     if not verificar_tabela:
+
                         visual.carregar_pontos_loop(3, "Verificando Vencedor")
-                        time.sleep(2)
-                        print(COR_AMARELA + "\nNenhum Voto Registrado")
-                        print(COR_AMARELA + "Vencedor não pode ser definido..")
+                        time.sleep(1)
+
+                        console.print("[bold red]\n\nNenhum Voto Registrado[/bold red]")
+                        console.print("\n[bold yellow]Vencedor não pode ser definido![/bold yellow]")
 
                         confirmacao.confirmacao()
                         visual.limpar_tela()
@@ -91,16 +105,19 @@ def exibir_boletim_urna():
 
                         if vencedor:
                             visual.carregar_pontos_loop(3, "Verificando Vencedor")
-                            time.sleep(2)
-                            print(Fore.CYAN + Style.BRIGHT + "\n----VENCEDOR----")
-                            print(COR_BRANCA + f'\n Nome: {vencedor['nome']}')
-                            print(COR_BRANCA + f' Partido: {vencedor['partido']}')
-                            print(COR_BRANCA + f' Total de Votos: {vencedor['total_votos']}')
+                            time.sleep(1)
+
+                            tabela.add_row(
+                                vencedor['nome'],
+                                vencedor['partido'],
+                                str(vencedor['total_votos'])
+                            )
+
                         # Caso não seja possível determinar um vencedor (improvável com a query atual, mas como fallback)
                         else:
                             visual.carregar_pontos_loop(3, "Verificando Vencedor")
-                            time.sleep(2)
-                            print(COR_AMARELA + "\nNão foi possível determinar um vencedor, mesmo com votos registrados.")
+                            time.sleep(1)
+                            console.print("\n[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]")
 
                         # Pausa e limpa a tela após exibir o resultado
                         confirmacao.confirmacao()
@@ -112,3 +129,4 @@ def exibir_boletim_urna():
             cursor.close()
         if conexao:
             conexao.close()
+exibir_boletim_urna()
