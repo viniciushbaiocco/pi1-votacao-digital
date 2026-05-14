@@ -225,6 +225,7 @@ def exibir_menu_ocorrencias():
         "  [bold yellow][3][/bold yellow]  Encerramento de Urna\n"
         "  [bold yellow][4][/bold yellow]  Voto Computado\n"
         "  [bold yellow][5][/bold yellow]  Voto Duplo\n"
-        "  [bold red][6]  Voltar[/bold red]\n"
+        "  [bold yellow][6][/bold yellow]  Gerais\n"
+        "  [bold red][7]  Voltar[/bold red]"
     )
     console.print(Panel(Align.center(conteudo), title="[bold cyan]OCORRÊNCIAS[/bold cyan]", border_style="white", box=box.DOUBLE))
