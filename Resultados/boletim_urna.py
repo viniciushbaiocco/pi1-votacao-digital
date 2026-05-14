@@ -129,4 +129,3 @@ def exibir_boletim_urna():
             cursor.close()
         if conexao:
             conexao.close()
-exibir_boletim_urna()
