@@ -30,13 +30,14 @@ def exibir_banner():
     # PASSO 1: gera o "LAD.PY" em letras grandes e centraliza pela largura real do terminal
     # PASSO 3: trocamos print+colorama por console.print do rich — estilo fica em style="bold cyan" etc.
     largura_terminal = os.get_terminal_size().columns
-    arte_lad_py = pyfiglet.figlet_format("LAD.PY", font="big")
+    arte_lad_py = pyfiglet.figlet_format("LAD.PY", font="standard")
 
     console.print("═" * largura_terminal, style="bold cyan")
     console.print()
     for linha in arte_lad_py.split('\n'):
         console.print(linha.center(largura_terminal), style="bold white")
-    console.print(subtitulo_banner.center(largura_terminal), style="bold white")
+    console.print()
+    console.print(subtitulo_banner.center(largura_terminal), style="white")
     console.print()
     console.print("═" * largura_terminal, style="bold cyan")
     console.print()
@@ -51,20 +52,20 @@ def exibir_menu_principal():
     Returns:
         None
     """
-    #executa uma limpeza do terminal cada opcao executada
-    os.system('cls' if os.name == 'nt' else 'clear')#cls foi usado pra nao atrapalhar minha vida e do leo, clear é do linux e cls é do windows
+    os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
-    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "MENU PRINCIPAL".center(largura))
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Gerenciamento")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Votação")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[3]  Finalizar Sistema")
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+
+    # PASSO 4: Panel substitui o ╔═╗ manual — border_style define a cor da borda
+    # [[1]] usa colchetes duplos pra mostrar [1] como texto literal (rich usa [..] como tags de cor)
+    conteudo = (
+        "\n"
+        "  [bold yellow][1][/bold yellow]  Gerenciamento\n"
+        "  [bold yellow][2][/bold yellow]  Votação\n"
+        "  [bold red][3]  Finalizar Sistema[/bold red]\n"
+    )
+
+    # Align.center dentro do Panel centraliza o texto das opções dentro do painel
+    console.print(Panel(Align.center(conteudo), title="[bold cyan]MENU PRINCIPAL[/bold cyan]", border_style="white", box=box.DOUBLE))
 
 
 def exibir_menu_gerenciamento():
