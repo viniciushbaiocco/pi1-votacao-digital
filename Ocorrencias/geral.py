@@ -18,12 +18,12 @@ CAMINHO_ARQUIVO = os.path.join(
     "Geral.txt"
 )
 
-def ocorrencia_abertura_urna(sessao_id):
+def ocorrencia_abertura_urna(id_sessao):
     '''
     Cria o log de ocorrencia para abertura de urna após Zerézima, e insere informações nele
 
     Args:
-        sessao_id (str): O ID único da sessão de urna atual.
+        id_sessao (str): O ID único da sessão de urna atual.
 
     Returns: None
     '''
@@ -31,14 +31,14 @@ def ocorrencia_abertura_urna(sessao_id):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[SESSAO: {sessao_id}] [{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
-def ocorrencia_acesso_negado(sessao_id):
+def ocorrencia_acesso_negado(id_sessao):
     '''
     Cria o log de ocorrencia para acesso negado do mesário, e insere informações nele
 
     Args:
-        sessao_id (str): O ID único da sessão de urna atual.
+        id_sessao (str): O ID único da sessão de urna atual.
 
     Returns: None
     '''
@@ -46,16 +46,16 @@ def ocorrencia_acesso_negado(sessao_id):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.RED + Style.BRIGHT +
-                  f"\n[SESSAO: {sessao_id}] [{sem_milisegundos}] ALERTA: Validação do mesário negado")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Validação do mesário negado")
 
-def ocorrencia_encerramento_urna(sessao_id):
+def ocorrencia_encerramento_urna(id_sessao):
 
     '''
 
     Cria o log de ocorrencia para encerramento de urna.
 
     Args:
-        sessao_id (str): O ID único da sessão de urna atual.
+        id_sessao (str): O ID único da sessão de urna atual.
 
     Returns: None
 
@@ -65,14 +65,14 @@ def ocorrencia_encerramento_urna(sessao_id):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[SESSAO: {sessao_id}] [{sem_milisegundos}]ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
 
-def ocorrencia_voto_computado(sessao_id):
+def ocorrencia_voto_computado(id_sessao):
     """
         Cria o arquivo que armazena os logs de voto computado e insere os logs nele.
 
         Args:
-            sessao_id (str): O ID único da sessão de urna atual.
+            id_sessao (str): O ID único da sessão de urna atual.
 
         Returns:
             None
@@ -82,14 +82,14 @@ def ocorrencia_voto_computado(sessao_id):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[SESSAO: {sessao_id}] [{sem_milisegundos}] Voto Computado!")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] Voto Computado!")
 
-def ocorrencia_voto_duplo(sessao_id):
+def ocorrencia_voto_duplo(id_sessao):
     """
         Cria o arquivo que armazena os logs de voto duplo e insere os logs nele.
 
         Args:
-            sessao_id (str): O ID único da sessão de urna atual.
+            id_sessao (str): O ID único da sessão de urna atual.
 
         Returns:
             None
@@ -99,7 +99,7 @@ def ocorrencia_voto_duplo(sessao_id):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.RED + Style.BRIGHT +
-                  f"\n[SESSAO: {sessao_id}] [{sem_milisegundos}] ALERTA: Tentativa de Voto Duplo")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Tentativa de Voto Duplo")
 
 def imprimir_ocorrencias_por_sessao():
     """

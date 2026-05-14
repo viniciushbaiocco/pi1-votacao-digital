@@ -14,7 +14,7 @@ from datetime import datetime
 from colorama import Fore, Style
 
 
-def sistema_voto(sessao_id):
+def sistema_voto(id_sessao):
     print(Fore.CYAN + Style.BRIGHT + '\n--- Eleição 2026 ---')
 
     conexao = conect.conexao_banco()
@@ -156,8 +156,8 @@ def sistema_voto(sessao_id):
             # encerrar processo caso eleitor ja tenha votado
             else:
                 print(Fore.RED + Style.BRIGHT + '\nErro, tentativa de voto duplo.')
-                voto_duplo.ocorrencia_voto_duplo(sessao_id)
-                geral.ocorrencia_voto_duplo(sessao_id)
+                voto_duplo.ocorrencia_voto_duplo(id_sessao)
+                geral.ocorrencia_voto_duplo(id_sessao)
                 confirmacao.confirmacao()
                 opcao = 1
             # atualizar no BD o eleitor para já votou
@@ -168,8 +168,8 @@ def sistema_voto(sessao_id):
                     f"Seu protocolo de votação é: {protocolo}")
                 confirmacao.confirmacao()
                 protocolo = crip.criptografar_protocolo(protocolo)
-                voto_computado.ocorrecia_voto_computado(sessao_id)
-                geral.ocorrencia_voto_computado(sessao_id)
+                voto_computado.ocorrecia_voto_computado(id_sessao)
+                geral.ocorrencia_voto_computado(id_sessao)
                 data_hora = datetime.now()
                 sem_milissegundos = data_hora.replace(microsecond=0)
 

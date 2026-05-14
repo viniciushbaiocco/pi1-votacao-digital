@@ -7,19 +7,19 @@ from Ocorrencias import encerramento_urna, geral
 from colorama import Fore, Style
 
 
-def encerrar_sistema_votacao(sessao_id):
+def encerrar_sistema_votacao(id_sessao):
     """
     Realiza o encerramento oficial do sistema de votação.
 
     Args:
-        sessao_id (str): O ID único da sessão de urna que está sendo encerrada.
+        id_sessao (str): O ID único da sessão de urna que está sendo encerrada.
 
     Returns:
         bool: True se o encerramento for realizado com sucesso, False caso contrário.
     """
 
     # 1. Tentar autenticar o mesário, passando o session_id
-    if not autenticacao_mesario.autenticar_mesario(sessao_id):
+    if not autenticacao_mesario.autenticar_mesario(id_sessao):
         return False
 
     conexao = conexao_banco.conexao_banco() #mudei o import pq o nome tava diferente
@@ -51,8 +51,8 @@ def encerrar_sistema_votacao(sessao_id):
 
         print(Fore.GREEN + Style.BRIGHT + "\nSistema de votação encerrado.")
 
-        encerramento_urna.ocorrencia_encerramento_urna(sessao_id)
-        geral.ocorrencia_encerramento_urna(sessao_id)
+        encerramento_urna.ocorrencia_encerramento_urna(id_sessao)
+        geral.ocorrencia_encerramento_urna(id_sessao)
         confirmacao.confirmacao()
 
         return True
