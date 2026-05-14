@@ -6,7 +6,7 @@ if not os.environ.get('TERM'):
 from colorama import Fore, Style
 import pyfiglet  # PASSO 1: biblioteca nova que gera texto em letras grandes (ASCII art)
 from rich.console import Console  # PASSO 3: Console do rich substitui print+colorama só no banner
-
+console = Console(highlight=False)
 ##SOBRE O PYFIGLET:
 ##pyfiglet.figlet_format(texto, font="nome_fonte") devolve uma STRING com o texto desenhado em letras grandes feitas de caracteres
 ##usamos a fonte "big". outras fontes legais: "slant", "standard", "doom"
@@ -248,7 +248,6 @@ def exibir_menu_ocorrencias():
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Encerramento de Urna")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[4]" + Fore.WHITE + "  Voto Computado")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[5]" + Fore.WHITE + "  Voto Duplo")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[6]" + Fore.WHITE + "  Ocorrências Gerais")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[7]  Voltar")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[6]  Voltar")
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)

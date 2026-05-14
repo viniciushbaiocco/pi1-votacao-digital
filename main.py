@@ -31,5 +31,4 @@ def exibir_splash():
 if __name__ == "__main__":
     init(autoreset=True)
     exibir_splash()
-    console = Console(highlight=False)
     menu_completo.menu_completo()
