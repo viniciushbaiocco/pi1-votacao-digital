@@ -1,6 +1,6 @@
 from database import conexao_banco as conect
 from Ocorrencias import voto_computado
-from Ocorrencias import voto_duplo
+from Ocorrencias import voto_duplo, geral
 from Validadores import gerenciador_de_entrada as ge, validacao_voto as val_voto
 from criptografia import criptografia as crip
 from Verificadores import verificacao_cpf_votacao as ver_cpf_vot
@@ -14,7 +14,7 @@ from datetime import datetime
 from colorama import Fore, Style
 
 
-def sistema_voto():
+def sistema_voto(id_sessao):
     print(Fore.CYAN + Style.BRIGHT + '\n--- Eleição 2026 ---')
 
     conexao = conect.conexao_banco()
@@ -70,7 +70,7 @@ def sistema_voto():
                             votou = 1
                             print(Fore.GREEN + Style.BRIGHT +
                                     '\nVoto Computado!')
-                            query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
+                            query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s" #
                             cursor.execute(query, (voto,))
                             resultado = cursor.fetchone()
                             cursor.execute(
@@ -78,6 +78,7 @@ def sistema_voto():
                             'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                             candidato = cursor.fetchone()
                             id_candidato = candidato['id']
+                            opcao = 1
                         case 2:
                             print('')
 
@@ -118,7 +119,7 @@ def sistema_voto():
                             'Você digitou um candidato inexistente novamente, o voto será considerado nulo.')
                         votou = 1
                         voto = 0
-
+                        opcao = 1
                         #pegar o id do candidato
                         cursor.execute(
                             'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
@@ -156,9 +157,10 @@ def sistema_voto():
             # encerrar processo caso eleitor ja tenha votado
             else:
                 print(Fore.RED + Style.BRIGHT + '\nErro, tentativa de voto duplo.')
-                voto_duplo.ocorrencia_voto_duplo()
+                voto_duplo.ocorrencia_voto_duplo(id_sessao)
+                geral.ocorrencia_voto_duplo(id_sessao)
                 confirmacao.confirmacao()
-
+                opcao = 1
             # atualizar no BD o eleitor para já votou
             if votou == 1:
                 # gerar protocolo e computar voto
@@ -167,7 +169,8 @@ def sistema_voto():
                     f"Seu protocolo de votação é: {protocolo}")
                 confirmacao.confirmacao()
                 protocolo = crip.criptografar_protocolo(protocolo)
-                voto_computado.voto_computado()
+                voto_computado.ocorrecia_voto_computado(id_sessao)
+                geral.ocorrencia_voto_computado(id_sessao)
                 data_hora = datetime.now()
                 sem_milissegundos = data_hora.replace(microsecond=0)
 
@@ -191,3 +194,5 @@ def sistema_voto():
 
 # NEXT STEPS
 # otimizar o codigo
+
+sistema_voto(1)

@@ -25,27 +25,25 @@ CAMINHO_ARQUIVO = os.path.join(
 
 )
 
-def ocorrencia_encerramento_urna():
+def ocorrencia_encerramento_urna(id_sessao):
 
     '''
 
     Cria o log de ocorrencia para encerramento de urna.
 
-    Args: None
+    Args:
+        id_sessao (str): O ID único da sessão de urna atual.
 
     Returns: None
 
     '''
 
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-
         agora = datetime.now()
-
         sem_milisegundos = agora.replace(microsecond=0)
-
         arq.write(Fore.GREEN + Style.BRIGHT +
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
 
-                  f"\n[{sem_milisegundos}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
 
 def imprimir_ocorrencia_encerramento_urna():
 

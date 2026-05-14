@@ -248,6 +248,7 @@ def exibir_menu_ocorrencias():
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Encerramento de Urna")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[4]" + Fore.WHITE + "  Voto Computado")
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[5]" + Fore.WHITE + "  Voto Duplo")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[6]  Voltar")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[6]" + Fore.WHITE + "  Ocorrências Gerais")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[7]  Voltar")
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)

@@ -19,12 +19,12 @@ CAMINHO_ARQUIVO = os.path.join(
 )
 
 
-def voto_computado():
+def ocorrecia_voto_computado(id_sessao):
     """
         Cria o arquivo que armazena os logs de voto computado e insere os logs nele.
 
         Args:
-            None
+            id_sessao (str): O ID único da sessão de urna atual.
 
         Returns:
             None
@@ -34,7 +34,7 @@ def voto_computado():
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] Voto Computado!")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] Voto Computado!")
 
 
 def imprimir_voto_computado():
