@@ -29,25 +29,23 @@ def exibir_banner():
         Returns:
             None
         """
-    # PASSO 1: gera o "LAD.PY" em letras grandes e centraliza pela largura real do terminal
-    # PASSO 3: trocamos print+colorama por console.print do rich — estilo fica em style="bold cyan" etc.
     try:
         largura_terminal = os.get_terminal_size().columns
     except OSError:
         largura_terminal = 80
     arte_lad_py = pyfiglet.figlet_format("LAD.PY", font="standard")
 
-    # cores da bandeira brasileira ciclando linha a linha no logo
     cores_brasil = ["bold green", "bold green", "bold yellow", "bold yellow", "bold green", "bold green"]
-    console.print("═" * largura_terminal, style="grey93")
+
+    console.print("═" * largura_terminal, style="bold yellow")
     console.print()
     for i, linha in enumerate(arte_lad_py.split('\n')):
-        cor = cores_brasil[i % len(cores_brasil)] #lógica: resto de i%len é o indice da lista (0%6 = 0, 1%6 = 1, 2%6 = 2, 3%6 = 3....)
+        cor = cores_brasil[i % len(cores_brasil)]
         console.print(linha.center(largura_terminal), style=cor)
     console.print()
     console.print(subtitulo_banner.center(largura_terminal), style="bright_white")
     console.print()
-    console.print("═" * largura_terminal, style="grey93")
+    console.print("═" * largura_terminal, style="bold yellow")
     console.print()
 
 def exibir_menu_principal():
@@ -66,10 +64,10 @@ def exibir_menu_principal():
     # PASSO 4: Panel substitui o ╔═╗ manual — border_style define a cor da borda
     # [[1]] usa colchetes duplos pra mostrar [1] como texto literal (rich usa [..] como tags de cor)
     conteudo = (
-        "         [bold bright_white][1][/bold bright_white]  Gerenciamento\n"
-        "         [bold bright_white][2][/bold bright_white]  Votação\n"
-        "         [dim]──────────────────────────────[/dim]\n"
-        "         [dim red][3]  Finalizar Sistema[/dim red]"
+        "              [bold bright_white][1][/bold bright_white]  Gerenciamento\n"
+        "              [bold bright_white][2][/bold bright_white]  Votação\n"
+        "              [dim]──────────────────────────────[/dim]\n"
+        "              [red][3]  Finalizar Sistema[/red]"
     )
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
 
