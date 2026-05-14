@@ -33,7 +33,7 @@ def ocorrencia_abertura_urna(id_sessao):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] [SESSAO: {id_sessao}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
 def imprimir_ocorrencia_abertura_urna():

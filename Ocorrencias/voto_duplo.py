@@ -34,7 +34,7 @@ def ocorrencia_voto_duplo(id_sessao: str):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.RED + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] [SESSAO: {id_sessao}] ALERTA: Tentativa de Voto Duplo")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Tentativa de Voto Duplo")
 
 
 def imprimir_voto_duplo():

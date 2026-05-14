@@ -34,7 +34,7 @@ def ocorrecia_voto_computado(id_sessao):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] [SESSAO: {id_sessao}] Voto Computado!")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] Voto Computado!")
 
 
 def imprimir_voto_computado():

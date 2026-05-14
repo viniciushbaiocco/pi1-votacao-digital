@@ -32,7 +32,7 @@ def ocorrencia_acesso_negado(id_sessao):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.RED + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] [SESSAO: {id_sessao}] ALERTA: Validação do mesário negado")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Validação do mesário negado")
 
 
 def imprimir_ocorrencia_acesso_negado():

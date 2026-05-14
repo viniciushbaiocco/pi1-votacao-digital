@@ -42,7 +42,7 @@ def ocorrencia_encerramento_urna(id_sessao):
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
         arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[{sem_milisegundos}] [SESSAO: {id_sessao}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
+                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
 
 
 def imprimir_ocorrencia_encerramento_urna():
