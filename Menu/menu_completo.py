@@ -133,7 +133,7 @@ def menu_completo():
                             case 5:
                                 voto_duplo.imprimir_voto_duplo()
                             case 6:
-                                geral.imprimir_ocorrencias_gerais()
+                                geral.imprimir_ocorrencias_por_sessao()
                             case 7:
                                 executando_menu_ocorrencias = 0  # Voltar
                 elif escolha_votacao == 4:  # Voltar
