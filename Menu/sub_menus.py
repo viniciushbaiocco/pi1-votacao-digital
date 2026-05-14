@@ -67,7 +67,7 @@ def exibir_menu_principal():
         "              [bold bright_white][1][/bold bright_white]  Gerenciamento\n"
         "              [bold bright_white][2][/bold bright_white]  Votação\n"
         "              [dim]──────────────────────────────[/dim]\n"
-        "              [red][3]  Finalizar Sistema[/red]"
+        "              [dim red][3]  Finalizar Sistema[/dim red]"
     )
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
 
@@ -88,9 +88,9 @@ def exibir_menu_gerenciamento():
         "               [bold bright_white][1][/bold bright_white]  Eleitores\n"
         "               [bold bright_white][2][/bold bright_white]  Candidatos\n"
         "               [dim]──────────────────────────────[/dim]\n"
-        "               [dim red][3]  Voltar[/dim red]"
+        "               [red][3]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]GERENCIAMENTO[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]GERENCIAMENTO[/bold bright_white]", border_style="bold orange1", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_eleitores():
@@ -112,9 +112,9 @@ def exibir_menu_eleitores():
         "                   [bold bright_white][4][/bold bright_white]  Buscar Eleitores\n"
         "                   [bold bright_white][5][/bold bright_white]  Visualizar Eleitores\n"
         "                   [dim]──────────────────────────────[/dim]\n"
-        "                   [dim red][6]  Voltar[/dim red]"
+        "                   [red][6]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]ELEITORES[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]ELEITORES[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_candidatos():
@@ -136,9 +136,9 @@ def exibir_menu_candidatos():
         "                  [bold bright_white][4][/bold bright_white]  Buscar Candidatos\n"
         "                  [bold bright_white][5][/bold bright_white]  Visualizar Candidatos\n"
         "                  [dim]──────────────────────────────[/dim]\n"
-        "                  [dim red][6]  Voltar[/dim red]"
+        "                  [red][6]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]CANDIDATOS[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]CANDIDATOS[/bold bright_white]", border_style="bold gold3", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_votacao():
@@ -154,13 +154,13 @@ def exibir_menu_votacao():
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
-        "                     [bold bright_white][1][/bold bright_white]  Abrir Sistema De Votação\n"
+        "                     [bold chartreuse1][1]  Abrir Sistema De Votação[/bold chartreuse1]\n"
         "                     [bold bright_white][2][/bold bright_white]  Resultados Da Votação\n"
         "                     [bold bright_white][3][/bold bright_white]  Ocorrências\n"
         "                     [dim]──────────────────────────────[/dim]\n"
-        "                     [dim red][4]  Voltar[/dim red]"
+        "                     [red][4]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]VOTAÇÃO[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]VOTAÇÃO[/bold bright_white]", border_style="bold dodger_blue1", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_sistema_votacao():
@@ -179,7 +179,7 @@ def exibir_menu_sistema_votacao():
         "          [bold bright_white][1][/bold bright_white]  Votar\n"
         "          [bold bright_white][2][/bold bright_white]  Encerrar Sistema De Votação"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]SISTEMA DE VOTAÇÃO[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]SISTEMA DE VOTAÇÃO[/bold bright_white]", border_style="bold chartreuse1", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_restultados_votacao():
@@ -201,9 +201,9 @@ def exibir_menu_restultados_votacao():
         "       [bold bright_white][3][/bold bright_white]  Votos Por Partido\n"
         "       [bold bright_white][4][/bold bright_white]  Validação De Integridade\n"
         "       [dim]──────────────────────────────[/dim]\n"
-        "       [dim red][5]  Voltar[/dim red]"
+        "       [red][5]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]RESULTADOS DA VOTAÇÃO[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]RESULTADOS DA VOTAÇÃO[/bold bright_white]", border_style="bold deep_sky_blue1", box=box.DOUBLE, padding=(1, 4)))
 
 def exibir_menu_ocorrencias():
     """
@@ -225,6 +225,6 @@ def exibir_menu_ocorrencias():
         "                 [bold bright_white][5][/bold bright_white]  Voto Duplo\n"
         "                 [bold bright_white][6][/bold bright_white]  Gerais\n"
         "                 [dim]──────────────────────────────[/dim]\n"
-        "                 [dim red][7]  Voltar[/dim red]"
+        "                 [red][7]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]OCORRÊNCIAS[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]OCORRÊNCIAS[/bold bright_white]", border_style="bold dark_orange", box=box.DOUBLE, padding=(1, 4)))
