@@ -137,5 +137,3 @@ def excluir_arquivo_ocorrencias_gerais():
     arquivo = CAMINHO_ARQUIVO
     if os.path.exists(arquivo):
         os.remove(arquivo)
-
-imprimir_ocorrencias_por_sessao()
