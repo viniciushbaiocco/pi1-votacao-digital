@@ -6,6 +6,10 @@ if not os.environ.get('TERM'):
 from colorama import Fore, Style
 import pyfiglet  # PASSO 1: biblioteca nova que gera texto em letras grandes (ASCII art)
 from rich.console import Console  # PASSO 3: Console do rich substitui print+colorama só no banner
+from rich.panel import Panel      # PASSO 4: Panel cria caixas com bordas automáticas, substitui o ╔═╗ manual
+from rich import box              # PASSO 4: box define o estilo da borda — usamos box.DOUBLE (╔═╗)
+from rich.align import Align      # PASSO 4: Align.center() centraliza o conteúdo dentro do painel
+
 console = Console(highlight=False)
 ##SOBRE O PYFIGLET:
 ##pyfiglet.figlet_format(texto, font="nome_fonte") devolve uma STRING com o texto desenhado em letras grandes feitas de caracteres
