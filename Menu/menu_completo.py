@@ -144,4 +144,7 @@ def menu_completo():
             acesso_negado.excluir_ocorrencia_acesso_negado()
             abertura_urna.excluir_ocorrencia_abertura_urna()
             encerramento_urna.excluir_ocorrencia_encerramento_urna()
+            voto_computado.excluir_arquivo_voto_computado()
+            voto_duplo.excluir_arquivo_voto_duplo()
+            geral.excluir_arquivo_ocorrencias_gerais()
             executando_menu_principal = 0
