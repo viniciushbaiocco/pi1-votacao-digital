@@ -1,7 +1,7 @@
 import os
 
 if not os.environ.get('TERM'):
-    os.environ['TERM'] = 'xterm-256color'
+    os.environ['TERM'] = 'xterm-266color'
 
 import pyfiglet  # PASSO 1: biblioteca nova que gera texto em letras grandes (ASCII art)
 from rich.console import Console  # PASSO 3: Console do rich substitui print+colorama só no banner
@@ -31,17 +31,23 @@ def exibir_banner():
         """
     # PASSO 1: gera o "LAD.PY" em letras grandes e centraliza pela largura real do terminal
     # PASSO 3: trocamos print+colorama por console.print do rich — estilo fica em style="bold cyan" etc.
-    largura_terminal = os.get_terminal_size().columns
+    try:
+        largura_terminal = os.get_terminal_size().columns
+    except OSError:
+        largura_terminal = 80
     arte_lad_py = pyfiglet.figlet_format("LAD.PY", font="standard")
 
-    console.print("═" * largura_terminal, style="bold cyan")
+    # cores da bandeira brasileira ciclando linha a linha no logo
+    cores_brasil = ["bold green", "bold green", "bold yellow", "bold yellow", "bold green", "bold green"]
+    console.print("═" * largura_terminal, style="bright_black")
     console.print()
-    for linha in arte_lad_py.split('\n'):
-        console.print(linha.center(largura_terminal), style="bold white")
+    for i, linha in enumerate(arte_lad_py.split('\n')):
+        cor = cores_brasil[i % len(cores_brasil)] #lógica: resto de i%len é o indice da lista (0%6 = 0, 1%6 = 1, 2%6 = 2, 3%6 = 3....)
+        console.print(linha.center(largura_terminal), style=cor)
     console.print()
-    console.print(subtitulo_banner.center(largura_terminal), style="white")
+    console.print(subtitulo_banner.center(largura_terminal), style="bright_white")
     console.print()
-    console.print("═" * largura_terminal, style="bold cyan")
+    console.print("═" * largura_terminal, style="bright_black")
     console.print()
 
 def exibir_menu_principal():
@@ -60,12 +66,12 @@ def exibir_menu_principal():
     # PASSO 4: Panel substitui o ╔═╗ manual — border_style define a cor da borda
     # [[1]] usa colchetes duplos pra mostrar [1] como texto literal (rich usa [..] como tags de cor)
     conteudo = (
-        "[bold yellow][1][/bold yellow]  Gerenciamento\n"
-        "[bold yellow][2][/bold yellow]  Votação\n"
-        "──────────────────────────────\n"
-        "[bold red][3]  Finalizar Sistema[/bold red]"
+        "[bold bright_white][1][/bold bright_white]  Gerenciamento\n"
+        "[bold bright_white][2][/bold bright_white]  Votação\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim red][3]  Finalizar Sistema[/dim red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold cyan]MENU PRINCIPAL[/bold cyan]", subtitle="[dim]Digite uma opção[/dim]", border_style="cyan", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_gerenciamento():
@@ -81,12 +87,12 @@ def exibir_menu_gerenciamento():
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
-        "[bold yellow][1][/bold yellow]  Eleitores\n"
-        "[bold yellow][2][/bold yellow]  Candidatos\n"
-        "──────────────────────────────\n"
-        "[bold red][3]  Voltar[/bold red]"
+        "[bold bright_white][1][/bold bright_white]  Eleitores\n"
+        "[bold bright_white][2][/bold bright_white]  Candidatos\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim red][3]  Voltar[/dim red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold cyan]GERENCIAMENTO[/bold cyan]", subtitle="[dim]Digite uma opção[/dim]", border_style="cyan", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]GERENCIAMENTO[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_eleitores():
@@ -102,15 +108,15 @@ def exibir_menu_eleitores():
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
-        "[bold yellow][1][/bold yellow]  Cadastrar Novos Eleitores\n"
-        "[bold yellow][2][/bold yellow]  Editar Eleitores\n"
-        "[bold yellow][3][/bold yellow]  Excluir Eleitores\n"
-        "[bold yellow][4][/bold yellow]  Buscar Eleitores\n"
-        "[bold yellow][5][/bold yellow]  Visualizar Eleitores\n"
-        "──────────────────────────────\n"
-        "[bold red][6]  Voltar[/bold red]"
+        "[bold bright_white][1][/bold bright_white]  Cadastrar Novos Eleitores\n"
+        "[bold bright_white][2][/bold bright_white]  Editar Eleitores\n"
+        "[bold bright_white][3][/bold bright_white]  Excluir Eleitores\n"
+        "[bold bright_white][4][/bold bright_white]  Buscar Eleitores\n"
+        "[bold bright_white][5][/bold bright_white]  Visualizar Eleitores\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim red][6]  Voltar[/dim red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold cyan]ELEITORES[/bold cyan]", subtitle="[dim]Digite uma opção[/dim]", border_style="cyan", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]ELEITORES[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_candidatos():
@@ -126,15 +132,15 @@ def exibir_menu_candidatos():
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
-        "[bold yellow][1][/bold yellow]  Cadastrar Novos Candidatos\n"
-        "[bold yellow][2][/bold yellow]  Editar Candidatos\n"
-        "[bold yellow][3][/bold yellow]  Excluir Candidatos\n"
-        "[bold yellow][4][/bold yellow]  Buscar Candidatos\n"
-        "[bold yellow][5][/bold yellow]  Visualizar Candidatos\n"
-        "──────────────────────────────\n"
-        "[bold red][6]  Voltar[/bold red]"
+        "[bold bright_white][1][/bold bright_white]  Cadastrar Novos Candidatos\n"
+        "[bold bright_white][2][/bold bright_white]  Editar Candidatos\n"
+        "[bold bright_white][3][/bold bright_white]  Excluir Candidatos\n"
+        "[bold bright_white][4][/bold bright_white]  Buscar Candidatos\n"
+        "[bold bright_white][5][/bold bright_white]  Visualizar Candidatos\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim red][6]  Voltar[/dim red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold cyan]CANDIDATOS[/bold cyan]", subtitle="[dim]Digite uma opção[/dim]", border_style="cyan", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]CANDIDATOS[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_votacao():
@@ -150,13 +156,13 @@ def exibir_menu_votacao():
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
-        "[bold yellow][1][/bold yellow]  Abrir Sistema De Votação\n"
-        "[bold yellow][2][/bold yellow]  Resultados Da Votação\n"
-        "[bold yellow][3][/bold yellow]  Ocorrências\n"
-        "──────────────────────────────\n"
-        "[bold red][4]  Voltar[/bold red]"
+        "[bold bright_white][1][/bold bright_white]  Abrir Sistema De Votação\n"
+        "[bold bright_white][2][/bold bright_white]  Resultados Da Votação\n"
+        "[bold bright_white][3][/bold bright_white]  Ocorrências\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim red][4]  Voltar[/dim red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold cyan]VOTAÇÃO[/bold cyan]", subtitle="[dim]Digite uma opção[/dim]", border_style="cyan", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]VOTAÇÃO[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_sistema_votacao():
@@ -172,10 +178,10 @@ def exibir_menu_sistema_votacao():
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
-        "[bold yellow][1][/bold yellow]  Votar\n"
-        "[bold yellow][2][/bold yellow]  Encerrar Sistema De Votação"
+        "[bold bright_white][1][/bold bright_white]  Votar\n"
+        "[bold bright_white][2][/bold bright_white]  Encerrar Sistema De Votação"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold cyan]SISTEMA DE VOTAÇÃO[/bold cyan]", subtitle="[dim]Digite uma opção[/dim]", border_style="cyan", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]SISTEMA DE VOTAÇÃO[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_restultados_votacao():
@@ -192,14 +198,14 @@ def exibir_menu_restultados_votacao():
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
-        "[bold yellow][1][/bold yellow]  Boletim De Urna\n"
-        "[bold yellow][2][/bold yellow]  Estatísticas De Comparecimento\n"
-        "[bold yellow][3][/bold yellow]  Votos Por Partido\n"
-        "[bold yellow][4][/bold yellow]  Validação De Integridade\n"
-        "──────────────────────────────\n"
-        "[bold red][5]  Voltar[/bold red]"
+        "[bold bright_white][1][/bold bright_white]  Boletim De Urna\n"
+        "[bold bright_white][2][/bold bright_white]  Estatísticas De Comparecimento\n"
+        "[bold bright_white][3][/bold bright_white]  Votos Por Partido\n"
+        "[bold bright_white][4][/bold bright_white]  Validação De Integridade\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim red][5]  Voltar[/dim red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold cyan]RESULTADOS DA VOTAÇÃO[/bold cyan]", subtitle="[dim]Digite uma opção[/dim]", border_style="cyan", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]RESULTADOS DA VOTAÇÃO[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
 
 def exibir_menu_ocorrencias():
     """
@@ -214,13 +220,13 @@ def exibir_menu_ocorrencias():
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
-        "[bold yellow][1][/bold yellow]  Abertura de Urna\n"
-        "[bold yellow][2][/bold yellow]  Acesso Negado\n"
-        "[bold yellow][3][/bold yellow]  Encerramento de Urna\n"
-        "[bold yellow][4][/bold yellow]  Voto Computado\n"
-        "[bold yellow][5][/bold yellow]  Voto Duplo\n"
-        "[bold yellow][6][/bold yellow]  Gerais\n"
-        "──────────────────────────────\n"
-        "[bold red][7]  Voltar[/bold red]"
+        "[bold bright_white][1][/bold bright_white]  Abertura de Urna\n"
+        "[bold bright_white][2][/bold bright_white]  Acesso Negado\n"
+        "[bold bright_white][3][/bold bright_white]  Encerramento de Urna\n"
+        "[bold bright_white][4][/bold bright_white]  Voto Computado\n"
+        "[bold bright_white][5][/bold bright_white]  Voto Duplo\n"
+        "[bold bright_white][6][/bold bright_white]  Gerais\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim red][7]  Voltar[/dim red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold cyan]OCORRÊNCIAS[/bold cyan]", subtitle="[dim]Digite uma opção[/dim]", border_style="cyan", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]OCORRÊNCIAS[/bold bright_white]", border_style="bright_blue", box=box.DOUBLE, padding=(1, 4)))
