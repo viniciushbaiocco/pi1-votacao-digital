@@ -3,7 +3,6 @@ import os
 if not os.environ.get('TERM'):
     os.environ['TERM'] = 'xterm-256color'
 
-from colorama import Fore, Style
 import pyfiglet  # PASSO 1: biblioteca nova que gera texto em letras grandes (ASCII art)
 from rich.console import Console  # PASSO 3: Console do rich substitui print+colorama só no banner
 from rich.panel import Panel      # PASSO 4: Panel cria caixas com bordas automáticas, substitui o ╔═╗ manual
@@ -17,7 +16,6 @@ console = Console(highlight=False)
 ##pra ver todas: python3 -c "import pyfiglet; print(pyfiglet.FigletFont.getFonts())"
 ##a string retornada tem várias linhas basta dar print() nela e o Python já quebra as linhas certinho
 
-largura = 36
 subtitulo_banner = "Sistema de Votação Digital"
 
 
@@ -64,7 +62,9 @@ def exibir_menu_principal():
     conteudo = (
         "\n"
         "  [bold yellow][1][/bold yellow]  Gerenciamento\n"
+        "\n"
         "  [bold yellow][2][/bold yellow]  Votação\n"
+        "\n"
         "  [bold red][3]  Finalizar Sistema[/bold red]\n"
     )
 
@@ -84,17 +84,13 @@ def exibir_menu_gerenciamento():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
-    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "GERENCIAMENTO".center(largura))
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Eleitores")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Candidatos")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[3]  Voltar")
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+    conteudo = (
+        "\n"
+        "  [bold yellow][1][/bold yellow]  Eleitores\n"
+        "  [bold yellow][2][/bold yellow]  Candidatos\n"
+        "  [bold red][3]  Voltar[/bold red]\n"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold cyan]GERENCIAMENTO[/bold cyan]", border_style="white", box=box.DOUBLE))
 
 
 def exibir_menu_eleitores():
@@ -109,20 +105,16 @@ def exibir_menu_eleitores():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
-    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "ELEITORES".center(largura))
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Cadastrar Novos Eleitores")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Editar Eleitores")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Excluir Eleitores")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[4]" + Fore.WHITE + "  Buscar Eleitores")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[5]" + Fore.WHITE + "  Visualizar Eleitores")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[6]  Voltar")
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+    conteudo = (
+        "\n"
+        "  [bold yellow][1][/bold yellow]  Cadastrar Novos Eleitores\n"
+        "  [bold yellow][2][/bold yellow]  Editar Eleitores\n"
+        "  [bold yellow][3][/bold yellow]  Excluir Eleitores\n"
+        "  [bold yellow][4][/bold yellow]  Buscar Eleitores\n"
+        "  [bold yellow][5][/bold yellow]  Visualizar Eleitores\n"
+        "  [bold red][6]  Voltar[/bold red]\n"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold cyan]ELEITORES[/bold cyan]", border_style="white", box=box.DOUBLE))
 
 
 def exibir_menu_candidatos():
@@ -137,20 +129,16 @@ def exibir_menu_candidatos():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
-    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "CANDIDATOS".center(largura))
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Cadastrar Novos Candidatos")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Editar Candidatos")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Excluir Candidatos")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[4]" + Fore.WHITE + "  Buscar Candidatos")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[5]" + Fore.WHITE + "  Visualizar Candidatos")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[6]  Voltar")
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+    conteudo = (
+        "\n"
+        "  [bold yellow][1][/bold yellow]  Cadastrar Novos Candidatos\n"
+        "  [bold yellow][2][/bold yellow]  Editar Candidatos\n"
+        "  [bold yellow][3][/bold yellow]  Excluir Candidatos\n"
+        "  [bold yellow][4][/bold yellow]  Buscar Candidatos\n"
+        "  [bold yellow][5][/bold yellow]  Visualizar Candidatos\n"
+        "  [bold red][6]  Voltar[/bold red]\n"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold cyan]CANDIDATOS[/bold cyan]", border_style="white", box=box.DOUBLE))
 
 
 def exibir_menu_votacao():
@@ -165,18 +153,14 @@ def exibir_menu_votacao():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
-    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "VOTAÇÃO".center(largura))
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Abrir Sistema De Votação")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Resultados Da Votação")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Ocorrências")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[4]  Voltar")
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+    conteudo = (
+        "\n"
+        "  [bold yellow][1][/bold yellow]  Abrir Sistema De Votação\n"
+        "  [bold yellow][2][/bold yellow]  Resultados Da Votação\n"
+        "  [bold yellow][3][/bold yellow]  Ocorrências\n"
+        "  [bold red][4]  Voltar[/bold red]\n"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold cyan]VOTAÇÃO[/bold cyan]", border_style="white", box=box.DOUBLE))
 
 
 def exibir_menu_sistema_votacao():
@@ -191,16 +175,12 @@ def exibir_menu_sistema_votacao():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
-    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "SISTEMA DE VOTAÇÃO".center(largura))
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Votar")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Encerrar Sistema De Votação")
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+    conteudo = (
+        "\n"
+        "  [bold yellow][1][/bold yellow]  Votar\n"
+        "  [bold yellow][2][/bold yellow]  Encerrar Sistema De Votação\n"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold cyan]SISTEMA DE VOTAÇÃO[/bold cyan]", border_style="white", box=box.DOUBLE))
 
 
 def exibir_menu_restultados_votacao():
@@ -216,19 +196,15 @@ def exibir_menu_restultados_votacao():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
-    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "RESULTADOS DA VOTAÇÃO".center(largura))
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Boletim De Urna")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Estatísticas De Comparecimento")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Votos Por Partido")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[4]" + Fore.WHITE + "  Validação De Integridade")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[5]  Voltar")
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+    conteudo = (
+        "\n"
+        "  [bold yellow][1][/bold yellow]  Boletim De Urna\n"
+        "  [bold yellow][2][/bold yellow]  Estatísticas De Comparecimento\n"
+        "  [bold yellow][3][/bold yellow]  Votos Por Partido\n"
+        "  [bold yellow][4][/bold yellow]  Validação De Integridade\n"
+        "  [bold red][5]  Voltar[/bold red]\n"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold cyan]RESULTADOS DA VOTAÇÃO[/bold cyan]", border_style="white", box=box.DOUBLE))
 
 def exibir_menu_ocorrencias():
     """
@@ -242,17 +218,13 @@ def exibir_menu_ocorrencias():
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
-    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "OCORRÊNCIAS".center(largura))
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Abertura de Urna")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Acesso Negado")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[3]" + Fore.WHITE + "  Encerramento de Urna")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[4]" + Fore.WHITE + "  Voto Computado")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[5]" + Fore.WHITE + "  Voto Duplo")
-    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[6]  Voltar")
-    print(Fore.LIGHTWHITE_EX + "║")
-    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+    conteudo = (
+        "\n"
+        "  [bold yellow][1][/bold yellow]  Abertura de Urna\n"
+        "  [bold yellow][2][/bold yellow]  Acesso Negado\n"
+        "  [bold yellow][3][/bold yellow]  Encerramento de Urna\n"
+        "  [bold yellow][4][/bold yellow]  Voto Computado\n"
+        "  [bold yellow][5][/bold yellow]  Voto Duplo\n"
+        "  [bold red][6]  Voltar[/bold red]\n"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold cyan]OCORRÊNCIAS[/bold cyan]", border_style="white", box=box.DOUBLE))
