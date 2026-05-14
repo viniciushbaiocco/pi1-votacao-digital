@@ -1,24 +1,16 @@
+import os
 import mysql.connector
+from dotenv import load_dotenv
+
+load_dotenv()
 
 def conexao_banco():
-
     try:
-        """
-        Tenta estabelecer uma conexão com um banco de dados MySQL usando variáveis de ambiente.
-
-        Args:
-            None
-
-        Returns: 
-            Retorna um objeto de conexão MySQL se a conexão for bem-sucedida,      
-            caso contrário, retorna None.
-        """
-
         conexao = mysql.connector.connect(
-            host="localhost",
-            user="seu_usuario",
-            password="sua_senha",
-            database="peu_banco"
+            host=os.environ.get("DB_HOST", "localhost"),
+            user=os.environ["DB_USER"],
+            password=os.environ["DB_PASSWORD"],
+            database=os.environ["DB_NAME"],
         )
         return conexao
     except mysql.connector.Error as err:
