@@ -1,9 +1,12 @@
 from database import conexao_banco as conect
 from Validadores import confirmacao
-from colorama import Fore, Style
+from rich.console import Console
+from rich.table import Table
+from rich import box
 
-def listagem_eleitores ():
+console = Console(highlight=False)
 
+def listagem_eleitores():
     """
     A função lista todos os eleitores da tabela eleitores.
 
@@ -12,46 +15,58 @@ def listagem_eleitores ():
 
     Returns:
         Os eleitores da tabela eleitores
-
     """
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 
     try:
-        #deve listar tudo da tabela eleitores (nome, cpf, titulo, etc)
         cursor.execute('SELECT * FROM eleitores')
         total_eleitores = cursor.fetchall()
 
         if len(total_eleitores) == 0:
-            print(Fore.YELLOW + Style.BRIGHT + '\n Nenhum eleitor cadastrado no sistema.')
+            console.print('\n Nenhum eleitor cadastrado no sistema.', style="bold yellow")
         else:
-            print(Fore.WHITE + Style.BRIGHT + '\n --- 5 - Listagem de Eleitores ---')
+            tabela = Table(
+                title="Listagem de Eleitores",
+                box=box.DOUBLE,
+                border_style="bold sandy_brown",
+                title_style="bold bright_white",
+                header_style="bold sandy_brown",
+                show_lines=True
+            ) #cria a tabela 
 
-            for eleitores in (total_eleitores):
-                print(Fore.WHITE + Style.BRIGHT + '=' * 50)
-                print(Fore.WHITE + Style.BRIGHT + f' ID: {eleitores["id"]}')
-                print(Fore.WHITE + Style.BRIGHT + f' Nome: {eleitores["nome"]}')
-                print(Fore.WHITE + Style.BRIGHT + f' Título de Eleitor: {eleitores["titulo_eleitor"]}')
+            tabela.add_column("ID", justify="center", style="bright_white")
+            tabela.add_column("Nome", style="bright_white")
+            tabela.add_column("Título de Eleitor", style="bright_white")
+            tabela.add_column("Mesário", justify="center")
+            tabela.add_column("Status de Votação", justify="center")
 
-                #para ficar melhor pro usuário transformarei 1 em sim 0 em não
-                if eleitores['mesario'] == 1:
-                    mesario = Fore.WHITE + Style.BRIGHT + 'Sim'
+            for eleitor in total_eleitores:
+                # converte 1/0 em texto colorido
+                if eleitor['mesario'] == 1:
+                    mesario = "[bold green]Sim[/bold green]"
                 else:
-                    mesario = Fore.WHITE + Style.BRIGHT + 'Não'
-                if eleitores['status_votacao'] == 1:
-                    status_votacao = Fore.WHITE + Style.BRIGHT + 'Já Votou'
+                    mesario = "[dim]Não[/dim]"
+
+                if eleitor['status_votacao'] == 1:
+                    status_votacao = "[bold green]Já Votou[/bold green]"
                 else:
-                    status_votacao = Fore.WHITE + Style.BRIGHT + 'Não Votou'
+                    status_votacao = "[dim]Não Votou[/dim]"
 
-                print(Fore.WHITE + Style.BRIGHT + f' Mesário: {mesario}')
-                print(Fore.WHITE + Style.BRIGHT + f' Status de Votação: {status_votacao}')
+                tabela.add_row(
+                    str(eleitor['id']),
+                    eleitor['nome'],
+                    eleitor['titulo_eleitor'],
+                    mesario,
+                    status_votacao
+                )
 
-            print(Fore.WHITE + Style.BRIGHT + '=' * 50)
-            print(Fore.WHITE + Style.BRIGHT + f' Total de Eleitores Cadastrados: {len(total_eleitores)}')
+            console.print(tabela)
+            console.print(f'\n Total de Eleitores Cadastrados: [bold white]{len(total_eleitores)}[/bold white]')
 
     except Exception as erro:
-        print(Fore.RED + Style.BRIGHT + f'\n Erro ao listar eleitores: {erro}')
+        console.print(f'\n Erro ao listar eleitores: {erro}', style="bold red")
 
     confirmacao.confirmacao()
 
