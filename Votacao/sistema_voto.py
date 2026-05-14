@@ -194,5 +194,3 @@ def sistema_voto(id_sessao):
 
 # NEXT STEPS
 # otimizar o codigo
-
-sistema_voto(1)
