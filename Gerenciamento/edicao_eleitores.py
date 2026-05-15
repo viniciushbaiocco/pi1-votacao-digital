@@ -79,27 +79,49 @@ def edicao_eleitores():
 
     console.print("\nDeseja realmente editar esse eleitor?\n1 - Sim\n2 - Não")
     opcao2 = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 2)
-
+    editado = 0
     match opcao2:
         case 1:
-            novo_nome = val_nome.validar_nome()
+            print('\nO Que Deseja Editar \n[1] Nome \n[2] Título \n[3] CPF \n[4] Mesário \n[5] Confirmar')
+            opcao_editar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ',1, 5)
+            while opcao_editar != 5:
+                match opcao_editar:
+                    case 1:
+                        novo_nome = val_nome.validar_nome()
+                        editado = 1
+                    
+                    case 2:
+                        novo_titulo = input('\nDigite o novo Título de Eleitor: ')
+                        while val_tit.validar_titulo(novo_titulo) == False:
+                            novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
+                        while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
+                            novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
+                        novo_titulo_verificado = novo_titulo
+                        
+                        editado = 1
 
-            novo_titulo = input('\nDigite o novo Título de Eleitor: ')
-            while val_tit.validar_titulo(novo_titulo) == False:
-                novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
-            while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
-                novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
-            novo_titulo_verificado = novo_titulo
+                    case 3:
+                        novo_cpf = input('\nDigite o novo CPF: ')
+                        novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
+                        while val_cpf.validacao_de_cpf(novo_cpf) == False:
+                            novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
+                        while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
+                            novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
+                            novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
 
-            novo_cpf = input('\nDigite o novo CPF: ')
-            novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
-            while val_cpf.validacao_de_cpf(novo_cpf) == False:
-                novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
-            while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
-                novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
-                novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
+                        editado = 1
 
-            novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ', 1, 2)
+                    case 4:
+                        novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ', 1, 2)
+
+                        editado = 1
+                    case 5:
+                        if editado == 1:
+                            print('Eleitor Editado Com Sucesso!')
+                        else:
+                            print('Encerrando Operação...')
+
+
             novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
             chave_acesso = chave.geracao_chave_acesso(novo_nome)
 
