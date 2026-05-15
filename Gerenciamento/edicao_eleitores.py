@@ -88,8 +88,9 @@ def edicao_eleitores():
                 match opcao_editar:
                     case 1:
                         novo_nome = val_nome.validar_nome()
+                        chave_acesso = chave.geracao_chave_acesso(novo_nome)
                         editado = 1
-                    
+                        
                     case 2:
                         novo_titulo = input('\nDigite o novo Título de Eleitor: ')
                         while val_tit.validar_titulo(novo_titulo) == False:
@@ -108,6 +109,7 @@ def edicao_eleitores():
                         while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
                             novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
                             novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
+                        novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
 
                         editado = 1
 
@@ -120,10 +122,6 @@ def edicao_eleitores():
                             print('Eleitor Editado Com Sucesso!')
                         else:
                             print('Encerrando Operação...')
-
-
-            novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
-            chave_acesso = chave.geracao_chave_acesso(novo_nome)
 
             cursor.execute('''
                            UPDATE eleitores SET nome = %s,
