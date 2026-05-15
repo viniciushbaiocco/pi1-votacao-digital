@@ -90,7 +90,13 @@ def edicao_eleitores():
                         novo_nome = val_nome.validar_nome()
                         chave_acesso = chave.geracao_chave_acesso(novo_nome)
                         editado = 1
-                        
+
+                        cursor.execute('''
+                        UPDATE eleitores SET nome = %s,
+                                            WHERE id = %s
+                        ''', (novo_nome))
+                        conexao.commit()
+
                     case 2:
                         novo_titulo = input('\nDigite o novo Título de Eleitor: ')
                         while val_tit.validar_titulo(novo_titulo) == False:
@@ -100,7 +106,11 @@ def edicao_eleitores():
                         novo_titulo_verificado = novo_titulo
                         
                         editado = 1
-
+                        cursor.execute('''
+                        UPDATE eleitores SET
+                                        titulo_eleitor = %s WHERE id = %s
+                        ''', (novo_titulo_verificado))
+                        conexao.commit()
                     case 3:
                         novo_cpf = input('\nDigite o novo CPF: ')
                         novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
@@ -112,22 +122,25 @@ def edicao_eleitores():
                         novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
 
                         editado = 1
-
+                        cursor.execute('''
+                        UPDATE eleitores SET
+                                        cpf = %s WHERE id = %s
+                        ''', (novo_cpf))
+                        conexao.commit()
                     case 4:
                         novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ', 1, 2)
 
                         editado = 1
+                        cursor.execute('''
+                        UPDATE eleitores SET
+                                        mesario = %s WHERE id = %s
+                        ''', (novo_mesario))
+                        conexao.commit()
                     case 5:
                         if editado == 1:
                             print('Eleitor Editado Com Sucesso!')
                         else:
                             print('Encerrando Operação...')
-
-            cursor.execute('''
-                           UPDATE eleitores SET nome = %s,
-                                                cpf = %s, titulo_eleitor = %s, mesario = %s, chave_acesso = %s WHERE id = %s
-                           ''', (novo_nome, novo_cpf_criptografado, novo_titulo_verificado, novo_mesario, chave_acesso, id_eleitor))
-            conexao.commit()
 
             cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
             eleitor = cursor.fetchone()
