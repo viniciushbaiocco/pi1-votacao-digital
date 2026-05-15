@@ -83,7 +83,7 @@ def exibir_boletim_urna():
                         visual.carregar_pontos_loop(3, "Verificando Vencedor")
                         time.sleep(1)
 
-                        console.print("[bold red]\n\nNenhum Voto Registrado[/bold red]")
+                        console.print("[bold red]Nenhum Voto Registrado[/bold red]")
                         console.print("\n[bold yellow]Vencedor não pode ser definido![/bold yellow]")
 
                         confirmacao.confirmacao()
@@ -117,7 +117,7 @@ def exibir_boletim_urna():
                         else:
                             visual.carregar_pontos_loop(3, "Verificando Vencedor")
                             time.sleep(1)
-                            console.print("\n[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]")
+                            console.print("[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]")
 
                         # Pausa e limpa a tela após exibir o resultado
                         confirmacao.confirmacao()
