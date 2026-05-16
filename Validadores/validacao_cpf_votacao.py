@@ -1,4 +1,6 @@
 from colorama import Fore, Style
+from Visual.visual import limpar_tela
+from time import sleep
 
 def validar_cpf_voto(cpf):
     """
@@ -18,6 +20,8 @@ def validar_cpf_voto(cpf):
     if len(cpf_arrumado) != 4:
         print(Fore.RED + Style.BRIGHT + "\nCPF INVÁLIDO")
         print(Fore.YELLOW+ Style.BRIGHT + "Para a votação digite apenas os quatro primeiros dígitos do seu CPF")
+        sleep(1.5)
+        limpar_tela()
         return False
 
 
@@ -26,7 +30,8 @@ def validar_cpf_voto(cpf):
         if i.isalpha():
             print(Fore.RED + Style.BRIGHT + "\nCPF INVÁLIDO")
             print(Fore.YELLOW + Style.BRIGHT + "Não digite letras no CPF")
+            sleep(1.5)
+            limpar_tela()
             return False
-
 
     return True

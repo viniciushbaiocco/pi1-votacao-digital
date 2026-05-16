@@ -1,4 +1,6 @@
 from colorama import Fore,Style
+from Visual.visual import limpar_tela
+from time import sleep
 
 def validar_nome():
     """
@@ -30,22 +32,30 @@ def validar_nome():
 
         if nome_letras == False:
             print(Fore.YELLOW + Style.BRIGHT + "O nome não pode ser espaço vazio e deve conter apenas letras!")
+            sleep(1.5)
+            limpar_tela()
         else:
             if len(nome_ajustado) < 2:
                 nome_validado = False
                 print(
                     Fore.RED + Style.BRIGHT + "Nome inválido! Necessário nome completo (nome e sobrenome).")
+                sleep(1.5)
+                limpar_tela()
             else:
 
                 if len(nome_ajustado[0]) < 2:
                     nome_validado = False
                     print(
                         Fore.RED + Style.BRIGHT + "Nome inválido! Primeiro nome precisa ter mínimo de 3 letras.")
+                    sleep(1.5)
+                    limpar_tela()
                 else:
                     if len(nome_ajustado[1]) < 1:
                         nome_validado = False
                         print(
                             Fore.RED + Style.BRIGHT + "Sobrenome inválido! Sobrenome precisa ter mínimo de 2 letras.")
+                        sleep(1.5)
+                        limpar_tela()
                     else:
                         nome_validado = True
 

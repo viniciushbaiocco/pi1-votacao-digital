@@ -1,4 +1,6 @@
 from colorama import Fore, Style
+from Visual.visual import limpar_tela
+from time import sleep
 
 def validar_titulo (titulo):
 
@@ -19,6 +21,8 @@ def validar_titulo (titulo):
     #Verificação de tamanho do título
     if  len(arrumando) != 12:
         print(Fore.RED + Style.BRIGHT + "Título de eleitor inválido! O Título de eleitor deve conter 12 dígitos.")
+        sleep(1.5)
+        limpar_tela()
         return False
     
      #Verificação se tem letras
@@ -27,6 +31,8 @@ def validar_titulo (titulo):
     
     except ValueError:
         print(Fore.RED + Style.BRIGHT + "Título de eleitor inválido! O Título deve conter apenas números.")
+        sleep(1.5)
+        limpar_tela()
         return False
 
     dicionario_UF = {
@@ -42,6 +48,8 @@ def validar_titulo (titulo):
  
     if str_uf not in dicionario_UF:
         print(Fore.RED + Style.BRIGHT + f"Título de eleitor inválido!")
+        sleep(1.5)
+        limpar_tela()
         return False
 
     lista_1_DV = [2, 3, 4, 5, 6, 7, 8, 9]
@@ -76,6 +84,8 @@ def validar_titulo (titulo):
  
     if separado[10] != digito_1_DV or separado[11] != digito_2_DV:
         print(Fore.RED + Style.BRIGHT + "Título de eleitor inválido!")
+        sleep(1.5)
+        limpar_tela()
         return False
  
     return True
