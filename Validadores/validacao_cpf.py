@@ -1,5 +1,5 @@
 from colorama import Fore, Style
-from Visual import visual
+from Visual.visual import limpar_tela
 from time import sleep
 def validacao_de_cpf(cpf_digitado_usuario):
     
@@ -19,8 +19,8 @@ def validacao_de_cpf(cpf_digitado_usuario):
     #Verificação de tamanho do CPF
     if len(arrumando) != 11:
         print(Fore.RED + Style.BRIGHT + f"CPF inválido! O CPF deve conter 11 dígitos")
-        sleep(2)
-        visual.limpar_tela()
+        sleep(1.5)
+        limpar_tela()
         return False
     
     #Verificação se têm números repitidos
