@@ -1,6 +1,5 @@
 from Verificadores import verificacao_chave_acesso_banco
 from Validadores import validacao_chave_acesso, confirmacao
-from Validadores import gerenciador_de_entrada as ge
 from database import conexao_banco
 from Votacao import autenticacao_mesario
 from criptografia import criptografia as cripto
@@ -31,10 +30,25 @@ def encerrar_sistema_votacao(id_sessao):
     try:
         cursor = conexao.cursor()
 
-        resposta = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT + "\nDeseja realmente encerrar a votação? \n[1] - Sim \n [X] - Não ")
+        resposta = input(Fore.WHITE + Style.BRIGHT + "\nDeseja realmente encerrar a votação? (Sim/Não): ")
+        resposta_sem_espaco = resposta.replace(" ", "")
 
-        if resposta.lower() != 1:
+        if resposta_sem_espaco.lower() != "sim":
             print(Fore.YELLOW + Style.BRIGHT + "\nEncerramento cancelado.") #mudei a msg aqui
+            confirmacao.confirmacao()
+            return False
+
+        confirmacao_chave = input(Fore.WHITE + Style.BRIGHT + "\nConfirme sua chave de acesso pessoal: ")
+
+        if validacao_chave_acesso.validar_chave_acesso(confirmacao_chave) == False:
+            print(Fore.YELLOW + Style.BRIGHT + "\nEncerramento cancelado.")
+            confirmacao.confirmacao()
+            return False
+
+        confirmacao_chave_criptografada = cripto.criptografar_chave_acesso(confirmacao_chave)
+
+        if verificacao_chave_acesso_banco.verificar_chave_acesso_banco(confirmacao_chave_criptografada) == (0,):
+            print(Fore.YELLOW + Style.BRIGHT + "\nChave de acesso não confere. Encerramento cancelado.")
             confirmacao.confirmacao()
             return False
 
