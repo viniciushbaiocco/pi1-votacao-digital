@@ -1,5 +1,4 @@
 from colorama import Fore, Style
-from Visual.visual import carregar_pontos_loop, limpar_tela
 
 def obter_entrada_inteira_valida(mensagem, min_val, max_val):
     """
@@ -20,7 +19,6 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
         entrada_str = input(Fore.WHITE + Style.BRIGHT + "\n" + mensagem)
 
         if entrada_str.upper() == "X":
-            carregar_pontos_loop(2, "Cancelando Operação")
             return False
         else:
             try:
@@ -28,6 +26,8 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
                 if min_val <= escolha <= max_val:
                     executando_entrada = 1
                     return escolha
+                elif min_val == max_val or max_val == min_val:
+                    print(f"{Fore.RED}{Style.BRIGHT}Erro: Opção inválida. Por favor, escolha dentre as opções mostradas")
                 else:
                     print(f"{Fore.RED}{Style.BRIGHT}Erro: Opção inválida. Por favor, escolha uma opção entre {min_val} e {max_val}.{Style.RESET_ALL}")
             except ValueError:
