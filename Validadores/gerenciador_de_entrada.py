@@ -15,13 +15,18 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
 
     """
     executando_entrada = 0
-    while (executando_entrada == 0):
-        try:
-            escolha = int(input(Fore.WHITE + Style.BRIGHT + "\n"+mensagem))
-            if min_val <= escolha <= max_val:
-                executando_entrada = 1
-                return escolha
-            else:
-                print(f"{Fore.RED}{Style.BRIGHT}Erro: Opção inválida. Por favor, escolha uma opção entre {min_val} e {max_val}.{Style.RESET_ALL}")
-        except ValueError:
-            print(f"{Fore.RED}{Style.BRIGHT}Erro: Entrada inválida. Por favor, digite um número inteiro.{Style.RESET_ALL}")
+    while executando_entrada == 0:
+        entrada_str = input(Fore.WHITE + Style.BRIGHT + "\n" + mensagem)
+
+        if entrada_str.upper() == "X":
+            return False
+        else:
+            try:
+                escolha = int(entrada_str)
+                if min_val <= escolha <= max_val:
+                    executando_entrada = 1
+                    return escolha
+                else:
+                    print(f"{Fore.RED}{Style.BRIGHT}Erro: Opção inválida. Por favor, escolha uma opção entre {min_val} e {max_val}.{Style.RESET_ALL}")
+            except ValueError:
+                print(f"{Fore.RED}{Style.BRIGHT}Erro: Entrada inválida. Por favor, digite um número inteiro ou 'X'.{Style.RESET_ALL}")
