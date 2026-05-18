@@ -23,21 +23,21 @@ def menu_completo():
     while executando_menu_principal:
         sm.exibir_menu_principal()
         escolha_principal = ge.obter_entrada_inteira_valida(
-            "Escolha uma opção: ", 1, 3)
+            "Escolha uma opção: ", 1, 2)
 
         if escolha_principal == 1:  # Gerenciamento
             executando_menu_gerenciamento = 1
             while executando_menu_gerenciamento == 1:
                 sm.exibir_menu_gerenciamento()
                 escolha_gerenciamento = ge.obter_entrada_inteira_valida(
-                    "Escolha uma opção: ", 1, 3)
+                    "Escolha uma opção: ", 1, 2)
 
                 if escolha_gerenciamento == 1:  # Eleitores
                     executando_menu_eleitores = 1
                     while executando_menu_eleitores:
                         sm.exibir_menu_eleitores()
                         escolha_eleitor = ge.obter_entrada_inteira_valida(
-                            "Escolha uma opção: ", 1, 6)
+                            "Escolha uma opção: ", 1, 5)
 
                         match escolha_eleitor:
                             case 1:
@@ -50,14 +50,14 @@ def menu_completo():
                                 busca_eleitores.busca_eleitor()
                             case 5:
                                 listagem_eleitores.listagem_eleitores()
-                            case 6:  # Voltar
+                            case False:  # Voltar
                                 executando_menu_eleitores = 0
                 elif escolha_gerenciamento == 2:  # Candidatos
                     executando_menu_candidatos = 1
                     while executando_menu_candidatos == 1:
                         sm.exibir_menu_candidatos()
                         escolha_candidato = ge.obter_entrada_inteira_valida(
-                            "Escolha uma opção: ", 1, 6)
+                            "Escolha uma opção: ", 1, 5)
 
                         match escolha_candidato:
                             case 1:
@@ -70,9 +70,9 @@ def menu_completo():
                                 print("Em desenvolvimento...")
                             case 5:
                                 print("Em desenvolvimento...")
-                            case 6:  # Voltar
+                            case False:  # Voltar
                                 executando_menu_candidatos = 0
-                elif escolha_gerenciamento == 3:  # Voltar
+                elif escolha_gerenciamento == False:  # Voltar
                     executando_menu_gerenciamento = 0
 
         elif escolha_principal == 2:  # Votação
@@ -80,7 +80,7 @@ def menu_completo():
             while executando_menu_votacao == 1:
                 sm.exibir_menu_votacao()
                 escolha_votacao = ge.obter_entrada_inteira_valida(
-                    "Escolha uma opção: ", 1, 4)
+                    "Escolha uma opção: ", 1, 3)
                 sessao += 1 # Soma 1 para cada entrada no menu votação, indicando a sessão
                 if escolha_votacao == 1 and abertura_votacao.abrir_sistema_votacao(sessao):  # Abrir Sistema De Votação
                     executando_menu_sistema_votacao = 1
@@ -101,7 +101,7 @@ def menu_completo():
                     while executando_menu_resultados_votacao == 1:
                         sm.exibir_menu_restultados_votacao()
                         escolha_resultado_votacao = ge.obter_entrada_inteira_valida(
-                            "Escolha uma opção: ", 1, 5)
+                            "Escolha uma opção: ", 1, 4)
 
                         match escolha_resultado_votacao:
                             case 1:
@@ -112,14 +112,14 @@ def menu_completo():
                                 print("Em desenvolvimento...")
                             case 4:
                                 print("Em desenvolvimento...")
-                            case 5:  # Voltar
+                            case False:  # Voltar
                                 executando_menu_resultados_votacao = 0
                 elif escolha_votacao == 3:
                     executando_menu_ocorrencias = 1
                     while executando_menu_ocorrencias == 1:
                         sm.exibir_menu_ocorrencias()
                         escolha_ocorrencia = ge.obter_entrada_inteira_valida(
-                            "Escolha uma opção: ", 1, 7)
+                            "Escolha uma opção: ", 1, 6)
 
                         match escolha_ocorrencia:
                             case 1:
@@ -134,12 +134,12 @@ def menu_completo():
                                 voto_duplo.imprimir_voto_duplo()
                             case 6:
                                 geral.imprimir_ocorrencias_por_sessao()
-                            case 7:
+                            case False:
                                 executando_menu_ocorrencias = 0  # Voltar
-                elif escolha_votacao == 4:  # Voltar
+                elif escolha_votacao == False:  # Voltar
                     executando_menu_votacao = 0
 
-        elif escolha_principal == 3:  # Sair
+        elif escolha_principal == False:  # Sair
             print("Sistema Finalizado")
             acesso_negado.excluir_ocorrencia_acesso_negado()
             abertura_urna.excluir_ocorrencia_abertura_urna()
