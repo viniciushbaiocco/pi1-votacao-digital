@@ -88,19 +88,20 @@ def edicao_eleitores():
     editado = 0
     match opcao2:
         case 1:
-            print('\nO Que Deseja Editar \n[1] Nome \n[2] Título \n[3] CPF \n[4] Mesário \n[5] Confirmar')
-            opcao_editar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ',1, 5)
+            opcao_editar = 0
             while opcao_editar != 5:
+                print('\nO Que Deseja Editar \n[1] Nome \n[2] Título \n[3] CPF \n[4] Mesário \n[5] Confirmar')
+                opcao_editar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ',1, 5)
                 match opcao_editar:
                     case 1:
                         novo_nome = val_nome.validar_nome()
-                        chave_acesso = chave.geracao_chave_acesso(novo_nome)
-                        editado = 1
+                        nova_chave_acesso = chave.geracao_chave_acesso(novo_nome)
 
+                        editado = 1
                         cursor.execute('''
-                        UPDATE eleitores SET nome = %s,
+                        UPDATE eleitores SET nome = %s, chave_acesso = %s
                                             WHERE id = %s
-                        ''', (novo_nome, id_eleitor))
+                        ''', (novo_nome, nova_chave_acesso, id_eleitor))
                         conexao.commit()
 
                         print('Eleitor Editado Com Sucesso!')
@@ -128,8 +129,7 @@ def edicao_eleitores():
                         while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
                             novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
                             novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
-                        novo_cpf_descriptografado = crip.descriptografar_cpf(novo_cpf_criptografado)
-
+                        
                         editado = 1
                         cursor.execute('''
                         UPDATE eleitores SET
