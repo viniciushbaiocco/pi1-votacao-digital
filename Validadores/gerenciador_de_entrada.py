@@ -1,4 +1,5 @@
 from colorama import Fore, Style
+from Visual.visual import carregar_pontos_loop, limpar_tela
 
 def obter_entrada_inteira_valida(mensagem, min_val, max_val):
     """
@@ -19,6 +20,7 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
         entrada_str = input(Fore.WHITE + Style.BRIGHT + "\n" + mensagem)
 
         if entrada_str.upper() == "X":
+            carregar_pontos_loop(2, "Cancelando Operação")
             return False
         else:
             try:

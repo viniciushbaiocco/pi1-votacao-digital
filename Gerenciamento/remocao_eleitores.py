@@ -52,8 +52,12 @@ def remocao_eleitores():
     console.print("\n[bold bright_white]--- 3 - Excluir Eleitores ---[/bold bright_white]")
     console.print("\nOpção 1: Remover pelo CPF")
     console.print("Opção 2: Remover pelo Título de eleitor")
+    console.print("[bold bright_red][X] Cancelar Operaçao[/bold bright_red]")
 
     opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 2)
+
+    if opcao == False:
+        return False
 
     while opcao != 3:
         eleitor = None
