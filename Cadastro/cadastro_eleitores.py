@@ -60,7 +60,7 @@ def cadastrar_eleitor():
 
         mesario_valido = False
         while not mesario_valido:
-            resposta = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT + "\nDeseja realmente encerrar a votação? \n[1] - Sim \n[X] - Não \nDigite uma opção: ", 1,1)
+            resposta = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT + "\nO eleitor será mesário? \n[1] - Sim \n[X] - Não \nDigite uma opção: ", 1,1)
 
             mesario_valido = True
 
