@@ -104,7 +104,8 @@ def edicao_eleitores():
                         ''', (novo_nome, nova_chave_acesso, id_eleitor))
                         conexao.commit()
 
-                        print('Eleitor Editado Com Sucesso!')
+                        print('Nome Editado Com Sucesso!')
+                        print(f'Sua Nova Chave de Acesso é:{nova_chave_acesso}')
                     case 2:
                         novo_titulo = input('\nDigite o novo Título de Eleitor: ')
                         while val_tit.validar_titulo(novo_titulo) == False:
@@ -120,7 +121,7 @@ def edicao_eleitores():
                         ''', (novo_titulo_verificado, id_eleitor))
                         conexao.commit()
 
-                        print('Eleitor Editado Com Sucesso!')
+                        print('Título Editado Com Sucesso!')
                     case 3:
                         novo_cpf = input('\nDigite o novo CPF: ')
                         novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
@@ -134,12 +135,14 @@ def edicao_eleitores():
                         cursor.execute('''
                         UPDATE eleitores SET
                                         cpf = %s WHERE id = %s
-                        ''', (novo_cpf, id_eleitor))
+                        ''', (novo_cpf_criptografado, id_eleitor))
                         conexao.commit()
 
-                        print('Eleitor Editado Com Sucesso!')
+                        print('CPF Editado Com Sucesso!')
                     case 4:
                         novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ', 1, 2)
+                        if novo_mesario == 2:
+                            novo_mesario = 0
 
                         editado = 1
                         cursor.execute('''
@@ -148,7 +151,7 @@ def edicao_eleitores():
                         ''', (novo_mesario, id_eleitor))
                         conexao.commit()
 
-                        print('Eleitor Editado Com Sucesso!')
+                        print('Mesário Editado Com Sucesso!')
                     case 5:
                         if editado == 1:
                             cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
