@@ -74,38 +74,47 @@ def busca_eleitor():
     while opcao != 3:
 
         if opcao == 1:
-            cpf = str(input("\nDigite o número do CPF a ser consultado: "))
+            cpf = ge.input_cancelavel("Digite o CPF do eleitor", "BUSCA POR CPF")
+            if cpf is None:
+                break
+            while val_cpf.validacao_de_cpf(cpf) == False:
+                cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "BUSCA POR CPF")
+                if cpf is None:
+                    break
+            if cpf is None:
+                break
 
-            if val_cpf.validacao_de_cpf(cpf):
-                cpf_criptografado = cripto.criptografar_cpf(cpf)
-
-                if ver_cpf.verificar_cpf_banco(cpf_criptografado)[0] == 1:
-                    cursor.execute(
-                        "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE cpf = %s",
-                        (cpf_criptografado,)
-                    )
-                    e = cursor.fetchone()
-                    exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'], cpf=cpf)
-                else:
-                    console.print("\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
+            cpf_criptografado = cripto.criptografar_cpf(cpf)
+            if ver_cpf.verificar_cpf_banco(cpf_criptografado)[0] == 1:
+                cursor.execute(
+                    "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE cpf = %s",
+                    (cpf_criptografado,)
+                )
+                e = cursor.fetchone()
+                exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'], cpf=cpf)
             else:
-                console.print("\nPor favor, refaça sua busca!", style="bold yellow")
+                console.print("\n*** Eleitor não cadastrado! ***\nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
 
         if opcao == 2:
-            titulo_eleitor = str(input("Digite o número do Título de eleitor a ser consultado: "))
+            titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor", "BUSCA POR TÍTULO")
+            if titulo_eleitor is None:
+                break
+            while val_titulo.validar_titulo(titulo_eleitor) == False:
+                titulo_eleitor = ge.input_cancelavel("Título inválido. Digite novamente", "BUSCA POR TÍTULO")
+                if titulo_eleitor is None:
+                    break
+            if titulo_eleitor is None:
+                break
 
-            if val_titulo.validar_titulo(titulo_eleitor):
-                if ver_titulo.verificar_titulo_de_eleitor_banco(titulo_eleitor)[0] == 1:
-                    cursor.execute(
-                        "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE titulo_eleitor = %s",
-                        (titulo_eleitor,)
-                    )
-                    e = cursor.fetchone()
-                    exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'])
-                else:
-                    console.print("*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.\n", style="bold yellow")
+            if ver_titulo.verificar_titulo_de_eleitor_banco(titulo_eleitor)[0] == 1:
+                cursor.execute(
+                    "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE titulo_eleitor = %s",
+                    (titulo_eleitor,)
+                )
+                e = cursor.fetchone()
+                exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'])
             else:
-                console.print("\nPor favor, refaça sua busca!", style="bold yellow")
+                console.print("*** Eleitor não cadastrado! ***\nRealizar o cadastramento no Menu Gerenciamento de Eleitores.\n", style="bold yellow")
         break
 
     confirmacao.confirmacao()
