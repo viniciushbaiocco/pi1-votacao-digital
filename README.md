@@ -15,7 +15,7 @@ O projeto é o backend de um sistema de votação digital via terminal desenvolv
 
     Linguagem: Python 3.x
     Banco de Dados: MySQL
-    Bibliotecas Exigidas: mysql.connector, datetime, pyfiglet
+    Bibliotecas Exigidas: mysql.connector, datetime, pyfiglet, rich, python-dotenv
     Criptografia: Cifra de Hill (Álgebra Linear)
 
 **Como Executar o Sistema**

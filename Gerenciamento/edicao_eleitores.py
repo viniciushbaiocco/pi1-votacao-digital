@@ -14,6 +14,7 @@ console = Console(highlight=False)
 def exibir_tabela_eleitor(titulo, eleitor):
     mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] == 1 else "[dim]Não[/dim]"
     status_texto  = "[bold green]Já Votou[/bold green]" if eleitor['status_votacao'] == 1 else "[dim]Não Votou[/dim]"
+    cpf_desc      = crip.descriptografar_cpf(eleitor['cpf'])
 
     tabela = Table(
         title=titulo,
@@ -24,12 +25,13 @@ def exibir_tabela_eleitor(titulo, eleitor):
         show_lines=True
     )
     tabela.add_column("ID", justify="center", style="bright_white")
-    tabela.add_column("Nome", style="bright_white")
+    tabela.add_column("Nome",              style="bright_white")
+    tabela.add_column("CPF",               style="bright_white")
     tabela.add_column("Título de Eleitor", style="bright_white")
-    tabela.add_column("Mesário", justify="center")
+    tabela.add_column("Mesário",           justify="center")
     tabela.add_column("Status de Votação", justify="center")
 
-    tabela.add_row(str(eleitor['id']), eleitor['nome'], eleitor['titulo_eleitor'], mesario_texto, status_texto)
+    tabela.add_row(str(eleitor['id']), eleitor['nome'], cpf_desc, eleitor['titulo_eleitor'], mesario_texto, status_texto)
     console.print(tabela)
 
 def edicao_eleitores():

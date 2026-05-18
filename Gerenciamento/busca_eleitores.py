@@ -12,7 +12,7 @@ from rich import box
 
 console = Console(highlight=False)
 
-def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao):
+def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao, cpf=None):
     mesario_texto  = "[bold green]Sim[/bold green]" if mesario == 1 else "[dim]Não[/dim]"
     status_texto   = "[bold green]Já Votou[/bold green]" if status_votacao == 1 else "[dim]Não Votou[/dim]"
 
@@ -24,13 +24,18 @@ def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao):
         header_style="bold sandy_brown",
         show_lines=True
     )
-    tabela.add_column("ID", justify="center", style="bright_white")
-    tabela.add_column("Nome", style="bright_white")
+    tabela.add_column("ID",                justify="center", style="bright_white")
+    tabela.add_column("Nome",              style="bright_white")
+    if cpf is not None:
+        tabela.add_column("CPF",           style="bright_white")
     tabela.add_column("Título de Eleitor", style="bright_white")
-    tabela.add_column("Mesário", justify="center")
+    tabela.add_column("Mesário",           justify="center")
     tabela.add_column("Status de Votação", justify="center")
 
-    tabela.add_row(str(id_), nome, titulo_eleitor, mesario_texto, status_texto)
+    if cpf is not None:
+        tabela.add_row(str(id_), nome, cpf, titulo_eleitor, mesario_texto, status_texto)
+    else:
+        tabela.add_row(str(id_), nome, titulo_eleitor, mesario_texto, status_texto)
     console.print(tabela)
 
 def busca_eleitor():
@@ -68,7 +73,7 @@ def busca_eleitor():
                         (cpf_criptografado,)
                     )
                     e = cursor.fetchone()
-                    exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'])
+                    exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'], cpf=cpf)
                 else:
                     console.print("\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
             else:
