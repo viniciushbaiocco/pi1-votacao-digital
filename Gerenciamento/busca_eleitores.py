@@ -59,8 +59,12 @@ def busca_eleitor():
     console.print("\n[bold bright_white]--- 4 - Buscar Eleitores ---[/bold bright_white]")
     console.print("\nOpção 1: Buscar pelo CPF")
     console.print("Opção 2: Buscar pelo Título de eleitor")
+    console.print("[X] Cancelar Operaçao")
 
     opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 2)
+
+    if opcao == False:
+        return False
 
     while opcao != 3:
 
