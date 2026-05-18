@@ -1,4 +1,18 @@
 from colorama import Fore, Style
+from rich.console import Console
+from rich.panel import Panel
+from rich.align import Align
+from rich import box
+
+_console = Console(highlight=False)
+
+def input_cancelavel(prompt, titulo=""):
+    conteudo = f"[bright_white]{prompt}[/bright_white]\n[dim]X - Cancelar[/dim]"
+    _console.print(Panel(Align.center(conteudo), title=f"[bold bright_white]{titulo}[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
+    valor = input("» ")
+    if valor.strip().upper() == "X":
+        return None
+    return valor
 
 def obter_entrada_inteira_valida(mensagem, min_val, max_val):
     """
