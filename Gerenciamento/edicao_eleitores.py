@@ -7,6 +7,8 @@ from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf
     validacao_titulo as val_tit
 from rich.console import Console
 from rich.table import Table
+from rich.panel import Panel
+from rich.align import Align
 from rich import box
 from Visual.visual import limpar_tela
 
@@ -52,9 +54,15 @@ def edicao_eleitores():
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 
-    console.print("\n[bold bright_white]--- 2 - Edição de Eleitores ---[/bold bright_white]")
-    console.print("\nOpção 1: Busca pelo CPF\nOpção 2: Busca pelo Título de Eleitor")
-    opcao = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 2)
+    conteudo = (
+        "[bold bright_white][1][/bold bright_white]  Buscar pelo CPF\n"
+        "[bold bright_white][2][/bold bright_white]  Buscar pelo Título de Eleitor\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim][X]  Cancelar[/dim]"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]EDITAR ELEITORES[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
+
+    opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
     match opcao:
         case 1:
