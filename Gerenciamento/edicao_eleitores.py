@@ -104,8 +104,8 @@ def edicao_eleitores():
                         ''', (novo_nome, nova_chave_acesso, id_eleitor))
                         conexao.commit()
 
-                        print('Nome Editado Com Sucesso!')
-                        print(f'Sua Nova Chave de Acesso é:{nova_chave_acesso}')
+                        console.print(f'[bold bright_green]Nome Editado Com Sucesso![/bold bright_green]')
+                        console.print(f'Sua Nova Chave de Acesso é: [bold bright_yellow]{nova_chave_acesso}[/bold bright_yellow]')
                     case 2:
                         novo_titulo = input('\nDigite o novo Título de Eleitor: ')
                         while val_tit.validar_titulo(novo_titulo) == False:
