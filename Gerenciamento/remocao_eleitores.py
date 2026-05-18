@@ -3,6 +3,8 @@ from Validadores import confirmacao as conf, gerenciador_de_entrada as ge, valid
 from criptografia import criptografia as crip
 from rich.console import Console
 from rich.table import Table
+from rich.panel import Panel
+from rich.align import Align
 from rich import box
 from Visual.visual import limpar_tela
 
@@ -49,12 +51,15 @@ def remocao_eleitores():
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 
-    console.print("\n[bold bright_white]--- 3 - Excluir Eleitores ---[/bold bright_white]")
-    console.print("\nOpção 1: Remover pelo CPF")
-    console.print("Opção 2: Remover pelo Título de eleitor")
-    console.print("[bold bright_red][X] Cancelar Operaçao[/bold bright_red]")
+    conteudo = (
+        "[bold bright_white][1][/bold bright_white]  Remover pelo CPF\n"
+        "[bold bright_white][2][/bold bright_white]  Remover pelo Título de Eleitor\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim][X]  Cancelar[/dim]"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]EXCLUIR ELEITORES[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
 
-    opcao = ge.obter_entrada_inteira_valida("\nDigite uma opção: ", 1, 2)
+    opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
     if opcao == False:
         return False
