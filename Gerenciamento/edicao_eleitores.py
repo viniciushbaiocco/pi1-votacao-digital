@@ -64,6 +64,11 @@ def edicao_eleitores():
 
     opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
+    if opcao == False:
+        cursor.close()
+        conexao.close()
+        return
+
     match opcao:
         case 1:
             cpf = input('\nCPF: ')
