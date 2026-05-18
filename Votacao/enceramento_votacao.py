@@ -29,19 +29,19 @@ def encerrar_sistema_votacao(id_sessao):
     conexao = conexao_banco.conexao_banco() #mudei o import pq o nome tava diferente
 
     try:
+
         cursor = conexao.cursor()
 
-        resposta = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT + "\nDeseja realmente encerrar a votação? \n[1] - Sim \n [X] - Não]: ")
-        
+        resposta = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT + "\nDeseja realmente encerrar a votação? \n[1] - Sim \n[X] - Não] \nDigite uma opção: ", 1,1)
 
-        if resposta == False:
+        if not resposta:
             print(Fore.YELLOW + Style.BRIGHT + "\nEncerramento cancelado.") #mudei a msg aqui
             confirmacao.confirmacao()
             return False
-        
+
         confirmacao_chave = input(Fore.WHITE + Style.BRIGHT + "\nConfirme sua chave de acesso pessoal: ")
 
-        if validacao_chave_acesso.validar_chave_acesso(confirmacao_chave) == False:
+        if not validacao_chave_acesso.validar_chave_acesso(confirmacao_chave):
             print(Fore.YELLOW + Style.BRIGHT + "\nEncerramento cancelado.")
             confirmacao.confirmacao()
             return False

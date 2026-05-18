@@ -6,6 +6,7 @@ from criptografia import criptografia as cripto
 from Cadastro import chave_acesso
 from colorama import Fore, Style
 from Visual.visual import limpar_tela
+from Validadores import gerenciador_de_entrada as ge
 
 def cadastrar_eleitor():
     """
@@ -59,15 +60,11 @@ def cadastrar_eleitor():
 
         mesario_valido = False
         while not mesario_valido:
-            resposta = input(Fore.WHITE + Style.BRIGHT + "Eleitor será mesário? (S/N): ").upper()
+            resposta = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT + "\nDeseja realmente encerrar a votação? \n[1] - Sim \n[X] - Não \nDigite uma opção: ", 1,1)
 
-            if resposta not in ("S", "SIM", "N", "NÃO", "NAO"):
-                print(Fore.RED + Style.BRIGHT + "Resposta inválida. Digite SIM ou NÃO.")
+            mesario_valido = True
 
-            else:
-                mesario_valido = True
-
-        if resposta in ("S", "SIM"):
+        if resposta == 1:
             mesario = True
             retorno_mesario = Fore.WHITE + Style.BRIGHT + 'Sim'
         else:
