@@ -69,30 +69,37 @@ def remocao_eleitores():
 
         match opcao:
             case 1:
-                cpf = str(input("\nDigite o número do CPF a ser removido: "))
-                validacao_cpf = val_cpf.validacao_de_cpf(cpf)
+                cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser removido", "REMOVER POR CPF")
+                if cpf is None:
+                    break
+                while val_cpf.validacao_de_cpf(cpf) == False:
+                    cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "REMOVER POR CPF")
+                    if cpf is None:
+                        break
+                if cpf is None:
+                    break
 
-                if validacao_cpf == True:
-                    cpf_criptografado = crip.criptografar_cpf(cpf)
-                    cursor.execute('SELECT * FROM eleitores WHERE cpf = %s', (cpf_criptografado,))
-                    eleitor = cursor.fetchone()
-
-                    if eleitor is None:
-                        console.print("\nEleitor não cadastrado.", style="bold yellow")
-                else:
-                    console.print("\nPor favor, refaça sua busca!", style="bold yellow")
+                cpf_criptografado = crip.criptografar_cpf(cpf)
+                cursor.execute('SELECT * FROM eleitores WHERE cpf = %s', (cpf_criptografado,))
+                eleitor = cursor.fetchone()
+                if eleitor is None:
+                    console.print("\nEleitor não cadastrado.", style="bold yellow")
 
             case 2:
-                titulo_eleitor = str(input("\nDigite o número do Título de Eleitor a ser removido: "))
+                titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor a ser removido", "REMOVER POR TÍTULO")
+                if titulo_eleitor is None:
+                    break
+                while val_tit.validar_titulo(titulo_eleitor) == False:
+                    titulo_eleitor = ge.input_cancelavel("Título inválido. Digite novamente", "REMOVER POR TÍTULO")
+                    if titulo_eleitor is None:
+                        break
+                if titulo_eleitor is None:
+                    break
 
-                if val_tit.validar_titulo(titulo_eleitor):
-                    cursor.execute('SELECT * FROM eleitores WHERE titulo_eleitor = %s', (titulo_eleitor,))
-                    eleitor = cursor.fetchone()
-
-                    if eleitor is None:
-                        console.print("\nEleitor não cadastrado.", style="bold yellow")
-                else:
-                    console.print("\nTítulo de Eleitor inválido. Por favor, refaça sua busca!")
+                cursor.execute('SELECT * FROM eleitores WHERE titulo_eleitor = %s', (titulo_eleitor,))
+                eleitor = cursor.fetchone()
+                if eleitor is None:
+                    console.print("\nEleitor não cadastrado.", style="bold yellow")
 
         if eleitor is not None:
             exibir_tabela_eleitor(eleitor)

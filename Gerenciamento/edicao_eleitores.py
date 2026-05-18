@@ -71,16 +71,30 @@ def edicao_eleitores():
 
     match opcao:
         case 1:
-            cpf = input('\nCPF: ')
+            cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser editado", "EDITAR POR CPF")
+            if cpf is None:
+                cursor.close(); conexao.close(); return
             while val_cpf.validacao_de_cpf(cpf) == False:
-                cpf = input('\nCPF inválido, digite novamente: ')
+                cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "EDITAR POR CPF")
+                if cpf is None:
+                    break
+            if cpf is None:
+                cursor.close(); conexao.close(); return
+
             cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
             if ver_cpf.verificar_cpf_banco(crip.criptografar_cpf(cpf)) == (0,):
                 console.print("\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
         case 2:
-            tit = input('\nTítulo de Eleitor: ')
+            tit = ge.input_cancelavel("Digite o Título de Eleitor a ser editado", "EDITAR POR TÍTULO")
+            if tit is None:
+                cursor.close(); conexao.close(); return
             while val_tit.validar_titulo(tit) == False:
-                tit = input('\nTítulo de Eleitor inválido, digite novamente: ')
+                tit = ge.input_cancelavel("Título inválido. Digite novamente", "EDITAR POR TÍTULO")
+                if tit is None:
+                    break
+            if tit is None:
+                cursor.close(); conexao.close(); return
+
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
             if ver_cpf.verificar_cpf_banco(tit) == (0,):
                 console.print("\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
