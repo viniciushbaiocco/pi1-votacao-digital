@@ -15,8 +15,6 @@ console = Console(highlight=False)
 
 def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao, cpf=None):
 
-    limpar_tela()
-
     mesario_texto  = "[bold green]Sim[/bold green]" if mesario == 1 else "[dim]Não[/dim]"
     status_texto   = "[bold green]Já Votou[/bold green]" if status_votacao == 1 else "[dim]Não Votou[/dim]"
 
@@ -53,6 +51,7 @@ def busca_eleitor():
     Returns:
         Exibe os dados selecionados do eleitor na tela para o usuário.
     """
+    limpar_tela()
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)

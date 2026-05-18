@@ -9,7 +9,6 @@ from Visual.visual import limpar_tela
 console = Console(highlight=False)
 
 def exibir_tabela_eleitor(eleitor):
-    limpar_tela()
 
     mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] == 1 else "[dim]Não[/dim]"
     status_texto  = "[bold green]Já Votou[/bold green]" if eleitor['status_votacao'] == 1 else "[dim]Não Votou[/dim]"
@@ -44,6 +43,8 @@ def remocao_eleitores():
         Realiza a exclusão do eleitor no banco de dados após confirmação.
         Exibe opções de novas remoções ou troca de Menu.
     """
+
+    limpar_tela()
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)

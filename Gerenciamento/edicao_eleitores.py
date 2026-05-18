@@ -14,8 +14,6 @@ console = Console(highlight=False)
 
 def exibir_tabela_eleitor(titulo, eleitor):
 
-    limpar_tela()
-
     mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] == 1 else "[dim]Não[/dim]"
     status_texto  = "[bold green]Já Votou[/bold green]" if eleitor['status_votacao'] == 1 else "[dim]Não Votou[/dim]"
     cpf_desc      = crip.descriptografar_cpf(eleitor['cpf'])
@@ -48,6 +46,8 @@ def edicao_eleitores():
     Returns:
         O eleitor editado
     """
+
+    limpar_tela()
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
