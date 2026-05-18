@@ -5,6 +5,7 @@ from database import conexao_banco
 from criptografia import criptografia as cripto
 from Cadastro import chave_acesso
 from colorama import Fore, Style
+from Visual.visual import limpar_tela
 
 def cadastrar_eleitor():
     """
@@ -17,6 +18,7 @@ def cadastrar_eleitor():
         bool: Retorna True se o cadastro válido e False caso contrário
 
     """
+    limpar_tela()
     cpf_valido = False
     while not cpf_valido:
         cpf = input(Fore.WHITE + Style.BRIGHT + "Digite o CPF do eleitor: ")

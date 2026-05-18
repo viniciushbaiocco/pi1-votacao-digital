@@ -2,6 +2,7 @@ from Zerezima import zerezima
 from Votacao import autenticacao_mesario
 from colorama import Fore, Style
 from Ocorrencias import abertura_urna, geral # Import geral to generate session_id
+from Visual.visual import limpar_tela
 
 def abrir_sistema_votacao(id_sessao):
     """
@@ -15,6 +16,7 @@ def abrir_sistema_votacao(id_sessao):
     """
 
     # 2. Tentar autenticar o mesário, passando o session_id
+    limpar_tela()
     if not autenticacao_mesario.autenticar_mesario(id_sessao):
         print(Fore.RED + Style.BRIGHT + "\n  [ERRO] Validação falhou.")
         print(Fore.YELLOW + Style.BRIGHT + "Confirme se o eleitor possui perfil de mesário")

@@ -9,10 +9,14 @@ from Validadores import confirmacao
 from rich.console import Console
 from rich.table import Table
 from rich import box
+from Visual.visual import limpar_tela
 
 console = Console(highlight=False)
 
 def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao, cpf=None):
+
+    limpar_tela()
+
     mesario_texto  = "[bold green]Sim[/bold green]" if mesario == 1 else "[dim]Não[/dim]"
     status_texto   = "[bold green]Já Votou[/bold green]" if status_votacao == 1 else "[dim]Não Votou[/dim]"
 

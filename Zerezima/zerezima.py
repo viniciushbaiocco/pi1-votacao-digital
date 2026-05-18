@@ -1,7 +1,6 @@
 from database import conexao_banco as cb
 from colorama import Fore, Style
-from Ocorrencias import voto_computado, voto_duplo
-
+from Visual.visual import limpar_tela
 
 def zerezima():
     """Função de zerezima para zerar todos os votos registados na tabela de votos.
@@ -14,6 +13,8 @@ def zerezima():
     Exibe a lista de candidatos com o total de votos, comprovando a finalização
     da zerézima.
 """
+
+    limpar_tela()
 
     print(Fore.WHITE + Style.BRIGHT + "\nIniciando zerézima...")
     conexao = cb.conexao_banco()

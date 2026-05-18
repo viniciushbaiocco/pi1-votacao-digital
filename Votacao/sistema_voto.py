@@ -12,9 +12,11 @@ from Verificadores import verificacao_titulo_banco as ver_tit
 from Votacao import protoco_votacao as prot_vot
 from datetime import datetime
 from colorama import Fore, Style
+from Visual.visual import limpar_tela
 
 
 def sistema_voto(id_sessao):
+    limpar_tela()
     print(Fore.CYAN + Style.BRIGHT + '\n--- Eleição 2026 ---')
 
     conexao = conect.conexao_banco()

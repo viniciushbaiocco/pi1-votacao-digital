@@ -5,7 +5,7 @@ from Votacao import autenticacao_mesario
 from criptografia import criptografia as cripto
 from Ocorrencias import encerramento_urna, geral
 from colorama import Fore, Style
-
+from Visual.visual import limpar_tela
 
 def encerrar_sistema_votacao(id_sessao):
     """
@@ -19,6 +19,9 @@ def encerrar_sistema_votacao(id_sessao):
     """
 
     # 1. Tentar autenticar o mesário, passando o session_id
+
+    limpar_tela()
+
     if not autenticacao_mesario.autenticar_mesario(id_sessao):
         return False
 

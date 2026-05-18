@@ -3,6 +3,7 @@ from Validadores import confirmacao
 from rich.console import Console
 from rich.table import Table
 from rich import box
+from Visual.visual import limpar_tela
 
 console = Console(highlight=False)
 
@@ -16,6 +17,8 @@ def listagem_eleitores():
     Returns:
         Os eleitores da tabela eleitores
     """
+
+    limpar_tela()
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)

@@ -8,10 +8,14 @@ from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf
 from rich.console import Console
 from rich.table import Table
 from rich import box
+from Visual.visual import limpar_tela
 
 console = Console(highlight=False)
 
 def exibir_tabela_eleitor(titulo, eleitor):
+
+    limpar_tela()
+
     mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] == 1 else "[dim]Não[/dim]"
     status_texto  = "[bold green]Já Votou[/bold green]" if eleitor['status_votacao'] == 1 else "[dim]Não Votou[/dim]"
     cpf_desc      = crip.descriptografar_cpf(eleitor['cpf'])
