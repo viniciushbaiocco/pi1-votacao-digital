@@ -5,8 +5,10 @@ from database import conexao_banco
 from Votacao import autenticacao_mesario
 from criptografia import criptografia as cripto
 from Ocorrencias import encerramento_urna, geral
-from colorama import Fore, Style
+from rich.console import Console
 from Visual.visual import limpar_tela
+
+console = Console(highlight=False)
 
 def encerrar_sistema_votacao(id_sessao):
     """
@@ -19,41 +21,39 @@ def encerrar_sistema_votacao(id_sessao):
         bool: True se o encerramento for realizado com sucesso, False caso contrário.
     """
 
-    # 1. Tentar autenticar o mesário, passando o session_id
-
     limpar_tela()
 
     if not autenticacao_mesario.autenticar_mesario(id_sessao):
         return False
 
-    conexao = conexao_banco.conexao_banco() #mudei o import pq o nome tava diferente
+    conexao = conexao_banco.conexao_banco()
 
     try:
 
         cursor = conexao.cursor()
 
-        resposta = ge.obter_entrada_inteira_valida(Fore.WHITE + Style.BRIGHT + "\nDeseja realmente encerrar a votação? \n[1] - Sim \n[X] - Não] \nDigite uma opção: ", 1,1)
+        resposta = ge.obter_entrada_inteira_valida("\nDeseja realmente encerrar a votação? \n[1] - Sim \n[X] - Não \nDigite uma opção: ", 1, 1)
 
         if not resposta:
-            print(Fore.YELLOW + Style.BRIGHT + "\nEncerramento cancelado.") #mudei a msg aqui
+            console.print("\nEncerramento cancelado.", style="bold yellow")
             confirmacao.confirmacao()
             return False
 
-        confirmacao_chave = input(Fore.WHITE + Style.BRIGHT + "\nConfirme sua chave de acesso pessoal: ")
+        confirmacao_chave = input("\nConfirme sua chave de acesso pessoal: ")
 
         if not validacao_chave_acesso.validar_chave_acesso(confirmacao_chave):
-            print(Fore.YELLOW + Style.BRIGHT + "\nEncerramento cancelado.")
+            console.print("\nEncerramento cancelado.", style="bold yellow")
             confirmacao.confirmacao()
             return False
 
         confirmacao_chave_criptografada = cripto.criptografar_chave_acesso(confirmacao_chave)
 
         if verificacao_chave_acesso_banco.verificar_chave_acesso_banco(confirmacao_chave_criptografada) == (0,):
-            print(Fore.YELLOW + Style.BRIGHT + "\nChave de acesso não confere. Encerramento cancelado.")
+            console.print("\nChave de acesso não confere. Encerramento cancelado.", style="bold yellow")
             confirmacao.confirmacao()
             return False
 
-        print(Fore.GREEN + Style.BRIGHT + "\nSistema de votação encerrado.")
+        console.print("\nSistema de votação encerrado.", style="bold green")
 
         encerramento_urna.ocorrencia_encerramento_urna(id_sessao)
         geral.ocorrencia_encerramento_urna(id_sessao)
@@ -62,7 +62,7 @@ def encerrar_sistema_votacao(id_sessao):
         return True
 
     except:
-        print(Fore.RED+ Style.BRIGHT + "\nErro ao registrar encerramento.")
+        console.print("\nErro ao registrar encerramento.", style="bold red")
         if conexao:
             conexao.rollback()
         return False
