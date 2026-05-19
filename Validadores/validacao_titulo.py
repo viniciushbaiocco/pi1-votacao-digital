@@ -1,6 +1,8 @@
-from colorama import Fore, Style
+from rich.console import Console
 from Visual.visual import limpar_tela
 from time import sleep
+
+console = Console(highlight=False)
 
 def validar_titulo (titulo):
 
@@ -20,7 +22,7 @@ def validar_titulo (titulo):
 
     #Verificação de tamanho do título
     if  len(arrumando) != 12:
-        print(Fore.RED + Style.BRIGHT + "Título de eleitor inválido! O Título de eleitor deve conter 12 dígitos.")
+        console.print("Título de eleitor inválido! O Título de eleitor deve conter 12 dígitos.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -30,7 +32,7 @@ def validar_titulo (titulo):
         separado = [int(i) for i in arrumando]
     
     except ValueError:
-        print(Fore.RED + Style.BRIGHT + "Título de eleitor inválido! O Título deve conter apenas números.")
+        console.print("Título de eleitor inválido! O Título deve conter apenas números.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -47,7 +49,7 @@ def validar_titulo (titulo):
     codigo_uf = uf_d1 * 10 + uf_d2
  
     if str_uf not in dicionario_UF:
-        print(Fore.RED + Style.BRIGHT + f"Título de eleitor inválido!")
+        console.print("Título de eleitor inválido!", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -83,7 +85,7 @@ def validar_titulo (titulo):
         digito_2_DV = resto_2_DV
  
     if separado[10] != digito_1_DV or separado[11] != digito_2_DV:
-        print(Fore.RED + Style.BRIGHT + "Título de eleitor inválido!")
+        console.print("Título de eleitor inválido!", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False

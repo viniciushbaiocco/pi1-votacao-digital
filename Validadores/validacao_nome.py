@@ -1,6 +1,8 @@
-from colorama import Fore,Style
+from rich.console import Console
 from Visual.visual import limpar_tela
 from time import sleep
+
+console = Console(highlight=False)
 
 def validar_nome():
     """
@@ -17,7 +19,7 @@ def validar_nome():
     nome_validado = False
     while not nome_validado:
 
-        nome = input(Fore.WHITE + Style.BRIGHT + "Digite o nome: ")
+        nome = input("Digite o nome: ")
 
         nome_ajustado = nome.split()
 
@@ -31,29 +33,26 @@ def validar_nome():
                 nome_letras = False
 
         if nome_letras == False:
-            print(Fore.YELLOW + Style.BRIGHT + "O nome não pode ser espaço vazio e deve conter apenas letras!")
+            console.print("O nome não pode ser espaço vazio e deve conter apenas letras!", style="bold yellow")
             sleep(1.5)
             limpar_tela()
         else:
             if len(nome_ajustado) < 2:
                 nome_validado = False
-                print(
-                    Fore.RED + Style.BRIGHT + "Nome inválido! Necessário nome completo (nome e sobrenome).")
+                console.print("Nome inválido! Necessário nome completo (nome e sobrenome).", style="bold red")
                 sleep(1.5)
                 limpar_tela()
             else:
 
                 if len(nome_ajustado[0]) < 2:
                     nome_validado = False
-                    print(
-                        Fore.RED + Style.BRIGHT + "Nome inválido! Primeiro nome precisa ter mínimo de 3 letras.")
+                    console.print("Nome inválido! Primeiro nome precisa ter mínimo de 3 letras.", style="bold red")
                     sleep(1.5)
                     limpar_tela()
                 else:
                     if len(nome_ajustado[1]) < 1:
                         nome_validado = False
-                        print(
-                            Fore.RED + Style.BRIGHT + "Sobrenome inválido! Sobrenome precisa ter mínimo de 2 letras.")
+                        console.print("Sobrenome inválido! Sobrenome precisa ter mínimo de 2 letras.", style="bold red")
                         sleep(1.5)
                         limpar_tela()
                     else:
