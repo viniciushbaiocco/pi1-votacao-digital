@@ -5,6 +5,7 @@ from Validadores import confirmacao
 from Verificadores import verificacao_mesario_banco as ver_mes
 from Ocorrencias import acesso_negado, geral
 from criptografia import criptografia as crip
+from database import conexao_banco as cb
 from Visual.visual import limpar_tela
 from rich.console import Console
 from rich.table import Table
@@ -13,9 +14,9 @@ from rich import box
 
 console = Console(highlight=False)
 
-def exibir_progresso_mesario(titulo=None, cpf_4=None, chave=None):
+def exibir_progresso_mesario(titulo=None, cpf_4=None, chave=None, tentativa=1):
     tabela = Table(
-        title="Identificação do Mesário",
+        title=f"Identificação do Mesário — Tentativa {tentativa} de 3",
         box=box.DOUBLE,
         border_style="bold chartreuse1",
         title_style="bold bright_white",
@@ -32,75 +33,113 @@ def exibir_progresso_mesario(titulo=None, cpf_4=None, chave=None):
     console.print(Align.center(tabela))
 
 def autenticar_mesario(id_sessao):
-    limpar_tela()
-
-    exibir_progresso_mesario()
-    titulo = ge.input_cancelavel("Digite seu Título de Eleitor", "IDENTIFICAÇÃO DO MESÁRIO")
-    if titulo is None:
-        return False
-
-    titulo_valido = val_tit.validar_titulo(titulo)
-    while titulo_valido == False:
+    for tentativa in range(1, 4):
         limpar_tela()
-        exibir_progresso_mesario()
-        titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
+
+        exibir_progresso_mesario(tentativa=tentativa)
+        titulo = ge.input_cancelavel("Digite seu Título de Eleitor", "IDENTIFICAÇÃO DO MESÁRIO")
         if titulo is None:
-            break
+            return False
+
+        titulo = titulo.strip()
         titulo_valido = val_tit.validar_titulo(titulo)
-    if titulo is None:
-        return False
+        while titulo_valido == False:
+            limpar_tela()
+            exibir_progresso_mesario(tentativa=tentativa)
+            titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
+            if titulo is None:
+                return False
+            titulo = titulo.strip()
+            titulo_valido = val_tit.validar_titulo(titulo)
 
-    limpar_tela()
-    exibir_progresso_mesario(titulo=titulo)
-    cpf_4 = ge.input_cancelavel("Digite os 4 primeiros dígitos do seu CPF", "IDENTIFICAÇÃO DO MESÁRIO")
-    if cpf_4 is None:
-        return False
+        conexao = cb.conexao_banco()
+        cursor = conexao.cursor()
+        cursor.execute("SELECT COUNT(*) FROM eleitores WHERE titulo_eleitor = %s AND mesario = 1", (titulo,))
+        if cursor.fetchone() == (0,):
+            cursor.close(); conexao.close()
+            limpar_tela()
+            exibir_progresso_mesario(tentativa=tentativa)
+            console.print("\n[bold red]Acesso negado. Eleitor não possui perfil de mesário.[/bold red]")
+            if tentativa < 3:
+                console.print(f"[dim]Tentativas restantes: {3 - tentativa}[/dim]")
+            confirmacao.confirmacao()
+            geral.ocorrencia_acesso_negado(id_sessao)
+            acesso_negado.ocorrencia_acesso_negado(id_sessao)
+            continue
+        cursor.close(); conexao.close()
 
-    cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
-    while cpf_4_valido == False:
         limpar_tela()
-        exibir_progresso_mesario(titulo=titulo)
-        cpf_4 = ge.input_cancelavel("CPF inválido. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
+        exibir_progresso_mesario(titulo=titulo, tentativa=tentativa)
+        cpf_4 = ge.input_cancelavel("Digite os 4 primeiros dígitos do seu CPF", "IDENTIFICAÇÃO DO MESÁRIO")
         if cpf_4 is None:
-            break
+            return False
+
         cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
-    if cpf_4 is None:
-        return False
+        while cpf_4_valido == False:
+            limpar_tela()
+            exibir_progresso_mesario(titulo=titulo, tentativa=tentativa)
+            cpf_4 = ge.input_cancelavel("CPF inválido. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
+            if cpf_4 is None:
+                return False
+            cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
 
-    limpar_tela()
-    exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4)
-    chave_acesso = ge.input_cancelavel("Digite sua Chave de Acesso", "IDENTIFICAÇÃO DO MESÁRIO")
-    if chave_acesso is None:
-        return False
-    chave_acesso = chave_acesso.upper()
+        cpf_4_criptografado = crip.criptografar_cpf(cpf_4)
+        conexao = cb.conexao_banco()
+        cursor = conexao.cursor()
+        cursor.execute(
+            "SELECT COUNT(*) FROM eleitores WHERE titulo_eleitor = %s AND SUBSTRING(cpf, 1, 4) = %s AND mesario = 1",
+            (titulo, cpf_4_criptografado[:4])
+        )
+        if cursor.fetchone() == (0,):
+            cursor.close(); conexao.close()
+            limpar_tela()
+            exibir_progresso_mesario(titulo=titulo, tentativa=tentativa)
+            console.print("\n[bold red]Os primeiros 4 dígitos do CPF não correspondem. Acesso negado.[/bold red]")
+            if tentativa < 3:
+                console.print(f"[dim]Tentativas restantes: {3 - tentativa}[/dim]")
+            confirmacao.confirmacao()
+            geral.ocorrencia_acesso_negado(id_sessao)
+            acesso_negado.ocorrencia_acesso_negado(id_sessao)
+            continue
+        cursor.close(); conexao.close()
 
-    chave_valida = val_chave.validar_chave_acesso(chave_acesso)
-    while chave_valida == False:
         limpar_tela()
-        exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4)
-        chave_acesso = ge.input_cancelavel("Chave inválida. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
+        exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, tentativa=tentativa)
+        chave_acesso = ge.input_cancelavel("Digite sua Chave de Acesso", "IDENTIFICAÇÃO DO MESÁRIO")
         if chave_acesso is None:
-            break
-        chave_acesso = chave_acesso.upper()
+            return False
+        chave_acesso = chave_acesso.strip().upper()
+
         chave_valida = val_chave.validar_chave_acesso(chave_acesso)
-    if chave_acesso is None:
-        return False
+        while chave_valida == False:
+            limpar_tela()
+            exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, tentativa=tentativa)
+            chave_acesso = ge.input_cancelavel("Chave inválida. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
+            if chave_acesso is None:
+                return False
+            chave_acesso = chave_acesso.strip().upper()
+            chave_valida = val_chave.validar_chave_acesso(chave_acesso)
 
-    limpar_tela()
-    exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, chave=chave_acesso)
+        chave_acesso_criptografada = crip.criptografar_chave_acesso(chave_acesso)
+        resultado = ver_mes.verificar_mesario(titulo, cpf_4_criptografado, chave_acesso_criptografada)
 
-    cpf_4_criptografado= crip.criptografar_cpf(cpf_4)
-    chave_acesso_criptografada= crip.criptografar_chave_acesso(chave_acesso)
+        if resultado == (1,):
+            limpar_tela()
+            exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, chave=chave_acesso, tentativa=tentativa)
+            console.print("\n[bold green]Mesário validado com sucesso![/bold green]")
+            input("\nPressione Enter para continuar...")
+            return True
 
-    resultado = ver_mes.verificar_mesario(titulo, cpf_4_criptografado, chave_acesso_criptografada)
-
-    if resultado == (1,):
-        console.print("\n[bold green]Mesário validado com sucesso![/bold green]")
-        input("\nPressione Enter para continuar...")
-        return True
-    else:
-        console.print("\n[bold red]Dados inválidos. Acesso negado.[/bold red]")
+        limpar_tela()
+        exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, tentativa=tentativa)
+        console.print("\n[bold red]Chave de acesso inválida. Acesso negado.[/bold red]")
+        if tentativa < 3:
+            console.print(f"[dim]Tentativas restantes: {3 - tentativa}[/dim]")
         confirmacao.confirmacao()
         geral.ocorrencia_acesso_negado(id_sessao)
         acesso_negado.ocorrencia_acesso_negado(id_sessao)
-        return False
+
+    limpar_tela()
+    console.print("\n[bold red]Número máximo de tentativas atingido. Acesso bloqueado.[/bold red]")
+    confirmacao.confirmacao()
+    return False
