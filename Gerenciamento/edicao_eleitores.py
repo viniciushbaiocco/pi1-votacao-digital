@@ -36,7 +36,7 @@ def exibir_tabela_eleitor(titulo, eleitor):
     tabela.add_column("Status de Votação", justify="center")
 
     tabela.add_row(str(eleitor['id']), eleitor['nome'], cpf_desc, eleitor['titulo_eleitor'], mesario_texto, status_texto)
-    console.print(tabela)
+    console.print(Align.center(tabela))
 
 def edicao_eleitores():
     """
@@ -106,87 +106,108 @@ def edicao_eleitores():
 
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
     eleitor = cursor.fetchone()
-    cpf_desc = crip.descriptografar_cpf(eleitor['cpf'])
 
     exibir_tabela_eleitor("Eleitor a Ser Editado", eleitor)
 
-    console.print("\nDeseja realmente editar esse eleitor?\n1 - Sim\n2 - Não")
+    conteudo_confirmar = (
+        "[bold bright_white][1][/bold bright_white]  Sim\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim][2]  Não[/dim]"
+    )
+    console.print(Panel(Align.center(conteudo_confirmar), title="[bold bright_white]CONFIRMAR EDIÇÃO[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
     opcao2 = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 2)
     editado = 0
     match opcao2:
         case 1:
             opcao_editar = 0
             while opcao_editar != 5:
-                print('\nO Que Deseja Editar \n[1] Nome \n[2] Título \n[3] CPF \n[4] Mesário \n[5] Confirmar')
-                opcao_editar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ',1, 5)
+                conteudo_campos = (
+                    "[bold bright_white][1][/bold bright_white]  Nome\n"
+                    "[bold bright_white][2][/bold bright_white]  Título\n"
+                    "[bold bright_white][3][/bold bright_white]  CPF\n"
+                    "[bold bright_white][4][/bold bright_white]  Mesário\n"
+                    "[dim]──────────────────────────────[/dim]\n"
+                    "[bold bright_white][5][/bold bright_white]  Confirmar"
+                )
+                console.print(Panel(Align.center(conteudo_campos), title="[bold bright_white]O QUE DESEJA EDITAR[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
+                opcao_editar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 5)
                 match opcao_editar:
                     case 1:
                         novo_nome = val_nome.validar_nome()
                         nova_chave_acesso = chave.geracao_chave_acesso(novo_nome)
-
                         editado = 1
                         cursor.execute('''
                         UPDATE eleitores SET nome = %s, chave_acesso = %s
                                             WHERE id = %s
                         ''', (novo_nome, nova_chave_acesso, id_eleitor))
                         conexao.commit()
-
-                        console.print(f'[bold bright_green]Nome Editado Com Sucesso![/bold bright_green]')
-                        console.print(f'Sua Nova Chave de Acesso é: [bold bright_yellow]{nova_chave_acesso}[/bold bright_yellow]')
+                        console.print('[bold green]Nome Editado Com Sucesso![/bold green]')
+                        console.print(f'Sua Nova Chave de Acesso é: [bold yellow]{nova_chave_acesso}[/bold yellow]')
                     case 2:
-                        novo_titulo = input('\nDigite o novo Título de Eleitor: ')
+                        novo_titulo = ge.input_cancelavel("Novo Título de Eleitor", "EDITAR TÍTULO")
+                        if novo_titulo is None:
+                            continue
                         while val_tit.validar_titulo(novo_titulo) == False:
-                            novo_titulo = input('\nNovo Título de Eleitor inválido, digite novamente: ')
+                            novo_titulo = ge.input_cancelavel("Título inválido. Digite novamente", "EDITAR TÍTULO")
+                            if novo_titulo is None:
+                                break
+                        if novo_titulo is None:
+                            continue
                         while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
-                            novo_titulo = input('\nTítulo de Eleitor já cadastrado, digite novamente: ')
-                        novo_titulo_verificado = novo_titulo
-                        
+                            novo_titulo = ge.input_cancelavel("Título já cadastrado. Digite novamente", "EDITAR TÍTULO")
+                            if novo_titulo is None:
+                                break
+                        if novo_titulo is None:
+                            continue
                         editado = 1
                         cursor.execute('''
-                        UPDATE eleitores SET
-                                        titulo_eleitor = %s WHERE id = %s
-                        ''', (novo_titulo_verificado, id_eleitor))
+                        UPDATE eleitores SET titulo_eleitor = %s WHERE id = %s
+                        ''', (novo_titulo, id_eleitor))
                         conexao.commit()
-
-                        print('Título Editado Com Sucesso!')
+                        console.print("Título Editado Com Sucesso!", style="bold green")
                     case 3:
-                        novo_cpf = input('\nDigite o novo CPF: ')
-                        novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
+                        novo_cpf = ge.input_cancelavel("Novo CPF", "EDITAR CPF")
+                        if novo_cpf is None:
+                            continue
                         while val_cpf.validacao_de_cpf(novo_cpf) == False:
-                            novo_cpf = input('\nNovo CPF inválido, digite novamente: ')
+                            novo_cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "EDITAR CPF")
+                            if novo_cpf is None:
+                                break
+                        if novo_cpf is None:
+                            continue
+                        novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
                         while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
-                            novo_cpf = input('\nCPF já cadastrado, digite novamente: ')
+                            novo_cpf = ge.input_cancelavel("CPF já cadastrado. Digite novamente", "EDITAR CPF")
+                            if novo_cpf is None:
+                                break
                             novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
-                        
+                        if novo_cpf is None:
+                            continue
                         editado = 1
                         cursor.execute('''
-                        UPDATE eleitores SET
-                                        cpf = %s WHERE id = %s
+                        UPDATE eleitores SET cpf = %s WHERE id = %s
                         ''', (novo_cpf_criptografado, id_eleitor))
                         conexao.commit()
-
-                        print('CPF Editado Com Sucesso!')
+                        console.print("CPF Editado Com Sucesso!", style="bold green")
                     case 4:
                         novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ', 1, 2)
                         if novo_mesario == 2:
                             novo_mesario = 0
-
                         editado = 1
                         cursor.execute('''
-                        UPDATE eleitores SET
-                                        mesario = %s WHERE id = %s
+                        UPDATE eleitores SET mesario = %s WHERE id = %s
                         ''', (novo_mesario, id_eleitor))
                         conexao.commit()
-
-                        print('Mesário Editado Com Sucesso!')
+                        console.print("Mesário Editado Com Sucesso!", style="bold green")
                     case 5:
                         if editado == 1:
                             cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
                             eleitor = cursor.fetchone()
-
                             exibir_tabela_eleitor("Eleitor Após Edição", eleitor)
                         else:
-                            print('Encerrando Operação...')
+                            console.print("Encerrando Operação...", style="bold yellow")
+                    case False:
+                        break
 
             cursor.close()
             conexao.close()
