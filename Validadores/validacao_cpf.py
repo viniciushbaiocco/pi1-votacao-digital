@@ -1,6 +1,9 @@
-from colorama import Fore, Style
+from rich.console import Console
 from Visual.visual import limpar_tela
 from time import sleep
+
+console = Console(highlight=False)
+
 def validacao_de_cpf(cpf_digitado_usuario):
     
     """
@@ -18,14 +21,14 @@ def validacao_de_cpf(cpf_digitado_usuario):
 
     #Verificação de tamanho do CPF
     if len(arrumando) != 11:
-        print(Fore.RED + Style.BRIGHT + f"CPF inválido! O CPF deve conter 11 dígitos")
+        console.print("CPF inválido! O CPF deve conter 11 dígitos", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
     
     #Verificação se têm números repitidos
     if arrumando == arrumando [0] * len(arrumando):
-        print(Fore.RED + Style.BRIGHT + "CPF inválido! Sequência de números repetidos.")
+        console.print("CPF inválido! Sequência de números repetidos.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -34,7 +37,7 @@ def validacao_de_cpf(cpf_digitado_usuario):
     try:
         separado = [int(i) for i in arrumando]
     except ValueError:
-        print(Fore.RED + Style.BRIGHT + "CPF inválido! O CPF deve conter apenas números.")
+        console.print("CPF inválido! O CPF deve conter apenas números.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -60,7 +63,7 @@ def validacao_de_cpf(cpf_digitado_usuario):
     resto_2_DV = soma_2_DV % 11
     digito_2_DV = 0 if resto_2_DV < 2 else 11 - resto_2_DV
     if digito_1_DV != separado[9] or digito_2_DV != separado[10]:
-        print(Fore.RED + Style.BRIGHT + "CPF inválido!")
+        console.print("CPF inválido!", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
