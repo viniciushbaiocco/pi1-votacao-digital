@@ -3,18 +3,13 @@ import os
 if not os.environ.get('TERM'):
     os.environ['TERM'] = 'xterm-266color'
 
-import pyfiglet  # PASSO 1: biblioteca nova que gera texto em letras grandes (ASCII art)
-from rich.console import Console  # PASSO 3: Console do rich substitui print+colorama só no banner
-from rich.panel import Panel      # PASSO 4: Panel cria caixas com bordas automáticas, substitui o ╔═╗ manual
-from rich import box              # PASSO 4: box define o estilo da borda — usamos box.DOUBLE (╔═╗)
+import pyfiglet 
+from rich.console import Console
+from rich.panel import Panel     
+from rich import box
 from rich.align import Align      # centraliza o conteúdo dentro do painel
 
 console = Console(highlight=False)
-##SOBRE O PYFIGLET:
-##pyfiglet.figlet_format(texto, font="nome_fonte") devolve uma STRING com o texto desenhado em letras grandes feitas de caracteres
-##usamos a fonte "big". outras fontes legais: "slant", "standard", "doom"
-##pra ver todas: python3 -c "import pyfiglet; print(pyfiglet.FigletFont.getFonts())"
-##a string retornada tem várias linhas basta dar print() nela e o Python já quebra as linhas certinho
 
 subtitulo_banner = "Sistema de Votação Digital"
 
