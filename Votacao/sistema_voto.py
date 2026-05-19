@@ -11,188 +11,212 @@ from Validadores import validacao_titulo as val_tit
 from Verificadores import verificacao_titulo_banco as ver_tit
 from Votacao import protoco_votacao as prot_vot
 from datetime import datetime
-from colorama import Fore, Style
 from Visual.visual import limpar_tela
+from rich.console import Console
+from rich.table import Table
+from rich.panel import Panel
+from rich.align import Align
+from rich import box
 
+console = Console(highlight=False)
+
+def exibir_progresso_votacao(cpf_4=None, titulo=None, chave=None):
+    tabela = Table(
+        title="Identificação do Eleitor",
+        box=box.DOUBLE,
+        border_style="bold dodger_blue1",
+        title_style="bold bright_white",
+        header_style="bold dodger_blue1",
+        show_lines=True
+    )
+    tabela.add_column("Campo", style="bright_white", min_width=22)
+    tabela.add_column("Valor", min_width=30)
+
+    tabela.add_row(f"CPF (4 primeiros dígitos) [dim green]{cpf_4}[/dim green]" if cpf_4 is not None else "[dim]─[/dim]")
+    tabela.add_row(f"Título de Eleitor [dim green]{titulo}[/dim green]" if titulo is not None else "[dim]─[/dim]")
+    tabela.add_row(f"Chave de Acesso [dim green]Confirmada[/dim green]" if chave is not None else "[dim]─[/dim]")
+
+    console.print(Align.center(tabela))
+
+def exibir_candidato(candidato):
+    conteudo = (
+        f"[bright_white]Nome:[/bright_white]{candidato['nome']}\n"
+        f"[bright_white]Partido:[/bright_white]{candidato['partido']}\n"
+        f"[bright_white]Número Eleitoral:[/bright_white]{candidato['numero_votacao']}"
+    )
+    console.print(Panel(conteudo, title="[bold bright_white]CANDIDATO[/bold bright_white]", border_style="bold chartreuse1", box=box.DOUBLE, padding=(1, 2)))
 
 def sistema_voto(id_sessao):
     limpar_tela()
-    print(Fore.CYAN + Style.BRIGHT + '\n--- Eleição 2026 ---')
 
     conexao = conect.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
 
-    # recolher os dados do eleitor e validar
-    cpf_4 = input(Fore.WHITE + Style.BRIGHT +
-                  '\n''Digite os 4 primeiros digitos de seu CPF: ')
-    while val_cpf_vot.validar_cpf_voto(cpf_4) == False:
-        cpf_4 = input(Fore.WHITE + Style.BRIGHT +
-                      '\n''Digite os 4 primeiros digitos de seu CPF novamente: ')
-        
-    titulo = input(Fore.WHITE + Style.BRIGHT +
-                   '\n''Digite seu título de eleitor: ')
-    while val_tit.validar_titulo(titulo) == False:
-        titulo = input(Fore.WHITE + Style.BRIGHT +
-                       '\n''Digite seu título de eleitor novamente: ')
+    exibir_progresso_votacao()
+    cpf_4 = ge.input_cancelavel("Digite os 4 primeiros dígitos do seu CPF", "IDENTIFICAÇÃO")
+    if cpf_4 is None:
+        cursor.close();
+        conexao.close(); 
+        return
 
-    chave_acesso = input(Fore.WHITE + Style.BRIGHT +
-                         '\nDigite sua chave de acesso: ').upper()
-    while val_chave.validar_chave_acesso(chave_acesso) == False:
-        chave_acesso = input(Fore.WHITE + Style.BRIGHT +
-                             '\nDigite sua chave de acesso novamente: ').upper()
+    cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
+    while cpf_4_valido == False:
+        limpar_tela()
+        exibir_progresso_votacao()
+        cpf_4 = ge.input_cancelavel("CPF inválido. Digite novamente", "IDENTIFICAÇÃO")
+        if cpf_4 is None:
+            break
+        cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
+    if cpf_4 is None:
+        cursor.close();
+        conexao.close();
+        return
 
-    # criptografar, encontrar no BD e verificar se ja votou
-    cpf_4 = crip.criptografar_cpf(cpf_4)
-    chave_acesso = crip.criptografar_chave_acesso(chave_acesso)
-    ver_votou = ver_eleit_vot.verificacao_eleitor_voto(chave_acesso)
-    votou = 0
-    opcao = 2
+    limpar_tela()
+    exibir_progresso_votacao(cpf_4=cpf_4)
+    titulo = ge.input_cancelavel("Digite seu Título de Eleitor", "IDENTIFICAÇÃO")
+    if titulo is None:
+        cursor.close();
+        conexao.close();
+        return
+
+    titulo_valido = val_tit.validar_titulo(titulo)
+    while titulo_valido == False:
+        limpar_tela()
+        exibir_progresso_votacao(cpf_4=cpf_4)
+        titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO")
+        if titulo is None:
+            break
+        titulo_valido = val_tit.validar_titulo(titulo)
+    if titulo is None:
+        cursor.close();
+        conexao.close();
+        return
+
+    limpar_tela()
+    exibir_progresso_votacao(cpf_4=cpf_4, titulo=titulo)
+    chave_acesso = ge.input_cancelavel("Digite sua Chave de Acesso", "IDENTIFICAÇÃO")
+    if chave_acesso is None:
+        cursor.close();
+        conexao.close();
+        return
+    chave_acesso = chave_acesso.upper()
+
+    chave_valida = val_chave.validar_chave_acesso(chave_acesso)
+    while chave_valida == False:
+        limpar_tela()
+        exibir_progresso_votacao(cpf_4=cpf_4, titulo=titulo)
+        chave_acesso = ge.input_cancelavel("Chave inválida. Digite novamente", "IDENTIFICAÇÃO")
+        if chave_acesso is None:
+            break
+        chave_acesso = chave_acesso.upper()
+        chave_valida = val_chave.validar_chave_acesso(chave_acesso)
+    if chave_acesso is None:
+        cursor.close();
+        conexao.close();
+        return
+
+    limpar_tela()
+    exibir_progresso_votacao(cpf_4=cpf_4, titulo=titulo, chave=chave_acesso)
+
+    cpf_4= crip.criptografar_cpf(cpf_4)
+    chave_acesso= crip.criptografar_chave_acesso(chave_acesso)
+    ver_votou= ver_eleit_vot.verificacao_eleitor_voto(chave_acesso)
+    votou  = 0
+    opcao  = 2
 
     while opcao == 2:
         if ver_cpf_vot.verificar_cpf_voto(cpf_4) == (1,) and ver_chave.verificar_chave_acesso_banco(chave_acesso) == (1,) and ver_tit.verificar_titulo_de_eleitor_banco(titulo) == (1,):
-            # iniciar processo de votação apenas se o eleitor não votou
             if ver_votou == (0,):
-                
-                # verificação pro voto e variavel para atualizar o eleitor depois de votar
                 voto = val_voto.validacao_voto()
 
-                # verificação do número eleitoral no banco de dados e pegar o id
                 query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
                 cursor.execute(query, (voto,))
                 resultado = cursor.fetchone()
 
                 if resultado == {'COUNT(*)': 0}:
-                    print(Fore.YELLOW + Style.BRIGHT +
-                        'Atenção: Número não cadastrado. Se confirmar, o voto será considerado nulo. Deseja prosseguir?'
-                        '\n[1] Sim \n[2] Não \nDigite uma opção: ')
-                    voto_nulo_opcao = ge.obter_entrada_inteira_valida('\n1 - Sim \n2 - Não \nDigite uma opção: ', 1, 2)
+                    console.print("\n[bold yellow]Número não cadastrado. Se confirmar, o voto será considerado nulo.[/bold yellow]")
+                    voto_nulo_opcao = ge.obter_entrada_inteira_valida('\n1 - Confirmar voto nulo \n2 - Tentar novamente \nDigite uma opção: ', 1, 2)
                     match voto_nulo_opcao:
                         case 1:
                             voto = 0
                             votou = 1
-                            print(Fore.GREEN + Style.BRIGHT +
-                                    '\nVoto Computado!')
-                            query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s" #
-                            cursor.execute(query, (voto,))
-                            resultado = cursor.fetchone()
-                            cursor.execute(
-                            
-                            'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
+                            console.print('\n[bold green]Voto Computado![/bold green]')
+                            cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                             candidato = cursor.fetchone()
                             id_candidato = candidato['id']
                             opcao = 1
                         case 2:
-                            print('')
-
+                            pass
                 else:
-                    # listar o candidato para confirmação do voto
-                    cursor.execute(
-                        'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
+                    cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                     candidato = cursor.fetchone()
                     id_candidato = candidato['id']
-                    print(Fore.WHITE + Style.BRIGHT + '=' * 50)
-                    print(Fore.WHITE + Style.BRIGHT +
-                        f' Nome: {candidato['nome']}')
-                    print(Fore.WHITE + Style.BRIGHT +
-                        f' Partido: {candidato['partido']}')
-                    print(Fore.WHITE + Style.BRIGHT +
-                        f' Número Eleitoral: {candidato['numero_votacao']}')
-                    print(Fore.WHITE + Style.BRIGHT + '=' * 50)
-                    opcao = ge.obter_entrada_inteira_valida(
-                        '\nCerteza que deseja votar nesse candidato? \n1 - Sim \n2 - Não \nDigite uma opção: ', 1, 2)
+                    exibir_candidato(candidato)
+                    opcao = ge.obter_entrada_inteira_valida('\nCerteza que deseja votar nesse candidato? \n1 - Sim \n2 - Não \nDigite uma opção: ', 1, 2)
                     match opcao:
                         case 1:
-                            print(Fore.GREEN + Style.BRIGHT + '\nVoto Computado!')
+                            console.print('\n[bold green]Voto Computado![/bold green]')
                             votou = 1
                             opcao = 1
                         case 2:
-                            print('')
+                            pass
 
-                # segunda tentativa de votação
                 if resultado == {'COUNT(*)': 0}:
                     voto = val_voto.validacao_voto()
                     query = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
                     cursor.execute(query, (voto,))
                     resultado = cursor.fetchone()
 
-                    # se a segunda tentativa foi falha, voto será nulo
                     if resultado == {'COUNT(*)': 0}:
-                        print(Fore.YELLOW + Style.BRIGHT +
-                            'Você digitou um candidato inexistente novamente, o voto será considerado nulo.')
+                        console.print('\n[bold yellow]Você digitou um candidato inexistente novamente, o voto será considerado nulo.[/bold yellow]')
                         votou = 1
-                        voto = 0
+                        voto  = 0
                         opcao = 1
-                        #pegar o id do candidato
-                        cursor.execute(
-                            'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
+                        cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                         candidato = cursor.fetchone()
                         id_candidato = candidato['id']
-
-                        print(Fore.GREEN + Style.BRIGHT +
-                                    '\nVoto Computado!')
-                        
-                    # se a segunda tentativa for sucesso
+                        console.print('\n[bold green]Voto Computado![/bold green]')
                     else:
-                        # listar o candidato para confirmação do voto
-                        cursor.execute(
-                            'SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
+                        cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                         candidato = cursor.fetchone()
                         id_candidato = candidato['id']
-                        print(Fore.WHITE + Style.BRIGHT + '=' * 50)
-                        print(Fore.WHITE + Style.BRIGHT +
-                            f' Nome: {candidato['nome']}')
-                        print(Fore.WHITE + Style.BRIGHT +
-                            f' Partido: {candidato['partido']}')
-                        print(Fore.WHITE + Style.BRIGHT +
-                            f' Número Eleitoral: {candidato['numero_votacao']}')
-                        print(Fore.WHITE + Style.BRIGHT + '=' * 50)
-                        opcao = ge.obter_entrada_inteira_valida(
-                            '\nCerteza que deseja votar nesse candidato? \n 1 - Sim \n 2 - Não \nDigite uma opção: ', 1, 2)
+                        exibir_candidato(candidato)
+                        opcao = ge.obter_entrada_inteira_valida('\nCerteza que deseja votar nesse candidato? \n 1 - Sim \n 2 - Não \nDigite uma opção: ', 1, 2)
                         match opcao:
                             case 1:
-                                print(Fore.GREEN + Style.BRIGHT +
-                                    '\nVoto Computado!')
+                                console.print('\n[bold green]Voto Computado![/bold green]')
                                 votou = 1
                                 opcao = 1
                             case 2:
-                                print('')
-            # encerrar processo caso eleitor ja tenha votado
+                                pass
             else:
-                print(Fore.RED + Style.BRIGHT + '\nErro, tentativa de voto duplo.')
+                console.print('\n[bold red]Erro, tentativa de voto duplo.[/bold red]')
                 voto_duplo.ocorrencia_voto_duplo(id_sessao)
                 geral.ocorrencia_voto_duplo(id_sessao)
                 confirmacao.confirmacao()
                 opcao = 1
-            # atualizar no BD o eleitor para já votou
+
             if votou == 1:
-                # gerar protocolo e computar voto
                 protocolo = prot_vot.gerar_protocolo_votacao(voto)
-                print(Fore.WHITE + Style.BRIGHT +
-                    f"Seu protocolo de votação é: {protocolo}")
+                console.print(f"\n[bold bright_white]Seu protocolo de votação é: {protocolo}[/bold bright_white]")
                 confirmacao.confirmacao()
-                protocolo = crip.criptografar_protocolo(protocolo)
+                protocolo= crip.criptografar_protocolo(protocolo)
                 voto_computado.ocorrecia_voto_computado(id_sessao)
                 geral.ocorrencia_voto_computado(id_sessao)
-                data_hora = datetime.now()
-                sem_milissegundos = data_hora.replace(microsecond=0)
+                data_hora= datetime.now()
+                sem_milissegundos= data_hora.replace(microsecond=0)
 
-                # inserir o voto no BD
                 query_voto = 'INSERT INTO votos (id_candidato, data_hora, protocolo_votacao) VALUES (%s, %s, %s)'
-                cursor.execute(query_voto, (id_candidato,
-                            sem_milissegundos, protocolo))
+                cursor.execute(query_voto, (id_candidato, sem_milissegundos, protocolo))
 
-                # atualizar o BD
                 query = 'UPDATE eleitores SET status_votacao = %s WHERE chave_acesso = %s'
                 cursor.execute(query, (votou, chave_acesso))
 
                 conexao.commit()
         else:
-            print(Fore.RED + Style.BRIGHT +
-                'Erro ao verificar CPF ou chave de acesso do eleitor.')
+            console.print('\n[bold red]Erro ao verificar CPF ou chave de acesso do eleitor.[/bold red]')
             confirmacao.confirmacao()
 
     cursor.close()
     conexao.close()
-
-# NEXT STEPS
-# otimizar o codigo

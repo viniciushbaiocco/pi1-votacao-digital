@@ -1,60 +1,54 @@
 from database import conexao_banco as cb
-from colorama import Fore, Style
 from Visual.visual import limpar_tela
+from rich.console import Console
+from rich.table import Table
+from rich.align import Align
+from rich import box
+
+console = Console(highlight=False)
 
 def zerezima():
-    """Função de zerezima para zerar todos os votos registados na tabela de votos.
-        Também atualiza o status de votação dos eleitores para 'False'(não votou).
+      limpar_tela()
 
-    Args: none
+      conexao = cb.conexao_banco()
+      cursor = conexao.cursor()
 
-    Return: none
+      console.print("\n[bold bright_white]Iniciando zerézima...[/bold bright_white]")
 
-    Exibe a lista de candidatos com o total de votos, comprovando a finalização
-    da zerézima.
-"""
+      truncar_votos = "TRUNCATE votos;"
+      cursor.execute(truncar_votos)
+      conexao.commit()
+      console.print("[bold yellow]Eliminando todos os votos registrados na tabela 'Votos'...[/bold yellow]")
 
-    limpar_tela()
+      resetar_status_eleitores = "UPDATE eleitores SET status_votacao = 0;"
+      cursor.execute(resetar_status_eleitores)
+      conexao.commit()
+      console.print("[bold yellow]Atualizando status de votação de eleitores para 'Não'...[/bold yellow]")
 
-    print(Fore.WHITE + Style.BRIGHT + "\nIniciando zerézima...")
-    conexao = cb.conexao_banco()
-    cursor = conexao.cursor()
+      console.print("\n[bold green]Zerézima finalizada![/bold green]\n")
 
-    # zerar votos da tabela candidatos
-    comando1 = ("TRUNCATE votos;")
-    cursor.execute(comando1)
-    conexao.commit()
-    print(Fore.YELLOW + Style.BRIGHT +
-          "\nEliminando todos os votos registrados na tabela 'Votos'...")
+      buscar_candidatos = "SELECT candidatos.nome, candidatos.sigla_partido, COUNT(votos.id) AS total_votos FROM candidatos LEFT JOIN votos ON candidatos.id = votos.id_candidato GROUP BY candidatos.id;"
+      cursor.execute(buscar_candidatos)
+      candidatos = cursor.fetchall()
 
-    # atualizar votos eleitores para "false"
-    comando2 = ("UPDATE eleitores SET status_votacao = 0;")
-    cursor.execute(comando2)
-    conexao.commit()
-    print(Fore.YELLOW + Style.BRIGHT +
-          "\nAtualizando status de votação de eleitores para 'Não'...")
+      tabela = Table(
+            title="Candidatos — Votos Zerados",
+            box=box.DOUBLE,
+            border_style="bold chartreuse1",
+            title_style="bold bright_white",
+            header_style="bold chartreuse1",
+            show_lines=True
+      )
+      tabela.add_column("Candidato", style="bright_white")
+      tabela.add_column("Partido", style="bright_white", justify="center")
+      tabela.add_column("Votos", style="bright_white", justify="center")
 
-    print(Fore.GREEN + Style.BRIGHT + "\nZerézima finalizada!")
+      for nome, partido, votos in candidatos:
+            tabela.add_row(nome, partido, str(votos))
 
-    # exibir lista de eleitores
-    comando3 = ("SELECT candidatos.nome, candidatos.sigla_partido, COUNT(votos.id) AS total_votos FROM candidatos LEFT JOIN votos ON candidatos.id = votos.id_candidato GROUP BY candidatos.id;")
-    cursor.execute(comando3)
-    lista_candidatos_zerado = cursor.fetchall()
+      console.print(Align.center(tabela))
 
-    print(Fore.WHITE + Style.BRIGHT + "\n" + "="*10 +
-          "LISTAGEM DE CANDIDATOS E VOTOS" + "="*10)
-    print(Fore.WHITE + Style.BRIGHT + "="*50)
-    print(Fore.WHITE + Style.BRIGHT +
-          f"{'CANDIDATO':<20} | {'PARTIDO':<10} | {'VOTOS':<5}")
-    print(Fore.WHITE + Style.BRIGHT + "-" * 50)
+      input("\nPressione Enter para continuar...")
 
-    for nome, partido, votos in lista_candidatos_zerado:
-        print(Fore.WHITE + Style.BRIGHT +
-              f"{nome:<20} | {partido:<10} | {votos:<5}")
-
-    print(Fore.WHITE + Style.BRIGHT + "="*50)
-
-    input(Fore.WHITE + Style.BRIGHT + "\nPressione Enter para continuar...")
-
-    cursor.close()
-    conexao.close()
+      cursor.close()
+      conexao.close()
