@@ -1,22 +1,14 @@
-from colorama import Fore, Style
+from rich.console import Console
 from datetime import datetime
 from Validadores import confirmacao
 import os
 
-# pasta do arquivo atual
+console = Console(highlight=False)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# cria o caminho da pasta Armazenamento
 PASTA_ARMAZENAMENTO = os.path.join(BASE_DIR, "Armazenamento")
-
-# cria a pasta caso ela não exista
 os.makedirs(PASTA_ARMAZENAMENTO, exist_ok=True)
-
-# caminho completo do arquivo
-CAMINHO_ARQUIVO = os.path.join(
-    PASTA_ARMAZENAMENTO,
-    "Acesso_Negado.txt"
-)
+CAMINHO_ARQUIVO = os.path.join(PASTA_ARMAZENAMENTO, "Acesso_Negado.txt")
 
 
 def ocorrencia_acesso_negado(id_sessao):
@@ -31,8 +23,7 @@ def ocorrencia_acesso_negado(id_sessao):
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(Fore.RED + Style.BRIGHT +
-                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Validação do mesário negado")
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Validação do mesário negado")
 
 
 def imprimir_ocorrencia_acesso_negado():
@@ -46,15 +37,13 @@ def imprimir_ocorrencia_acesso_negado():
     try:
         with open(CAMINHO_ARQUIVO, "r", encoding="utf-8") as arq:
             conteudo = arq.read()
-            print(conteudo)
+            console.print(conteudo, markup=False)
             confirmacao.confirmacao()
     except FileNotFoundError:
-        print(Fore.YELLOW + Style.BRIGHT +
-              "\nNenhum Log de Acesso Negado Registrado")
+        console.print("\nNenhum Log de Acesso Negado Registrado", style="bold yellow")
         confirmacao.confirmacao()
     except Exception as e:
-        print(Fore.RED + Style.BRIGHT +
-              f"\nErro ao ler o log de Acesso Negado {e}")
+        console.print(f"\nErro ao ler o log de Acesso Negado {e}", style="bold red")
         confirmacao.confirmacao()
 
 
@@ -66,6 +55,5 @@ def excluir_ocorrencia_acesso_negado():
 
     Returns: None
     """
-    arquivo = CAMINHO_ARQUIVO
-    if os.path.exists(arquivo):
-        os.remove(arquivo)
+    if os.path.exists(CAMINHO_ARQUIVO):
+        os.remove(CAMINHO_ARQUIVO)
