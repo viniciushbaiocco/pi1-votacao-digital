@@ -31,7 +31,7 @@ def exibir_progresso_mesario(titulo=None, cpf_4=None, chave=None):
 
     console.print(Align.center(tabela))
 
-def autenticar_mesario(id_sessao: str):
+def autenticar_mesario(id_sessao):
     limpar_tela()
 
     exibir_progresso_mesario()

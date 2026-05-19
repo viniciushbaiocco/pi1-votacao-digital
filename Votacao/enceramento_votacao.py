@@ -15,7 +15,7 @@ def encerrar_sistema_votacao(id_sessao):
     Realiza o encerramento oficial do sistema de votação.
 
     Args:
-        id_sessao (str): O ID único da sessão de urna que está sendo encerrada.
+        id_sessao (int): O ID único da sessão de urna que está sendo encerrada.
 
     Returns:
         bool: True se o encerramento for realizado com sucesso, False caso contrário.
