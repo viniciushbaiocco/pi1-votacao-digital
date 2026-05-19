@@ -18,18 +18,18 @@ def validar_titulo (titulo):
     
     """
 
-    arrumando = titulo.replace(" ", "")
+    titulo = titulo.strip()
 
     #Verificação de tamanho do título
-    if  len(arrumando) != 12:
+    if  len(titulo) != 12:
         console.print("Título de eleitor inválido! O Título de eleitor deve conter 12 dígitos.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
     
-     #Verificação se tem letras
+    #Verificação se tem letras
     try:
-        separado = [int(i) for i in arrumando]
+        separado = [int(i) for i in titulo]
     
     except ValueError:
         console.print("Título de eleitor inválido! O Título deve conter apenas números.", style="bold red")
@@ -43,11 +43,11 @@ def validar_titulo (titulo):
     "19": "MS","20": "DF","21": "SE","22": "AM","23": "RO","24": "AC","25": "AP","26": "RR","27": "TO",
     "28": "ZZ"
     }
-    str_uf = arrumando[8:10]
+    str_uf = titulo[8:10]
     uf_d1 = separado[8]
     uf_d2 = separado[9]
     codigo_uf = uf_d1 * 10 + uf_d2
- 
+
     if str_uf not in dicionario_UF:
         console.print("Título de eleitor inválido!", style="bold red")
         sleep(1.5)
@@ -58,36 +58,36 @@ def validar_titulo (titulo):
     soma_1_DV  = 0
     for i in range(8):
         soma_1_DV = soma_1_DV + (separado[i] * lista_1_DV[i])
- 
+
     resto_1_DV = soma_1_DV % 11
- 
+
     if resto_1_DV == 10:
         digito_1_DV = 0
     elif resto_1_DV == 0 and (codigo_uf == 1 or codigo_uf == 2):
         digito_1_DV = 1
     else:
         digito_1_DV = resto_1_DV
- 
+
     lista_2_DV = [7, 8, 9]
     soma_2_DV  = 0
     nova_lista  = [uf_d1, uf_d2, digito_1_DV]
- 
+
     for i in range(3):
         soma_2_DV = soma_2_DV + (nova_lista[i] * lista_2_DV[i])
- 
+
     resto_2_DV = soma_2_DV % 11
- 
+
     if resto_2_DV == 10:
         digito_2_DV = 0
     elif resto_2_DV == 0 and (codigo_uf == 1 or codigo_uf == 2):
         digito_2_DV = 1
     else:
         digito_2_DV = resto_2_DV
- 
+
     if separado[10] != digito_1_DV or separado[11] != digito_2_DV:
         console.print("Título de eleitor inválido!", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
- 
+
     return True
