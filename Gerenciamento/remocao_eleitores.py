@@ -104,7 +104,12 @@ def remocao_eleitores():
         if eleitor is not None:
             exibir_tabela_eleitor(eleitor)
 
-            console.print("\nDeseja realmente remover este eleitor?\n 1 - Sim\n 2 - Não")
+            conteudo_remover = (
+                "[bold bright_white][1][/bold bright_white]  Sim\n"
+                "[dim]──────────────────────────────[/dim]\n"
+                "[dim][2]  Não[/dim]"
+            )
+            console.print(Panel(Align.center(conteudo_remover), title="[bold bright_white]CONFIRMAR REMOÇÃO[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
             confirmacao = ge.obter_entrada_inteira_valida("Opção escolhida: ", 1, 2)
 
             if confirmacao == 1:
