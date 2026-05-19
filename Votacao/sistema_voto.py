@@ -80,7 +80,7 @@ def sistema_voto(id_sessao):
         conexao.close();
         return
 
-    titulo = titulo.replace(" ", "")
+    titulo = titulo.strip()
     titulo_valido = val_tit.validar_titulo(titulo)
     while titulo_valido == False:
         limpar_tela()
@@ -88,7 +88,7 @@ def sistema_voto(id_sessao):
         titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO")
         if titulo is None:
             break
-        titulo = titulo.replace(" ", "")
+        titulo = titulo.strip()
         titulo_valido = val_tit.validar_titulo(titulo)
     if titulo is None:
         cursor.close();
