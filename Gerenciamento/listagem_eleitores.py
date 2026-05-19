@@ -2,6 +2,7 @@ from database import conexao_banco as conect
 from Validadores import confirmacao
 from rich.console import Console
 from rich.table import Table
+from rich.align import Align
 from rich import box
 from Visual.visual import limpar_tela
 
@@ -65,7 +66,7 @@ def listagem_eleitores():
                     status_votacao
                 )
 
-            console.print(tabela)
+            console.print(Align.center(tabela))
             console.print(f'\n Total de Eleitores Cadastrados: [bold white]{len(total_eleitores)}[/bold white]')
 
     except Exception as erro:
