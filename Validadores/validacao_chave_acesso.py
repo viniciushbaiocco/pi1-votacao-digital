@@ -1,6 +1,8 @@
-from colorama import Fore, Style
+from rich.console import Console
 from Visual.visual import limpar_tela
 from time import sleep
+
+console = Console(highlight=False)
 
 def validar_chave_acesso(chave_acesso):
 
@@ -18,25 +20,25 @@ def validar_chave_acesso(chave_acesso):
 
     # Verifica se a chave de acesso possui 6 dígitos
     if len(chave_acesso) != 7:
-        print(Fore.RED + Style.BRIGHT + "\nChave de Acesso INVÁLIDA")
-        print(Fore.YELLOW+ Style.BRIGHT + "Chave de Acesso deve conter 7 dígitos")
-        print(Fore.YELLOW + Style.BRIGHT + "Não utilize espaços ou pontuações")
+        console.print("\nChave de Acesso INVÁLIDA", style="bold red")
+        console.print("Chave de Acesso deve conter 7 dígitos", style="bold yellow")
+        console.print("Não utilize espaços ou pontuações", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
 
     # Verifica se os dois primeiros caracteres são letras
     if not chave_acesso[0:3].isalpha():
-        print(Fore.RED + Style.BRIGHT + "\nChave de Acesso INVÁLIDA")
-        print(Fore.YELLOW + Style.BRIGHT + "Os três primeiros dígitos devem ser LETRAS")
+        console.print("\nChave de Acesso INVÁLIDA", style="bold red")
+        console.print("Os três primeiros dígitos devem ser LETRAS", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
 
     # Verifica se os quatro últimos caracteres são números
     if not chave_acesso[3:7].isdigit():
-        print(Fore.RED + Style.BRIGHT + "\nChave de Acesso INVÁLIDA")
-        print(Fore.YELLOW + Style.BRIGHT + "Os quatro últimos dígitos devem ser NÚMEROS")
+        console.print("\nChave de Acesso INVÁLIDA", style="bold red")
+        console.print("Os quatro últimos dígitos devem ser NÚMEROS", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
