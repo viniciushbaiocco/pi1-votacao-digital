@@ -80,6 +80,7 @@ def sistema_voto(id_sessao):
         conexao.close();
         return
 
+    titulo = titulo.replace(" ", "")
     titulo_valido = val_tit.validar_titulo(titulo)
     while titulo_valido == False:
         limpar_tela()
@@ -87,6 +88,7 @@ def sistema_voto(id_sessao):
         titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO")
         if titulo is None:
             break
+        titulo = titulo.replace(" ", "")
         titulo_valido = val_tit.validar_titulo(titulo)
     if titulo is None:
         cursor.close();
@@ -100,7 +102,7 @@ def sistema_voto(id_sessao):
         cursor.close();
         conexao.close();
         return
-    chave_acesso = chave_acesso.upper()
+    chave_acesso = chave_acesso.strip().upper()
 
     chave_valida = val_chave.validar_chave_acesso(chave_acesso)
     while chave_valida == False:
@@ -109,7 +111,7 @@ def sistema_voto(id_sessao):
         chave_acesso = ge.input_cancelavel("Chave inválida. Digite novamente", "IDENTIFICAÇÃO")
         if chave_acesso is None:
             break
-        chave_acesso = chave_acesso.upper()
+        chave_acesso = chave_acesso.strip().upper()
         chave_valida = val_chave.validar_chave_acesso(chave_acesso)
     if chave_acesso is None:
         cursor.close();
