@@ -46,7 +46,6 @@ def votos_por_partido():
                 str(partidos['total_votos'])
             )
 
-        # implementar cor com o rich
         visual.carregar_pontos_loop(2, "Consultando resultados")
         time.sleep(1)
         console.print(tabela)
@@ -56,7 +55,3 @@ def votos_por_partido():
     finally:
         cursor.close()
         conexao.close()
-
-
-if __name__ == '__main__':
-    votos_por_partido()
