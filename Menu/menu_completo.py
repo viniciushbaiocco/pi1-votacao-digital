@@ -4,6 +4,9 @@ from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores,
 from Cadastro import cadastro_eleitores
 from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna, geral
 from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
+from rich.console import Console
+
+console = Console(highlight=False)
 
 
 def menu_completo():
@@ -140,7 +143,7 @@ def menu_completo():
                     executando_menu_votacao = 0
 
         elif escolha_principal == False:  # Sair
-            print("Sistema Finalizado")
+            console.print("Sistema Finalizado", style="bold green")
             acesso_negado.excluir_ocorrencia_acesso_negado()
             abertura_urna.excluir_ocorrencia_abertura_urna()
             encerramento_urna.excluir_ocorrencia_encerramento_urna()
