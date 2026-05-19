@@ -84,20 +84,22 @@ def menu_completo():
                 sm.exibir_menu_votacao()
                 escolha_votacao = ge.obter_entrada_inteira_valida(
                     "Escolha uma opção: ", 1, 3)
-                sessao += 1 # Soma 1 para cada entrada no menu votação, indicando a sessão
-                if escolha_votacao == 1 and abertura_votacao.abrir_sistema_votacao(sessao):  # Abrir Sistema De Votação
-                    executando_menu_sistema_votacao = 1
-                    while executando_menu_sistema_votacao == 1:
-                        sm.exibir_menu_sistema_votacao()
-                        escolha_sistema_votacao = ge.obter_entrada_inteira_valida(
-                            "Escolha uma opção: ", 1, 2)
 
-                        match escolha_sistema_votacao:
-                            case 1:
-                                sistema_voto.sistema_voto(sessao)
-                            case 2:
-                                if enceramento_votacao.encerrar_sistema_votacao(sessao):
-                                    executando_menu_sistema_votacao = 0
+                if escolha_votacao == 1: # Abre a opção de iniciar a votação
+                    sessao += 1 # Contabiliza a sessão após essa abertura
+                    if abertura_votacao.abrir_sistema_votacao(sessao): # Se confirmado abre o sistema
+                        executando_menu_sistema_votacao = 1
+                        while executando_menu_sistema_votacao == 1:
+                            sm.exibir_menu_sistema_votacao()
+                            escolha_sistema_votacao = ge.obter_entrada_inteira_valida(
+                                "Escolha uma opção: ", 1, 2)
+
+                            match escolha_sistema_votacao:
+                                case 1:
+                                    sistema_voto.sistema_voto(sessao)
+                                case 2:
+                                    if enceramento_votacao.encerrar_sistema_votacao(sessao):
+                                        executando_menu_sistema_votacao = 0
 
                 elif escolha_votacao == 2:  # Resultados Da Votação
                     executando_menu_resultados_votacao = 1
