@@ -53,5 +53,7 @@ def votos_por_partido():
         visual.limpar_tela()
 
     finally:
-        cursor.close()
-        conexao.close()
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()
