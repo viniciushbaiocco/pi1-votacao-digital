@@ -1,22 +1,14 @@
-from colorama import Fore, Style
+from rich.console import Console
 from datetime import datetime
 from Validadores import confirmacao
 import os
 
-# pasta do arquivo atual
+console = Console(highlight=False)
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-
-# cria o caminho da pasta Armazenamento
 PASTA_ARMAZENAMENTO = os.path.join(BASE_DIR, "Armazenamento")
-
-# cria a pasta caso ela não exista
 os.makedirs(PASTA_ARMAZENAMENTO, exist_ok=True)
-
-# caminho completo do arquivo
-CAMINHO_ARQUIVO = os.path.join(
-    PASTA_ARMAZENAMENTO,
-    "Abertura_Urna.txt"
-)
+CAMINHO_ARQUIVO = os.path.join(PASTA_ARMAZENAMENTO, "Abertura_Urna.txt")
 
 
 def ocorrencia_abertura_urna(id_sessao):
@@ -28,12 +20,10 @@ def ocorrencia_abertura_urna(id_sessao):
     Returns:
         None
     '''
-
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(Fore.GREEN + Style.BRIGHT +
-                  f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
 def imprimir_ocorrencia_abertura_urna():
@@ -47,15 +37,13 @@ def imprimir_ocorrencia_abertura_urna():
     try:
         with open(CAMINHO_ARQUIVO, "r", encoding="utf-8") as arq:
             conteudo = arq.read()
-            print(conteudo)
+            console.print(conteudo, markup=False)
             confirmacao.confirmacao()
     except FileNotFoundError:
-        print(Fore.YELLOW + Style.BRIGHT +
-              "\nNenhum Log de Abertura de Urna Registrado")
+        console.print("\nNenhum Log de Abertura de Urna Registrado", style="bold yellow")
         confirmacao.confirmacao()
     except Exception as e:
-        print(Fore.RED + Style.BRIGHT +
-              f"\nErro ao ler o log de Abertura de Urna {e}")
+        console.print(f"\nErro ao ler o log de Abertura de Urna {e}", style="bold red")
         confirmacao.confirmacao()
 
 
@@ -67,6 +55,5 @@ def excluir_ocorrencia_abertura_urna():
 
     Returns: None
     """
-    arquivo = CAMINHO_ARQUIVO
-    if os.path.exists(arquivo):
-        os.remove(arquivo)
+    if os.path.exists(CAMINHO_ARQUIVO):
+        os.remove(CAMINHO_ARQUIVO)
