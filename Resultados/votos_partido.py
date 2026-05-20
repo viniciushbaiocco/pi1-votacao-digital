@@ -5,6 +5,7 @@ from rich.console import Console
 from rich.table import Table
 from rich import box
 from Visual import visual
+from rich.align import Align
 
 console = Console(highlight=False)
 
@@ -46,9 +47,9 @@ def votos_por_partido():
                 str(partidos['total_votos'])
             )
 
-        visual.carregar_pontos_loop(2, "Consultando resultados")
+        visual.carregar_pontos_loop(2, "Consultando Resultados")
         time.sleep(1)
-        console.print(tabela)
+        console.print(Align.center(tabela))
         confirmacao.confirmacao()
         visual.limpar_tela()
 
