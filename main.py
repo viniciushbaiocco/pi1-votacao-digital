@@ -5,12 +5,12 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
 from rich import box
+from Visual.visual import limpar_tela
 
 console = Console(highlight=False)
 
 def exibir_splash():
-    os.system('cls' if os.name == 'nt' else 'clear')
-
+    limpar_tela()
     try:
         largura_terminal = os.get_terminal_size().columns
     except OSError:
