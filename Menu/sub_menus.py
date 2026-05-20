@@ -246,3 +246,18 @@ def exibir_menu_ocorrencias():
     print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[7]  Voltar")
     print(Fore.LIGHTWHITE_EX + "║")
     print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
+
+def exibir_menu_boletim_urna():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    exibir_banner()
+    print(Fore.LIGHTWHITE_EX + "╔" + "═" * largura)
+    print(Fore.LIGHTWHITE_EX + "║")
+    print(Fore.LIGHTWHITE_EX + "║" + Fore.CYAN + Style.BRIGHT + "BOLTEIM DE URNA".center(largura))
+    print(Fore.LIGHTWHITE_EX + "║")
+    print(Fore.LIGHTWHITE_EX + "╠" + "═" * largura)
+    print(Fore.LIGHTWHITE_EX + "║")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[1]" + Fore.WHITE + "  Listagem dos Candidatos")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.YELLOW + Style.BRIGHT + "[2]" + Fore.WHITE + "  Verificar Vencedor")
+    print(Fore.LIGHTWHITE_EX + "║  " + Fore.RED + "[3]  Voltar")
+    print(Fore.LIGHTWHITE_EX + "║")
+    print(Fore.LIGHTWHITE_EX + "╚" + "═" * largura)
