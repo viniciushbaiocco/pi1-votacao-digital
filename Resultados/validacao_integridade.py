@@ -1,6 +1,9 @@
 from database import conexao_banco
 from Visual.visual import carregar_pontos_loop, limpar_tela
 from Validadores.confirmacao import   confirmacao
+from rich.console import Console
+
+console = Console(highlight=False)
 
 def validar_integridade():
     """
@@ -31,10 +34,10 @@ def validar_integridade():
     carregar_pontos_loop(3, "Validando Integridade")
 
     if total_votos == total_ja_votou:
-        print(f"Validação concluída, nenhum voto foi perdido.")
+        console.print(f"[bold green]Validação concluída, nenhum voto foi perdido.[/bold green]")
         confirmacao()
         return True
     else:
-        print(f"Validação não concluída, possível inconsistência.")
+        console.print(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]")
         confirmacao()
         return False

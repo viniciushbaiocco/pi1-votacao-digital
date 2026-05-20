@@ -27,10 +27,10 @@ def exibir_estatistica_comparecimento() -> None:
     cursor.execute("SELECT COUNT(*) AS total FROM eleitores")
     total_eleitores = cursor.fetchone()["total"]
 
-    #carregar_pontos_loop(3, "Calculando Estatísticas")
+    carregar_pontos_loop(3, "Calculando Estatísticas")
 
     if total_eleitores == 0:
-        print("\n  [bold red][AVISO] Nenhum eleitor cadastrado no sistema.[/bold red]")
+        console.print("\n  [bold red][AVISO] Nenhum eleitor cadastrado no sistema.[/bold red]")
         cursor.close()
         conexao.close()
         return
