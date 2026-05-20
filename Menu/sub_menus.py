@@ -223,3 +223,13 @@ def exibir_menu_ocorrencias():
         "                 [red][X]  Voltar[/red]"
     )
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]OCORRÊNCIAS[/bold bright_white]", border_style="bold dark_orange", box=box.DOUBLE, padding=(1, 4)))
+
+def exibir_menu_boletim_urna():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    exibir_banner()
+    conteudo = (
+        "                 [bold bright_white][1][/bold bright_white]  Listagem dos Candidatos\n"
+        "                 [bold bright_white][2][/bold bright_white]  Verificar Vencedor\n"
+        "                 [red][X]  Voltar[/red]"
+    )
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]OCORRÊNCIAS[/bold bright_white]", border_style="bold dark_orange", box=box.DOUBLE, padding=(1, 4)))

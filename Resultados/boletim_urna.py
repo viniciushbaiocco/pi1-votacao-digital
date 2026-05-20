@@ -30,7 +30,7 @@ def exibir_boletim_urna():
         executando_entrada = 1
         while executando_entrada == 1:
             sub_menus.exibir_menu_boletim_urna()
-            escolha = gerenciador_de_entrada.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 3)
+            escolha = gerenciador_de_entrada.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
 
             tabela = Table(
                 title="Listagem de Eleitores",
@@ -78,11 +78,10 @@ def exibir_boletim_urna():
                     cursor.execute(query_verificar_tabela_votos)
                     verificar_tabela = cursor.fetchall()
 
+                    visual.carregar_pontos_loop(3, "Verificando Vencedor")
+                    time.sleep(1)
+
                     if not verificar_tabela:
-
-                        visual.carregar_pontos_loop(3, "Verificando Vencedor")
-                        time.sleep(1)
-
                         console.print("[bold red]Nenhum Voto Registrado[/bold red]")
                         console.print("\n[bold yellow]Vencedor não pode ser definido![/bold yellow]")
 
@@ -100,29 +99,23 @@ def exibir_boletim_urna():
                                                      ' ORDER BY total_votos DESC')
                         cursor.execute(query_verificar_vencedor)
                         vencedor = cursor.fetchone()
-                        # Consome o restante dos resultados para evitar erros em futuras operações do cursor
                         cursor.fetchall()
 
                         if vencedor:
-                            visual.carregar_pontos_loop(3, "Verificando Vencedor")
-                            time.sleep(1)
-
                             tabela.add_row(
                                 vencedor['nome'],
                                 vencedor['partido'],
                                 str(vencedor['total_votos'])
                             )
-
+                            console.print(tabela) # Exibe a tabela com o vencedor
                         # Caso não seja possível determinar um vencedor (improvável com a query atual, mas como fallback)
                         else:
-                            visual.carregar_pontos_loop(3, "Verificando Vencedor")
-                            time.sleep(1)
                             console.print("[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]")
 
-                        # Pausa e limpa a tela após exibir o resultado
-                        confirmacao.confirmacao()
-                        visual.limpar_tela()
-                case 3:
+                    # Pausa e limpa a tela após exibir o resultado (movido para fora do if/else para consistência)
+                    confirmacao.confirmacao()
+                    visual.limpar_tela()
+                case False:
                     executando_entrada = 0
     finally:
         if cursor:
