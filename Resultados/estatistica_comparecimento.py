@@ -1,6 +1,12 @@
 from database.conexao_banco import conexao_banco
 from Visual.visual import carregar_pontos_loop, limpar_tela
 from Validadores.confirmacao import   confirmacao
+from rich.console import Console
+from rich.table import Table
+from rich import box, style
+from rich.align import Align
+
+console = Console(highlight=False)
 
 def exibir_estatistica_comparecimento() -> None:
     """
@@ -15,19 +21,16 @@ def exibir_estatistica_comparecimento() -> None:
     limpar_tela()
 
     conexao = conexao_banco()
-    if not conexao:
-        print("  [ERRO] Falha na conexão com o banco de dados.")
-        return
-
     cursor = conexao.cursor(dictionary=True)
 
     # Total de eleitores cadastrados
     cursor.execute("SELECT COUNT(*) AS total FROM eleitores")
     total_eleitores = cursor.fetchone()["total"]
 
-    carregar_pontos_loop(3, "Calculando Estatísticas")
+    #carregar_pontos_loop(3, "Calculando Estatísticas")
+
     if total_eleitores == 0:
-        print("\n  [AVISO] Nenhum eleitor cadastrado no sistema.")
+        print("\n  [bold red][AVISO] Nenhum eleitor cadastrado no sistema.[/bold red]")
         cursor.close()
         conexao.close()
         return
@@ -46,15 +49,32 @@ def exibir_estatistica_comparecimento() -> None:
     percentual = (total_votaram / total_eleitores) * 100
     percentual_ausencia = (nao_votaram / total_eleitores) * 100
 
+    # Tabela
+    tabela = Table(
+        title="Estastítica de Comparecimento",
+        box=box.DOUBLE,
+        border_style="bold sandy_brown",
+        title_style="bold bright_white",
+        header_style="bold sandy_brown",
+        show_lines=True
+    )
+
+    tabela.add_column("Total de Eleitores Aptos", style="bright_white")
+    tabela.add_column("Eleitores Que Votaram", style="bright_white")
+    tabela.add_column("Eleitores Ausentes", style="bright_white")
+    tabela.add_column("Percentual de Comparecimento", style="bright_white")
+    tabela.add_column("Percentual de abstenção", style="bright_white")
+
+    for i in range (1,2):
+        tabela.add_row(
+            str(total_eleitores),
+            str(total_votaram),
+            str(nao_votaram),
+            str(percentual),
+            str(percentual_ausencia)
+        )
+
     # Exibição dos resultados
-    print("\n" + "=" * 55)
-    print("\tESTATÍSTICA DE COMPARECIMENTO")
-    print("=" * 55)
-    print(f"  Total de eleitores aptos    : {total_eleitores}")
-    print(f"  Eleitores que votaram       : {total_votaram}")
-    print(f"  Eleitores ausentes          : {nao_votaram}")
-    print("-" * 55)
-    print(f"  Percentual de comparecimento: {percentual:.2f}%")
-    print(f"  Percentual de abstenção     : {percentual_ausencia:.2f}%")
-    print("=" * 55)
+    console.print(Align.center(tabela))
+
     confirmacao()
