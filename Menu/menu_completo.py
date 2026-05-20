@@ -5,6 +5,7 @@ from Cadastro import cadastro_eleitores
 from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna, geral
 from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
 from rich.console import Console
+from Resultados import boletim_urna, estatistica_comparecimento, votos_partido, validacao_integridade
 
 console = Console(highlight=False)
 
@@ -110,13 +111,13 @@ def menu_completo():
 
                         match escolha_resultado_votacao:
                             case 1:
-                                print("Em desenvolvimento...")
+                                boletim_urna.exibir_boletim_urna()
                             case 2:
-                                print("Em desenvolvimento...")
+                                estatistica_comparecimento.exibir_estatistica_comparecimento()
                             case 3:
-                                print("Em desenvolvimento...")
+                                votos_partido.votos_por_partido()
                             case 4:
-                                print("Em desenvolvimento...")
+                                validacao_integridade.validar_integridade()
                             case False:  # Voltar
                                 executando_menu_resultados_votacao = 0
                 elif escolha_votacao == 3:
