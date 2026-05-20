@@ -7,6 +7,7 @@ from Visual import visual
 from rich.console import Console
 from rich.table import Table
 from rich import box, style
+from rich.align import Align
 
 console = Console(highlight=False)
 
@@ -45,6 +46,19 @@ def exibir_boletim_urna():
             tabela.add_column("Partido", style="bright_white")
             tabela.add_column("Total de Votos", justify="center")
 
+            tabela_vencedor = Table(
+                title="Vencedor",
+                box=box.DOUBLE,
+                border_style="bold sandy_brown",
+                title_style="bold bright_white",
+                header_style="bold sandy_brown",
+                show_lines=True
+            )
+
+            tabela_vencedor.add_column("Nome", style="bright_white")
+            tabela_vencedor.add_column("Partido", style="bright_white")
+            tabela_vencedor.add_column("Total de Votos", justify="center")
+
             match escolha:
                 # Opção 1: Listar todos os candidatos com seus votos
                 case 1:
@@ -68,7 +82,7 @@ def exibir_boletim_urna():
 
                     visual.carregar_pontos_loop(3, "Listando Candidatos") # implementar cor com o rich
                     time.sleep(1)
-                    console.print(tabela)
+                    console.print(Align.center(tabela))
                     confirmacao.confirmacao()
                     visual.limpar_tela()
 
@@ -102,12 +116,12 @@ def exibir_boletim_urna():
                         cursor.fetchall()
 
                         if vencedor:
-                            tabela.add_row(
+                            tabela_vencedor.add_row(
                                 vencedor['nome'],
                                 vencedor['partido'],
                                 str(vencedor['total_votos'])
                             )
-                            console.print(tabela) # Exibe a tabela com o vencedor
+                            console.print(Align.center(tabela_vencedor)) # Exibe a tabela com o vencedor
                         # Caso não seja possível determinar um vencedor (improvável com a query atual, mas como fallback)
                         else:
                             console.print("[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]")
