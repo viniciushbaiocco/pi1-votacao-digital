@@ -51,7 +51,7 @@ def exibir_estatistica_comparecimento() -> None:
 
     # Tabela
     tabela = Table(
-        title="Estastítica de Comparecimento",
+        title="Estastíticas de Comparecimento",
         box=box.DOUBLE,
         border_style="bold sandy_brown",
         title_style="bold bright_white",
