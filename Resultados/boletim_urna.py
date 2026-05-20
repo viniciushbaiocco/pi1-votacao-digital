@@ -20,7 +20,7 @@ def exibir_boletim_urna():
         None
 
     Returns:
-        Listagem ou o Vencedor
+        None. A função exibe o boletim de urna ou o vencedor diretamente no console
     """
     conexao = None
     cursor = None
