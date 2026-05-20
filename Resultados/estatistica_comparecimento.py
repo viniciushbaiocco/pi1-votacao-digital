@@ -1,14 +1,6 @@
-"""
-Estatística de Comparecimento
-
-Exibindo:
-  - Quantidade total de eleitores que votaram
-  - Percentual desse número que realmente votou
-
-"""
-
 from database.conexao_banco import conexao_banco
-
+from Visual.visual import carregar_pontos_loop, limpar_tela
+from Validadores.confirmacao import   confirmacao
 
 def exibir_estatistica_comparecimento() -> None:
     """
@@ -19,6 +11,8 @@ def exibir_estatistica_comparecimento() -> None:
     Returns:
         None
     """
+
+    limpar_tela()
 
     conexao = conexao_banco()
     if not conexao:
@@ -31,6 +25,7 @@ def exibir_estatistica_comparecimento() -> None:
     cursor.execute("SELECT COUNT(*) AS total FROM eleitores")
     total_eleitores = cursor.fetchone()["total"]
 
+    carregar_pontos_loop(3, "Calculando Estatísticas")
     if total_eleitores == 0:
         print("\n  [AVISO] Nenhum eleitor cadastrado no sistema.")
         cursor.close()
@@ -62,3 +57,4 @@ def exibir_estatistica_comparecimento() -> None:
     print(f"  Percentual de comparecimento: {percentual:.2f}%")
     print(f"  Percentual de abstenção     : {percentual_ausencia:.2f}%")
     print("=" * 55)
+    confirmacao()

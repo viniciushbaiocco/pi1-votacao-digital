@@ -1,4 +1,6 @@
 from database import conexao_banco
+from Visual.visual import carregar_pontos_loop, limpar_tela
+from Validadores.confirmacao import   confirmacao
 
 def validar_integridade():
     """
@@ -11,6 +13,9 @@ def validar_integridade():
     Returns:
         bool: True se a quantidade de votos bater com a quantidade de eleitores que votaram, False caso contrário.
     """
+
+    limpar_tela()
+
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor()
 
@@ -23,9 +28,13 @@ def validar_integridade():
     cursor.close()
     conexao.close()
 
+    carregar_pontos_loop(3, "Validando Integridade")
+
     if total_votos == total_ja_votou:
         print(f"Validação concluída, nenhum voto foi perdido.")
+        confirmacao()
         return True
     else:
         print(f"Validação não concluída, possível inconsistência.")
+        confirmacao()
         return False
