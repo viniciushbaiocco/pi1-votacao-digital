@@ -2,6 +2,9 @@ from database import conexao_banco
 from Visual.visual import carregar_pontos_loop, limpar_tela
 from Validadores.confirmacao import   confirmacao
 from rich.console import Console
+from rich import box
+from rich.panel import Panel
+from rich.align import Align
 
 console = Console(highlight=False)
 
@@ -34,10 +37,10 @@ def validar_integridade():
     carregar_pontos_loop(3, "Validando Integridade")
 
     if total_votos == total_ja_votou:
-        console.print(f"[bold green]Validação concluída, nenhum voto foi perdido.[/bold green]")
+        console.print(Panel(Align.center(f"[bold green]Validação concluída, nenhum voto foi perdido.[/bold green]"), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
         confirmacao()
         return True
     else:
-        console.print(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]")
+        console.print(Panel(Align.center(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]"), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
         confirmacao()
         return False
