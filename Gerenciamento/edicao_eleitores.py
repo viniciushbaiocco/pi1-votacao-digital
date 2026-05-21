@@ -3,8 +3,7 @@ from criptografia import criptografia as crip
 from Verificadores import verificacao_cpf_banco as ver_cpf
 from Verificadores import verificacao_titulo_banco as ver_tit
 from Cadastro import chave_acesso as chave
-from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf as val_cpf, validacao_nome as val_nome, \
-    validacao_titulo as val_tit
+from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf as val_cpf, validacao_nome as val_nome, validacao_titulo as val_tit
 from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
@@ -135,6 +134,8 @@ def edicao_eleitores():
                 match opcao_editar:
                     case 1:
                         novo_nome = val_nome.validar_nome()
+                        if novo_nome is None:
+                            continue
                         nova_chave_acesso = chave.geracao_chave_acesso(novo_nome)
                         editado = 1
                         cursor.execute('''
