@@ -1,4 +1,3 @@
-
 '''
 Matriz-chave 2x2 = [5 8; 17 3]; de acordo com requisito
 det = 23; é invertível
@@ -190,7 +189,7 @@ def criptografar(texto: str):
     Criptografa usando Cifra de Hill com MATRIZ_CHAVE 2x2.
     
     Etapas:
-        1. Converte o texto para maiúsculao e duplica o último caractere se necessário.
+        1. Converte o texto para maiúsculo e duplica o último caractere se necessário.
         2. Divide em vetores de 2 caracteres.
         3. Converte cada vetor para um vetor numérico.
         4. Multiplica pela MATRIZ_CHAVE com módulo 36.
@@ -367,4 +366,28 @@ def descriptografar_protocolo(protocolo_cifrado: str):
     Returns:
         str: Protocolo de votação descriptografado.
     """
-    return descriptografar(protocolo_cifrado)   
+    return descriptografar(protocolo_cifrado)
+
+def criptografar_palavra_chave(palavra_chave: str):
+    """
+    Criptografa uma palavra-chave.
+
+    Args:
+        palavra_chave (str): A palavra-chave a ser criptografada.
+
+    Returns:
+        str: A palavra-chave criptografada.
+    """
+    return criptografar(palavra_chave)
+
+def descriptografar_palavra_chave(palavra_chave_cifrada: str):
+    """
+    Descriptografa uma palavra-chave criptografada.
+
+    Args:
+        palavra_chave_cifrada (str): A palavra-chave criptografada.
+
+    Returns:
+        str: A palavra-chave descriptografada.
+    """
+    return descriptografar(palavra_chave_cifrada)
