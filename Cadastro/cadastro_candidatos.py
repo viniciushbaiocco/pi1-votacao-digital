@@ -14,6 +14,22 @@ console = Console(highlight=False)
 
 
 def exibir_progresso(nome=None, partido=None, sigla=None, numero=None):
+    """
+    Exibe uma tabela estilizada no terminal com o progresso do cadastro do candidato.
+
+    Utiliza a biblioteca Rich para renderizar uma tabela centralizada contendo
+    as informações preenchidas até o momento. Caso algum campo ainda não tenha
+    sido informado (seja None), ele é exibido com um caractere de interrogação.
+
+    Args:
+        nome (str, optional): Nome completo do candidato. O padrão é None.
+        partido (str, optional): Nome do partido político. O padrão é None.
+        sigla (str, optional): Sigla do partido político. O padrão é None.
+        numero (int ou str, optional): Número de votação do candidato. O padrão é None.
+
+    Returns:
+        None: A função apenas renderiza e imprime a tabela no console, não retornando valor.
+    """
     tabela = Table(
         title="Cadastro de Candidato",
         box=box.DOUBLE,
@@ -34,6 +50,23 @@ def exibir_progresso(nome=None, partido=None, sigla=None, numero=None):
 
 
 def cadastrar_candidato():
+    """
+    Gere o fluxo passo a passo para o cadastro de um novo candidato no sistema.
+
+    A função guia o usuário através de telas limpas e atualizadas dinamicamente
+    conforme os dados (Nome, Partido, Sigla e Número) são inseridos e validados.
+    Permite o cancelamento a qualquer momento através dos inputs interativos.
+    Ao final, valida conflitos no banco de dados, persiste o novo registro e
+    exibe um resumo do candidato cadastrado de forma estilizada.
+
+    Args:
+        None.
+
+    Returns:
+        bool ou None: Retorna True se o candidato for cadastrado com sucesso.
+        Retorna None caso o usuário cancele a operação em qualquer etapa ou
+        se houver alguma falha de validação/conflito com regras de negócio.
+    """
     limpar_tela()
 
     exibir_progresso()

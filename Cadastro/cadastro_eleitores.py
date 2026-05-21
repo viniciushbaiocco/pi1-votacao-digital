@@ -15,6 +15,28 @@ from rich import box
 console = Console(highlight=False)
 
 def exibir_progresso(cpf=None, nome=None, titulo=None, mesario=None, palavra_chave=None):
+    """
+    Exibe uma tabela estilizada no terminal com o progresso do cadastro do eleitor.
+
+    Utiliza a biblioteca Rich para construir e renderizar uma tabela centralizada
+    contendo os dados parciais ou totais do eleitor. Os campos que ainda não foram
+    preenchidos (iguais a None) exibem um caractere de interrogação. O status de
+    mesário e da palavra-chave possuem estilizações de cores específicas (verde/vermelho)
+    para facilitar a identificação visual.
+
+    Args:
+        cpf (str, optional): CPF do eleitor. O padrão é None.
+        nome (str, optional): Nome completo do eleitor. O padrão é None.
+        titulo (str, optional): Número do título de eleitor. O padrão é None.
+        mesario (bool, optional): Indica se o eleitor será mesário (True),
+        não será (False) ou se ainda não foi definido (None). O padrão é None.
+        palavra_chave (str, optional): Palavra-chave de recuperação/backup do eleitor.
+        Se informada, a tabela exibe apenas o status "Cadastrada" por questões
+        de privacidade. O padrão é None.
+
+    Returns:
+        None: A função realiza apenas a impressão dos dados no console, sem retornar valor.
+    """
     tabela = Table(
         title="Cadastro de Eleitor",
         box=box.DOUBLE,
@@ -47,6 +69,27 @@ def exibir_progresso(cpf=None, nome=None, titulo=None, mesario=None, palavra_cha
     console.print(Align.center(tabela))
 
 def cadastrar_eleitor():
+    """
+    Gere o fluxo sequencial interativo para o cadastro de um novo eleitor no banco de dados.
+
+    A função orienta o usuário passo a passo através de telas atualizadas dinamicamente,
+    solicitando dados cruciais como CPF (validado e criptografado), Nome completo, e Título
+    de Eleitor (higienizado para conter apenas dígitos e verificado contra duplicidades).
+    Também define opcionalmente o perfil de mesário e gera uma palavra-chave de backup.
+
+    Por questões de segurança e privacidade do eleitor, dados sensíveis como o CPF e
+    a palavra-chave de backup são inseridos criptografados no banco de dados. Uma chave de
+    acesso única e temporária é gerada a partir do nome, exibida uma única vez na tabela
+    final de sucesso e salva de forma criptografada para futuras autenticações na urna.
+
+    Args:
+        Nenhum.
+
+    Returns:
+        bool ou None: Retorna True se o eleitor for cadastrado com sucesso ou caso o CPF já
+        esteja cadastrado no banco de dados (redirecionando o fluxo). Retorna None se o
+        usuário cancelar a operação através dos prompts interactivos em qualquer etapa.
+    """
     limpar_tela()
 
     exibir_progresso()
