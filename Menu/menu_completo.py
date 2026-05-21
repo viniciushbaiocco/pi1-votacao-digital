@@ -1,7 +1,8 @@
 from Menu import sub_menus as sm
 from Validadores import gerenciador_de_entrada as ge
 from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
-from Cadastro import cadastro_eleitores
+from Gerenciamento import busca_candidatos, edicao_candidatos, listagem_candidatos, remocao_candidatos
+from Cadastro import cadastro_eleitores, cadastro_candidatos
 from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna, geral
 from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
 from rich.console import Console
@@ -65,15 +66,15 @@ def menu_completo():
 
                         match escolha_candidato:
                             case 1:
-                                print("Em desenvolvimento...")
+                                cadastro_candidatos.cadastrar_candidato()
                             case 2:
-                                print("Em desenvolvimento...")
+                                edicao_candidatos.edicao_candidatos()
                             case 3:
-                                print("Em desenvolvimento...")
+                                remocao_candidatos.remocao_candidatos()
                             case 4:
-                                print("Em desenvolvimento...")
+                                busca_candidatos.busca_candidato()
                             case 5:
-                                print("Em desenvolvimento...")
+                                listagem_candidatos.listagem_candidatos()
                             case False:  # Voltar
                                 executando_menu_candidatos = 0
                 elif escolha_gerenciamento == False:  # Voltar
