@@ -82,6 +82,12 @@ def cadastrar_candidato():
         if numero is None:
             return
 
+    if numero == '00':
+        console.print("\nNúmero 00 é reservado para votos nulos e não pode ser cadastrado.", style="bold red")
+        sleep(1.5)
+        confirmacao.confirmacao()
+        return
+
     if not verificacao_candidato_banco.verificar_candidato(partido, sigla, numero):
         confirmacao.confirmacao()
         return
