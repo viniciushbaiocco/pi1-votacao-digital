@@ -7,6 +7,7 @@ from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna
 from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
 from rich.console import Console
 from Resultados import boletim_urna, estatistica_comparecimento, votos_partido, validacao_integridade
+from Visual.visual import limpar_tela
 
 console = Console(highlight=False)
 
@@ -132,16 +133,22 @@ def menu_completo():
 
                         match escolha_ocorrencia:
                             case 1:
+                                limpar_tela()
                                 abertura_urna.imprimir_ocorrencia_abertura_urna()
                             case 2:
+                                limpar_tela()
                                 acesso_negado.imprimir_ocorrencia_acesso_negado()
                             case 3:
+                                limpar_tela()
                                 encerramento_urna.imprimir_ocorrencia_encerramento_urna()
                             case 4:
+                                limpar_tela()
                                 voto_computado.imprimir_voto_computado()
                             case 5:
+                                limpar_tela()
                                 voto_duplo.imprimir_voto_duplo()
                             case 6:
+                                limpar_tela()
                                 geral.imprimir_ocorrencias_por_sessao()
                             case False:
                                 executando_menu_ocorrencias = 0  # Voltar
