@@ -11,6 +11,7 @@ from rich.panel import Panel
 from rich.align import Align
 from rich import box
 from Visual.visual import limpar_tela
+from time import sleep
 
 console = Console(highlight=False)
 
@@ -153,6 +154,10 @@ def edicao_eleitores():
                                 break
                         if novo_titulo is None:
                             continue
+                        if novo_titulo == eleitor['titulo_eleitor']:
+                            console.print("Título igual ao atual. Nenhuma alteração feita.", style="bold yellow")
+                            sleep(1.5)
+                            continue
                         while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
                             novo_titulo = ge.input_cancelavel("Título já cadastrado. Digite novamente", "EDITAR TÍTULO")
                             if novo_titulo is None:
@@ -176,6 +181,10 @@ def edicao_eleitores():
                         if novo_cpf is None:
                             continue
                         novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
+                        if novo_cpf_criptografado == eleitor['cpf']:
+                            console.print("CPF igual ao atual. Nenhuma alteração feita.", style="bold yellow")
+                            sleep(1.5)
+                            continue
                         while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
                             novo_cpf = ge.input_cancelavel("CPF já cadastrado. Digite novamente", "EDITAR CPF")
                             if novo_cpf is None:
