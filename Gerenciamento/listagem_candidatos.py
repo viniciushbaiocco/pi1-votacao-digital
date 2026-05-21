@@ -10,6 +10,25 @@ console = Console(highlight=False)
 
 
 def listagem_candidatos():
+    """
+    Recupera e lista todos os candidatos cadastrados no banco de dados.
+
+    A função faz uma varredura completa na tabela de candidatos. Caso não existam
+    registros, uma mensagem informativa é exibida. Se houver registros, eles são
+    renderizados em uma tabela unificada e centralizada no terminal. Ao final,
+    a função imprime um contador com o total geral de candidatos localizados.
+
+    Qualquer falha de comunicação ou sintaxe na consulta SQL é capturada de forma
+    segura pelo bloco de exceção, exibindo o erro em destaque para o usuário
+    sem interromper a execução do sistema.
+
+    Args:
+        None.
+
+    Returns:
+        None: A função realiza apenas operações de leitura e exibição de dados
+        no console, encerrando as conexões antes de finalizar.
+    """
     limpar_tela()
 
     conexao = conect.conexao_banco()

@@ -16,6 +16,26 @@ from Visual.visual import limpar_tela
 console = Console(highlight=False)
 
 def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao, cpf=None):
+    """
+    Exibe uma tabela estilizada no terminal com os dados detalhados do eleitor encontrado.
+
+    A tabela é gerada dinamicamente utilizando a biblioteca Rich. Caso o parâmetro
+    'cpf' seja fornecido, a função adiciona uma coluna extra para renderizar este
+    dado. Os status de mesário e de votação recebem cores e formatações específicas
+    (Verde para ativo/concluído e esmaecido para falso/pendente).
+
+    Args:
+        id_ (int ou str): O identificador único do eleitor no banco de dados.
+        nome (str): O nome completo do eleitor.
+        titulo_eleitor (str): O número do título de eleitor.
+        mesario (int ou bool): Flag indicando se o eleitor é mesário (1 ou True) ou não.
+        status_votacao (int ou bool): Flag indicando se o eleitor já votou (1 ou True) ou não.
+        cpf (str, optional): O CPF em formato limpo do eleitor. Se omitido, a coluna CPF
+        não será gerada na tabela. O padrão é None.
+
+    Returns:
+        None: A função realiza apenas a impressão dos dados no terminal, sem retornar valor.
+        """
 
     mesario_texto  = "[bold green]Sim[/bold green]" if mesario == 1 else "[dim]Não[/dim]"
     status_texto   = "[bold green]Já Votou[/bold green]" if status_votacao == 1 else "[dim]Não Votou[/dim]"
@@ -44,14 +64,27 @@ def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao, cp
 
 def busca_eleitor():
     """
-    A função exibe opções para receber valores str de cpf ou titulo de eleitor para consulta do eleitor no banco de dados.
-    Utiliza de funções de criptografia, validacao e verificacao de CPF e título de eleitor.
+    Gerencia a interface interativa de pesquisa e consulta de eleitores cadastrados.
+
+    A função apresenta um menu de opções no terminal que permite localizar um
+    eleitor utilizando dois critérios de pesquisa:
+
+    1. Pelo CPF: O valor digitado é validado, criptografado para comparação e,
+       se encontrado, exibe a tabela contendo o CPF aberto inserido pelo usuário.
+    2. Pelo Título de Eleitor: O valor digitado é validado e pesquisado diretamente
+       no banco de dados.
+
+    Caso o eleitor não conste na base de dados, uma mensagem orientando a realização
+    do cadastro no Menu de Gerenciamento é exibida. O fluxo fecha corretamente
+    os cursores e conexões com o banco antes de finalizar.
 
     Args:
-        none
+        None.
 
     Returns:
-        Exibe os dados selecionados do eleitor na tela para o usuário.
+        bool ou None: Retorna False de forma imediata caso o usuário decida cancelar
+        a operação logo na seleção inicial do menu. Retorna None após a execução normal
+        da pesquisa ou cancelamento nas etapas internas de input.
     """
     limpar_tela()
 

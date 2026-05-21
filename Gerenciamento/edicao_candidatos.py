@@ -12,6 +12,22 @@ console = Console(highlight=False)
 
 
 def exibir_tabela_candidato(titulo, candidato):
+    """
+    Exibe uma tabela estilizada no terminal com as informações de um candidato.
+
+    A função utiliza a biblioteca Rich para renderizar uma tabela centralizada
+    cujo título do cabeçalho pode ser alterado dinamicamente dependendo do momento
+    do fluxo em que é chamada (ex: "Candidato a Ser Editado" ou "Candidato Após Edição").
+
+    Args:
+        titulo (str): O título que será exibido no topo da tabela.
+        candidato (dict): Um dicionário contendo os dados do candidato extraídos do
+        banco de dados. Deve possuir as chaves: 'id', 'nome', 'partido',
+        'sigla_partido' e 'numero_votacao'.
+
+    Returns:
+        None: A função realiza apenas a impressão dos dados no console, sem retornar valor.
+    """
     tabela = Table(
         title=titulo,
         box=box.DOUBLE,
@@ -37,6 +53,27 @@ def exibir_tabela_candidato(titulo, candidato):
 
 
 def edicao_candidatos():
+    """
+    Gerencia a interface interativa e o fluxo de alteração de dados de candidatos.
+
+    A função localiza o candidato desejado através do seu número de votação.
+    Aplica regras estruturais do sistema eleitoral, impedindo a modificação do
+    registro com número '00' (reservado para votos nulos).
+
+    Apresenta um menu cíclico utilizando a estrutura match/case que permite
+    editar múltiplos campos (Nome, Partido, Sigla, Número) consecutivamente.
+    Antes de persistir as mudanças no banco de dados, o sistema valida se os
+    novos dados não são idênticos aos antigos ou se o novo número de votação
+    já está em uso por outro candidato cadastrado.
+
+    Args:
+        None.
+
+    Returns:
+        Any: Retorna o resultado da chamada da função `confirmacao.confirmacao()`
+        após encerrar as conexões com o banco de dados. Pode retornar None caso a
+        operação seja interrompida precocemente nos inputs canceláveis iniciais.
+    """
     limpar_tela()
 
     conexao = conect.conexao_banco()

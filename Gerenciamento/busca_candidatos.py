@@ -11,6 +11,24 @@ console = Console(highlight=False)
 
 
 def exibir_tabela_candidato(candidato):
+    """
+    Exibe uma tabela estilizada no terminal com as informações detalhadas de um candidato.
+
+    A função utiliza a biblioteca Rich para renderizar uma tabela centralizada
+    contendo os dados de um candidato específico que foi localizado no sistema.
+
+    Args:
+        candidato (dict): Um dicionário contendo os dados do candidato extraídos do
+        banco de dados. Deve obrigatoriamente possuir as seguintes chaves:
+        - 'id' (int ou str): O identificador único do candidato.
+        - 'nome' (str): O nome completo do candidato.
+        - 'partido' (str): O nome do partido político.
+        - 'sigla_partido' (str): A sigla do partido.
+        - 'numero_votacao' (str ou int): O número do candidato na urna.
+
+    Returns:
+        None: A função realiza apenas a impressão dos dados no terminal, sem retornar valor.
+        """
     tabela = Table(
         title="Candidato Encontrado",
         box=box.DOUBLE,
@@ -36,6 +54,29 @@ def exibir_tabela_candidato(candidato):
 
 
 def busca_candidato():
+    """
+    Gerencia a interface interativa para pesquisa de candidatos no sistema.
+
+    A função abre um menu que permite ao usuário escolher entre dois métodos de
+    busca distintos:
+
+    1. Por Número de Votação: Realiza uma busca exata por um número previamente
+        validado e exibe o candidato correspondente.
+    2. Por Nome: Realiza uma busca parcial (utilizando o operador LIKE do SQL),
+        permitindo encontrar e listar múltiplos candidatos que contenham o termo digitado.
+
+    Em ambos os casos, se houver resultados, eles serão renderizados em formato
+    de tabela na tela. Caso contrário, uma mensagem informando que nenhum candidato
+    foi localizado será exibida. A operação pode ser cancelada pelo usuário a
+    qualquer momento.
+
+    Args:
+        None.
+
+    Returns:
+        None: A função manipula diretamente as saídas no console e encerra conexões,
+        não retornando nenhum valor.
+    """
     limpar_tela()
 
     conexao = conect.conexao_banco()

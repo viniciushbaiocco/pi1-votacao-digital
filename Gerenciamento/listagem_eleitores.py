@@ -10,13 +10,24 @@ console = Console(highlight=False)
 
 def listagem_eleitores():
     """
-    A função lista todos os eleitores da tabela eleitores.
+    Recupera e exibe uma listagem consolidada de todos os eleitores do sistema.
+
+    A função faz uma consulta completa na tabela de eleitores. Se a base estiver
+    vazia, exibe uma mensagem informativa. Caso contrário, gera uma tabela centralizada
+    no terminal via biblioteca Rich, convertendo as flags binárias do banco de dados
+    (0 e 1) em representações textuais coloridas e amigáveis para leitura (Sim/Não e
+    Já Votou/Não Votou). Ao final, exibe um contador com o total geral acumulado.
+
+    Qualquer falha estrutural ou de comunicação com o banco é tratada internamente
+    pelo bloco de exceção genérico, gerando um aviso estilizado no terminal e
+    garantindo que o script feche os recursos de conexão sem travar o sistema.
 
     Args:
-        None
+        None.
 
     Returns:
-        Os eleitores da tabela eleitores
+        None: A função tem propósito puramente de exibição gráfica de dados no console,
+        não gerando retornos físicos.
     """
 
     limpar_tela()

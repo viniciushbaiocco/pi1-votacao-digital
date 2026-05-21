@@ -15,6 +15,23 @@ from time import sleep
 console = Console(highlight=False)
 
 def exibir_tabela_eleitor(titulo, eleitor):
+    """
+    Exibe uma tabela estilizada no terminal com as informações de um eleitor.
+
+    A função reconstrói e renderiza uma tabela centralizada via biblioteca Rich.
+    Durante o processo, ela descriptografa o CPF do eleitor em tempo de execução
+    para exibi-lo em formato limpo e legível. Os status de mesário e votação são
+    estilizados com cores dinâmicas (Verde/Esmaecido).
+
+    Args:
+        titulo (str): O título que será exibido no cabeçalho superior da tabela.
+        eleitor (dict): Um dicionário contendo os dados do eleitor extraídos do
+        banco de dados. Deve possuir as chaves: 'id', 'nome', 'cpf'
+        (criptografado), 'titulo_eleitor', 'mesario' e 'status_votacao'.
+
+    Returns:
+        None: A função apenas manipula saídas no console, não retornando valor.
+    """
 
     mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] == 1 else "[dim]Não[/dim]"
     status_texto  = "[bold green]Já Votou[/bold green]" if eleitor['status_votacao'] == 1 else "[dim]Não Votou[/dim]"
@@ -40,15 +57,27 @@ def exibir_tabela_eleitor(titulo, eleitor):
 
 def edicao_eleitores():
     """
-    A função exibe opções para receber valores str de cpf ou titulo de eleitor para editar um eleitor.
+    Gerencia a interface interativa e as regras de alteração cadastral de eleitores.
+
+    Permite localizar um eleitor ativo utilizando filtros por CPF ou por Título
+    de Eleitor. Após a confirmação da identidade, abre um menu cíclico para a
+    modificação pontual de dados cadastrais (Nome, Título, CPF ou Status de Mesário).
+
+    Regras de negócio implementadas:
+    1. Alteração de Nome: Força a regeneração automática de uma nova chave de acesso
+        exclusiva para a urna, imprimindo o novo token em destaque na tela.
+    2. Modificação de chaves únicas (CPF/Título): Valida contra duplicidades na
+        base de dados e rejeita entradas idênticas às já armazenadas.
+    3. Proteção de dados: O CPF novo é criptografado antes da persistência.
 
     Args:
-        None
+        None.
 
     Returns:
-        O eleitor editado
+        Any: Retorna o resultado do módulo `confirmacao.confirmacao()` após a
+        conclusão ou cancelamento das operações. Pode retornar None em caso de
+        saída precoce nos inputs iniciais.
     """
-
     limpar_tela()
 
     conexao = conect.conexao_banco()

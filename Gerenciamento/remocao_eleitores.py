@@ -11,6 +11,21 @@ from Visual.visual import limpar_tela
 console = Console(highlight=False)
 
 def exibir_tabela_eleitor(eleitor):
+    """
+    Exibe uma tabela estilizada no terminal com as informações do eleitor selecionado para remoção.
+
+    Utiliza a biblioteca Rich para criar e renderizar uma tabela centralizada,
+    permitindo que o usuário valide visualmente os dados do eleitor (ID, Nome,
+    Título, se é Mesário e Status de Votação) antes de prosseguir com a exclusão definitiva.
+
+    Args:
+        eleitor (dict): Dicionário contendo os dados do eleitor extraídos do
+        banco de dados. Deve possuir as chaves obrigatórias: 'id', 'nome',
+        'titulo_eleitor', 'mesario' e 'status_votacao'.
+
+    Returns:
+        None: A função realiza apenas a impressão dos dados no terminal, sem retornar valor.
+        """
 
     mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] == 1 else "[dim]Não[/dim]"
     status_texto  = "[bold green]Já Votou[/bold green]" if eleitor['status_votacao'] == 1 else "[dim]Não Votou[/dim]"
@@ -30,20 +45,31 @@ def exibir_tabela_eleitor(eleitor):
     tabela.add_column("Status de Votação", justify="center")
 
     tabela.add_row(str(eleitor['id']), eleitor['nome'], eleitor['titulo_eleitor'], mesario_texto, status_texto)
-    console.print(tabela)
+    console.print(Align.center(tabela))
 
 def remocao_eleitores():
     """
-    A função exibe opções para receber valores str de cpf ou titulo de eleitor para remoção do eleitor no banco de dados.
-    Utiliza de funções de criptografia, validação e gerenciamento de entrada.
+    Gerencia a interface interativa e executa a exclusão de eleitores do banco de dados.
+
+    A função abre um menu de opções para localizar o eleitor que será removido,
+    permitindo dois tipos de filtros:
+
+    1. Por CPF: O input é validado e criptografado para conferência e busca na tabela.
+    2. Por Título de Eleitor: O input é validado e consultado diretamente de forma textual.
+
+    Caso o eleitor seja localizado, a tabela com suas informações é exibida e um
+    painel de confirmação é gerado. Se o usuário confirmar a ação (Opção 1), o comando
+    SQL DELETE é executado baseado no ID único do eleitor e consolidado com um commit.
+    Se o usuário cancelar ou se o eleitor não for encontrado, o fluxo fecha as conexões
+    com segurança e encerra a rotina.
 
     Args:
-        none
+        None.
 
     Returns:
-        Exibe (print) os dados do eleitor a ser removido na tela para o usuário.
-        Realiza a exclusão do eleitor no banco de dados após confirmação.
-        Exibe opções de novas remoções ou troca de Menu.
+        bool ou None: Retorna False de forma imediata caso o usuário cancele a operação
+        logo na seleção inicial do menu. Retorna None ao concluir a execução normal da
+        exclusão, cancelamento interno ou término das rotinas.
     """
 
     limpar_tela()
@@ -69,6 +95,7 @@ def remocao_eleitores():
 
         match opcao:
             case 1:
+                limpar_tela()
                 cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser removido", "REMOVER POR CPF")
                 if cpf is None:
                     break
@@ -86,6 +113,7 @@ def remocao_eleitores():
                     console.print("\nEleitor não cadastrado.", style="bold yellow")
 
             case 2:
+                limpar_tela()
                 titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor a ser removido", "REMOVER POR TÍTULO")
                 if titulo_eleitor is None:
                     break
@@ -102,6 +130,7 @@ def remocao_eleitores():
                     console.print("\nEleitor não cadastrado.", style="bold yellow")
 
         if eleitor is not None:
+            limpar_tela()
             exibir_tabela_eleitor(eleitor)
 
             conteudo_remover = (
