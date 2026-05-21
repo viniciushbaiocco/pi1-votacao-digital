@@ -14,7 +14,7 @@ CREATE TABLE eleitores (
 CREATE TABLE candidatos (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
-    partido VARCHAR(50) NOT NULL,
+    partido VARCHAR(100) NOT NULL,
     sigla_partido VARCHAR(6) NOT NULL,
     numero_votacao CHAR(2) UNIQUE NOT NULL
 );
