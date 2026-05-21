@@ -28,7 +28,7 @@ def votos_por_partido():
 
         tabela.add_column("Partido", style="bright_white")
         tabela.add_column("Sigla Partido", style="bright_white")
-        tabela.add_column("Total de Votos", justify="center")
+        tabela.add_column("Total de Votos", justify="center", style="bright_white")
 
         query_votos_partido = ("SELECT c.partido, c.sigla_partido, COUNT(v.id_candidato) as total_votos "
                                 "FROM candidatos c "
