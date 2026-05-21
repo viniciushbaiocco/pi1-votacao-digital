@@ -2,29 +2,31 @@ import os
 import mysql.connector
 from dotenv import load_dotenv
 
-
-#################### MUDANCA IMPORTANTE!!!!!!
-# crie um arquivo chamado .env(literalmente, só crie um .env sem nome nenhum) fora de qualquer pasta
-# bota as suas credenciais do banco de dados. igual esse modelo, substituindo o texto apos o = pelo oq vc usa:
-
-#   DB_HOST=localhost
-#   DB_USER=root
-#   DB_PASSWORD=sua_senha
-#   DB_NAME=projeto_integrador
-
-# o arquivo .env.example já tem o modelo pronto pra copiar
-# nao commite o .env com senha real, ele já está no .gitignore (obrigado deus baiocco)
-# essa mudança foi necessaria pra evitar trabalho pesado de commitar toda vez tendo que alterar credencial do banco de dados
-
-# precisa de uma biblioteca nova (instale uma vez):
-#   pip install python-dotenv
-
-load_dotenv() #pega as credenciais no .env, pra substituir ali em baixo
+load_dotenv()
 
 def conexao_banco():
+    """
+    Estabelece uma conexão com o banco de dados MySQL utilizando variáveis de ambiente.
+
+    A função tenta abrir uma conexão utilizando as credenciais configuradas nas
+    variáveis de ambiente do sistema. Caso a variável 'DB_HOST' não seja encontrada,
+    ela adota 'localhost' como padrão. Em caso de falha na autenticação ou na
+    comunicação com o banco, o erro é exibido no terminal.
+
+    Args:
+        None.
+
+    Returns:
+        mysql.connector.connection.MySQLConnection ou None: Retorna o objeto de
+        conexão ativa se for bem-sucedido, ou None se ocorrer um erro do MySQL.
+
+    Raises:
+        KeyError: Se alguma das variáveis de ambiente obrigatórias ('DB_USER',
+        'DB_PASSWORD' ou 'DB_NAME') não estiver definida no sistema.
+        """
     try:
         conexao = mysql.connector.connect(
-            host=os.environ.get("DB_HOST", "localhost"), #localhost é 2° opcao, caso nao tenha nada la no .env
+            host=os.environ.get("DB_HOST", "localhost"),
             user=os.environ["DB_USER"],
             password=os.environ["DB_PASSWORD"],
             database=os.environ["DB_NAME"],
