@@ -6,9 +6,11 @@ from Verificadores import verificacao_mesario_banco as ver_mes
 from Ocorrencias import acesso_negado, geral
 from criptografia import criptografia as crip
 from database import conexao_banco as cb
+from Gerenciamento import recuperacao_chave
 from Visual.visual import limpar_tela
 from rich.console import Console
 from rich.table import Table
+from rich.panel import Panel
 from rich.align import Align
 from rich import box
 
@@ -133,9 +135,29 @@ def autenticar_mesario(id_sessao):
         limpar_tela()
         exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, tentativa=tentativa)
         console.print("\n[bold red]Chave de acesso inválida. Acesso negado.[/bold red]")
+
         if tentativa < 3:
             console.print(f"[dim]Tentativas restantes: {3 - tentativa}[/dim]")
-        confirmacao.confirmacao()
+            titulo_painel = "[bold bright_white]RECUPERAR CHAVE DE ACESSO?[/bold bright_white]"
+            borda_painel = "bold sandy_brown"
+            aviso = ""
+        else:
+            titulo_painel = "[bold red]ÚLTIMA TENTATIVA ESGOTADA[/bold red]"
+            borda_painel = "bold red"
+            aviso = "[bold red]Esta foi sua última tentativa.[/bold red] O acesso está bloqueado.\nRecupere sua chave para tentar novamente na próxima sessão.\n\n"
+
+        console.print(Panel(
+            Align.center(f"{aviso}[bold bright_white][1][/bold bright_white]  Sim\n[dim]──────────────────────────────[/dim]\n[dim red][X]  Não[/dim red]"),
+            title=titulo_painel,
+            border_style=borda_painel,
+            box=box.DOUBLE,
+            padding=(1, 4)
+        ))
+        opcao = ge.obter_entrada_inteira_valida("Escolha: ", 1, 1)
+        if opcao == 1:
+            recuperacao_chave.recuperar_chave()
+        else:
+            confirmacao.confirmacao()
         geral.ocorrencia_acesso_negado(id_sessao)
         acesso_negado.ocorrencia_acesso_negado(id_sessao)
 
