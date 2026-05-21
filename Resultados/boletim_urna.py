@@ -35,7 +35,7 @@ def exibir_boletim_urna():
             escolha = gerenciador_de_entrada.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
 
             tabela = Table(
-                title="Listagem de Eleitores",
+                title="Listagem de Candidatos",
                 box=box.DOUBLE,
                 border_style="bold sandy_brown",
                 title_style="bold bright_white",
@@ -45,7 +45,7 @@ def exibir_boletim_urna():
 
             tabela.add_column("Nome", style="bright_white")
             tabela.add_column("Partido", style="bright_white")
-            tabela.add_column("Total de Votos", justify="center")
+            tabela.add_column("Total de Votos", justify="center", style="bright_white")
 
             tabela_vencedor = Table(
                 title="Vencedor",
@@ -58,7 +58,7 @@ def exibir_boletim_urna():
 
             tabela_vencedor.add_column("Nome", style="bright_white")
             tabela_vencedor.add_column("Partido", style="bright_white")
-            tabela_vencedor.add_column("Total de Votos", justify="center")
+            tabela_vencedor.add_column("Total de Votos", justify="center", style="bright_white")
 
             match escolha:
                 # Opção 1: Listar todos os candidatos com seus votos
@@ -81,7 +81,7 @@ def exibir_boletim_urna():
                             str(candidatos['total_votos'])
                         )
 
-                    visual.carregar_pontos_loop(3, "Listando Candidatos") # implementar cor com o rich
+                    visual.carregar_pontos_loop(3, "Listando Candidatos")
                     time.sleep(1)
                     console.print(Align.center(tabela))
                     confirmacao.confirmacao()
