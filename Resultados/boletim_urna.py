@@ -63,6 +63,7 @@ def exibir_boletim_urna():
             match escolha:
                 # Opção 1: Listar todos os candidatos com seus votos
                 case 1:
+                    visual.limpar_tela()
                     query_listagem_candidatos = ('SELECT c.nome, c.partido, '
                                                  'COUNT(v.id) AS total_votos '
                                                  'FROM candidatos c '
@@ -81,8 +82,6 @@ def exibir_boletim_urna():
                             str(candidatos['total_votos'])
                         )
 
-                    visual.carregar_pontos_loop(3, "Listando Candidatos")
-                    time.sleep(1)
                     console.print(Align.center(tabela))
                     confirmacao.confirmacao()
                     visual.limpar_tela()
