@@ -1,6 +1,6 @@
 from Verificadores import verificacao_cpf_banco
 from Verificadores import verificacao_titulo_banco
-from Validadores import confirmacao, validacao_cpf, validacao_nome, validacao_titulo
+from Validadores import confirmacao, validacao_cpf, validacao_nome, validacao_titulo, validacao_palavra_chave
 from database import conexao_banco
 from criptografia import criptografia as cripto
 from Cadastro import chave_acesso
@@ -14,7 +14,7 @@ from rich import box
 
 console = Console(highlight=False)
 
-def exibir_progresso(cpf=None, nome=None, titulo=None, mesario=None):
+def exibir_progresso(cpf=None, nome=None, titulo=None, mesario=None, palavra_chave=None):
     tabela = Table(
         title="Cadastro de Eleitor",
         box=box.DOUBLE,
@@ -36,6 +36,13 @@ def exibir_progresso(cpf=None, nome=None, titulo=None, mesario=None):
         tabela.add_row("Mesário", "[dim green]Sim[/dim green]")
     else:
         tabela.add_row("Mesário", "[dim red]Não[/dim red]")
+
+    if palavra_chave is None:
+        tabela.add_row("Palavra-chave de Backup", "[dim]─[/dim]")
+    elif palavra_chave is not None:
+        tabela.add_row("Palavra-chave de Backup", "[dim green]Cadastrada[/dim green]")
+    else:
+        tabela.add_row("Palavra-chave de Backup", "[dim]Não cadastrada[/dim]")
 
     console.print(Align.center(tabela))
 
@@ -104,20 +111,48 @@ def cadastrar_eleitor():
     chave_acesso_original = chave_acesso.geracao_chave_acesso(nome)
     chave_criptografada   = cripto.criptografar_chave_acesso(chave_acesso_original)
 
+    limpar_tela()
+    exibir_progresso(cpf=cpf, nome=nome, titulo=titulo, mesario=mesario)
+    conteudo_backup = (
+        "[bold bright_white][1][/bold bright_white]  Sim\n"
+        "[dim]──────────────────────────────[/dim]\n"
+        "[dim][X]  Não[/dim]"
+    )
+    console.print(Panel(Align.center(conteudo_backup), title="[bold bright_white]CADASTRAR PALAVRA-CHAVE DE BACKUP?[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
+    opcao_backup = ge.obter_entrada_inteira_valida("Escolha: ", 1, 1)
+
+    palavra_chave_criptografada = None
+    if opcao_backup == 1:
+        limpar_tela()
+        exibir_progresso(cpf=cpf, nome=nome, titulo=titulo, mesario=mesario)
+        palavra = ge.input_cancelavel("Digite uma palavra-chave (4 letras, sem acento)", "PALAVRA-CHAVE DE BACKUP")
+        if palavra is not None:
+            palavra = palavra.upper()
+            while not validacao_palavra_chave.validacao_palavra_chave(palavra):
+                limpar_tela()
+                exibir_progresso(cpf=cpf, nome=nome, titulo=titulo, mesario=mesario)
+                palavra = ge.input_cancelavel("Palavra inválida. Digite novamente", "PALAVRA-CHAVE DE BACKUP")
+                if palavra is None:
+                    break
+                palavra = palavra.upper()
+            if palavra is not None:
+                palavra_chave_criptografada = cripto.criptografar_palavra_chave(palavra)
+
     conexao = conexao_banco.conexao_banco()
     cursor  = conexao.cursor(dictionary=True)
 
     cursor.execute(
-        "INSERT INTO eleitores (nome, titulo_eleitor, cpf, mesario, chave_acesso, status_votacao) VALUES (%s, %s, %s, %s, %s, %s)",
-        (nome, titulo, cpf_criptografado, mesario, chave_criptografada, False)
+        "INSERT INTO eleitores (nome, titulo_eleitor, cpf, mesario, chave_acesso, palavra_chave, status_votacao) VALUES (%s, %s, %s, %s, %s, %s, %s)",
+        (nome, titulo, cpf_criptografado, mesario, chave_criptografada, palavra_chave_criptografada, False)
     )
     conexao.commit()
 
     cursor.execute("SELECT * FROM eleitores WHERE cpf = %s", (cpf_criptografado,))
     eleitor = cursor.fetchone()
 
+    tem_backup = palavra_chave_criptografada is not None
     limpar_tela()
-    exibir_progresso(cpf=cpf, nome=nome, titulo=titulo, mesario=mesario)
+    exibir_progresso(cpf=cpf, nome=nome, titulo=titulo, mesario=mesario, palavra_chave=tem_backup)
 
     tabela_final = Table(
         title="Eleitor Cadastrado com Sucesso",
