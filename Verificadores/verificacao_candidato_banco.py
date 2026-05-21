@@ -5,7 +5,7 @@ from time import sleep
 
 console = Console(highlight=False)
 
-def verificar_candidato(partido, numero_votacao):
+def verificar_candidato(partido, sigla_partido, numero_votacao):
 
     """
     Verifica a validade de um candidato antes de seu cadastro no banco de dados.
@@ -16,6 +16,7 @@ def verificar_candidato(partido, numero_votacao):
     
     Args:
         partido (str): O nome do partido do candidato a ser verificado.
+        sigla_partido (str): A sigla do partido do candidato a ser verificado.
         numero_votacao (int): O número de votação do candidato a ser verificado.
         
     Returns:
@@ -36,6 +37,17 @@ def verificar_candidato(partido, numero_votacao):
         limpar_tela()
         return False
 
+    query_sigla_partido = "SELECT COUNT(*) FROM candidatos WHERE sigla_partido = %s"
+
+    cursor.execute(query_sigla_partido, (sigla_partido,))
+    resultado_sigla_partido = cursor.fetchone()
+
+    if resultado_sigla_partido == (1,):
+        console.print("Apenas um candidato por partido é permitido", style="bold yellow")
+        sleep(1.5)
+        limpar_tela()
+        return False
+
     query_numero_votacao = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
 
     cursor.execute(query_numero_votacao, (numero_votacao,))
@@ -51,3 +63,5 @@ def verificar_candidato(partido, numero_votacao):
     conexao.close()
 
     return True
+
+verificar_candidato("AS DA", "PE", 11)
