@@ -14,10 +14,11 @@ def validar_integridade():
     na urna com a quantidade de eleitores com status 'Já Votou'.
 
     Args:
-        Nenhum.
+        None.
 
     Returns:
-        bool: True se a quantidade de votos bater com a quantidade de eleitores que votaram, False caso contrário.
+        bool: True se o número de votos registrados for igual ao número de eleitores que votaram,
+              False caso contrário.
     """
 
     limpar_tela()
@@ -28,6 +29,9 @@ def validar_integridade():
     cursor.execute("SELECT COUNT(*) FROM votos")
     total_votos = cursor.fetchone()[0]
 
+    cursor.execute("SELECT COUNT(*) FROM votos")
+    verificar_voto = cursor.fetchone()
+
     cursor.execute("SELECT COUNT(*) FROM eleitores WHERE status_votacao = 1")
     total_ja_votou = cursor.fetchone()[0]
 
@@ -36,11 +40,23 @@ def validar_integridade():
 
     carregar_pontos_loop(3, "Validando Integridade")
 
-    if total_votos == total_ja_votou:
-        console.print(Panel(Align.center(f"[bold green]Validação concluída, nenhum voto foi perdido.[/bold green]"), title="[bold bright_white]Validação de Integridade[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
+    if verificar_voto == (0,):
+        console.print(Panel(Align.center(f"[bold yellow]Nenhum voto registrado para concluir a validação.[/bold yellow]"),
+                            title="[bold bright_white]Validação de Integridade[/bold bright_white]",
+                            border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
+        confirmacao()
+        return False
+
+    elif total_votos == total_ja_votou:
+        console.print(Panel(Align.center(f"[bold green]Validação concluída, nenhum voto foi perdido.[/bold green]"),
+                            title="[bold bright_white]Validação de Integridade[/bold bright_white]",
+                            border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
         confirmacao()
         return True
+
     else:
-        console.print(Panel(Align.center(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]"), title="[bold bright_white]Validação de Integridade[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
+        console.print(Panel(Align.center(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]"),
+                            title="[bold bright_white]Validação de Integridade[/bold bright_white]", border_style="bold red",
+                            box=box.DOUBLE, padding=(1, 4)))
         confirmacao()
         return False
