@@ -83,7 +83,7 @@ def cadastrar_eleitor():
     final de sucesso e salva de forma criptografada para futuras autenticações na urna.
 
     Args:
-        Nenhum.
+        None.
 
     Returns:
         bool ou None: Retorna True se o eleitor for cadastrado com sucesso ou caso o CPF já
