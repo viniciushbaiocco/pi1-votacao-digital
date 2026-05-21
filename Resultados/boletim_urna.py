@@ -6,7 +6,7 @@ from Validadores import confirmacao, gerenciador_de_entrada
 from Visual import visual
 from rich.console import Console
 from rich.table import Table
-from rich import box, style
+from rich import box
 from rich.align import Align
 from rich.panel import Panel
 
