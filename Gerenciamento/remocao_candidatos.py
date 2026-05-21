@@ -64,6 +64,13 @@ def remocao_candidatos():
         conexao.close()
         return
 
+    if candidato['numero_votacao'] == '00':
+        console.print("\nO candidato de voto nulo é estrutural do sistema e não pode ser removido.", style="bold red")
+        conf.confirmacao()
+        cursor.close()
+        conexao.close()
+        return
+
     exibir_tabela_candidato(candidato)
 
     conteudo_remover = (
