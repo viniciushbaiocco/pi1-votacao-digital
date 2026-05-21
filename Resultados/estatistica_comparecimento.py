@@ -3,7 +3,7 @@ from Visual.visual import carregar_pontos_loop, limpar_tela
 from Validadores.confirmacao import   confirmacao
 from rich.console import Console
 from rich.table import Table
-from rich import box
+from rich import box, style
 from rich.align import Align
 
 console = Console(highlight=False)
@@ -51,7 +51,7 @@ def exibir_estatistica_comparecimento() -> None:
 
     # Tabela
     tabela = Table(
-        title="Estatísticas de Comparecimento",
+        title="Estastíticas de Comparecimento",
         box=box.DOUBLE,
         border_style="bold sandy_brown",
         title_style="bold bright_white",
@@ -65,14 +65,13 @@ def exibir_estatistica_comparecimento() -> None:
     tabela.add_column("Percentual de Comparecimento", style="bright_white")
     tabela.add_column("Percentual de abstenção", style="bright_white")
 
-    for i in range (1,2):
-        tabela.add_row(
-            str(total_eleitores),
-            str(total_votaram),
-            str(nao_votaram),
-            str(percentual),
-            str(percentual_ausencia)
-        )
+    tabela.add_row(
+        str(total_eleitores),
+        str(total_votaram),
+        str(nao_votaram),
+        f"{percentual:.1f}%",
+        f"{percentual_ausencia:.1f}%"
+    )
 
     # Exibição dos resultados
     console.print(Align.center(tabela))
