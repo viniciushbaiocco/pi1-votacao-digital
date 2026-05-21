@@ -3,7 +3,7 @@ from Visual.visual import carregar_pontos_loop, limpar_tela
 from Validadores.confirmacao import   confirmacao
 from rich.console import Console
 from rich.table import Table
-from rich import box, style
+from rich import box
 from rich.align import Align
 
 console = Console(highlight=False)
@@ -51,7 +51,7 @@ def exibir_estatistica_comparecimento() -> None:
 
     # Tabela
     tabela = Table(
-        title="Estastíticas de Comparecimento",
+        title="Estatísticas de Comparecimento",
         box=box.DOUBLE,
         border_style="bold sandy_brown",
         title_style="bold bright_white",
