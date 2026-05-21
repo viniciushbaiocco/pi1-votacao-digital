@@ -65,6 +65,14 @@ def edicao_candidatos():
         conexao.close()
         return
 
+    if candidato['numero_votacao'] == '00':
+        console.print("\nO candidato de voto nulo é estrutural do sistema e não pode ser editado.", style="bold red")
+        sleep(1.5)
+        confirmacao.confirmacao()
+        cursor.close()
+        conexao.close()
+        return
+
     id_candidato = candidato['id']
     exibir_tabela_candidato("Candidato a Ser Editado", candidato)
 
@@ -169,6 +177,10 @@ def edicao_candidatos():
                     if novo_numero is None:
                         break
                 if novo_numero is None:
+                    continue
+                if novo_numero == '00':
+                    console.print("O número 00 é reservado para votos nulos.", style="bold red")
+                    sleep(1.5)
                     continue
                 if novo_numero == candidato['numero_votacao']:
                     console.print("Número igual ao atual. Nenhuma alteração feita.", style="bold yellow")
