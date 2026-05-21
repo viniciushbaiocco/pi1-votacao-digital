@@ -37,10 +37,10 @@ def validar_integridade():
     carregar_pontos_loop(3, "Validando Integridade")
 
     if total_votos == total_ja_votou:
-        console.print(Panel(Align.center(f"[bold green]Validação concluída, nenhum voto foi perdido.[/bold green]"), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
+        console.print(Panel(Align.center(f"[bold green]Validação concluída, nenhum voto foi perdido.[/bold green]"), title="[bold bright_white]Validação de Integridade[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
         confirmacao()
         return True
     else:
-        console.print(Panel(Align.center(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]"), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
+        console.print(Panel(Align.center(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]"), title="[bold bright_white]Validação de Integridade[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
         confirmacao()
         return False

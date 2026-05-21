@@ -31,11 +31,11 @@ def votos_por_partido():
         tabela.add_column("Total de Votos", justify="center")
 
         query_votos_partido = ("SELECT c.partido, c.sigla_partido, COUNT(v.id_candidato) as total_votos "
-                               "FROM candidatos c "
-                               "LEFT JOIN votos v "
-                               "ON c.id = v.id_candidato "
-                               "GROUP BY c.partido, c.sigla_partido "
-                               "ORDER BY total_votos DESC;")
+                                "FROM candidatos c "
+                                "LEFT JOIN votos v "
+                                "ON c.id = v.id_candidato "
+                                "GROUP BY c.partido, c.sigla_partido "
+                                "ORDER BY total_votos DESC;")
 
         cursor.execute(query_votos_partido)
         votos_partido = cursor.fetchall()

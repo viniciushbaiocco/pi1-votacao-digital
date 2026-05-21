@@ -8,6 +8,7 @@ from rich.console import Console
 from rich.table import Table
 from rich import box, style
 from rich.align import Align
+from rich.panel import Panel
 
 console = Console(highlight=False)
 
@@ -96,8 +97,8 @@ def exibir_boletim_urna():
                     time.sleep(1)
 
                     if not verificar_tabela:
-                        console.print("[bold red]Nenhum Voto Registrado[/bold red]")
-                        console.print("\n[bold yellow]Vencedor não pode ser definido![/bold yellow]")
+                        console.print(Panel(Align.center(f"[bold red]Nenhum Voto Registrado.[/bold red]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
+                        console.print(Panel(Align.center(f"[bold yellow]Não foi possível determinar um vencedor.[/bold yellow]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
 
                         confirmacao.confirmacao()
                         visual.limpar_tela()
@@ -105,12 +106,12 @@ def exibir_boletim_urna():
                     # Se houver votos, tenta determinar o vencedor
                     else:
                         query_verificar_vencedor =  ('SELECT c.nome, c.partido, '
-                                                     'COUNT(v.id) AS total_votos '
-                                                     'FROM candidatos c '
-                                                     'LEFT JOIN votos v '
-                                                     'ON c.id = v.id_candidato '
-                                                     'GROUP BY c.id, c.nome, c.partido '
-                                                     ' ORDER BY total_votos DESC')
+                                                    'COUNT(v.id) AS total_votos '
+                                                    'FROM candidatos c '
+                                                    'LEFT JOIN votos v '
+                                                    'ON c.id = v.id_candidato '
+                                                    'GROUP BY c.id, c.nome, c.partido '
+                                                    ' ORDER BY total_votos DESC')
                         cursor.execute(query_verificar_vencedor)
                         vencedor = cursor.fetchone()
                         cursor.fetchall()
@@ -124,9 +125,8 @@ def exibir_boletim_urna():
                             console.print(Align.center(tabela_vencedor)) # Exibe a tabela com o vencedor
                         # Caso não seja possível determinar um vencedor (improvável com a query atual, mas como fallback)
                         else:
-                            console.print("[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]")
-
-                    # Pausa e limpa a tela após exibir o resultado (movido para fora do if/else para consistência)
+                            console.print(Panel(Align.center(f"[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
+                        # Pausa e limpa a tela após exibir o resultado (movido para fora do if/else para consistência)
                     confirmacao.confirmacao()
                     visual.limpar_tela()
                 case False:
