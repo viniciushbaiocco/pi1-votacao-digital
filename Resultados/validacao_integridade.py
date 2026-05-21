@@ -41,6 +41,6 @@ def validar_integridade():
         confirmacao()
         return True
     else:
-        console.print(Panel(Align.center(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]"), title="[bold bright_white]Validação de Integridade[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
+        console.print(Panel(Align.center(f"[bold red]Validação não concluída, possível inconsistência.[/bold red]"), title="[bold bright_white]Validação de Integridade[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
         confirmacao()
         return False
