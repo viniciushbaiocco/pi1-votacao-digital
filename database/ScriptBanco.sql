@@ -1,13 +1,14 @@
 CREATE DATABASE projeto_integrador;
 USE projeto_integrador;
 
-CREATE TABLE eleitores ( 
+CREATE TABLE eleitores (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     nome VARCHAR(100) NOT NULL,
     titulo_eleitor CHAR(12) UNIQUE NOT NULL,
     cpf CHAR(12) UNIQUE NOT NULL,
     mesario BOOLEAN DEFAULT FALSE,
     chave_acesso CHAR(8) UNIQUE NOT NULL,
+    palavra_chave CHAR(4) DEFAULT NULL,
     status_votacao BOOLEAN DEFAULT FALSE NOT NULL
 );
 
