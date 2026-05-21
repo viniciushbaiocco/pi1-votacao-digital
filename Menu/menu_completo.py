@@ -1,6 +1,6 @@
 from Menu import sub_menus as sm
 from Validadores import gerenciador_de_entrada as ge
-from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores
+from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores, recuperacao_chave
 from Gerenciamento import busca_candidatos, edicao_candidatos, listagem_candidatos, remocao_candidatos
 from Cadastro import cadastro_eleitores, cadastro_candidatos
 from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna, geral
@@ -42,7 +42,7 @@ def menu_completo():
                     while executando_menu_eleitores:
                         sm.exibir_menu_eleitores()
                         escolha_eleitor = ge.obter_entrada_inteira_valida(
-                            "Escolha uma opção: ", 1, 5)
+                            "Escolha uma opção: ", 1, 6)
 
                         match escolha_eleitor:
                             case 1:
@@ -55,6 +55,8 @@ def menu_completo():
                                 busca_eleitores.busca_eleitor()
                             case 5:
                                 listagem_eleitores.listagem_eleitores()
+                            case 6:
+                                recuperacao_chave.recuperar_chave()
                             case False:  # Voltar
                                 executando_menu_eleitores = 0
                 elif escolha_gerenciamento == 2:  # Candidatos
