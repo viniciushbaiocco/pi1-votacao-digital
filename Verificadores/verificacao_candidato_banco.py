@@ -63,5 +63,3 @@ def verificar_candidato(partido, sigla_partido, numero_votacao):
     conexao.close()
 
     return True
-
-verificar_candidato("AS DA", "PE", 11)
