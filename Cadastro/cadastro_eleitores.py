@@ -75,6 +75,8 @@ def cadastrar_eleitor():
     limpar_tela()
     exibir_progresso(cpf=cpf)
     nome = validacao_nome.validar_nome()
+    if nome is None:
+        return
 
     limpar_tela()
     exibir_progresso(cpf=cpf, nome=nome)
