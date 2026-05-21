@@ -99,7 +99,8 @@ def edicao_candidatos():
             "[bold bright_white][3][/bold bright_white]  Sigla do Partido\n"
             "[bold bright_white][4][/bold bright_white]  Número de Votação\n"
             "[dim]──────────────────────────────[/dim]\n"
-            "[bold bright_white][5][/bold bright_white]  Confirmar"
+            "[bold bright_white][5][/bold bright_white]  Confirmar\n"
+            "[dim red][X]  Cancelar[/dim red]"
         )
         console.print(Panel(Align.center(conteudo_campos), title="[bold bright_white]O QUE DESEJA EDITAR[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
         opcao_editar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 5)
@@ -132,11 +133,6 @@ def edicao_candidatos():
                     console.print("Partido igual ao atual. Nenhuma alteração feita.", style="bold yellow")
                     sleep(1.5)
                     continue
-                cursor.execute("SELECT COUNT(*) as cnt FROM candidatos WHERE partido = %s", (novo_partido,))
-                if cursor.fetchone()['cnt'] >= 1:
-                    console.print("Já existe um candidato com esse partido.", style="bold yellow")
-                    sleep(1.5)
-                    continue
                 editado = 1
                 cursor.execute('UPDATE candidatos SET partido = %s WHERE id = %s', (novo_partido, id_candidato))
                 conexao.commit()
@@ -156,11 +152,6 @@ def edicao_candidatos():
                     continue
                 if nova_sigla == candidato['sigla_partido']:
                     console.print("Sigla igual à atual. Nenhuma alteração feita.", style="bold yellow")
-                    sleep(1.5)
-                    continue
-                cursor.execute("SELECT COUNT(*) as cnt FROM candidatos WHERE sigla_partido = %s", (nova_sigla,))
-                if cursor.fetchone()['cnt'] >= 1:
-                    console.print("Já existe um candidato com essa sigla.", style="bold yellow")
                     sleep(1.5)
                     continue
                 editado = 1
