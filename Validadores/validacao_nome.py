@@ -1,3 +1,4 @@
+from Validadores import gerenciador_de_entrada as ge
 from rich.console import Console
 from Visual.visual import limpar_tela
 from time import sleep
@@ -5,21 +6,12 @@ from time import sleep
 console = Console(highlight=False)
 
 def validar_nome():
-    """
-    A função solicita o nome do usuário e faz validacoes necessárias, de acordo com as regras do programa.
-
-    Args:
-        none
-
-    Returns:
-        Retorna o nome inserido no input.
-
-    """
-
     nome_validado = False
     while not nome_validado:
 
-        nome = input("Digite o nome: ")
+        nome = ge.input_cancelavel("Digite o nome completo", "NOME")
+        if nome is None:
+            return None
 
         nome_ajustado = nome.split()
 
