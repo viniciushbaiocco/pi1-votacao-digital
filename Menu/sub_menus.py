@@ -106,6 +106,7 @@ def exibir_menu_eleitores():
         "                   [bold bright_white][3][/bold bright_white]  Excluir Eleitores\n"
         "                   [bold bright_white][4][/bold bright_white]  Buscar Eleitores\n"
         "                   [bold bright_white][5][/bold bright_white]  Visualizar Eleitores\n"
+        "                   [bold bright_white][6][/bold bright_white]  Recuperar Chave de Acesso\n"
         "                   [dim]──────────────────────────────[/dim]\n"
         "                   [red][X]  Voltar[/red]"
     )
