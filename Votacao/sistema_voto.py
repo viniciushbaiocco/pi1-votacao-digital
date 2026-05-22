@@ -264,6 +264,7 @@ def sistema_voto(id_sessao):
                 conexao.commit()
         else:
             console.print('\n[bold red]Erro ao verificar CPF ou chave de acesso do eleitor.[/bold red]')
+            opcao = 1
             confirmacao.confirmacao()
 
     cursor.close()
