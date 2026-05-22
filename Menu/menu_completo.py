@@ -124,7 +124,7 @@ def menu_completo():
                 elif escolha_votacao == 2:  # Resultados Da Votação
                     executando_menu_resultados_votacao = 1
                     while executando_menu_resultados_votacao == 1:
-                        sm.exibir_menu_restultados_votacao()
+                        sm.exibir_menu_resultados_votacao()
                         escolha_resultado_votacao = ge.obter_entrada_inteira_valida(
                             "Escolha uma opção: ", 1, 4)
 
