@@ -69,6 +69,7 @@ def listagem_candidatos():
             console.print(f'\nTotal de Candidatos Cadastrados: [bold white]{len(total_candidatos)}[/bold white]')
 
     except Exception as erro:
+        limpar_tela()
         console.print(f'\n Erro ao listar candidatos: {erro}', style="bold red")
 
     confirmacao.confirmacao()

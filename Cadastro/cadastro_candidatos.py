@@ -117,6 +117,7 @@ def cadastrar_candidato():
             return None
 
     if numero == '00':
+        limpar_tela()
         console.print("\nNúmero 00 é reservado para votos nulos e não pode ser cadastrado.", style="bold red")
         sleep(1.5)
         confirmacao.confirmacao()

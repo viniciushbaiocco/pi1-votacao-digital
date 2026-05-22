@@ -100,6 +100,7 @@ def busca_candidato():
     while opcao == 1 or opcao == 2:
 
         if opcao == 1:
+            limpar_tela()
             numero = ge.input_cancelavel("Digite o Número de Votação", "BUSCA POR NÚMERO")
             if numero is None:
                 break
@@ -115,9 +116,11 @@ def busca_candidato():
             if candidato is not None:
                 exibir_tabela_candidato(candidato)
             else:
+                limpar_tela()
                 console.print("\n*** Candidato não encontrado! ***", style="bold yellow")
 
         if opcao == 2:
+            limpar_tela()
             nome = ge.input_cancelavel("Digite o Nome do Candidato", "BUSCA POR NOME")
             if nome is None:
                 break
@@ -126,8 +129,10 @@ def busca_candidato():
             resultados = cursor.fetchall()
             if resultados:
                 for candidato in resultados:
+                    limpar_tela()
                     exibir_tabela_candidato(candidato)
             else:
+                limpar_tela()
                 console.print("\n*** Candidato não encontrado! ***", style="bold yellow")
 
         break

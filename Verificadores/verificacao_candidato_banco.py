@@ -33,9 +33,9 @@ def verificar_candidato(partido, sigla_partido, numero_votacao):
     resultado_partido = cursor.fetchone()
 
     if resultado_partido == (1,):
+        limpar_tela()
         console.print("Apenas um candidato por partido é permitido", style="bold yellow")
         sleep(1.5)
-        limpar_tela()
         return False
 
     query_sigla_partido = "SELECT COUNT(*) FROM candidatos WHERE sigla_partido = %s"
@@ -44,9 +44,9 @@ def verificar_candidato(partido, sigla_partido, numero_votacao):
     resultado_sigla_partido = cursor.fetchone()
 
     if resultado_sigla_partido == (1,):
+        limpar_tela()
         console.print("Apenas um candidato por partido é permitido", style="bold yellow")
         sleep(1.5)
-        limpar_tela()
         return False
 
     query_numero_votacao = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
@@ -55,9 +55,9 @@ def verificar_candidato(partido, sigla_partido, numero_votacao):
     resultado_votacao = cursor.fetchone()
 
     if resultado_votacao == (1,):
+        limpar_tela()
         console.print("Número de Votação já cadastrado", style="bold yellow")
         sleep(1.5)
-        limpar_tela()
         return False
 
     cursor.close()

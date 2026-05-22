@@ -144,6 +144,7 @@ def edicao_candidatos():
 
         match opcao_editar:
             case 1:
+                limpar_tela()
                 novo_nome = val_nome.validar_nome()
                 if novo_nome is None:
                     continue
@@ -157,6 +158,7 @@ def edicao_candidatos():
                 console.print('Nome Editado Com Sucesso!', style="bold green")
 
             case 2:
+                limpar_tela()
                 novo_partido = ge.input_cancelavel("Novo nome do Partido", "EDITAR PARTIDO")
                 if novo_partido is None:
                     continue
@@ -176,6 +178,7 @@ def edicao_candidatos():
                 console.print("Partido Editado Com Sucesso!", style="bold green")
 
             case 3:
+                limpar_tela()
                 nova_sigla = ge.input_cancelavel("Nova Sigla do Partido", "EDITAR SIGLA")
                 if nova_sigla is None:
                     continue
@@ -197,6 +200,7 @@ def edicao_candidatos():
                 console.print("Sigla Editada Com Sucesso!", style="bold green")
 
             case 4:
+                limpar_tela()
                 novo_numero = ge.input_cancelavel("Novo Número de Votação", "EDITAR NÚMERO")
                 if novo_numero is None:
                     continue
@@ -225,6 +229,7 @@ def edicao_candidatos():
                 console.print("Número de Votação Editado Com Sucesso!", style="bold green")
 
             case 5:
+                limpar_tela()
                 if editado == 1:
                     cursor.execute('SELECT * FROM candidatos WHERE id = %s', (id_candidato,))
                     candidato = cursor.fetchone()

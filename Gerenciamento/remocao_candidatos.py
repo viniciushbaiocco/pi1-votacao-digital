@@ -108,12 +108,14 @@ def remocao_candidatos():
         return
 
     if candidato['numero_votacao'] == '00':
+        limpar_tela()
         console.print("\nO candidato de voto nulo é estrutural do sistema e não pode ser removido.", style="bold red")
         conf.confirmacao()
         cursor.close()
         conexao.close()
         return
 
+    limpar_tela()
     exibir_tabela_candidato(candidato)
 
     conteudo_remover = (
@@ -127,8 +129,10 @@ def remocao_candidatos():
     if confirmacao == 1:
         cursor.execute("DELETE FROM candidatos WHERE id = %s", (candidato['id'],))
         conexao.commit()
+        limpar_tela()
         console.print("\nCandidato removido com sucesso.", style="bold green")
     else:
+        limpar_tela()
         console.print("\nRemoção cancelada pelo usuário.", style="bold yellow")
 
     conf.confirmacao()
