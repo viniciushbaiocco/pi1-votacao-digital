@@ -8,7 +8,7 @@ def validar_chave_acesso(chave_acesso):
 
     """
     Verifica se a chave de acesso fornecida pelo usuário segue o padrão esperado:
-    dois primeiros caracteres são letras e os quatro últimos são números, totalizando 6 dígitos.
+    tres primeiros caracteres são letras e os quatro últimos são números, totalizando 7 dígitos.
 
     Args:
         chave_acesso (str): A chave de acesso a ser validada.
@@ -18,7 +18,7 @@ def validar_chave_acesso(chave_acesso):
               Em caso de formatação incorreta, mensagens de erro detalhadas são impressas no console.
     """
 
-    # Verifica se a chave de acesso possui 6 dígitos
+    # Verifica se a chave de acesso possui 7 dígitos
     if len(chave_acesso) != 7:
         console.print("\nChave de Acesso INVÁLIDA", style="bold red")
         console.print("Chave de Acesso deve conter 7 dígitos", style="bold yellow")
