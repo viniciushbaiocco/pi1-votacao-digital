@@ -37,4 +37,3 @@ def validar_cpf_voto(cpf):
 
     return True
 
-print(validar_cpf_voto("123/"))
