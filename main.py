@@ -10,6 +10,27 @@ from Visual.visual import limpar_tela
 console = Console(highlight=False)
 
 def exibir_splash():
+    """
+    Renderiza a tela de abertura (Splash Screen) responsiva do sistema eleitoral.
+
+    A função projeta uma interface visual de apresentação na CLI antes de iniciar a
+    aplicação. Ela mede dinamicamente o tamanho atual da janela do terminal utilizando
+    `os.get_terminal_size().columns` para centralizar as linhas textuais de forma
+    proporcional. Caso o ambiente não possua suporte a console físico (disparando um
+    `OSError`), um fallback seguro de 80 colunas é aplicado.
+
+    A identidade visual utiliza a biblioteca Pyfiglet para estilizar o nome "LAD.PY" em
+    arte ASCII e aplica um degradê cíclico nas cores verde e amarela através do operador
+    de módulo (`%`). Ao final, exibe um painel Rich descritivo com bordas duplas e suspende
+    a execução do script aguardando uma interação de teclado (`input()`).
+
+    Args:
+        None.
+
+    Returns:
+        None: A função atua estritamente na leitura de metadados da janela e renderização
+        de componentes gráficos na saída padrão (stdout).
+    """
     limpar_tela()
     try:
         largura_terminal = os.get_terminal_size().columns
