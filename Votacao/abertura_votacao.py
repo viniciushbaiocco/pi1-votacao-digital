@@ -1,4 +1,4 @@
-from Zerezima import zerezima
+from Zeresima import zeresima
 from Votacao import autenticacao_mesario
 from Ocorrencias import abertura_urna, geral
 from Visual.visual import limpar_tela
@@ -87,7 +87,7 @@ def abrir_sistema_votacao(id_sessao):
         confirmacao.confirmacao()
         return False
 
-    zerezima.zerezima()
+    zeresima.zeresima()
     geral.ocorrencia_abertura_urna(id_sessao)
     abertura_urna.ocorrencia_abertura_urna(id_sessao)
     return True
