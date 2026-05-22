@@ -6,6 +6,27 @@ from rich import box
 console = Console(highlight=False)
 
 def input_cancelavel(prompt, titulo=""):
+    """
+    Exibe um painel de captura de dados que permite o cancelamento voluntário do fluxo.
+
+    A função atua como um invólucro (wrapper) seguro para a entrada do
+    Python. Ela renderiza um painel Rich estilizado contendo as instruções do prompt e
+    uma indicação explícita de que a tecla 'X' aborta a operação corrente.
+
+    Caso o usuário digite 'X' (independente de espaços residuais ou uso de caixa alta/baixa),
+    a rotina intercepta a ação e retorna `None`. Caso contrário, devolve a string bruta
+    informada para ser tratada pelas funções chamadoras.
+
+    Args:
+        prompt (str): A instrução ou pergunta descritiva que orienta o preenchimento do
+            campo (ex: "Digite seu Título de Eleitor").
+        titulo (str, optional): O texto de cabeçalho exibido na borda superior do painel
+            Rich. Padrão é uma string vazia.
+
+    Returns:
+        str ou None: Retorna a string contendo o valor digitado pelo usuário caso a
+        operação prossiga; retorna `None` se o usuário optar por cancelar a ação digitando 'X'.
+    """
     conteudo = f"[bright_white]{prompt}[/bright_white]\n[dim]X - Cancelar[/dim]"
     console.print(Panel(Align.center(conteudo), title=f"[bold bright_white]{titulo}[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
     valor = input("» ")
@@ -25,7 +46,6 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
 
     Returns:
         int: Retorna o valor inteiro (opção) escolhida pelo usuário.
-
     """
     executando_entrada = 0
     while executando_entrada == 0:

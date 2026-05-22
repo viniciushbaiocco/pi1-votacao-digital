@@ -5,7 +5,6 @@ from time import sleep
 console = Console(highlight=False)
 
 def validacao_de_cpf(cpf_digitado_usuario):
-    
     """
     Valida matematicamente um CPF verificando seus dois dígitos verificadores.
 

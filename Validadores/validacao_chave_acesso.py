@@ -5,7 +5,6 @@ from time import sleep
 console = Console(highlight=False)
 
 def validar_chave_acesso(chave_acesso):
-
     """
     Verifica se a chave de acesso fornecida pelo usuário segue o padrão esperado:
     tres primeiros caracteres são letras e os quatro últimos são números, totalizando 7 dígitos.

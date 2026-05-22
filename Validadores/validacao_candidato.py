@@ -5,7 +5,6 @@ from Visual.visual import limpar_tela
 console = Console(highlight=False)
 
 def validacao_sigla_partido(sigla_partido):
-
     """
     Valida a sigla de um partido político.
 

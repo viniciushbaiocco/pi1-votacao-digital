@@ -5,14 +5,29 @@ from time import sleep
 console = Console(highlight=False)
 
 def validacao_voto():
-    '''
-        Verifica se o voto tem dois digitos e é positivo
+    """
+    Captura e valida a sintaxe do número eleitoral digitado pelo eleitor.
 
-        Args: NONE
+    A função executa um loop de persistência na interface de linha de comando para
+    garantir que o voto fornecido atenda aos critérios estruturais obrigatórios do pleito:
 
-        Returns: Voto já verificado
+    1. Trata exceções de conversão (`ValueError`) para impedir que strings puras, caracteres
+       alfabéticos ou vazios quebrem o fluxo do terminal.
+    2. Garante que o valor numérico digitado seja estritamente positivo (maior ou igual a 0).
+    3. Exige consistência de formato obrigando que o número digitado possua exatamente
+       dois caracteres de extensão (ex: '13', '22', '00').
 
-    '''
+    Se o dado passar por todas essas travas, a string original é retornada para que o
+    módulo chamador faça a busca relacional na tabela de candidatos. Caso contrário, uma
+    mensagem de erro descritiva do Rich é renderizada por 1.5 segundos e a tela é limpa
+    para uma nova tentativa.
+
+    Args:
+        None.
+
+    Returns:
+        str: A string contendo o número eleitoral perfeitamente validado com dois dígitos.
+    """
     executando_entrada = 0
     while (executando_entrada == 0):
         try:

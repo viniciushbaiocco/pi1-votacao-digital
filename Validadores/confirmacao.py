@@ -1,11 +1,11 @@
 def confirmacao():
     """
-    Traz um input para confirmar a volta do usuário ao menu
+    Traz um input para confirmar a volta do usuário ao menu.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None.
     """
     input("\nPressione Enter para voltar ao menu...")

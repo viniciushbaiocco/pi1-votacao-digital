@@ -5,7 +5,6 @@ from time import sleep
 console = Console(highlight=False)
 
 def validar_titulo (titulo):
-
     """
     Valida matematicamente um Título de Eleitor verificando seus dois dígitos verificadores e
     verificando o código de UF
