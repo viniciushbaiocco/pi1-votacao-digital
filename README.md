@@ -15,20 +15,26 @@ O projeto é o backend de um sistema de votação digital via terminal desenvolv
 
     Linguagem: Python 3.x
     Banco de Dados: MySQL
-    Bibliotecas Exigidas: mysql.connector, datetime, pyfiglet, rich, python-dotenv
+    Bibliotecas Exigidas: Listadas em requirements: [requirements.txt](requirements.txt)
     Criptografia: Cifra de Hill (Álgebra Linear)
 
 **Como Executar o Sistema**
 
-**1.** Requisitos e Dependências Certifique-se de ter o Python 3 e o MySQL rodando na sua máquina. Em seguida, instale a biblioteca de conexão executando no terminal:
+**1.** Requisitos e Dependências Certifique-se de ter o Python 3 e o MySQL funcionando em sua máquina. Em seguida, instale as bibliotecas requisitadas executando no terminal:
 
-pip install mysql-connector-python
+    pip install -r requirements.txt
 
 **2.** Preparando o Banco de Dados
 
+    Crie um arquivo .env localmente dentro da pasta desse projeto.
+    Copie o texto de env example.
+    Mude as variáveis padrões para as suas, dentro do arquivo .env criado por você, que permitem acesso ao MySQL.
     Execute o script ScriptBanco.sql no seu MySQL para criar as tabelas.
-    Abra o código [] e preencha as variáveis com seu usuário e senha local do MySQL.
 
 **3.** Rodando a Aplicação Abra o terminal na pasta raiz do projeto e inicie o sistema executando:
 
-python []
+    python main.py
+
+Caso apareca command not found:
+
+    python3 main.py
