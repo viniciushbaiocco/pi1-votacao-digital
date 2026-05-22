@@ -64,11 +64,12 @@ def edicao_eleitores():
     modificação pontual de dados cadastrais (Nome, Título, CPF ou Status de Mesário).
 
     Regras de negócio implementadas:
-    1. Alteração de Nome: Força a regeneração automática de uma nova chave de acesso
+
+    1.  Alteração de Nome: Força a regeneração automática de uma nova chave de acesso
         exclusiva para a urna, imprimindo o novo token em destaque na tela.
-    2. Modificação de chaves únicas (CPF/Título): Valida contra duplicidades na
+    2.  Modificação de chaves únicas (CPF/Título): Valida contra duplicidades na
         base de dados e rejeita entradas idênticas às já armazenadas.
-    3. Proteção de dados: O CPF novo é criptografado antes da persistência.
+    3.  Proteção de dados: O CPF novo é criptografado antes da persistência.
 
     Args:
         None.

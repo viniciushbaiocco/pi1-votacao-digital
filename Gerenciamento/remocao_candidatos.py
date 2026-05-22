@@ -55,6 +55,30 @@ def exibir_tabela_candidato(candidato):
 
 
 def remocao_candidatos():
+    """
+    Gerencia a interface de exclusão e remove candidatos da base de dados.
+
+    A função interage com o usuário para obter o número eleitoral do candidato que
+    deseja remover. O processo segue um fluxo estrito de validação e segurança:
+
+    1.  Solicita e valida a sintaxe do número de votação informado.
+    2.  Consulta o banco para obter o registro correspondente.
+    3.  Aplica uma regra de negócio impeditiva: se o candidato consultado for o
+        'Voto Nulo' (número '00'), a remoção é negada por se tratar de um registro
+        estrutural obrigatório do sistema da urna.
+    4.  Exibe a tabela com os dados do candidato e exige uma confirmação explícita
+        antes de rodar o comando SQL `DELETE` com base no ID único do registro.
+
+    A função garante o encerramento dos cursores e conexões abertas com o MySQL em todos
+    os pontos de interrupção ou retornos antecipados.
+
+    Args:
+        None.
+
+    Returns:
+        None: A função gerencia entradas, interações na CLI e mutações na base de dados,
+        encerrando a execução por meio de retornos vazios (`return`).
+    """
     limpar_tela()
 
     conexao = conect.conexao_banco()

@@ -16,9 +16,10 @@ def recuperar_chave():
     Gere a interface interativa e valida as etapas de segurança para recuperar a chave de acesso do eleitor.
 
     A função atua como um mecanismo de recuperação baseado em três fatores de autenticação:
-    1. Solicita e valida o CPF (criptografando-o para efetuar a busca).
-    2. Solicita e valida o Título de Eleitor (removendo espaços em branco sobressalentes).
-    3. Caso o eleitor exista e possua uma palavra-chave registrada, solicita a confirmação
+
+    1.  Solicita e valida o CPF (criptografando-o para efetuar a busca).
+    2.  Solicita e valida o Título de Eleitor (removendo espaços em branco sobressalentes).
+    3.  Caso o eleitor exista e possua uma palavra-chave registrada, solicita a confirmação
         desta palavra de backup (comparando os hashes criptografados).
 
     Se todas as validações forem bem-sucedidas, a função descriptografa a chave de acesso original

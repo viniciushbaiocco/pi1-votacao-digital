@@ -60,9 +60,9 @@ def busca_candidato():
     A função abre um menu que permite ao usuário escolher entre dois métodos de
     busca distintos:
 
-    1. Por Número de Votação: Realiza uma busca exata por um número previamente
+    1.  Por Número de Votação: Realiza uma busca exata por um número previamente
         validado e exibe o candidato correspondente.
-    2. Por Nome: Realiza uma busca parcial (utilizando o operador LIKE do SQL),
+    2.  Por Nome: Realiza uma busca parcial (utilizando o operador LIKE do SQL),
         permitindo encontrar e listar múltiplos candidatos que contenham o termo digitado.
 
     Em ambos os casos, se houver resultados, eles serão renderizados em formato

@@ -55,6 +55,7 @@ def remocao_eleitores():
     permitindo dois tipos de filtros:
 
     1. Por CPF: O input é validado e criptografado para conferência e busca na tabela.
+
     2. Por Título de Eleitor: O input é validado e consultado diretamente de forma textual.
 
     Caso o eleitor seja localizado, a tabela com suas informações é exibida e um
