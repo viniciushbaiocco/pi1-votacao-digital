@@ -116,13 +116,16 @@ def exibir_boletim_urna():
 
                     # Se houver votos, tenta determinar o vencedor
                     else:
-                        query_verificar_vencedor =  ('SELECT c.nome, c.partido, '
-                                                    'COUNT(v.id) AS total_votos '
-                                                    'FROM candidatos c '
-                                                    'LEFT JOIN votos v '
-                                                    'ON c.id = v.id_candidato '
-                                                    'GROUP BY c.id, c.nome, c.partido '
-                                                    ' ORDER BY total_votos DESC')
+                        query_verificar_vencedor = (
+                            "SELECT c.nome, c.partido, c.numero_votacao, COUNT(v.id) AS total_votos "
+                            "FROM candidatos c "
+                            "LEFT JOIN votos v ON c.id = v.id_candidato "
+                            "WHERE c.numero_votacao != '00' "
+                            "GROUP BY c.id, c.nome, c.partido, c.numero_votacao "
+                            "HAVING total_votos > 0 "
+                            "ORDER BY total_votos DESC "
+                            "LIMIT 1"
+                        )
                         cursor.execute(query_verificar_vencedor)
                         vencedor = cursor.fetchone()
                         cursor.fetchall()
@@ -134,10 +137,10 @@ def exibir_boletim_urna():
                                 str(vencedor['total_votos'])
                             )
                             console.print(Align.center(tabela_vencedor)) # Exibe a tabela com o vencedor
-                        # Caso não seja possível determinar um vencedor (improvável com a query atual, mas como fallback)
                         else:
-                            console.print(Panel(Align.center(f"[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
-                        # Pausa e limpa a tela após exibir o resultado (movido para fora do if/else para consistência)
+                            console.print(Panel(Align.center(f"[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]"),
+                                                title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red",
+                                                box=box.DOUBLE, padding=(1, 4)))
                     confirmacao.confirmacao()
                     visual.limpar_tela()
                 case False:
