@@ -8,7 +8,7 @@ def validacao_palavra_chave(palavra):
     """
     Valida a palavra-chave de backup do eleitor.
 
-    Deve conter apenas letras A-Z (sem acentos), entre 3 e 4 caracteres.
+    Deve conter apenas letras A-Z (sem acentos), 4 caracteres.
     A restrição de A-Z é exigida pela Cifra de Hill utilizada na criptografia.
 
     Args:
