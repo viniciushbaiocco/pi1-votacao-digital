@@ -92,7 +92,7 @@ def busca_candidato():
 
     opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
-    if opcao == False:
+    if not opcao:
         cursor.close()
         conexao.close()
         return

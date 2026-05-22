@@ -83,14 +83,14 @@ def edicao_candidatos():
     if numero is None:
         cursor.close()
         conexao.close()
-        return
+        return None
 
     while not val_cand.validacao_numero_votacao(numero):
         numero = ge.input_cancelavel("Número inválido. Digite novamente", "EDITAR CANDIDATO")
         if numero is None:
             cursor.close()
             conexao.close()
-            return
+            return None
 
     cursor.execute("SELECT * FROM candidatos WHERE numero_votacao = %s", (numero,))
     candidato = cursor.fetchone()
@@ -100,7 +100,7 @@ def edicao_candidatos():
         confirmacao.confirmacao()
         cursor.close()
         conexao.close()
-        return
+        return None
 
     if candidato['numero_votacao'] == '00':
         console.print("\nO candidato de voto nulo é estrutural do sistema e não pode ser editado.", style="bold red")
@@ -108,7 +108,7 @@ def edicao_candidatos():
         confirmacao.confirmacao()
         cursor.close()
         conexao.close()
-        return
+        return None
 
     id_candidato = candidato['id']
     exibir_tabela_candidato("Candidato a Ser Editado", candidato)
@@ -125,7 +125,7 @@ def edicao_candidatos():
         confirmacao.confirmacao()
         cursor.close()
         conexao.close()
-        return
+        return None
 
     editado = 0
     opcao_editar = 0

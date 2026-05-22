@@ -94,22 +94,24 @@ def edicao_eleitores():
 
     opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
-    if opcao == False:
+    if not opcao:
         cursor.close()
         conexao.close()
-        return
+        return None
 
     match opcao:
         case 1:
             cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser editado", "EDITAR POR CPF")
             if cpf is None:
-                cursor.close(); conexao.close(); return
-            while val_cpf.validacao_de_cpf(cpf) == False:
+                cursor.close(); conexao.close()
+                return None
+            while not val_cpf.validacao_de_cpf(cpf):
                 cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "EDITAR POR CPF")
                 if cpf is None:
                     break
             if cpf is None:
-                cursor.close(); conexao.close(); return
+                cursor.close(); conexao.close()
+                return None
 
             cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
             if ver_cpf.verificar_cpf_banco(crip.criptografar_cpf(cpf)) == (0,):
@@ -117,13 +119,15 @@ def edicao_eleitores():
         case 2:
             tit = ge.input_cancelavel("Digite o Título de Eleitor a ser editado", "EDITAR POR TÍTULO")
             if tit is None:
-                cursor.close(); conexao.close(); return
-            while val_tit.validar_titulo(tit) == False:
+                cursor.close(); conexao.close()
+                return None
+            while not val_tit.validar_titulo(tit):
                 tit = ge.input_cancelavel("Título inválido. Digite novamente", "EDITAR POR TÍTULO")
                 if tit is None:
                     break
             if tit is None:
-                cursor.close(); conexao.close(); return
+                cursor.close(); conexao.close()
+                return None
 
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
             if ver_cpf.verificar_cpf_banco(tit) == (0,):
@@ -179,7 +183,7 @@ def edicao_eleitores():
                         novo_titulo = ge.input_cancelavel("Novo Título de Eleitor", "EDITAR TÍTULO")
                         if novo_titulo is None:
                             continue
-                        while val_tit.validar_titulo(novo_titulo) == False:
+                        while not val_tit.validar_titulo(novo_titulo):
                             novo_titulo = ge.input_cancelavel("Título inválido. Digite novamente", "EDITAR TÍTULO")
                             if novo_titulo is None:
                                 break
@@ -205,7 +209,7 @@ def edicao_eleitores():
                         novo_cpf = ge.input_cancelavel("Novo CPF", "EDITAR CPF")
                         if novo_cpf is None:
                             continue
-                        while val_cpf.validacao_de_cpf(novo_cpf) == False:
+                        while not val_cpf.validacao_de_cpf(novo_cpf):
                             novo_cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "EDITAR CPF")
                             if novo_cpf is None:
                                 break
@@ -259,3 +263,4 @@ def edicao_eleitores():
             return confirmacao.confirmacao()
         case 2:
             return confirmacao.confirmacao()
+    return None

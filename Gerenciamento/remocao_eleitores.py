@@ -88,7 +88,7 @@ def remocao_eleitores():
 
     opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
-    if opcao == False:
+    if not opcao:
         return False
 
     while opcao == 1 or opcao == 2:
@@ -100,7 +100,7 @@ def remocao_eleitores():
                 cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser removido", "REMOVER POR CPF")
                 if cpf is None:
                     break
-                while val_cpf.validacao_de_cpf(cpf) == False:
+                while not val_cpf.validacao_de_cpf(cpf):
                     cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "REMOVER POR CPF")
                     if cpf is None:
                         break
@@ -118,7 +118,7 @@ def remocao_eleitores():
                 titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor a ser removido", "REMOVER POR TÍTULO")
                 if titulo_eleitor is None:
                     break
-                while val_tit.validar_titulo(titulo_eleitor) == False:
+                while not val_tit.validar_titulo(titulo_eleitor):
                     titulo_eleitor = ge.input_cancelavel("Título inválido. Digite novamente", "REMOVER POR TÍTULO")
                     if titulo_eleitor is None:
                         break
@@ -155,3 +155,4 @@ def remocao_eleitores():
 
     cursor.close()
     conexao.close()
+    return None

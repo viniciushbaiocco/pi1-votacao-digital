@@ -1,12 +1,13 @@
-from database import conexao_banco as conect
-from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf as val_cpf, validacao_titulo as val_tit, validacao_palavra_chave as val_palavra
-from criptografia import criptografia as cripto
+from rich import box
+from rich.align import Align
 from rich.console import Console
 from rich.panel import Panel
-from rich.align import Align
-from rich import box
+
+from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf as val_cpf, \
+    validacao_titulo as val_tit, validacao_palavra_chave as val_palavra
 from Visual.visual import limpar_tela
-from time import sleep
+from criptografia import criptografia as cripto
+from database import conexao_banco as conect
 
 console = Console(highlight=False)
 

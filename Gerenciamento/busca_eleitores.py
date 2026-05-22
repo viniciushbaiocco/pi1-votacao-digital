@@ -101,7 +101,7 @@ def busca_eleitor():
 
     opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
-    if opcao == False:
+    if not opcao:
         return False
 
     while opcao == 1 or opcao == 2:
@@ -110,7 +110,7 @@ def busca_eleitor():
             cpf = ge.input_cancelavel("Digite o CPF do eleitor", "BUSCA POR CPF")
             if cpf is None:
                 break
-            while val_cpf.validacao_de_cpf(cpf) == False:
+            while not val_cpf.validacao_de_cpf(cpf):
                 cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "BUSCA POR CPF")
                 if cpf is None:
                     break
@@ -132,7 +132,7 @@ def busca_eleitor():
             titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor", "BUSCA POR TÍTULO")
             if titulo_eleitor is None:
                 break
-            while val_titulo.validar_titulo(titulo_eleitor) == False:
+            while not val_titulo.validar_titulo(titulo_eleitor):
                 titulo_eleitor = ge.input_cancelavel("Título inválido. Digite novamente", "BUSCA POR TÍTULO")
                 if titulo_eleitor is None:
                     break
@@ -153,3 +153,4 @@ def busca_eleitor():
     confirmacao.confirmacao()
     cursor.close()
     conexao.close()
+    return None
