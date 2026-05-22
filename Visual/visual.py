@@ -8,16 +8,28 @@ RESET = "\033[0m"
 
 def carregar_pontos_loop(ciclos, mensagem):
     """
-    Exibe uma animação de carregamento com pontos em loop no terminal.
+    Exibe uma animação contínua de carregamento com pontos incrementais em uma CLI.
+
+    A função simula um feedback visual de processamento assíncrono imprimindo a mensagem
+    fornecida acompanhada de pontos que crescem sequencialmente (de 0 a 3 pontos).
+    Para garantir uma atualização fluida na mesma linha do terminal e evitar artefatos
+    visuais de rastros anteriores, ela utiliza duas diretrizes técnicas:
+
+    Retorno de carro (`\r`): Move o cursor de escrita de volta para o início da linha.
+    Sequência ANSI (`\033[K`): Limpa todos os caracteres residuais à direita do cursor.
+
+    O `sys.stdout.flush()` é invocado explicitamente a cada iteração para forçar
+    o esvaziamento do buffer de saída do sistema operacional, garantindo que o delay
+    do `time.sleep` funcione de maneira síncrona com a renderização da tela.
 
     Args:
-        ciclos (int): O número de vezes que a sequência completa de pontos
-                      (0 a 3 pontos) será repetida.
-        mensagem (str): A string de texto a ser exibida antes dos pontos
-                        (ex: "Carregando", "Processando").
+        ciclos (int): O quantitativo de vezes que a sequência completa de animação
+        (0, 1, 2 e 3 pontos) será iterada.
+        mensagem (str): O texto descritivo que precede os pontos suspensivos
+        (ex: "Consultando Resultados", "Validando Integridade").
 
     Returns:
-        None
+        None: A função manipula diretamente o buffer de saída padrão (stdout) do terminal.
     """
     for _ in range(ciclos):
         for pontos in range(4):
@@ -31,11 +43,17 @@ def carregar_pontos_loop(ciclos, mensagem):
 
 def limpar_tela():
     """
-    Limpa a tela do terminal.
+    Limpa o buffer de exibição e redefine o topo do console corrente.
+
+    A rotina avalia a propriedade de ambiente de subprocesso `os.name` para disparar o
+    comando nativo correspondente ao núcleo da plataforma hospedeira: `cls` se o script
+    estiver rodando em ambiente Windows (`nt`) ou `clear` caso resida sob sistemas
+    POSIX/Unix-like (como distribuições Linux ou macOS).
 
     Args:
-        None
+        None.
+
     Returns:
-        None
+        None: A função delega a chamada diretamente ao shell do sistema operacional.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
