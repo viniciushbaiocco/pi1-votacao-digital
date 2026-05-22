@@ -101,12 +101,12 @@ def sistema_voto(id_sessao):
     exibir_progresso_votacao()
     cpf_4 = ge.input_cancelavel("Digite os 4 primeiros dígitos do seu CPF", "IDENTIFICAÇÃO")
     if cpf_4 is None:
-        cursor.close();
-        conexao.close(); 
+        cursor.close()
+        conexao.close()
         return
 
     cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
-    while cpf_4_valido == False:
+    while not cpf_4_valido:
         limpar_tela()
         exibir_progresso_votacao()
         cpf_4 = ge.input_cancelavel("CPF inválido. Digite novamente", "IDENTIFICAÇÃO")
@@ -114,21 +114,21 @@ def sistema_voto(id_sessao):
             break
         cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
     if cpf_4 is None:
-        cursor.close();
-        conexao.close();
+        cursor.close()
+        conexao.close()
         return
 
     limpar_tela()
     exibir_progresso_votacao(cpf_4=cpf_4)
     titulo = ge.input_cancelavel("Digite seu Título de Eleitor", "IDENTIFICAÇÃO")
     if titulo is None:
-        cursor.close();
-        conexao.close();
+        cursor.close()
+        conexao.close()
         return
 
     titulo = titulo.strip()
     titulo_valido = val_tit.validar_titulo(titulo)
-    while titulo_valido == False:
+    while not titulo_valido:
         limpar_tela()
         exibir_progresso_votacao(cpf_4=cpf_4)
         titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO")
@@ -137,21 +137,21 @@ def sistema_voto(id_sessao):
         titulo = titulo.strip()
         titulo_valido = val_tit.validar_titulo(titulo)
     if titulo is None:
-        cursor.close();
-        conexao.close();
+        cursor.close()
+        conexao.close()
         return
 
     limpar_tela()
     exibir_progresso_votacao(cpf_4=cpf_4, titulo=titulo)
     chave_acesso = ge.input_cancelavel("Digite sua Chave de Acesso", "IDENTIFICAÇÃO")
     if chave_acesso is None:
-        cursor.close();
-        conexao.close();
+        cursor.close()
+        conexao.close()
         return
     chave_acesso = chave_acesso.strip().upper()
 
     chave_valida = val_chave.validar_chave_acesso(chave_acesso)
-    while chave_valida == False:
+    while not chave_valida:
         limpar_tela()
         exibir_progresso_votacao(cpf_4=cpf_4, titulo=titulo)
         chave_acesso = ge.input_cancelavel("Chave inválida. Digite novamente", "IDENTIFICAÇÃO")
@@ -160,8 +160,8 @@ def sistema_voto(id_sessao):
         chave_acesso = chave_acesso.strip().upper()
         chave_valida = val_chave.validar_chave_acesso(chave_acesso)
     if chave_acesso is None:
-        cursor.close();
-        conexao.close();
+        cursor.close()
+        conexao.close()
         return
 
     limpar_tela()

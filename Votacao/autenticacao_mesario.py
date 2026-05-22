@@ -89,7 +89,7 @@ def autenticar_mesario(id_sessao):
 
         titulo = titulo.strip()
         titulo_valido = val_tit.validar_titulo(titulo)
-        while titulo_valido == False:
+        while not titulo_valido:
             limpar_tela()
             exibir_progresso_mesario(tentativa=tentativa)
             titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
@@ -121,7 +121,7 @@ def autenticar_mesario(id_sessao):
             return False
 
         cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
-        while cpf_4_valido == False:
+        while not cpf_4_valido:
             limpar_tela()
             exibir_progresso_mesario(titulo=titulo, tentativa=tentativa)
             cpf_4 = ge.input_cancelavel("CPF inválido. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
@@ -157,7 +157,7 @@ def autenticar_mesario(id_sessao):
         chave_acesso = chave_acesso.strip().upper()
 
         chave_valida = val_chave.validar_chave_acesso(chave_acesso)
-        while chave_valida == False:
+        while not chave_valida:
             limpar_tela()
             exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, tentativa=tentativa)
             chave_acesso = ge.input_cancelavel("Chave inválida. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
