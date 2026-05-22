@@ -14,15 +14,30 @@ console = Console(highlight=False)
 
 def menu_completo():
     """
-    Gerencia a navegação completa entre os menus da aplicação (principal, gerenciamento e votação).
-    Permite ao usuário interagir com as diferentes funcionalidades do sistema.
+    Atua como o orquestrador principal de rotas e navegação de menus do sistema da urna eleitoral.
+
+    Esta função gerencia loops aninhados que estruturam os submenus da aplicação,
+    permitindo uma navegaçao hierárquica e bidirecional (avançar e voltar) entre as
+    seguintes seções:
+
+    1. Menu de Gerenciamento: Subdividido no CRUD e relatórios de Eleitores e Candidatos.
+    2. Menu de Votação: Responsável pelo ciclo de abertura de sessão, votação em tempo
+       real, encerramento e auditoria.
+    3. Resultados da Votação: Emissão de relatórios consolidados como Boletim de Urna,
+       Estatísticas de Comparecimento, Votos por Partido e Validação de Integridade.
+    4. Menu de Ocorrências: Histórico de logs de auditoria e segurança da urna.
+
+    A função mantém o estado da 'sessao' atual e garante que, ao finalizar a execução
+    do menu principal de forma voluntária, todos os arquivos de logs temporários de
+    auditoria criados em disco sejam eliminados de maneira segura para preservar o
+    sigilo e a integridade do encerramento da urna.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
-
+        None: A função gerencia o ciclo de vida completo da execução do programa,
+        não retornando nenhum valor.
     """
     executando_menu_principal = 1
     sessao = 0 # Começa a sessão como 0

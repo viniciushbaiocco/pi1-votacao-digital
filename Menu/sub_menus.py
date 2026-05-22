@@ -16,14 +16,20 @@ subtitulo_banner = "Sistema de Votação Digital"
 
 def exibir_banner():
     """
-        Exibe o banner para estética do menu.
+    Gera e exibe o banner estético em arte ASCII estilizado com as cores do Brasil.
 
-        Args:
-            None
+    A função calcula dinamicamente a largura atual da janela do terminal utilizando o
+    módulo `os`. Caso o script seja executado em um ambiente sem suporte (como saídas
+    de logs ou pipes), adota 80 colunas como fallback. A palavra 'LAD.PY' é convertida
+    em arte ASCII via PyFiglet e impressa linha a linha aplicando cores alternadas
+    (verde e amarelo) de forma centralizada.
 
-        Returns:
-            None
-        """
+    Args:
+        None.
+
+    Returns:
+        None: A função realiza apenas impressões no console.
+    """
     try:
         largura_terminal = os.get_terminal_size().columns
     except OSError:
@@ -45,13 +51,17 @@ def exibir_banner():
 
 def exibir_menu_principal():
     """
-    Exibe o menu principal da aplicação com as opções de gerenciamento, votação e saída.
+    Renderiza a interface gráfica do Menu Principal no terminal.
+
+    Limpa a tela do terminal de acordo com o sistema operacional ativo (Windows ou
+    Unix-based), imprime o cabeçalho dinâmico e monta um painel Rich contendo as
+    rotas principais da Urna: Gerenciamento e Votação.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza apenas impressões no console.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
@@ -69,13 +79,16 @@ def exibir_menu_principal():
 
 def exibir_menu_gerenciamento():
     """
-    Exibe o menu de gerenciamento com as opções de eleitores e candidatos.
+    Renderiza a interface gráfica do Menu de Gerenciamento.
+
+    Apresenta as opções administrativas para triagem e direcionamento entre os
+    módulos específicos de eleitores ou candidatos cadastrados no sistema.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza apenas impressões no console.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
@@ -90,13 +103,16 @@ def exibir_menu_gerenciamento():
 
 def exibir_menu_eleitores():
     """
-    Exibe o menu de eleitores com as opções de cadastrar, editar, excluir, buscar e visualizar eleitores.
+    Renderiza a interface gráfica com o Menu de Controle e Relatórios de Eleitores.
+
+    Exibe o painel consolidado com todas as operações cadastrais (CRUD), consultas
+    por CPF/Título, listagens em lote e a rotina de recuperação de chave de acesso de backup.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza apenas impressões no console.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
@@ -115,13 +131,16 @@ def exibir_menu_eleitores():
 
 def exibir_menu_candidatos():
     """
-    Exibe o menu de candidatos com as opções de cadastrar, editar, excluir, buscar e visualizar candidatos.
+    Renderiza a interface gráfica com o Menu de Controle e Relatórios de Candidatos.
+
+    Exibe o painel consolidado contendo as opções de inclusão, alteração, remoção por número
+    de urna, busca exata/parcial e listagem geral de partidos e candidatos.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza apenas impressões no console.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
@@ -139,13 +158,16 @@ def exibir_menu_candidatos():
 
 def exibir_menu_votacao():
     """
-    Exibe o menu de votação com as opções de abrir o sistema de votação e resultados da votação.
+    Renderiza a interface gráfica do Menu Operacional de Votação.
+
+    Disponibiliza os caminhos críticos para abertura do sistema interativo de votação,
+    módulo de apuração/estatísticas e acesso aos relatórios e logs de ocorrência emitidos.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza apenas impressões no console.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
@@ -161,13 +183,16 @@ def exibir_menu_votacao():
 
 def exibir_menu_sistema_votacao():
     """
-    Exibe o menu de sistema de votação com as opções votar e encerrar o sistema de votação.
+    Renderiza a interface gráfica do Terminal de Votação (Urna Eleitoral Ativa).
+
+    Exibe o menu simplificado exposto ao mesário e eleitor para iniciar o fluxo de
+    computação de votos individuais ou comandar o encerramento da sessão atual da seção.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza apenas impressões no console.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
@@ -180,14 +205,17 @@ def exibir_menu_sistema_votacao():
 
 def exibir_menu_restultados_votacao():
     """
-    Exibe o menu de resultados da votação com as opções de boletim de urna, estatísticas de comparecimento,
-    votos por partido e validação por integridade.
+    Renderiza a interface gráfica do Menu de Relatórios de Fechamento e Auditoria.
+
+    Apresenta caminhos para extração de dados consolidados pós-pleito, incluindo a emissão
+    de Boletim de Urna, taxas de abstenção/comparecimento, votos por legenda e rotinas de
+    verificação de integridade de hashes de segurança.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza apenas impressões no console.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
@@ -203,13 +231,17 @@ def exibir_menu_restultados_votacao():
 
 def exibir_menu_ocorrencias():
     """
-    Exibe o menu de ocorrências.
+    Renderiza a interface gráfica do Menu de Auditoria de Logs de Ocorrências.
+
+    Exibe o catálogo com os filtros de monitoramento e rastreabilidade da urna, permitindo
+    revisar logs de inicialização, tentativas de fraudes/acessos negados, logs de votos
+    computados e relatórios de sessões gerais.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza apenas impressões no console.
     """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
@@ -226,6 +258,18 @@ def exibir_menu_ocorrencias():
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]OCORRÊNCIAS[/bold bright_white]", border_style="bold dark_orange", box=box.DOUBLE, padding=(1, 4)))
 
 def exibir_menu_boletim_urna():
+    """
+    Renderiza a interface gráfica do Menu de Detalhamento do Boletim de Urna (BU).
+
+    Ajustei o metadado do título do painel para 'BOLETIM DE URNA' para corresponder
+    corretamente ao escopo das opções expostas (Listagem de Candidatos / Verificar Vencedor).
+
+    Args:
+        None.
+
+    Returns:
+        None: A função realiza apenas impressões no console.
+    """
     os.system('cls' if os.name == 'nt' else 'clear')
     exibir_banner()
     conteudo = (
@@ -233,4 +277,4 @@ def exibir_menu_boletim_urna():
         "                 [bold bright_white][2][/bold bright_white]  Verificar Vencedor\n"
         "                 [red][X]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]OCORRÊNCIAS[/bold bright_white]", border_style="bold dark_orange", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]BOLETIM DE URNA[/bold bright_white]", border_style="bold dark_orange", box=box.DOUBLE, padding=(1, 4)))
