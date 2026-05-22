@@ -11,6 +11,7 @@ def verificar_candidato(partido, sigla_partido, numero_votacao):
     Verifica a validade de um candidato antes de seu cadastro no banco de dados.
     
     Esta função realiza duas verificações principais:
+    
     1. Garante que não haja mais de um candidato associado ao mesmo partido.
     2. Garante que o número de votação proposto ainda não esteja em uso.
     

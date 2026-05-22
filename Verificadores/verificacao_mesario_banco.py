@@ -2,16 +2,29 @@ from database import conexao_banco
 
 def verificar_mesario(titulo, cpf_4_criptografado, chave_acesso_criptografada):
     """
-    Verifica se o título de eleitor, os 4 primeiros dígitos do CPF e a chave de acesso
-    correspondem a um mesário cadastrado no banco de dados.
+    Verifica se o conjunto de credenciais fornecido pertence a um mesário ativo no banco.
+
+    A função executa uma consulta de contagem (`COUNT(*)`) para validar de forma combinada
+    e simultânea três fatores de identidade do mesário. A busca aplica regras rígidas
+    de correspondência por igualdade estrita para o título e a chave de acesso, além de
+    utilizar a função nativa `SUBSTRING` do MySQL para comparar apenas o fatiamento inicial
+    de 4 caracteres da hash do CPF.
+
+    A cláusula `mesario = 1` garante que o acesso seja negado mesmo se os dados estiverem
+    corretos, caso o eleitor correspondente não possua a flag de privilégio administrativo
+    concedida na base de dados.
 
     Args:
-        titulo (str): Título de eleitor validado.
-        cpf_4_criptografado (str): Primeiros 4 dígitos do CPF criptografados.
-        chave_acesso_criptografada (str): Chave de acesso criptografada.
+        titulo (str): O número do título de eleitor já tratado e validado.
+        cpf_4_criptografado (str): A hash do CPF do usuário, da qual serão extraídos
+            apenas os 4 caracteres iniciais para validação posicional.
+        chave_acesso_criptografada (str): A assinatura da chave de acesso pessoal,
+            já tratada e criptografada.
 
     Returns:
-        tuple: Retorna (1,) se os dados correspondem a um mesário, (0,) caso contrário.
+        tuple: Uma tupla contendo um único número inteiro na primeira posição,
+        representando o resultado do COUNT. Retorna `(1,)` se o conjunto de dados
+        corresponder perfeitamente a um mesário habilitado, ou `(0,)` caso contrário.
     """
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor()

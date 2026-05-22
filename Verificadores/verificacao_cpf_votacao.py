@@ -2,15 +2,24 @@ from database import conexao_banco
 
 def verificar_cpf_voto(cpf_criptografado):
     """
-        Verifica a existência de um cpf (Pega apenas os 4 primeiros dígitos) já criptografado e validado
-        do eleitor no banco de dados.
+    Verifica a existência de um eleitor com base no fragmento inicial do CPF criptografado.
 
-        Args:
-            cpf(str): O cpf criptografado e validado a ser consultado no banco de dados.
+    A função extrai uma fatia contendo os 4 primeiros caracteres da hash de CPF informada
+    e realiza uma busca de contagem (`COUNT(*)`) no banco de dados. A consulta utiliza a
+    função nativa `SUBSTRING` do MySQL para comparar apenas o início da string gravada na
+    tabela de eleitores, atuando como o primeiro fator de identificação no terminal de voto.
 
-        Returns:
-            tupla: Uma tupla contendo a contagem de eleitores encontrados com o cpf fornecido.
-                   Retorna (1,) se o cpf for encontrado, (0,) caso contrário.
+    O cursor e a conexão aberta com o servidor MySQL são devidamente encerrados após a
+    captura do resultado, garantindo a liberação imediata dos recursos de rede.
+
+    Args:
+        cpf_criptografado (str): A hash completa do CPF do eleitor, da qual serão
+            extraídos os 4 primeiros caracteres para a validação por fatiamento.
+
+    Returns:
+        tuple: Uma tupla contendo um único número inteiro na primeira posição,
+        representando o resultado do COUNT. Retorna `(1,)` se algum eleitor possuir a
+        mesma assinatura inicial na coluna de CPF, ou `(0,)` caso contrário.
     """
 
     # Pega os primeiros quatros dígitos
