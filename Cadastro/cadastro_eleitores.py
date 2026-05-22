@@ -219,6 +219,8 @@ def cadastrar_eleitor():
         str(eleitor['id']), eleitor['nome'], eleitor['titulo_eleitor'],
         mesario_texto, "[dim]Não Votou[/dim]", chave_acesso_original
     )
+
+    limpar_tela()
     console.print(Align.center(tabela_final))
 
     cursor.close()

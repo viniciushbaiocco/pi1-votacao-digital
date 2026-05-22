@@ -162,6 +162,7 @@ def cadastrar_candidato():
         candidato['sigla_partido'],
         candidato['numero_votacao']
     )
+    limpar_tela()
     console.print(Align.center(tabela_final))
 
     cursor.close()
