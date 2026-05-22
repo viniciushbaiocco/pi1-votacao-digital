@@ -22,7 +22,7 @@ def ocorrencia_encerramento_urna(id_sessao):
 
     Args:
         id_sessao (str ou int): O identificador exclusivo da sessão de urna ativa que
-        está sendo encerrada.
+            está sendo encerrada.
 
     Returns:
         None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.

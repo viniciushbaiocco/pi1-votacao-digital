@@ -22,7 +22,7 @@ def ocorrencia_acesso_negado(id_sessao):
 
     Args:
         id_sessao (str ou int): O identificador exclusivo da sessão de urna ativa
-        onde a falha de autenticação ocorreu.
+            onde a falha de autenticação ocorreu.
 
     Returns:
         None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.

@@ -22,7 +22,7 @@ def ocorrencia_voto_duplo(id_sessao: str):
 
     Args:
         id_sessao (str): O identificador exclusivo da sessão de urna ativa onde
-        a tentativa de fraude foi detectada.
+            a tentativa de fraude foi detectada.
 
     Returns:
         None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.

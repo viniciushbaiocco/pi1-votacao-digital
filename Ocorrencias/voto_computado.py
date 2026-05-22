@@ -21,7 +21,7 @@ def ocorrecia_voto_computado(id_sessao):
 
     Args:
         id_sessao (str ou int): O identificador exclusivo da sessão de urna ativa onde
-        o voto foi registrado.
+            o voto foi registrado.
 
     Returns:
         None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.

@@ -22,7 +22,7 @@ def ocorrencia_abertura_urna(id_sessao):
 
     Args:
         id_sessao (int ou str): O identificador numérico da sessão eleitoral correspondente
-        à abertura do ciclo de votação.
+            à abertura do ciclo de votação.
 
     Returns:
         None: A função realiza apenas escrita em arquivo físico (I/O), sem retornar valor.
