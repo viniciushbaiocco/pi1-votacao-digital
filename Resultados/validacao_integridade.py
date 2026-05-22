@@ -10,15 +10,27 @@ console = Console(highlight=False)
 
 def validar_integridade():
     """
-    Valida a integridade da votação comparando o total de votos registrados
-    na urna com a quantidade de eleitores com status 'Já Votou'.
+    Valida a integridade matemática da eleição cruzando dados de votos e eleitores.
+
+    A função atua como uma ferramenta de auditoria interna da urna eleitoral. Ela realiza
+    duas consultas independentes no banco de dados MySQL:
+
+    1. Conta o volume total de cédulas eletrônicas armazenadas na tabela `votos`.
+    2. Conta o quantitativo de eleitores que possuem o status de votação ativo (`status_votacao = 1`).
+
+    A partir dessas métricas, valida o ecossistema sob três cenários lógicos:
+    - Se não houver registros de votos, aborta a validação retornando `False`.
+    - Se o total de votos for exatamente igual ao número de eleitores que compareceram,
+      confirma a integridade do pleito e retorna `True`.
+    - Se houver qualquer divergência numérica entre as duas contagens, emite um alerta
+      crítico de possível inconsistência/fraude e retorna `False`.
 
     Args:
         None.
 
     Returns:
-        bool: True se o número de votos registrados for igual ao número de eleitores que votaram,
-              False caso contrário.
+        bool: Retorna True se a validação for bem-sucedida (dados consistentes).
+        Retorna False se a base estiver vazia ou se houver divergência entre as contagens.
     """
 
     limpar_tela()

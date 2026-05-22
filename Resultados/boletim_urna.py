@@ -14,14 +14,26 @@ console = Console(highlight=False)
 
 def exibir_boletim_urna():
     """
-    Gerencia a exibição do boletim de urna, permitindo ao usuário listar candidatos
-    com seus respectivos votos ou determinar o vencedor da eleição.
+    Gerencia a interface interativa de apuração e emissão do Boletim de Urna (BU).
+
+    A função se conecta à base de dados para extrair e consolidar os dados das tabelas
+    de candidatos e votos. Apresenta um menu interativo que permite duas operações:
+
+    1. Listagem Geral: Realiza um agrupamento (`LEFT JOIN` com `COUNT`) para listar
+       todos os candidatos da base e seus respectivos totais de votos em ordem alfabética.
+    2. Determinação do Vencedor: Verifica se há votos registrados em sistema e, em
+       caso positivo, executa uma consulta ordenada de forma decrescente para retornar
+       o candidato com maior volume de votos computados.
+
+    As tabelas de relatórios e painéis de erro são centralizados e renderizados via Rich.
+    Independentemente do sucesso ou cancelamento do fluxo, o encerramento seguro dos
+    cursores e conexões abertas com o MySQL é sempre garantido pelo bloco `finally`.
 
     Args:
-        None
+        None.
 
     Returns:
-        None. A função exibe o boletim de urna ou o vencedor diretamente no console
+        None: A função atua apenas na leitura, agregação e exibição visual de dados no console.
     """
     conexao = None
     cursor = None

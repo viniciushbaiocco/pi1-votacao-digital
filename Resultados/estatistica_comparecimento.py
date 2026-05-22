@@ -10,12 +10,23 @@ console = Console(highlight=False)
 
 def exibir_estatistica_comparecimento() -> None:
     """
-    Consulta o banco de dados e exibe no terminal a estatística.
+    Consulta o banco de dados e calcula os índices de comparecimento e abstenção eleitoral.
+
+    A função extrai o volume total de registros na tabela de eleitores e o quantitativo
+    de cidadãos que efetivamente concluíram o voto (onde `status_votacao = TRUE`).
+    A partir desses dados agregados, realiza o cálculo percentual de presença e de
+    abstenção (ausência), renderizando as métricas consolidadas em uma tabela
+    centralizada no terminal com precisão de uma casa decimal.
+
+    Para blindar a operação matemática contra erros de divisão por zero, a rotina
+    valida previamente se a base de eleitores está vazia, efetuando um retorno
+    antecipado seguro e fechando as conexões de banco abertas.
 
     Args:
-        None
+        None.
+
     Returns:
-        None
+        None: A função realiza leituras no banco e exibe as métricas diretamente no terminal.
     """
 
     limpar_tela()

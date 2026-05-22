@@ -11,6 +11,26 @@ console = Console(highlight=False)
 
 
 def votos_por_partido():
+    """
+    Gera e exibe um relatório consolidado com o total de votos de cada legenda partidária.
+
+    A função consulta o banco de dados MySQL realizando um agrupamento relacional
+    (`LEFT JOIN` combinado com `GROUP BY`) entre as tabelas de candidatos e votos.
+    Ela contabiliza o volume total de votos recebidos por todos os candidatos pertencentes
+    a cada partido e ordena o resultado de forma decrescente (`DESC`), destacando as
+    legendas mais votadas no topo.
+
+    As informações coletadas são renderizadas em uma tabela estilizada e centralizada
+    no console via biblioteca Rich. O encerramento dos cursores e conexões com a base
+    de dados é mapeado de forma segura dentro do bloco `finally`, prevenindo conexões
+    pendentes no servidor em caso de interrupções.
+
+    Args:
+        None.
+
+    Returns:
+        None: A função tem propósito puramente consultivo e de saída visual na CLI.
+    """
     conexao = None
     cursor = None
     try:
