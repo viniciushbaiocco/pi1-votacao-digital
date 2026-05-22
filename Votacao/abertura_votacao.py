@@ -12,6 +12,21 @@ from rich import box
 console = Console(highlight=False)
 
 def verificar_candidatos():
+    """
+    Valida o quantitativo de candidatos reais e garante a existência do registro de voto nulo.
+
+    Esta função realiza duas checagens na tabela de candidatos:
+    1. Conta quantos candidatos válidos estão registrados (cujo número de votação é diferente de '00').
+    2. Verifica a existência do registro estrutural do 'Voto Nulo' (número '00'). Caso este registro
+        não seja localizado na base de dados, a função realiza uma inserção automática (INSERT)
+        e um commit para garantir que o sistema consiga computar votos nulos corretamente.
+
+    Args:
+        None.
+
+    Returns:
+        int: O volume total de candidatos reais cadastrados no sistema (desconsiderando o voto nulo).
+    """
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor()
 
@@ -34,6 +49,24 @@ def verificar_candidatos():
     return total_candidatos
 
 def abrir_sistema_votacao(id_sessao):
+    """
+    Gerencia as etapas de segurança e autorização necessárias para abrir o terminal de votação.
+
+    A função executa o fluxo rígido de preparação da urna eletrônica através dos seguintes passos:
+
+    1.  Solicita e valida as credenciais do mesário. Caso falhe, aborta o processo imediatamente.
+    2.  Consulta o banco para verificar se existem candidatos reais cadastrados. Se a contagem for
+        igual a zero, a abertura é negada através de um painel informativo via Rich.
+    3.  Caso o mesário seja válido e haja candidatos, dispara o procedimento de auditoria da Zerésima.
+    4.  Grava os arquivos de log locais e gerais de auditoria notificando o início bem-sucedido.
+
+    Args:
+        id_sessao (str ou int): O identificador exclusivo da sessão eleitoral que está sendo iniciada.
+
+    Returns:
+        bool: True se o sistema de votação foi aberto com sucesso após todas as validações de
+        segurança e regras de negócio; False caso contrário.
+    """
     limpar_tela()
     if not autenticacao_mesario.autenticar_mesario(id_sessao):
         console.print("\n[bold red][ERRO] Validação falhou.[/bold red]")

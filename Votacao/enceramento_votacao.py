@@ -16,13 +16,29 @@ console = Console(highlight=False)
 
 def encerrar_sistema_votacao(id_sessao):
     """
-    Realiza o encerramento oficial do sistema de votação.
+    Executa o protocolo de segurança para o encerramento oficial da sessão de votação.
+
+    A função atua em camadas sucessivas de validação para impedir o fechamento acidental
+    ou não autorizado da urna eletrônica:
+
+    1.  Invoca o módulo de autenticação multifator para validar a identidade e o perfil do mesário.
+    2.  Solicita uma confirmação explícita de intenção de encerramento por parte do usuário.
+    3.  Exige um segundo desafio de segurança, forçando o mesário a digitar sua chave de acesso
+        pessoal sob um limite estrito de até 3 tentativas, protegendo o estado contra força bruta.
+
+    Se o desafio for superado, a função consolida o encerramento e dispara a gravação dos logs
+    físicos de auditoria local e geral. Caso ocorra qualquer erro sistêmico no processo, um
+    mecanismo de `rollback` é acionado preventivamente. O fechamento dos cursores e conexões
+    é garantido no bloco `finally`.
 
     Args:
-        id_sessao (int): O ID único da sessão de urna que está sendo encerrada.
+        id_sessao (int ou str): O identificador exclusivo da sessão de urna ativa
+        que está sendo finalizada.
 
     Returns:
-        bool: True se o encerramento for realizado com sucesso, False caso contrário.
+        bool: True se o protocolo de encerramento e escrita de logs foi concluído com
+        sucesso; False se o mesário falhou nas autenticações, cancelou a operação ou se
+        ocorreu uma exceção de banco de dados.
     """
 
     limpar_tela()

@@ -17,6 +17,23 @@ from rich import box
 console = Console(highlight=False)
 
 def exibir_progresso_mesario(titulo=None, cpf_4=None, chave=None, tentativa=1):
+    """
+    Gera e renderiza uma tabela dinâmica com o progresso de validação do mesário.
+
+    Esta função atua como um formulário visual incremental no terminal. Conforme o
+    mesário preenche e valida cada dado (Título, fatiamento inicial do CPF e confirmação
+    de Chave de Acesso), a tabela substitui os placeholders de interrogação ('?') por
+    textos coloridos de confirmação. Exibe também o número da tentativa atual no cabeçalho.
+
+    Args:
+        titulo (str, optional): Título de eleitor informado e validado. Padrão é None.
+        cpf_4 (str, optional): Os 4 primeiros dígitos do CPF informados. Padrão é None.
+        chave (str, optional): Chave de acesso criptografada correspondente. Padrão é None.
+        tentativa (int): O índice da tentativa atual do mesário (de 1 a 3). Padrão é 1.
+
+    Returns:
+        None: A função realiza apenas a exibição gráfica da tabela centralizada no terminal.
+    """
     tabela = Table(
         title=f"Identificação do Mesário — Tentativa {tentativa} de 3",
         box=box.DOUBLE,
@@ -35,6 +52,33 @@ def exibir_progresso_mesario(titulo=None, cpf_4=None, chave=None, tentativa=1):
     console.print(Align.center(tabela))
 
 def autenticar_mesario(id_sessao):
+    """
+    Executa o protocolo de autenticação multifator com limite de tentativas para mesários.
+
+    A função restringe o acesso à urna por meio de um loop de até 3 tentativas.
+    Para obter sucesso, o usuário deve passar por três barreiras de checagem:
+
+    1.  Validar a sintaxe e a existência do Título de Eleitor associado a um perfil
+        de mesário ativo no banco de dados (`mesario = 1`).
+    2.  Validar se os 4 dígitos iniciais informados do CPF batem com o fragmento inicial
+        da hash de CPF salva em banco.
+    3.  Validar a assinatura criptográfica da Chave de Acesso.
+
+    Caso ocorra erro em qualquer etapa da checagem, a conexão com o banco é encerrada com
+    segurança, as tentativas restantes são calculadas e são gerados alertas em tempo real
+    nos logs de auditoria local e geral. Na terceira falha consecutiva, o sistema bloqueia
+    o acesso e oferece um atalho para invocar a rotina de recuperação de chave de backup.
+
+    Args:
+        id_sessao (str ou int): O identificador exclusivo da sessão ativa da urna eleitoral
+        para fins de amarração de logs de auditoria.
+
+    Returns:
+        bool: True se o mesário passou com sucesso por todas as etapas de validação e
+        criptografia; False se o processo foi cancelado voluntariamente ou se o número
+        máximo de tentativas falhas foi atingido.
+    """
+
     for tentativa in range(1, 4):
         limpar_tela()
 

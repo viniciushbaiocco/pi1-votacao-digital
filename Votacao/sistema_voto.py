@@ -21,6 +21,22 @@ from rich import box
 console = Console(highlight=False)
 
 def exibir_progresso_votacao(cpf_4=None, titulo=None, chave=None):
+    """
+    Gera e renderiza uma tabela dinâmica com o progresso de identificação do eleitor.
+
+    Esta função cria uma tabela centralizada via biblioteca Rich que serve como
+    um painel de progresso visual para o eleitor. Conforme cada etapa da identificação
+    é preenchida com sucesso (Fragmento do CPF, Título e Chave), os placeholders
+    de interrogação ('?') são atualizados sequencialmente por textos verdes de confirmação.
+
+    Args:
+        cpf_4 (str, optional): Os 4 primeiros dígitos do CPF do eleitor. Padrão é None.
+        titulo (str, optional): O título de eleitor informado. Padrão é None.
+        chave (str, optional): A chave de acesso pessoal tratada do eleitor. Padrão é None.
+
+    Returns:
+        None: A função realiza apenas a renderização do componente visual na CLI.
+    """
     tabela = Table(
         title="Identificação do Eleitor",
         box=box.DOUBLE,
@@ -47,6 +63,36 @@ def exibir_candidato(candidato):
     console.print(Panel(conteudo, title="[bold bright_white]CANDIDATO[/bold bright_white]", border_style="bold chartreuse1", box=box.DOUBLE, padding=(1, 2)))
 
 def sistema_voto(id_sessao):
+    """
+    Gerencia a interface interativa, autenticação de eleitores e computação do voto.
+
+    Esta é a função central do fluxo de votação em tempo real da urna eletrônica.
+    A rotina é executada sob as seguintes diretrizes rígidas de segurança:
+
+    1.  Fase de Autenticação: Solicita de maneira incremental os dados do eleitor (CPF,
+        Título e Chave). Todos os inputs passam por validação de formato e, se cancelados
+        pelo usuário, fecham o banco de dados e interrompem o fluxo com segurança.
+    2.  Validação Criptográfica e Segurança Antifraude: Transforma os dados locais em hashes,
+        valida o cadastro do cidadão no banco e checa se ele já votou (`ver_votou == (0,)`).
+        Caso seja detectada uma tentativa de voto duplo, bloqueia a operação e grava alertas
+        imediatos nos arquivos de auditoria.
+    3.  Escolha do Candidato: Captura o número digitado. Se não existir, oferece um fluxo de
+        contingência para confirmação de voto nulo (atribuindo ID '00'). Se existir, exibe o
+        painel do candidato para revisão visual e confirmação de intenção do eleitor.
+
+    4.  Gravação e Anonimato: Gera um protocolo de auditoria alfanumérico único desvinculado de
+        dados pessoais, criptografa o protocolo, insere o registro na tabela de `votos` com a
+        estampa de tempo truncada e atualiza o estado do eleitor para `status_votacao = 1` sob
+        uma transação atômica (`commit`).
+
+    Args:
+        id_sessao (str ou int): O identificador exclusivo da sessão eleitoral ativa
+        para fins de amarração técnica nos logs de auditoria de votos.
+
+    Returns:
+        None: A função gerencia entradas de usuários, mutações complexas de estados em banco
+        de dados e gravações de arquivos de log, encerrando os fluxos por retornos antecipados.
+    """
     limpar_tela()
 
     conexao = conect.conexao_banco()

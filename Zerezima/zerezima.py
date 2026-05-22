@@ -16,6 +16,7 @@ def zerezima():
 
       1. Executa um comando `TRUNCATE` na tabela de votos para eliminar permanentemente
       qualquer registro residual e redefinir os contadores de chaves primárias.
+
       2. Executa um comando `UPDATE` na tabela de eleitores, resetando o campo
       `status_votacao` para 0 (Não Votou), deixando todos aptos para o pleito.
 
