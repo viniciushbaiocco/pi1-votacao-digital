@@ -40,7 +40,7 @@ def listagem_eleitores():
         total_eleitores = cursor.fetchall()
 
         if len(total_eleitores) == 0:
-            console.print('\n Nenhum eleitor cadastrado no sistema.', style="bold yellow")
+            console.print('\nNenhum eleitor cadastrado no sistema.', style="bold yellow")
         else:
             tabela = Table(
                 title="Listagem de Eleitores",

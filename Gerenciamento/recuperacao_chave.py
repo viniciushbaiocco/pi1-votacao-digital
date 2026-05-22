@@ -42,25 +42,31 @@ def recuperar_chave():
 
     cpf = ge.input_cancelavel("Digite seu CPF", "RECUPERAÇÃO DE CHAVE DE ACESSO")
     if cpf is None:
+        limpar_tela()
         cursor.close()
         conexao.close()
         return
 
     while not val_cpf.validacao_de_cpf(cpf):
+        limpar_tela()
         cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "RECUPERAÇÃO DE CHAVE DE ACESSO")
         if cpf is None:
+            limpar_tela()
             cursor.close()
             conexao.close()
             return
 
+    limpar_tela()
     titulo = ge.input_cancelavel("Digite seu Título de Eleitor", "RECUPERAÇÃO DE CHAVE DE ACESSO")
     if titulo is None:
+        limpar_tela()
         cursor.close()
         conexao.close()
         return
     titulo = titulo.strip()
 
     while not val_tit.validar_titulo(titulo):
+        limpar_tela()
         titulo = ge.input_cancelavel("Título inválido. Digite novamente", "RECUPERAÇÃO DE CHAVE DE ACESSO")
         if titulo is None:
             cursor.close()
@@ -78,6 +84,7 @@ def recuperar_chave():
     conexao.close()
 
     if eleitor is None:
+        limpar_tela()
         console.print(Panel(
             Align.center("[bold red]Eleitor não encontrado.[/bold red]\n[bold yellow]Verifique o CPF e Título informados.[/bold yellow]"),
             title="[bold bright_white]RECUPERAÇÃO DE CHAVE[/bold bright_white]",
@@ -89,6 +96,7 @@ def recuperar_chave():
         return
 
     if eleitor['palavra_chave'] is None:
+        limpar_tela()
         console.print(Panel(
             Align.center("[bold yellow]Este eleitor não possui palavra-chave de backup cadastrada.[/bold yellow]"),
             title="[bold bright_white]RECUPERAÇÃO DE CHAVE[/bold bright_white]",
@@ -99,12 +107,15 @@ def recuperar_chave():
         confirmacao.confirmacao()
         return
 
+    limpar_tela()
     palavra = ge.input_cancelavel("Digite sua palavra-chave de backup", "PALAVRA-CHAVE DE BACKUP")
     if palavra is None:
+        limpar_tela()
         return
     palavra = palavra.upper()
 
     while not val_palavra.validacao_palavra_chave(palavra):
+        limpar_tela()
         palavra = ge.input_cancelavel("Palavra inválida. Digite novamente", "PALAVRA-CHAVE DE BACKUP")
         if palavra is None:
             return
@@ -113,6 +124,7 @@ def recuperar_chave():
     palavra_criptografada = cripto.criptografar_palavra_chave(palavra)
 
     if palavra_criptografada != eleitor['palavra_chave']:
+        limpar_tela()
         console.print(Panel(
             Align.center("[bold red]Palavra-chave incorreta. Acesso negado.[/bold red]"),
             title="[bold bright_white]RECUPERAÇÃO DE CHAVE[/bold bright_white]",
@@ -123,6 +135,7 @@ def recuperar_chave():
         confirmacao.confirmacao()
         return
 
+    limpar_tela()
     chave_original = cripto.descriptografar_chave_acesso(eleitor['chave_acesso'])
     console.print(Panel(
         Align.center(f"[bold green]Chave de acesso recuperada com sucesso![/bold green]\n\n[bold yellow]{chave_original}[/bold yellow]"),

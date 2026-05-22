@@ -208,6 +208,7 @@ def edicao_eleitores():
                             sleep(1.5)
                             continue
                         while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
+                            limpar_tela()
                             novo_titulo = ge.input_cancelavel("Título já cadastrado. Digite novamente", "EDITAR TÍTULO")
                             if novo_titulo is None:
                                 limpar_tela()
@@ -238,6 +239,7 @@ def edicao_eleitores():
                             continue
                         novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
                         if novo_cpf_criptografado == eleitor['cpf']:
+                            limpar_tela()
                             console.print("CPF igual ao atual. Nenhuma alteração feita.", style="bold yellow")
                             limpar_tela()
                             sleep(1.5)

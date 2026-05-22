@@ -39,7 +39,7 @@ def listagem_candidatos():
         total_candidatos = cursor.fetchall()
 
         if len(total_candidatos) == 0:
-            console.print('\n Nenhum candidato cadastrado no sistema.', style="bold yellow")
+            console.print('\nNenhum candidato cadastrado no sistema.', style="bold yellow")
         else:
             tabela = Table(
                 title="Listagem de Candidatos",
@@ -66,7 +66,7 @@ def listagem_candidatos():
                 )
 
             console.print(Align.center(tabela))
-            console.print(f'\n Total de Candidatos Cadastrados: [bold white]{len(total_candidatos)}[/bold white]')
+            console.print(f'\nTotal de Candidatos Cadastrados: [bold white]{len(total_candidatos)}[/bold white]')
 
     except Exception as erro:
         console.print(f'\n Erro ao listar candidatos: {erro}', style="bold red")

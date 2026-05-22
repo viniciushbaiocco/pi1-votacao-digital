@@ -111,7 +111,9 @@ def remocao_eleitores():
                 cursor.execute('SELECT * FROM eleitores WHERE cpf = %s', (cpf_criptografado,))
                 eleitor = cursor.fetchone()
                 if eleitor is None:
+                    limpar_tela()
                     console.print("\nEleitor não cadastrado.", style="bold yellow")
+                    input("\nPressione Enter para continuar inserir novamente...")
 
             case 2:
                 limpar_tela()
@@ -128,7 +130,9 @@ def remocao_eleitores():
                 cursor.execute('SELECT * FROM eleitores WHERE titulo_eleitor = %s', (titulo_eleitor,))
                 eleitor = cursor.fetchone()
                 if eleitor is None:
+                    limpar_tela()
                     console.print("\nEleitor não cadastrado.", style="bold yellow")
+                    input("\nPressione Enter para continuar inserir novamente...")
 
         if eleitor is not None:
             limpar_tela()
@@ -143,12 +147,14 @@ def remocao_eleitores():
             confirmacao = ge.obter_entrada_inteira_valida("Opção escolhida: ", 1, 2)
 
             if confirmacao == 1:
+                limpar_tela()
                 cursor.execute('DELETE FROM eleitores WHERE id = %s', (eleitor['id'],))
                 conexao.commit()
                 console.print("\nEleitor removido com sucesso.", style="bold green")
                 conf.confirmacao()
                 break
             else:
+                limpar_tela()
                 console.print("\nRemoção cancelada pelo usuário.", style="bold yellow")
                 conf.confirmacao()
                 break

@@ -60,7 +60,7 @@ def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao, cp
         tabela.add_row(str(id_), nome, cpf, titulo_eleitor, mesario_texto, status_texto)
     else:
         tabela.add_row(str(id_), nome, titulo_eleitor, mesario_texto, status_texto)
-    console.print(tabela)
+    console.print(Align.center(tabela))
 
 def busca_eleitor():
     """
@@ -107,14 +107,19 @@ def busca_eleitor():
     while opcao == 1 or opcao == 2:
 
         if opcao == 1:
+            limpar_tela()
             cpf = ge.input_cancelavel("Digite o CPF do eleitor", "BUSCA POR CPF")
             if cpf is None:
+                limpar_tela()
                 break
             while not val_cpf.validacao_de_cpf(cpf):
+                limpar_tela()
                 cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "BUSCA POR CPF")
                 if cpf is None:
+                    limpar_tela()
                     break
             if cpf is None:
+                limpar_tela()
                 break
 
             cpf_criptografado = cripto.criptografar_cpf(cpf)
@@ -124,19 +129,26 @@ def busca_eleitor():
                     (cpf_criptografado,)
                 )
                 e = cursor.fetchone()
+                limpar_tela()
                 exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'], cpf=cpf)
             else:
+                limpar_tela()
                 console.print("\n*** Eleitor não cadastrado! ***\nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
 
         if opcao == 2:
+            limpar_tela()
             titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor", "BUSCA POR TÍTULO")
             if titulo_eleitor is None:
+                limpar_tela()
                 break
             while not val_titulo.validar_titulo(titulo_eleitor):
+                limpar_tela()
                 titulo_eleitor = ge.input_cancelavel("Título inválido. Digite novamente", "BUSCA POR TÍTULO")
                 if titulo_eleitor is None:
+                    limpar_tela()
                     break
             if titulo_eleitor is None:
+                limpar_tela()
                 break
 
             if ver_titulo.verificar_titulo_de_eleitor_banco(titulo_eleitor)[0] == 1:
@@ -145,8 +157,10 @@ def busca_eleitor():
                     (titulo_eleitor,)
                 )
                 e = cursor.fetchone()
+                limpar_tela()
                 exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'])
             else:
+                limpar_tela()
                 console.print("*** Eleitor não cadastrado! ***\nRealizar o cadastramento no Menu Gerenciamento de Eleitores.\n", style="bold yellow")
         break
 
