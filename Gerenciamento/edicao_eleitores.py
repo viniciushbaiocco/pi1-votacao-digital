@@ -9,7 +9,7 @@ from rich.table import Table
 from rich.panel import Panel
 from rich.align import Align
 from rich import box
-from Visual.visual import limpar_tela
+from Visual.visual import limpar_tela, carregar_pontos_loop
 from time import sleep
 
 console = Console(highlight=False)
@@ -101,6 +101,7 @@ def edicao_eleitores():
 
     match opcao:
         case 1:
+            limpar_tela()
             cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser editado", "EDITAR POR CPF")
             if cpf is None:
                 cursor.close(); conexao.close()
@@ -117,6 +118,7 @@ def edicao_eleitores():
             if ver_cpf.verificar_cpf_banco(crip.criptografar_cpf(cpf)) == (0,):
                 console.print("\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
         case 2:
+            limpar_tela()
             tit = ge.input_cancelavel("Digite o Título de Eleitor a ser editado", "EDITAR POR TÍTULO")
             if tit is None:
                 cursor.close(); conexao.close()
@@ -141,6 +143,7 @@ def edicao_eleitores():
     cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
     eleitor = cursor.fetchone()
 
+    limpar_tela()
     exibir_tabela_eleitor("Eleitor a Ser Editado", eleitor)
 
     conteudo_confirmar = (
@@ -153,6 +156,7 @@ def edicao_eleitores():
     editado = 0
     match opcao2:
         case 1:
+            limpar_tela()
             opcao_editar = 0
             while opcao_editar != 5:
                 conteudo_campos = (
@@ -167,37 +171,49 @@ def edicao_eleitores():
                 opcao_editar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 5)
                 match opcao_editar:
                     case 1:
+                        limpar_tela()
                         novo_nome = val_nome.validar_nome()
                         if novo_nome is None:
+                            limpar_tela()
                             continue
                         nova_chave_acesso = chave.geracao_chave_acesso(novo_nome)
+                        nova_chave_criptografada = crip.criptografar_chave_acesso(nova_chave_acesso)
                         editado = 1
                         cursor.execute('''
                         UPDATE eleitores SET nome = %s, chave_acesso = %s
                                             WHERE id = %s
-                        ''', (novo_nome, nova_chave_acesso, id_eleitor))
+                        ''', (novo_nome, nova_chave_criptografada, id_eleitor))
                         conexao.commit()
-                        console.print('[bold green]Nome Editado Com Sucesso![/bold green]')
-                        console.print(f'Sua Nova Chave de Acesso é: [bold yellow]{nova_chave_acesso}[/bold yellow]')
+                        console.print('[bold green]\nNome Editado Com Sucesso![/bold green]')
+                        console.print(f'\nNova Chave de Acesso é: [bold yellow]{nova_chave_acesso}[/bold yellow]')
+                        confirmacao.confirmacao()
+                        limpar_tela()
                     case 2:
+                        limpar_tela()
                         novo_titulo = ge.input_cancelavel("Novo Título de Eleitor", "EDITAR TÍTULO")
                         if novo_titulo is None:
+                            limpar_tela()
                             continue
                         while not val_tit.validar_titulo(novo_titulo):
                             novo_titulo = ge.input_cancelavel("Título inválido. Digite novamente", "EDITAR TÍTULO")
                             if novo_titulo is None:
+                                limpar_tela()
                                 break
                         if novo_titulo is None:
+                            limpar_tela()
                             continue
                         if novo_titulo == eleitor['titulo_eleitor']:
                             console.print("Título igual ao atual. Nenhuma alteração feita.", style="bold yellow")
+                            limpar_tela()
                             sleep(1.5)
                             continue
                         while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
                             novo_titulo = ge.input_cancelavel("Título já cadastrado. Digite novamente", "EDITAR TÍTULO")
                             if novo_titulo is None:
+                                limpar_tela()
                                 break
                         if novo_titulo is None:
+                            limpar_tela()
                             continue
                         editado = 1
                         cursor.execute('''
@@ -205,42 +221,55 @@ def edicao_eleitores():
                         ''', (novo_titulo, id_eleitor))
                         conexao.commit()
                         console.print("Título Editado Com Sucesso!", style="bold green")
+                        limpar_tela()
                     case 3:
+                        limpar_tela()
                         novo_cpf = ge.input_cancelavel("Novo CPF", "EDITAR CPF")
                         if novo_cpf is None:
+                            limpar_tela()
                             continue
                         while not val_cpf.validacao_de_cpf(novo_cpf):
                             novo_cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "EDITAR CPF")
                             if novo_cpf is None:
+                                limpar_tela()
                                 break
                         if novo_cpf is None:
+                            limpar_tela()
                             continue
                         novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
                         if novo_cpf_criptografado == eleitor['cpf']:
                             console.print("CPF igual ao atual. Nenhuma alteração feita.", style="bold yellow")
+                            limpar_tela()
                             sleep(1.5)
                             continue
                         while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
                             novo_cpf = ge.input_cancelavel("CPF já cadastrado. Digite novamente", "EDITAR CPF")
                             if novo_cpf is None:
+                                limpar_tela()
                                 break
                             novo_cpf_criptografado = crip.criptografar_cpf(novo_cpf)
                         if novo_cpf is None:
+                            limpar_tela()
                             continue
+
                         editado = 1
                         cursor.execute('''
                         UPDATE eleitores SET cpf = %s WHERE id = %s
                         ''', (novo_cpf_criptografado, id_eleitor))
                         conexao.commit()
                         console.print("CPF Editado Com Sucesso!", style="bold green")
+                        limpar_tela()
                     case 4:
+                        limpar_tela()
                         novo_mesario = ge.input_cancelavel('\nMesário: \n 1 - SIM \n 2 - NÃO')
 
                         if novo_mesario is None:
+                            limpar_tela()
                             continue
 
                         elif novo_mesario == 2:
                             novo_mesario = 0
+                            limpar_tela()
 
                         editado = 1
                         cursor.execute('''
@@ -248,13 +277,15 @@ def edicao_eleitores():
                         ''', (novo_mesario, id_eleitor))
                         conexao.commit()
                         console.print("Mesário Editado Com Sucesso!", style="bold green")
+                        limpar_tela()
                     case 5:
+                        limpar_tela()
                         if editado == 1:
                             cursor.execute('SELECT * FROM eleitores WHERE id = %s', (id_eleitor,))
                             eleitor = cursor.fetchone()
                             exibir_tabela_eleitor("Eleitor Após Edição", eleitor)
                         else:
-                            console.print("Encerrando Operação...", style="bold yellow")
+                            carregar_pontos_loop(3, "Encerrando Operação...")
                     case False:
                         break
 
