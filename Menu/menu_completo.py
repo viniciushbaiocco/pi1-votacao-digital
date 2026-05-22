@@ -95,7 +95,7 @@ def menu_completo():
                                 listagem_candidatos.listagem_candidatos()
                             case False:  # Voltar
                                 executando_menu_candidatos = 0
-                elif escolha_gerenciamento == False:  # Voltar
+                elif not escolha_gerenciamento:  # Voltar
                     executando_menu_gerenciamento = 0
 
         elif escolha_principal == 2:  # Votação
@@ -167,10 +167,10 @@ def menu_completo():
                                 geral.imprimir_ocorrencias_por_sessao()
                             case False:
                                 executando_menu_ocorrencias = 0  # Voltar
-                elif escolha_votacao == False:  # Voltar
+                elif not escolha_votacao:  # Voltar
                     executando_menu_votacao = 0
 
-        elif escolha_principal == False:  # Sair
+        elif not escolha_principal:  # Sair
             console.print("Sistema Finalizado", style="bold green")
             acesso_negado.excluir_ocorrencia_acesso_negado()
             abertura_urna.excluir_ocorrencia_abertura_urna()
