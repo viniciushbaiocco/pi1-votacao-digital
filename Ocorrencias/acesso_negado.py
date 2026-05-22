@@ -12,14 +12,21 @@ CAMINHO_ARQUIVO = os.path.join(PASTA_ARMAZENAMENTO, "Acesso_Negado.txt")
 
 
 def ocorrencia_acesso_negado(id_sessao):
-    '''
-    Cria o log de ocorrencia para acesso negado do mesário, e insere informações nele
+    """
+    Cria ou atualiza o log de ocorrência para tentativas falhas de validação de mesários.
+
+    A função abre o arquivo de log especificado em modo de anexação (append), captura
+    o carimbo de data e hora corrente do sistema (com resolução de segundos, limpando
+    os microssegundos) e grava uma nova linha de registro identificando um alerta de
+    falha de validação/autenticação para a sessão eleitoral fornecida.
 
     Args:
-        id_sessao (str): O ID único da sessão de urna atual.
+        id_sessao (str ou int): O identificador exclusivo da sessão de urna ativa
+        onde a falha de autenticação ocorreu.
 
-    Returns: None
-    '''
+    Returns:
+        None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.
+    """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
@@ -28,11 +35,22 @@ def ocorrencia_acesso_negado(id_sessao):
 
 def imprimir_ocorrencia_acesso_negado():
     """
-    Imprime o log de ocorrencia no terminal
+    Lê o arquivo de log e exibe todas as ocorrências de acesso negado no terminal.
 
-    Args: None
+    A rotina tenta abrir o arquivo mapeado para leitura de fluxo contínuo. Caso existam
+    registros salvos, renderiza o texto bruto no terminal. A flag `markup=False` assegura
+    que as marcações cronológicas estruturadas com colchetes não sofram parsing do
+    interpretador de tags do Rich.
 
-    Returns: None
+    Exceções de arquivo inexistente (FileNotFoundError) ou violações de IO/permissões
+    são devidamente capturadas de modo a exibir avisos coloridos na tela sem interromper
+    o script principal. Ambas as saídas pausam o terminal exigindo interação de confirmação.
+
+    Args:
+        None.
+
+    Returns:
+        None: A função atua apenas na leitura de arquivos locais e saídas visuais na CLI.
     """
     try:
         with open(CAMINHO_ARQUIVO, "r", encoding="utf-8") as arq:
@@ -49,11 +67,17 @@ def imprimir_ocorrencia_acesso_negado():
 
 def excluir_ocorrencia_acesso_negado():
     """
-    Exclui o log de ocorrencia de acesso negado
+    Remove permanentemente o arquivo físico de log de acessos negados armazenado em disco.
 
-    Args: None
+    Realiza uma checagem condicional prévia via módulo `os.path` para validar se o
+    recurso referenciado por `CAMINHO_ARQUIVO` reside no diretório especificado,
+    prevenindo que o interpretador dispare interrupções de IO não tratadas.
 
-    Returns: None
+    Args:
+        None.
+
+    Returns:
+        None: A função executa unicamente a remoção física do arquivo em disco.
     """
     if os.path.exists(CAMINHO_ARQUIVO):
         os.remove(CAMINHO_ARQUIVO)

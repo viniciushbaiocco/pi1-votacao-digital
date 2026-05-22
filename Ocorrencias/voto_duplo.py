@@ -13,13 +13,19 @@ CAMINHO_ARQUIVO = os.path.join(PASTA_ARMAZENAMENTO, "Voto_Duplo.txt")
 
 def ocorrencia_voto_duplo(id_sessao: str):
     """
-    Cria o arquivo que armazena os logs de voto duplo e insere os logs nele.
+    Cria ou atualiza o log em disco para registrar tentativas ilegais de voto duplo.
+
+    A função abre o arquivo de logs especificado em modo de anexo (append), captura
+    o carimbo de data e hora atual do sistema (removendo os microssegundos) e grava
+    uma nova entrada de alerta crítico sempre que um eleitor já autenticado tentar
+    votar novamente na sessão eleitoral ativa.
 
     Args:
-        id_sessao (str): O ID único da sessão de urna atual.
+        id_sessao (str): O identificador exclusivo da sessão de urna ativa onde
+        a tentativa de fraude foi detectada.
 
     Returns:
-        None
+        None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
@@ -29,13 +35,22 @@ def ocorrencia_voto_duplo(id_sessao: str):
 
 def imprimir_voto_duplo():
     """
-    Faz a leitura do arquivo de voto duplo caso houver.
+    Lê o arquivo de log e exibe todos os alertas de voto duplo registrados no terminal.
+
+    A função tenta abrir o arquivo mapeado para leitura de fluxo contínuo. Se houver
+    registros salvos, o conteúdo textual é impresso no console. A flag `markup=False`
+    no `console.print` impede que os colchetes dos metadados de tempo sejam
+    processados como formatação visual do Rich.
+
+    Erros de arquivos não encontrados (FileNotFoundError) ou falhas gerais de leitura
+    são tratados por blocos de exceção dedicados para emitir avisos claros ao usuário.
+    Todas as saídas forçam uma pausa na tela aguardando confirmação.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função manipula fluxos de leitura e saídas visuais no terminal.
     """
     try:
         with open(CAMINHO_ARQUIVO, "r", encoding="utf-8") as arq:
@@ -52,13 +67,17 @@ def imprimir_voto_duplo():
 
 def excluir_arquivo_voto_duplo():
     """
-    Exclui o arquivo de voto duplo caso houver.
+    Remove permanentemente do disco o arquivo físico contendo os logs de voto duplo.
+
+    A rotina realiza uma validação de existência preventiva via `os.path.exists` para
+    evitar falhas ou interrupções abruptas no script caso o arquivo mapeado em
+    `CAMINHO_ARQUIVO` já tenha sido deletado ou não tenha sido criado.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função executa unicamente a remoção física do arquivo em disco.
     """
     if os.path.exists(CAMINHO_ARQUIVO):
         os.remove(CAMINHO_ARQUIVO)

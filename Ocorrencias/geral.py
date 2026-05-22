@@ -12,14 +12,19 @@ CAMINHO_ARQUIVO = os.path.join(PASTA_ARMAZENAMENTO, "Geral.txt")
 
 
 def ocorrencia_abertura_urna(id_sessao):
-    '''
-    Cria o log de ocorrencia para abertura de urna após Zerézima, e insere informações nele
+    """
+    Cria ou atualiza o log de ocorrência para a abertura de urna após a Zerésima.
+
+    A função abre o arquivo de logs configurado em modo de anexo (append), captura
+    o carimbo de data e hora atual do sistema (removendo os microssegundos) e insere
+    uma linha registrando o início oficial da votação para a sessão informada.
 
     Args:
-        id_sessao (str): O ID único da sessão de urna atual.
+        id_sessao (str ou int): O ID único ou número da sessão de urna atual.
 
-    Returns: None
-    '''
+    Returns:
+        None: A função realiza apenas escrita em arquivo físico (I/O).
+    """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
@@ -27,14 +32,18 @@ def ocorrencia_abertura_urna(id_sessao):
 
 
 def ocorrencia_acesso_negado(id_sessao):
-    '''
-    Cria o log de ocorrencia para acesso negado do mesário, e insere informações nele
+    """
+    Cria ou atualiza o log de ocorrência para tentativas falhas de validação de mesários.
+
+    Grava um registro de alerta em modo anexo (append) indicando que uma validação
+    ou credencial de mesário foi rejeitada pelo sistema na sessão eleitoral ativa.
 
     Args:
-        id_sessao (str): O ID único da sessão de urna atual.
+        id_sessao (str ou int): O ID único ou número da sessão de urna atual.
 
-    Returns: None
-    '''
+    Returns:
+        None: A função realiza apenas escrita em arquivo físico (I/O).
+    """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
@@ -42,14 +51,18 @@ def ocorrencia_acesso_negado(id_sessao):
 
 
 def ocorrencia_encerramento_urna(id_sessao):
-    '''
-    Cria o log de ocorrencia para encerramento de urna.
+    """
+    Cria ou atualiza o log de ocorrência para o encerramento das atividades da urna.
+
+    Registra de forma persistente o encerramento do ciclo de votação de uma sessão específica,
+    marcando o fechamento e consolidando o estado dos votos computados.
 
     Args:
-        id_sessao (str): O ID único da sessão de urna atual.
+        id_sessao (str ou int): O ID único ou número da sessão de urna atual.
 
-    Returns: None
-    '''
+    Returns:
+        None: A função realiza apenas escrita em arquivo físico (I/O).
+    """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
         sem_milisegundos = agora.replace(microsecond=0)
@@ -58,13 +71,16 @@ def ocorrencia_encerramento_urna(id_sessao):
 
 def ocorrencia_voto_computado(id_sessao):
     """
-    Cria o arquivo que armazena os logs de voto computado e insere os logs nele.
+    Cria ou atualiza o log em disco para registrar que um voto foi armazenado com sucesso.
+
+    Insere uma entrada cronológica indicando a computação bem-sucedida de um voto regular
+    dentro da sessão eleitoral correspondente, mantendo o anonimato do eleitor.
 
     Args:
-        id_sessao (str): O ID único da sessão de urna atual.
+        id_sessao (str ou int): O ID único ou número da sessão de urna atual.
 
     Returns:
-        None
+        None: A função realiza apenas escrita em arquivo físico (I/O).
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
@@ -74,13 +90,17 @@ def ocorrencia_voto_computado(id_sessao):
 
 def ocorrencia_voto_duplo(id_sessao):
     """
-    Cria o arquivo que armazena os logs de voto duplo e insere os logs nele.
+    Registra uma ocorrência de alerta crítico para uma tentativa de voto duplo.
+
+    Esta função atua diretamente no log de auditoria de segurança da urna, salvando um
+    aviso com data, hora e sessão sempre que um eleitor que já votou tentar realizar
+    uma nova autenticação ou inserção de voto.
 
     Args:
-        id_sessao (str): O ID único da sessão de urna atual.
+        id_sessao (str ou int): O ID único ou número da sessão de urna atual.
 
     Returns:
-        None
+        None: A função realiza apenas escrita em arquivo físico (I/O).
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
@@ -90,7 +110,21 @@ def ocorrencia_voto_duplo(id_sessao):
 
 def imprimir_ocorrencias_por_sessao():
     """
-    Lê o arquivo de logs e imprime as ocorrências agrupadas por sessão.
+    Lê o arquivo de logs e imprime em lote todas as ocorrências gravadas por sessão.
+
+    A função abre o arquivo em formato de leitura e exibe  o histórico unificado de
+    auditoria da urna. Utiliza `markup=False` na impressão do Rich para neutralizar
+    os colchetes de estruturação dos metadados dos logs (ex: `[SESSÃO: X]`), assegurando a
+    exibição das mensagens.
+
+    Trata de forma segura cenários de arquivos inexistentes ou falhas de permissão de I/O
+    exibindo alertas estilizados e pausando a tela para controle do terminal.
+
+    Args:
+        None.
+
+    Returns:
+        None: A função manipula fluxos de leitura e saídas no terminal.
     """
     try:
         with open(CAMINHO_ARQUIVO, "r", encoding="utf-8") as arq:
@@ -107,13 +141,16 @@ def imprimir_ocorrencias_por_sessao():
 
 def excluir_arquivo_ocorrencias_gerais():
     """
-    Exclui o arquivo de ocorrências gerais caso houver.
+    Remove permanentemente o arquivo de log de ocorrências gerais armazenado em disco.
+
+    Efetua uma validação lógica de existência via módulo `os.path` antes de disparar o
+    comando de exclusão física, blindando o ecossistema contra exceções de falta de recurso.
 
     Args:
-        None
+        None.
 
     Returns:
-        None
+        None: A função realiza unicamente a remoção do arquivo físico em disco.
     """
     if os.path.exists(CAMINHO_ARQUIVO):
         os.remove(CAMINHO_ARQUIVO)
