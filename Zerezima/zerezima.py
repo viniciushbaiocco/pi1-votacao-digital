@@ -8,6 +8,29 @@ from rich import box
 console = Console(highlight=False)
 
 def zerezima():
+      """
+      Executa o procedimento de Zerésima para inicialização segura da urna eletrônica.
+
+      Esta função realiza a auditoria e o reset completo do sistema eleitoral antes
+      do início da votação, garantindo a lisura do pleito através de duas etapas críticas:
+
+      1. Executa um comando `TRUNCATE` na tabela de votos para eliminar permanentemente
+      qualquer registro residual e redefinir os contadores de chaves primárias.
+      2. Executa um comando `UPDATE` na tabela de eleitores, resetando o campo
+      `status_votacao` para 0 (Não Votou), deixando todos aptos para o pleito.
+
+      Após consolidar as alterações com o `commit`, a função realiza uma consulta relacional
+      (`LEFT JOIN` agrupado) para gerar e exibir uma tabela centralizada via Rich, provando
+      visualmente ao mesário e aos fiscais que todos os candidatos cadastrados iniciam a
+      sessão com exatamente zero votos computados.
+
+      Args:
+            None.
+
+      Returns:
+            None: A função modifica dados estruturais no banco e exibe o relatório de zeramento
+            diretamente no console, aguardando uma interação de teclado para encerrar.
+      """
       limpar_tela()
 
       conexao = cb.conexao_banco()
