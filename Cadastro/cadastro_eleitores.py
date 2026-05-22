@@ -95,10 +95,10 @@ def cadastrar_eleitor():
     exibir_progresso()
     cpf = ge.input_cancelavel("Digite o CPF do eleitor", "CPF")
     if cpf is None:
-        return
+        return None
 
     cpf_valido = validacao_cpf.validacao_de_cpf(cpf)
-    while cpf_valido == False:
+    while not cpf_valido:
         limpar_tela()
         exibir_progresso()
         cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "CPF")
@@ -106,7 +106,7 @@ def cadastrar_eleitor():
             break
         cpf_valido = validacao_cpf.validacao_de_cpf(cpf)
     if cpf is None:
-        return
+        return None
 
     cpf_criptografado = cripto.criptografar_cpf(cpf)
     cpf_no_banco = verificacao_cpf_banco.verificar_cpf_banco(cpf_criptografado)
@@ -119,13 +119,13 @@ def cadastrar_eleitor():
     exibir_progresso(cpf=cpf)
     nome = validacao_nome.validar_nome()
     if nome is None:
-        return
+        return None
 
     limpar_tela()
     exibir_progresso(cpf=cpf, nome=nome)
     titulo = ge.input_cancelavel("Digite o Título de Eleitor", "TÍTULO DE ELEITOR")
     if titulo is None:
-        return
+        return None
     titulo = ''.join(filter(str.isdigit, titulo))
 
     titulo_valido = validacao_titulo.validar_titulo(titulo)
@@ -140,7 +140,7 @@ def cadastrar_eleitor():
         titulo_valido = validacao_titulo.validar_titulo(titulo)
         titulo_no_banco = verificacao_titulo_banco.verificar_titulo_de_eleitor_banco(titulo)
     if titulo is None:
-        return
+        return None
 
     limpar_tela()
     exibir_progresso(cpf=cpf, nome=nome, titulo=titulo)

@@ -1,14 +1,15 @@
-from Verificadores import verificacao_candidato_banco
-from Validadores import confirmacao, validacao_nome, validacao_candidato, validacao_partido
-from database import conexao_banco
-from Visual.visual import limpar_tela
-from Validadores import gerenciador_de_entrada as ge
+from time import sleep
+
+from rich import box
+from rich.align import Align
 from rich.console import Console
 from rich.table import Table
-from rich.panel import Panel
-from rich.align import Align
-from rich import box
-from time import sleep
+
+from Validadores import confirmacao, validacao_nome, validacao_candidato, validacao_partido
+from Validadores import gerenciador_de_entrada as ge
+from Verificadores import verificacao_candidato_banco
+from Visual.visual import limpar_tela
+from database import conexao_banco
 
 console = Console(highlight=False)
 
@@ -72,26 +73,26 @@ def cadastrar_candidato():
     exibir_progresso()
     nome = validacao_nome.validar_nome()
     if nome is None:
-        return
+        return None
 
     limpar_tela()
     exibir_progresso(nome=nome)
     partido = ge.input_cancelavel("Digite o nome do Partido", "PARTIDO")
     if partido is None:
-        return
+        return None
 
     while not validacao_partido.validacao_partido(partido):
         limpar_tela()
         exibir_progresso(nome=nome)
         partido = ge.input_cancelavel("Partido inválido. Digite novamente", "PARTIDO")
         if partido is None:
-            return
+            return None
 
     limpar_tela()
     exibir_progresso(nome=nome, partido=partido)
     sigla = ge.input_cancelavel("Digite a Sigla do Partido (2 a 6 letras)", "SIGLA DO PARTIDO")
     if sigla is None:
-        return
+        return None
     sigla = sigla.upper()
 
     while not validacao_candidato.validacao_sigla_partido(sigla):
@@ -99,31 +100,31 @@ def cadastrar_candidato():
         exibir_progresso(nome=nome, partido=partido)
         sigla = ge.input_cancelavel("Sigla inválida. Digite novamente", "SIGLA DO PARTIDO")
         if sigla is None:
-            return
+            return None
         sigla = sigla.upper()
 
     limpar_tela()
     exibir_progresso(nome=nome, partido=partido, sigla=sigla)
     numero = ge.input_cancelavel("Digite o Número de Votação (2 dígitos)", "NÚMERO DE VOTAÇÃO")
     if numero is None:
-        return
+        return None
 
     while not validacao_candidato.validacao_numero_votacao(numero):
         limpar_tela()
         exibir_progresso(nome=nome, partido=partido, sigla=sigla)
         numero = ge.input_cancelavel("Número inválido. Digite novamente", "NÚMERO DE VOTAÇÃO")
         if numero is None:
-            return
+            return None
 
     if numero == '00':
         console.print("\nNúmero 00 é reservado para votos nulos e não pode ser cadastrado.", style="bold red")
         sleep(1.5)
         confirmacao.confirmacao()
-        return
+        return None
 
     if not verificacao_candidato_banco.verificar_candidato(partido, sigla, numero):
         confirmacao.confirmacao()
-        return
+        return None
 
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor(dictionary=True)
