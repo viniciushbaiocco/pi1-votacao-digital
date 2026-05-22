@@ -7,7 +7,7 @@ from rich import box
 
 console = Console(highlight=False)
 
-def zerezima():
+def zeresima():
       """
       Executa o procedimento de Zerésima para inicialização segura da urna eletrônica.
 
