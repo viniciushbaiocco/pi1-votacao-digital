@@ -91,7 +91,7 @@ def remocao_eleitores():
     if opcao == False:
         return False
 
-    while opcao != 3:
+    while opcao == 1 or opcao == 2:
         eleitor = None
 
         match opcao:

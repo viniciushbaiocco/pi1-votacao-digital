@@ -104,7 +104,7 @@ def busca_eleitor():
     if opcao == False:
         return False
 
-    while opcao != 3:
+    while opcao == 1 or opcao == 2:
 
         if opcao == 1:
             cpf = ge.input_cancelavel("Digite o CPF do eleitor", "BUSCA POR CPF")

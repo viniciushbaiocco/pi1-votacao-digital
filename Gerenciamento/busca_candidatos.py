@@ -97,7 +97,7 @@ def busca_candidato():
         conexao.close()
         return
 
-    while opcao != 3:
+    while opcao == 1 or opcao == 2:
 
         if opcao == 1:
             numero = ge.input_cancelavel("Digite o Número de Votação", "BUSCA POR NÚMERO")
