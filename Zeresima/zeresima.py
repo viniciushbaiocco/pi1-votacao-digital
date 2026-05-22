@@ -1,5 +1,5 @@
 from database import conexao_banco as cb
-from Visual.visual import limpar_tela
+from Visual.visual import limpar_tela, carregar_pontos_loop
 from rich.console import Console
 from rich.table import Table
 from rich.align import Align
@@ -37,19 +37,19 @@ def zeresima():
       conexao = cb.conexao_banco()
       cursor = conexao.cursor()
 
-      console.print("\n[bold bright_white]Iniciando zerézima...[/bold bright_white]")
+      carregar_pontos_loop(3, "Iniciando Zerésima")
 
       truncar_votos = "TRUNCATE votos;"
       cursor.execute(truncar_votos)
       conexao.commit()
-      console.print("[bold yellow]Eliminando todos os votos registrados na tabela 'Votos'...[/bold yellow]")
+      carregar_pontos_loop(2, "\nEliminando todos os votos registrados na tabela 'Votos'")
 
       resetar_status_eleitores = "UPDATE eleitores SET status_votacao = 0;"
       cursor.execute(resetar_status_eleitores)
       conexao.commit()
-      console.print("[bold yellow]Atualizando status de votação de eleitores para 'Não'...[/bold yellow]")
+      carregar_pontos_loop(2, "\nAtualizando status de votação de eleitores para 'Não'")
 
-      console.print("\n[bold green]Zerézima finalizada![/bold green]\n")
+      console.print("\n[bold green]\nZerésima finalizada![/bold green]\n")
 
       buscar_candidatos = "SELECT candidatos.nome, candidatos.sigla_partido, COUNT(votos.id) AS total_votos FROM candidatos LEFT JOIN votos ON candidatos.id = votos.id_candidato GROUP BY candidatos.id;"
       cursor.execute(buscar_candidatos)
@@ -58,9 +58,9 @@ def zeresima():
       tabela = Table(
             title="Candidatos — Votos Zerados",
             box=box.DOUBLE,
-            border_style="bold chartreuse1",
+            border_style="bold sandy_brown",
             title_style="bold bright_white",
-            header_style="bold chartreuse1",
+            header_style="bold sandy_brown",
             show_lines=True
       )
       tabela.add_column("Candidato", style="bright_white")
