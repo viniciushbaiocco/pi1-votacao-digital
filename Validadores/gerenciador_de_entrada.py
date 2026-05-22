@@ -57,7 +57,6 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
             try:
                 escolha = int(entrada_str)
                 if min_val <= escolha <= max_val:
-                    executando_entrada = 1
                     return escolha
                 elif min_val == max_val:
                     console.print("Erro: Opção inválida. Por favor, escolha dentre as opções mostradas.", style="bold red")

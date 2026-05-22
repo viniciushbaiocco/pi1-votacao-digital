@@ -41,7 +41,6 @@ def validacao_voto():
                 sleep(1.5)
                 limpar_tela()
             else:
-                executando_entrada = 1
                 return voto
         except ValueError:
             console.print('Erro: Entrada inválida. Por favor, digite um número inteiro.', style="bold red")
