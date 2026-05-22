@@ -64,3 +64,4 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
                     console.print(f"Erro: Opção inválida. Por favor, escolha uma opção entre {min_val} e {max_val}.", style="bold red")
             except ValueError:
                 console.print("Erro: Entrada inválida. Por favor, digite um número inteiro ou digite 'X' para retornar.", style="bold red")
+    return None

@@ -47,7 +47,7 @@ def validar_nome():
             else:
                 nome_letras = False
 
-        if nome_letras == False:
+        if not nome_letras:
             console.print("O nome não pode ser espaço vazio e deve conter apenas letras!", style="bold yellow")
             sleep(1.5)
             limpar_tela()
