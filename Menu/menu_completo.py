@@ -4,7 +4,7 @@ from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores,
 from Gerenciamento import busca_candidatos, edicao_candidatos, listagem_candidatos, remocao_candidatos
 from Cadastro import cadastro_eleitores, cadastro_candidatos
 from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna, geral
-from Votacao import abertura_votacao, sistema_voto, enceramento_votacao
+from Votacao import abertura_votacao, encerramento_votacao, sistema_voto
 from rich.console import Console
 from Resultados import boletim_urna, estatistica_comparecimento, votos_partido, validacao_integridade
 from Visual.visual import limpar_tela
@@ -118,7 +118,7 @@ def menu_completo():
                                 case 1:
                                     sistema_voto.sistema_voto(sessao)
                                 case 2:
-                                    if enceramento_votacao.encerrar_sistema_votacao(sessao):
+                                    if encerramento_votacao.encerrar_sistema_votacao(sessao):
                                         executando_menu_sistema_votacao = 0
 
                 elif escolha_votacao == 2:  # Resultados Da Votação

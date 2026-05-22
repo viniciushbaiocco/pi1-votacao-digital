@@ -29,8 +29,8 @@ def ocorrencia_abertura_urna(id_sessao):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
 def imprimir_ocorrencia_abertura_urna():

@@ -29,8 +29,8 @@ def ocorrencia_voto_duplo(id_sessao: str):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Tentativa de Voto Duplo")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ALERTA: Tentativa de Voto Duplo")
 
 
 def imprimir_voto_duplo():

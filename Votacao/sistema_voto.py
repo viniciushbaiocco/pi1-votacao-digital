@@ -9,7 +9,7 @@ from Verificadores import verificacao_chave_acesso_banco as ver_chave
 from Validadores import validacao_cpf_votacao as val_cpf_vot, validacao_chave_acesso as val_chave, confirmacao
 from Validadores import validacao_titulo as val_tit
 from Verificadores import verificacao_titulo_banco as ver_tit
-from Votacao import protoco_votacao as prot_vot
+from Votacao import protocolo_votacao as prot_vot
 from datetime import datetime
 from Visual.visual import limpar_tela
 from rich.console import Console
@@ -250,13 +250,13 @@ def sistema_voto(id_sessao):
                 console.print(f"\n[bold bright_white]Seu protocolo de votação é: {protocolo}[/bold bright_white]")
                 confirmacao.confirmacao()
                 protocolo= crip.criptografar_protocolo(protocolo)
-                voto_computado.ocorrecia_voto_computado(id_sessao)
+                voto_computado.ocorrencia_voto_computado(id_sessao)
                 geral.ocorrencia_voto_computado(id_sessao)
                 data_hora= datetime.now()
-                sem_milissegundos= data_hora.replace(microsecond=0)
+                sem_milissegundosssegundos= data_hora.replace(microsecond=0)
 
                 query_voto = 'INSERT INTO votos (id_candidato, data_hora, protocolo_votacao) VALUES (%s, %s, %s)'
-                cursor.execute(query_voto, (id_candidato, sem_milissegundos, protocolo))
+                cursor.execute(query_voto, (id_candidato, sem_milissegundosssegundos, protocolo))
 
                 query = 'UPDATE eleitores SET status_votacao = %s WHERE chave_acesso = %s'
                 cursor.execute(query, (votou, chave_acesso))

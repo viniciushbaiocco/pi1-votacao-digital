@@ -41,7 +41,6 @@ def validacao_de_cpf(cpf_digitado_usuario):
         sleep(1.5)
         limpar_tela()
         return False
-    ''
     lista_1_DV = [10, 9, 8, 7, 6, 5, 4, 3, 2]
 
     soma_1_DV = 0

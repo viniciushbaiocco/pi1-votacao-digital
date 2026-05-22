@@ -11,7 +11,7 @@ os.makedirs(PASTA_ARMAZENAMENTO, exist_ok=True)
 CAMINHO_ARQUIVO = os.path.join(PASTA_ARMAZENAMENTO, "Voto_Computado.txt")
 
 
-def ocorrecia_voto_computado(id_sessao):
+def ocorrencia_voto_computado(id_sessao):
     """
     Cria ou atualiza o log em disco para registrar que um voto foi computado com sucesso.
 
@@ -28,8 +28,8 @@ def ocorrecia_voto_computado(id_sessao):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] Voto Computado!")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] Voto Computado!")
 
 
 def imprimir_voto_computado():

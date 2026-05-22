@@ -29,8 +29,8 @@ def ocorrencia_acesso_negado(id_sessao):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Validação do mesário negado")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ALERTA: Validação do mesário negado")
 
 
 def imprimir_ocorrencia_acesso_negado():

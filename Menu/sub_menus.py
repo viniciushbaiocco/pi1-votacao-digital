@@ -203,7 +203,7 @@ def exibir_menu_sistema_votacao():
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]SISTEMA DE VOTAÇÃO[/bold bright_white]", border_style="bold chartreuse1", box=box.DOUBLE, padding=(1, 4)))
 
 
-def exibir_menu_restultados_votacao():
+def exibir_menu_resultados_votacao():
     """
     Renderiza a interface gráfica do Menu de Relatórios de Fechamento e Auditoria.
 

@@ -27,8 +27,8 @@ def ocorrencia_abertura_urna(id_sessao):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
 def ocorrencia_acesso_negado(id_sessao):
@@ -46,8 +46,8 @@ def ocorrencia_acesso_negado(id_sessao):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Validação do mesário negado")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ALERTA: Validação do mesário negado")
 
 
 def ocorrencia_encerramento_urna(id_sessao):
@@ -65,8 +65,8 @@ def ocorrencia_encerramento_urna(id_sessao):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
 
 
 def ocorrencia_voto_computado(id_sessao):
@@ -84,8 +84,8 @@ def ocorrencia_voto_computado(id_sessao):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] Voto Computado!")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] Voto Computado!")
 
 
 def ocorrencia_voto_duplo(id_sessao):
@@ -104,8 +104,8 @@ def ocorrencia_voto_duplo(id_sessao):
     """
     with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
         agora = datetime.now()
-        sem_milisegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milisegundos}] ALERTA: Tentativa de Voto Duplo")
+        sem_milissegundos = agora.replace(microsecond=0)
+        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ALERTA: Tentativa de Voto Duplo")
 
 
 def imprimir_ocorrencias_por_sessao():
