@@ -230,9 +230,14 @@ def edicao_eleitores():
                         conexao.commit()
                         console.print("CPF Editado Com Sucesso!", style="bold green")
                     case 4:
-                        novo_mesario = ge.obter_entrada_inteira_valida('\nMesário: \n 1 - SIM \n 2 - NÃO \n Escolha: ', 1, 2)
-                        if novo_mesario == 2:
+                        novo_mesario = ge.input_cancelavel('\nMesário: \n 1 - SIM \n 2 - NÃO')
+
+                        if novo_mesario is None:
+                            continue
+
+                        elif novo_mesario == 2:
                             novo_mesario = 0
+
                         editado = 1
                         cursor.execute('''
                         UPDATE eleitores SET mesario = %s WHERE id = %s
