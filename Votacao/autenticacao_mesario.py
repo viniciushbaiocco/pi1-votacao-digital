@@ -172,6 +172,7 @@ def autenticar_mesario(id_sessao):
         if resultado == (1,):
             limpar_tela()
             exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, chave=chave_acesso, tentativa=tentativa)
+            limpar_tela()
             console.print("\n[bold green]Mesário validado com sucesso![/bold green]")
             input("\nPressione Enter para continuar...")
             return True
@@ -181,11 +182,13 @@ def autenticar_mesario(id_sessao):
         console.print("\n[bold red]Chave de acesso inválida. Acesso negado.[/bold red]")
 
         if tentativa < 3:
+            limpar_tela()
             console.print(f"[dim]Tentativas restantes: {3 - tentativa}[/dim]")
             titulo_painel = "[bold bright_white]RECUPERAR CHAVE DE ACESSO?[/bold bright_white]"
             borda_painel = "bold sandy_brown"
             aviso = ""
         else:
+            limpar_tela()
             titulo_painel = "[bold red]ÚLTIMA TENTATIVA ESGOTADA[/bold red]"
             borda_painel = "bold red"
             aviso = "[bold red]Esta foi sua última tentativa.[/bold red] O acesso está bloqueado.\nRecupere sua chave para tentar novamente na próxima sessão.\n\n"

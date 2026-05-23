@@ -44,19 +44,21 @@ def zeresima():
       cursor.execute(truncar_votos)
       conexao.commit()
 
-      carregar_pontos_loop(2, "\nEliminando todos os votos registrados na tabela 'Votos'")
+      carregar_pontos_loop(2, "Eliminando todos os votos registrados na tabela 'Votos'")
 
       resetar_status_eleitores = "UPDATE eleitores SET status_votacao = 0;"
       cursor.execute(resetar_status_eleitores)
       conexao.commit()
 
       limpar_tela()
-      carregar_pontos_loop(2, "\nAtualizando status de votação de eleitores para 'Não'")
+      carregar_pontos_loop(2, "Atualizando status de votação dos eleitores para 'Não'")
 
       limpar_tela()
-      console.print("\n[bold green]\nZerésima finalizada![/bold green]\n")
+      console.print("[bold green]Zerésima finalizada![/bold green]\n")
+      input("Pressione Enter para continuar...")
+      limpar_tela()
 
-      buscar_candidatos = "SELECT candidatos.nome, candidatos.sigla_partido, COUNT(votos.id) AS total_votos FROM candidatos LEFT JOIN votos ON candidatos.id = votos.id_candidato GROUP BY candidatos.id;"
+      buscar_candidatos = "SELECT candidatos.nome, candidatos.sigla_partido, COUNT(votos.id) AS total_votos FROM candidatos LEFT JOIN votos ON candidatos.id = votos.id_candidato GROUP BY candidatos.id ORDER BY candidatos.nome;"
       cursor.execute(buscar_candidatos)
       candidatos = cursor.fetchall()
 

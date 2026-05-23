@@ -183,10 +183,12 @@ def sistema_voto(id_sessao):
                 resultado = cursor.fetchone()
 
                 if resultado == {'COUNT(*)': 0}:
+                    limpar_tela()
                     console.print("\n[bold yellow]Número não cadastrado. Se confirmar, o voto será considerado nulo.[/bold yellow]")
                     voto_nulo_opcao = ge.obter_entrada_inteira_valida('\n1 - Confirmar voto nulo \n2 - Tentar novamente \nDigite uma opção: ', 1, 2)
                     match voto_nulo_opcao:
                         case 1:
+                            limpar_tela()
                             voto = 0
                             votou = 1
                             console.print('\n[bold green]Voto Computado![/bold green]')
@@ -197,6 +199,7 @@ def sistema_voto(id_sessao):
                         case 2:
                             pass
                 else:
+                    limpar_tela()
                     cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                     candidato = cursor.fetchone()
                     id_candidato = candidato['id']
@@ -217,6 +220,7 @@ def sistema_voto(id_sessao):
                     resultado = cursor.fetchone()
 
                     if resultado == {'COUNT(*)': 0}:
+                        limpar_tela()
                         console.print('\n[bold yellow]Você digitou um candidato inexistente novamente, o voto será considerado nulo.[/bold yellow]')
                         votou = 1
                         voto  = 0
@@ -226,6 +230,7 @@ def sistema_voto(id_sessao):
                         id_candidato = candidato['id']
                         console.print('\n[bold green]Voto Computado![/bold green]')
                     else:
+                        limpar_tela()
                         cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
                         candidato = cursor.fetchone()
                         id_candidato = candidato['id']
@@ -233,12 +238,14 @@ def sistema_voto(id_sessao):
                         opcao = ge.obter_entrada_inteira_valida('\nCerteza que deseja votar nesse candidato? \n 1 - Sim \n 2 - Não \nDigite uma opção: ', 1, 2)
                         match opcao:
                             case 1:
+                                limpar_tela()
                                 console.print('\n[bold green]Voto Computado![/bold green]')
                                 votou = 1
                                 opcao = 1
                             case 2:
                                 pass
             else:
+                limpar_tela()
                 console.print('\n[bold red]Erro, tentativa de voto duplo.[/bold red]')
                 voto_duplo.ocorrencia_voto_duplo(id_sessao)
                 geral.ocorrencia_voto_duplo(id_sessao)
@@ -246,6 +253,7 @@ def sistema_voto(id_sessao):
                 opcao = 1
 
             if votou == 1:
+                limpar_tela()
                 protocolo = prot_vot.gerar_protocolo_votacao(voto)
                 console.print(f"\n[bold bright_white]Seu protocolo de votação é: {protocolo}[/bold bright_white]")
                 confirmacao.confirmacao()
@@ -263,6 +271,7 @@ def sistema_voto(id_sessao):
 
                 conexao.commit()
         else:
+            limpar_tela()
             console.print('\n[bold red]Erro ao verificar CPF ou chave de acesso do eleitor.[/bold red]')
             opcao = 1
             confirmacao.confirmacao()

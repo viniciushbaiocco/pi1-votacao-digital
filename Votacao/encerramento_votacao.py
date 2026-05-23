@@ -50,23 +50,29 @@ def encerrar_sistema_votacao(id_sessao):
 
     try:
 
+        limpar_tela()
+
         cursor = conexao.cursor()
 
-        resposta = ge.obter_entrada_inteira_valida("\nDeseja realmente encerrar a votação? \n[1] - Sim \n[X] - Não \nDigite uma opção: ", 1, 1)
+        resposta = ge.input_cancelavel("Deseja realmente encerrar o sistema de votação? "
+                                       "\n[bold white][1][/bold white] Sim", "Encerrar Sistema")
 
         if not resposta:
+            limpar_tela()
             console.print("\nEncerramento cancelado.", style="bold yellow")
             confirmacao.confirmacao()
             return False
 
         chave_confirmada = False
         for tentativa in range(1, 4):
+            limpar_tela()
             confirmacao_chave = ge.input_cancelavel("Confirme sua chave de acesso pessoal", "CONFIRMAÇÃO DE ENCERRAMENTO")
             if confirmacao_chave is None:
                 return False
             confirmacao_chave = confirmacao_chave.strip().upper()
 
             if not validacao_chave_acesso.validar_chave_acesso(confirmacao_chave):
+                limpar_tela()
                 console.print("\n[bold red]Chave inválida. Tente novamente.[/bold red]")
                 confirmacao.confirmacao()
                 continue
@@ -76,13 +82,16 @@ def encerrar_sistema_votacao(id_sessao):
                 chave_confirmada = True
                 break
 
+            limpar_tela()
             console.print("\n[bold red]Chave de acesso não confere. Acesso negado.[/bold red]")
             if tentativa < 3:
+                limpar_tela()
                 console.print(f"[dim]Tentativas restantes: {3 - tentativa}[/dim]")
                 titulo_painel = "[bold bright_white]RECUPERAR CHAVE DE ACESSO?[/bold bright_white]"
                 borda_painel = "bold sandy_brown"
                 aviso = ""
             else:
+                limpar_tela()
                 titulo_painel = "[bold red]ÚLTIMA TENTATIVA ESGOTADA[/bold red]"
                 borda_painel = "bold red"
                 aviso = "[bold red]Esta foi sua última tentativa.[/bold red] O encerramento está bloqueado.\nRecupere sua chave para tentar novamente na próxima sessão.\n\n"
@@ -101,10 +110,12 @@ def encerrar_sistema_votacao(id_sessao):
                 confirmacao.confirmacao()
 
         if not chave_confirmada:
+            limpar_tela()
             console.print("\n[bold red]Encerramento cancelado. Número máximo de tentativas atingido.[/bold red]")
             confirmacao.confirmacao()
             return False
 
+        limpar_tela()
         console.print("\nSistema de votação encerrado.", style="bold green")
 
         encerramento_urna.ocorrencia_encerramento_urna(id_sessao)
@@ -114,6 +125,7 @@ def encerrar_sistema_votacao(id_sessao):
         return True
 
     except:
+        limpar_tela()
         console.print("\nErro ao registrar encerramento.", style="bold red")
         if conexao:
             conexao.rollback()

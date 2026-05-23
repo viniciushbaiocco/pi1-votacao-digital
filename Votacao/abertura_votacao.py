@@ -69,6 +69,7 @@ def abrir_sistema_votacao(id_sessao):
     """
     limpar_tela()
     if not autenticacao_mesario.autenticar_mesario(id_sessao):
+        limpar_tela()
         console.print("\n[bold red][ERRO] Validação falhou.[/bold red]")
         console.print("[bold yellow]Confirme se o eleitor possui perfil de mesário.[/bold yellow]")
         return False
@@ -76,6 +77,7 @@ def abrir_sistema_votacao(id_sessao):
     total_candidatos = verificar_candidatos()
 
     if total_candidatos == 0:
+        limpar_tela()
         console.print(Panel(
             Align.center("[bold red]Nenhum candidato cadastrado no sistema.[/bold red]\n"
                          "[bold yellow]Cadastre ao menos um candidato antes de abrir a votação.[/bold yellow]"),
