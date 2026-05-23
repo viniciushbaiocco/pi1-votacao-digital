@@ -20,14 +20,14 @@ def validacao_sigla_partido(sigla_partido):
 
     if not sigla_partido.isalpha():
         console.print("\nSigla INVÁLIDA", style="bold red")
-        console.print("Sigla deve conter apenas letras", style="bold yellow")
+        console.print("\nSigla deve conter apenas letras", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
 
     if len(sigla_partido) < 2 or len(sigla_partido) > 6:
         console.print("\nSigla INVÁLIDA", style="bold red")
-        console.print("Sigla deve conter de 2 a 6 letras", style="bold yellow")
+        console.print("\nSigla deve conter de 2 a 6 letras", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
@@ -51,14 +51,14 @@ def validacao_numero_votacao(numero_votacao):
 
     if not numero_votacao.isdigit():
         console.print("\nNúmero de Votação INVÁLIDO", style="bold red")
-        console.print("Número de Votação deve conter apenas dígitos", style="bold yellow")
+        console.print("\nNúmero de Votação deve conter apenas dígitos", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
 
     if len(numero_votacao) < 2 or len(str(numero_votacao)) > 2:
         console.print("\nNúmero de Votação INVÁLIDO", style="bold red")
-        console.print("Número de Votação deve conter apenas dois dígitos", style="bold yellow")
+        console.print("\nNúmero de Votação deve conter apenas dois dígitos", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False

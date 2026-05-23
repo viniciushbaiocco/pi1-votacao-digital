@@ -21,7 +21,7 @@ def validar_titulo (titulo):
 
     #Verificação de tamanho do título
     if  len(titulo) != 12:
-        console.print("Título de eleitor inválido! O Título de eleitor deve conter 12 dígitos.", style="bold red")
+        console.print("\nTítulo de eleitor inválido! O Título de eleitor deve conter 12 dígitos.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -31,7 +31,7 @@ def validar_titulo (titulo):
         separado = [int(i) for i in titulo]
     
     except ValueError:
-        console.print("Título de eleitor inválido! O Título deve conter apenas números.", style="bold red")
+        console.print("\nTítulo de eleitor inválido! O Título deve conter apenas números.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -48,7 +48,7 @@ def validar_titulo (titulo):
     codigo_uf = uf_d1 * 10 + uf_d2
 
     if str_uf not in dicionario_UF:
-        console.print("Título de eleitor inválido!", style="bold red")
+        console.print("\nTítulo de eleitor inválido!", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -84,7 +84,7 @@ def validar_titulo (titulo):
         digito_2_DV = resto_2_DV
 
     if separado[10] != digito_1_DV or separado[11] != digito_2_DV:
-        console.print("Título de eleitor inválido!", style="bold red")
+        console.print("\nTítulo de eleitor inválido!", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False

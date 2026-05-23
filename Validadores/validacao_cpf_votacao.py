@@ -22,7 +22,7 @@ def validar_cpf_voto(cpf):
 
     if len(cpf_arrumado) != 4:
         console.print("\nCPF INVÁLIDO", style="bold red")
-        console.print("Para a votação digite apenas os quatro primeiros dígitos do seu CPF", style="bold yellow")
+        console.print("\nPara a votação digite apenas os quatro primeiros dígitos do seu CPF", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
@@ -30,7 +30,7 @@ def validar_cpf_voto(cpf):
     for caractere in cpf_arrumado:
         if not caractere.isdigit():
             console.print("\nCPF INVÁLIDO", style="bold red")
-            console.print("O CPF deve conter apenas números. Não digite letras ou símbolos.", style="bold yellow")
+            console.print("\nO CPF deve conter apenas números. Não digite letras ou símbolos.", style="bold yellow")
             sleep(1.5)
             limpar_tela()
             return False

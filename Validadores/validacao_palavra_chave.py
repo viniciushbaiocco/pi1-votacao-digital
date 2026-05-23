@@ -20,14 +20,14 @@ def validacao_palavra_chave(palavra):
 
     if not palavra.isalpha() or not palavra.isascii():
         console.print("\nPalavra-chave INVÁLIDA", style="bold red")
-        console.print("A palavra-chave deve conter apenas letras sem acentos (A-Z)", style="bold yellow")
+        console.print("\nA palavra-chave deve conter apenas letras sem acentos (A-Z)", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
 
     if len(palavra) != 4:
         console.print("\nPalavra-chave INVÁLIDA", style="bold red")
-        console.print("A palavra-chave deve ter exatamente 4 letras", style="bold yellow")
+        console.print("\nA palavra-chave deve ter exatamente 4 letras", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False

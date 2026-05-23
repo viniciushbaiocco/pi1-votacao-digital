@@ -2,6 +2,8 @@ from rich.console import Console
 from rich.panel import Panel
 from rich.align import Align
 from rich import box
+from time import  sleep
+from Visual.visual import limpar_tela
 
 console = Console(highlight=False)
 
@@ -59,9 +61,9 @@ def obter_entrada_inteira_valida(mensagem, min_val, max_val):
                 if min_val <= escolha <= max_val:
                     return escolha
                 elif min_val == max_val:
-                    console.print("Erro: Opção inválida. Por favor, escolha dentre as opções mostradas.", style="bold red")
+                    console.print("\nErro: Opção inválida. Por favor, escolha dentre as opções mostradas.", style="bold red")
                 else:
-                    console.print(f"Erro: Opção inválida. Por favor, escolha uma opção entre {min_val} e {max_val}.", style="bold red")
+                    console.print(f"\nErro: Opção inválida. Por favor, escolha uma opção entre {min_val} e {max_val}.", style="bold red")
             except ValueError:
-                console.print("Erro: Entrada inválida. Por favor, digite um número inteiro ou digite 'X' para retornar.", style="bold red")
+                console.print("\nErro: Entrada inválida. Por favor, digite um número inteiro ou digite 'X' para retornar.", style="bold red")
     return None

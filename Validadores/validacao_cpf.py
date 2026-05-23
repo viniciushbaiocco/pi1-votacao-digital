@@ -20,14 +20,14 @@ def validacao_de_cpf(cpf_digitado_usuario):
 
     #Verificação de tamanho do CPF
     if len(arrumando) != 11:
-        console.print("CPF inválido! O CPF deve conter 11 dígitos", style="bold red")
+        console.print("\nCPF inválido! O CPF deve conter 11 dígitos", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
     
     #Verificação se têm números repitidos
     if arrumando == arrumando [0] * len(arrumando):
-        console.print("CPF inválido! Sequência de números repetidos.", style="bold red")
+        console.print("\nCPF inválido! Sequência de números repetidos.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -36,7 +36,7 @@ def validacao_de_cpf(cpf_digitado_usuario):
     try:
         separado = [int(i) for i in arrumando]
     except ValueError:
-        console.print("CPF inválido! O CPF deve conter apenas números.", style="bold red")
+        console.print("\nCPF inválido! O CPF deve conter apenas números.", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False
@@ -61,7 +61,7 @@ def validacao_de_cpf(cpf_digitado_usuario):
     resto_2_DV = soma_2_DV % 11
     digito_2_DV = 0 if resto_2_DV < 2 else 11 - resto_2_DV
     if digito_1_DV != separado[9] or digito_2_DV != separado[10]:
-        console.print("CPF inválido!", style="bold red")
+        console.print("\nCPF inválido!", style="bold red")
         sleep(1.5)
         limpar_tela()
         return False

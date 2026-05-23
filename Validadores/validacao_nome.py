@@ -48,26 +48,26 @@ def validar_nome():
                 nome_letras = False
 
         if not nome_letras:
-            console.print("O nome não pode ser espaço vazio e deve conter apenas letras!", style="bold yellow")
+            console.print("\nO nome não pode ser espaço vazio e deve conter apenas letras!", style="bold yellow")
             sleep(1.5)
             limpar_tela()
         else:
             if len(nome_ajustado) < 2:
                 nome_validado = False
-                console.print("Nome inválido! Necessário nome completo (nome e sobrenome).", style="bold red")
+                console.print("\nNome inválido! Necessário nome completo (nome e sobrenome).", style="bold red")
                 sleep(1.5)
                 limpar_tela()
             else:
 
                 if len(nome_ajustado[0]) < 2:
                     nome_validado = False
-                    console.print("Nome inválido! Primeiro nome precisa ter mínimo de 3 letras.", style="bold red")
+                    console.print("\nNome inválido! Primeiro nome precisa ter mínimo de 3 letras.", style="bold red")
                     sleep(1.5)
                     limpar_tela()
                 else:
                     if len(nome_ajustado[1]) < 1:
                         nome_validado = False
-                        console.print("Sobrenome inválido! Sobrenome precisa ter mínimo de 2 letras.", style="bold red")
+                        console.print("\nSobrenome inválido! Sobrenome precisa ter mínimo de 2 letras.", style="bold red")
                         sleep(1.5)
                         limpar_tela()
                     else:

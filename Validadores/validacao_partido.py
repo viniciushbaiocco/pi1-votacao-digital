@@ -1,4 +1,6 @@
 from rich.console import Console
+
+from Validadores.validacao_candidato import validacao_sigla_partido
 from Visual.visual import limpar_tela
 from time import sleep
 
@@ -22,7 +24,7 @@ def validacao_partido(partido):
 
     if len(partido.strip()) < 3:
         console.print("\nNome do partido INVÁLIDO", style="bold red")
-        console.print("Nome do partido deve ter no mínimo 3 caracteres", style="bold yellow")
+        console.print("\nNome do partido deve ter no mínimo 3 caracteres", style="bold yellow")
         sleep(1.5)
         limpar_tela()
         return False
@@ -30,7 +32,7 @@ def validacao_partido(partido):
     for caractere in partido:
         if caractere not in LETRAS_VALIDAS:
             console.print("\nNome do partido INVÁLIDO", style="bold red")
-            console.print("Nome do partido deve conter apenas letras e espaços", style="bold yellow")
+            console.print("\nNome do partido deve conter apenas letras e espaços", style="bold yellow")
             sleep(1.5)
             limpar_tela()
             return False
