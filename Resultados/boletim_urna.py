@@ -141,7 +141,7 @@ def exibir_boletim_urna():
                             console.print(Panel(Align.center(f"[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]"),
                                                 title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red",
                                                 box=box.DOUBLE, padding=(1, 4)))
-                    confirmacao.confirmacao()
+                        confirmacao.confirmacao()
                     visual.limpar_tela()
                 case False:
                     executando_entrada = 0

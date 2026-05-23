@@ -37,18 +37,23 @@ def zeresima():
       conexao = cb.conexao_banco()
       cursor = conexao.cursor()
 
+      limpar_tela()
       carregar_pontos_loop(3, "Iniciando Zerésima")
 
       truncar_votos = "TRUNCATE votos;"
       cursor.execute(truncar_votos)
       conexao.commit()
+
       carregar_pontos_loop(2, "\nEliminando todos os votos registrados na tabela 'Votos'")
 
       resetar_status_eleitores = "UPDATE eleitores SET status_votacao = 0;"
       cursor.execute(resetar_status_eleitores)
       conexao.commit()
+
+      limpar_tela()
       carregar_pontos_loop(2, "\nAtualizando status de votação de eleitores para 'Não'")
 
+      limpar_tela()
       console.print("\n[bold green]\nZerésima finalizada![/bold green]\n")
 
       buscar_candidatos = "SELECT candidatos.nome, candidatos.sigla_partido, COUNT(votos.id) AS total_votos FROM candidatos LEFT JOIN votos ON candidatos.id = votos.id_candidato GROUP BY candidatos.id;"

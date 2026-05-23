@@ -1,6 +1,6 @@
 from database.conexao_banco import conexao_banco
 from Visual.visual import carregar_pontos_loop, limpar_tela
-from Validadores.confirmacao import   confirmacao
+from Validadores.confirmacao import confirmacao
 from rich.console import Console
 from rich.table import Table
 from rich import box
@@ -41,9 +41,10 @@ def exibir_estatistica_comparecimento() -> None:
     carregar_pontos_loop(3, "Calculando Estatísticas")
 
     if total_eleitores == 0:
-        console.print("\n  [bold red][AVISO] Nenhum eleitor cadastrado no sistema.[/bold red]")
+        console.print("\n[bold red][AVISO] Nenhum eleitor cadastrado no sistema.[/bold red]")
         cursor.close()
         conexao.close()
+        confirmacao()
         return
 
     # Total de eleitores que votaram (status_votacao = TRUE)
