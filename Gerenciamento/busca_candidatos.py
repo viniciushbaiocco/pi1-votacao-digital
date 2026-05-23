@@ -114,6 +114,7 @@ def busca_candidato():
             cursor.execute("SELECT * FROM candidatos WHERE numero_votacao = %s", (numero,))
             candidato = cursor.fetchone()
             if candidato is not None:
+                limpar_tela()
                 exibir_tabela_candidato(candidato)
             else:
                 limpar_tela()
