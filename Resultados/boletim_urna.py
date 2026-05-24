@@ -108,8 +108,8 @@ def exibir_boletim_urna():
                     time.sleep(1)
 
                     if not verificar_tabela:
-                        console.print(Panel(Align.center(f"[bold red]Nenhum Voto Registrado.[/bold red]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
-                        console.print(Panel(Align.center(f"[bold yellow]Não foi possível determinar um vencedor.[/bold yellow]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
+                        console.print(Panel(Align.center("[bold red]Nenhum Voto Registrado.[/bold red]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
+                        console.print(Panel(Align.center("[bold yellow]Não foi possível determinar um vencedor.[/bold yellow]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
 
                         confirmacao.confirmacao()
                         visual.limpar_tela()
@@ -138,7 +138,7 @@ def exibir_boletim_urna():
                             )
                             console.print(Align.center(tabela_vencedor)) # Exibe a tabela com o vencedor
                         else:
-                            console.print(Panel(Align.center(f"[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]"),
+                            console.print(Panel(Align.center("[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]"),
                                                 title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red",
                                                 box=box.DOUBLE, padding=(1, 4)))
                         confirmacao.confirmacao()
