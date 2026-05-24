@@ -1,4 +1,5 @@
 import random
+from Validadores.validacao_chave_acesso import remover_acentos
 
 def geracao_chave_acesso(nome):
     """
@@ -21,8 +22,12 @@ def geracao_chave_acesso(nome):
     primeiro_nome = partes_nome[0]
     primeiro_sobrenome = partes_nome[1]
 
-    iniciais_nome = primeiro_nome[:2].upper()
-    inicial_sobrenome = primeiro_sobrenome[0].upper()
+    # A Cifra de Hill só aceita A-Z/0-9: remove acentos e mantém apenas letras A-Z nas iniciais
+    primeiro_nome_az = ''.join(c for c in remover_acentos(primeiro_nome).upper() if 'A' <= c <= 'Z')
+    primeiro_sobrenome_az = ''.join(c for c in remover_acentos(primeiro_sobrenome).upper() if 'A' <= c <= 'Z')
+
+    iniciais_nome = primeiro_nome_az[:2]
+    inicial_sobrenome = primeiro_sobrenome_az[:1]
 
     chave_acesso = iniciais_nome + inicial_sobrenome + str(numero)
 

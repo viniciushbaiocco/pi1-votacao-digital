@@ -1,5 +1,6 @@
 from Verificadores import verificacao_cpf_banco
 from Verificadores import verificacao_titulo_banco
+from Verificadores import verificacao_chave_acesso_banco
 from Validadores import confirmacao, validacao_cpf, validacao_nome, validacao_titulo, validacao_palavra_chave
 from database import conexao_banco
 from criptografia import criptografia as cripto
@@ -61,7 +62,7 @@ def exibir_progresso(cpf=None, nome=None, titulo=None, mesario=None, palavra_cha
 
     if palavra_chave is None:
         tabela.add_row("Palavra-chave de Backup", "[dim]─[/dim]")
-    elif palavra_chave is not None:
+    elif palavra_chave:
         tabela.add_row("Palavra-chave de Backup", "[dim green]Cadastrada[/dim green]")
     else:
         tabela.add_row("Palavra-chave de Backup", "[dim]Não cadastrada[/dim]")
@@ -155,6 +156,9 @@ def cadastrar_eleitor():
 
     chave_acesso_original = chave_acesso.geracao_chave_acesso(nome)
     chave_criptografada   = cripto.criptografar_chave_acesso(chave_acesso_original)
+    while verificacao_chave_acesso_banco.verificar_chave_acesso_banco(chave_criptografada) != (0,):
+        chave_acesso_original = chave_acesso.geracao_chave_acesso(nome)
+        chave_criptografada   = cripto.criptografar_chave_acesso(chave_acesso_original)
 
     limpar_tela()
     exibir_progresso(cpf=cpf, nome=nome, titulo=titulo, mesario=mesario)
