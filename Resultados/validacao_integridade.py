@@ -12,25 +12,25 @@ def validar_integridade():
     """
     Valida a integridade matemática da eleição cruzando dados de votos e eleitores.
 
-    A função atua como uma ferramenta de auditoria interna da urna eleitoral. Ela realiza [cite: 149, 158]
-    duas consultas independentes no banco de dados MySQL: [cite: 149, 200]
+    A função atua como uma ferramenta de auditoria interna da urna eleitoral. Ela realiza
+    duas consultas independentes no banco de dados MySQL:
 
-    1. Conta o volume total de cédulas eletrônicas armazenadas na tabela `votos`. [cite: 149, 159]
-    2. Conta o quantitativo de eleitores que possuem o status de votação ativo (`status_votacao = 1`). [cite: 149, 159]
+    1. Conta o volume total de cédulas eletrônicas armazenadas na tabela `votos`.
+    2. Conta o quantitativo de eleitores que possuem o status de votação ativo (`status_votacao = 1`).
 
     A partir dessas métricas, valida o ecossistema sob três cenários lógicos:
     - Se não houver registros de votos, aborta a validação retornando `False`.
-    - Se o total de votos for exatamente igual ao número de eleitores que compareceram, [cite: 149, 159]
-      confirma a integridade do pleito e retorna `True`. [cite: 149, 160]
-    - Se houver qualquer divergência numérica entre as duas contagens, emite um alerta [cite: 149, 159]
+    - Se o total de votos for exatamente igual ao número de eleitores que compareceram,
+      confirma a integridade do pleito e retorna `True`.
+    - Se houver qualquer divergência numérica entre as duas contagens, emite um alerta
       crítico de possível inconsistência/fraude e retorna `False`.
 
     Args:
-        None. [cite: 283, 285]
+        None.
 
     Returns:
-        bool: Retorna True se a validação for bem-sucedida (dados consistentes). [cite: 283, 286]
-              Retorna False se a base estiver vazia ou se houver divergência entre as contagens. [cite: 283, 286]
+        bool: Retorna True se a validação for bem-sucedida (dados consistentes).
+              Retorna False se a base estiver vazia ou se houver divergência entre as contagens.
     """
 
     limpar_tela()
