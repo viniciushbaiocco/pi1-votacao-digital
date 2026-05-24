@@ -101,7 +101,7 @@ def autenticar_mesario(id_sessao):
         conexao = cb.conexao_banco()
         cursor = conexao.cursor()
         cursor.execute("SELECT COUNT(*) FROM eleitores WHERE titulo_eleitor = %s AND mesario = 1", (titulo,))
-        if cursor.fetchone() == (0,):
+        if cursor.fetchone()[0] == 0:
             cursor.close(); conexao.close()
             limpar_tela()
             exibir_progresso_mesario(tentativa=tentativa)
@@ -136,7 +136,7 @@ def autenticar_mesario(id_sessao):
             "SELECT COUNT(*) FROM eleitores WHERE titulo_eleitor = %s AND SUBSTRING(cpf, 1, 4) = %s AND mesario = 1",
             (titulo, cpf_4_criptografado[:4])
         )
-        if cursor.fetchone() == (0,):
+        if cursor.fetchone()[0] == 0:
             cursor.close(); conexao.close()
             limpar_tela()
             exibir_progresso_mesario(titulo=titulo, tentativa=tentativa)
@@ -169,7 +169,7 @@ def autenticar_mesario(id_sessao):
         chave_acesso_criptografada = crip.criptografar_chave_acesso(chave_acesso)
         resultado = ver_mes.verificar_mesario(titulo, cpf_4_criptografado, chave_acesso_criptografada)
 
-        if resultado == (1,):
+        if resultado[0] > 0:
             limpar_tela()
             exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, chave=chave_acesso, tentativa=tentativa)
             limpar_tela()
