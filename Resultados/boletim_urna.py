@@ -123,24 +123,29 @@ def exibir_boletim_urna():
                             "WHERE c.numero_votacao != '00' "
                             "GROUP BY c.id, c.nome, c.partido, c.numero_votacao "
                             "HAVING total_votos > 0 "
-                            "ORDER BY total_votos DESC "
-                            "LIMIT 1"
+                            "ORDER BY total_votos DESC"
                         )
                         cursor.execute(query_verificar_vencedor)
-                        vencedor = cursor.fetchone()
-                        cursor.fetchall()
+                        ranking = cursor.fetchall()
 
-                        if vencedor:
-                            tabela_vencedor.add_row(
-                                vencedor['nome'],
-                                vencedor['partido'],
-                                str(vencedor['total_votos'])
-                            )
-                            console.print(Align.center(tabela_vencedor)) # Exibe a tabela com o vencedor
-                        else:
+                        if not ranking:
                             console.print(Panel(Align.center("[bold yellow]Não foi possível determinar um vencedor, mesmo com votos registrados.[/bold yellow]"),
                                                 title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red",
                                                 box=box.DOUBLE, padding=(1, 4)))
+                        else:
+                            max_votos = ranking[0]['total_votos']
+                            empatados = [c for c in ranking if c['total_votos'] == max_votos]
+                            for c in empatados:
+                                tabela_vencedor.add_row(c['nome'], c['partido'], str(c['total_votos']))
+
+                            if len(empatados) > 1:
+                                tabela_vencedor.title = "Empate"
+                                console.print(Align.center(tabela_vencedor))
+                                console.print(Panel(Align.center("[bold yellow]Empate entre os candidatos acima — não há vencedor único.[/bold yellow]"),
+                                                    title="[bold bright_white]Empate[/bold bright_white]", border_style="bold yellow",
+                                                    box=box.DOUBLE, padding=(1, 4)))
+                            else:
+                                console.print(Align.center(tabela_vencedor))
                         confirmacao.confirmacao()
                     visual.limpar_tela()
                 case False:
