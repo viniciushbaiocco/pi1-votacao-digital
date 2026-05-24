@@ -131,7 +131,7 @@ def cadastrar_eleitor():
 
     titulo_valido = validacao_titulo.validar_titulo(titulo)
     titulo_no_banco = verificacao_titulo_banco.verificar_titulo_de_eleitor_banco(titulo)
-    while titulo_valido == False or titulo_no_banco == (1,):
+    while not titulo_valido or titulo_no_banco[0] > 0:
         limpar_tela()
         exibir_progresso(cpf=cpf, nome=nome)
         titulo = ge.input_cancelavel("Título inválido ou já cadastrado. Digite novamente", "TÍTULO DE ELEITOR")
@@ -156,7 +156,7 @@ def cadastrar_eleitor():
 
     chave_acesso_original = chave_acesso.geracao_chave_acesso(nome)
     chave_criptografada   = cripto.criptografar_chave_acesso(chave_acesso_original)
-    while verificacao_chave_acesso_banco.verificar_chave_acesso_banco(chave_criptografada) != (0,):
+    while verificacao_chave_acesso_banco.verificar_chave_acesso_banco(chave_criptografada)[0] > 0:
         chave_acesso_original = chave_acesso.geracao_chave_acesso(nome)
         chave_criptografada   = cripto.criptografar_chave_acesso(chave_acesso_original)
 
