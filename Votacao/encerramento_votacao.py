@@ -1,7 +1,6 @@
 from Verificadores import verificacao_chave_acesso_banco
 from Validadores import validacao_chave_acesso, confirmacao
 from Validadores import gerenciador_de_entrada as ge
-from database import conexao_banco
 from Votacao import autenticacao_mesario
 from Gerenciamento import recuperacao_chave
 from criptografia import criptografia as cripto
@@ -46,8 +45,6 @@ def encerrar_sistema_votacao(id_sessao):
     if not autenticacao_mesario.autenticar_mesario(id_sessao):
         return False
 
-    conexao = conexao_banco.conexao_banco()
-
     try:
 
         limpar_tela()
@@ -76,7 +73,7 @@ def encerrar_sistema_votacao(id_sessao):
                 continue
 
             confirmacao_chave_criptografada = cripto.criptografar_chave_acesso(confirmacao_chave)
-            if verificacao_chave_acesso_banco.verificar_chave_acesso_banco(confirmacao_chave_criptografada) != (0,):
+            if verificacao_chave_acesso_banco.verificar_chave_acesso_banco(confirmacao_chave_criptografada)[0] > 0:
                 chave_confirmada = True
                 break
 
@@ -125,10 +122,4 @@ def encerrar_sistema_votacao(id_sessao):
     except Exception:
         limpar_tela()
         console.print("\nErro ao registrar encerramento.", style="bold red")
-        if conexao:
-            conexao.rollback()
         return False
-
-    finally:
-        if conexao:
-            conexao.close()
