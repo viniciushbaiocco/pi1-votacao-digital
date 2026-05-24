@@ -97,35 +97,27 @@ def busca_candidato():
         conexao.close()
         return
 
-    while opcao == 1 or opcao == 2:
-
-        if opcao == 1:
-            limpar_tela()
-            numero = ge.input_cancelavel("Digite o Número de Votação", "BUSCA POR NÚMERO")
-            if numero is None:
-                break
+    if opcao == 1:
+        limpar_tela()
+        numero = ge.input_cancelavel("Digite o Número de Votação", "BUSCA POR NÚMERO")
+        if numero is not None:
             while not val_cand.validacao_numero_votacao(numero):
                 numero = ge.input_cancelavel("Número inválido. Digite novamente", "BUSCA POR NÚMERO")
                 if numero is None:
                     break
-            if numero is None:
-                break
+            if numero is not None:
+                cursor.execute("SELECT * FROM candidatos WHERE numero_votacao = %s", (numero,))
+                candidato = cursor.fetchone()
+                if candidato is not None:
+                    exibir_tabela_candidato(candidato)
+                else:
+                    limpar_tela()
+                    console.print("\n*** Candidato não encontrado! ***", style="bold yellow")
 
-            cursor.execute("SELECT * FROM candidatos WHERE numero_votacao = %s", (numero,))
-            candidato = cursor.fetchone()
-            if candidato is not None:
-                limpar_tela()
-                exibir_tabela_candidato(candidato)
-            else:
-                limpar_tela()
-                console.print("\n*** Candidato não encontrado! ***", style="bold yellow")
-
-        if opcao == 2:
-            limpar_tela()
-            nome = ge.input_cancelavel("Digite o Nome do Candidato", "BUSCA POR NOME")
-            if nome is None:
-                break
-
+    elif opcao == 2:
+        limpar_tela()
+        nome = ge.input_cancelavel("Digite o Nome do Candidato", "BUSCA POR NOME")
+        if nome is not None:
             cursor.execute("SELECT * FROM candidatos WHERE nome LIKE %s", (f"%{nome}%",))
             resultados = cursor.fetchall()
             if resultados:
@@ -135,8 +127,6 @@ def busca_candidato():
             else:
                 limpar_tela()
                 console.print("\n*** Candidato não encontrado! ***", style="bold yellow")
-
-        break
 
     confirmacao.confirmacao()
     cursor.close()
