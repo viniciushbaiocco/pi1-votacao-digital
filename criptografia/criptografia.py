@@ -356,18 +356,6 @@ def criptografar_protocolo(protocolo: str):
     """
     return criptografar(protocolo)
  
-def descriptografar_protocolo(protocolo_cifrado: str):
-    """
-    Descriptografa o protocolo de votação.
-
-    Args:
-        protocolo_cifrado (str): Protocolo criptografado.
-
-    Returns:
-        str: Protocolo de votação descriptografado.
-    """
-    return descriptografar(protocolo_cifrado)
-
 def criptografar_palavra_chave(palavra_chave: str):
     """
     Criptografa uma palavra-chave.
@@ -379,15 +367,3 @@ def criptografar_palavra_chave(palavra_chave: str):
         str: A palavra-chave criptografada.
     """
     return criptografar(palavra_chave)
-
-def descriptografar_palavra_chave(palavra_chave_cifrada: str):
-    """
-    Descriptografa uma palavra-chave criptografada.
-
-    Args:
-        palavra_chave_cifrada (str): A palavra-chave criptografada.
-
-    Returns:
-        str: A palavra-chave descriptografada.
-    """
-    return descriptografar(palavra_chave_cifrada)
