@@ -154,7 +154,7 @@ def autenticar_mesario(id_sessao):
         chave_acesso = ge.input_cancelavel("Digite sua Chave de Acesso", "IDENTIFICAÇÃO DO MESÁRIO")
         if chave_acesso is None:
             return False
-        chave_acesso = chave_acesso.strip().upper()
+        chave_acesso = val_chave.remover_acentos(chave_acesso.strip()).upper()
 
         chave_valida = val_chave.validar_chave_acesso(chave_acesso)
         while not chave_valida:
@@ -163,7 +163,7 @@ def autenticar_mesario(id_sessao):
             chave_acesso = ge.input_cancelavel("Chave inválida. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
             if chave_acesso is None:
                 return False
-            chave_acesso = chave_acesso.strip().upper()
+            chave_acesso = val_chave.remover_acentos(chave_acesso.strip()).upper()
             chave_valida = val_chave.validar_chave_acesso(chave_acesso)
 
         chave_acesso_criptografada = crip.criptografar_chave_acesso(chave_acesso)
