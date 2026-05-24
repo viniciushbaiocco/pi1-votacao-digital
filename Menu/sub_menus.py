@@ -8,6 +8,7 @@ from rich.console import Console
 from rich.panel import Panel     
 from rich import box
 from rich.align import Align      # centraliza o conteúdo dentro do painel
+from Visual.visual import limpar_tela
 
 console = Console(highlight=False)
 
@@ -63,7 +64,7 @@ def exibir_menu_principal():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
 
     # PASSO 4: Panel substitui o ╔═╗ manual — border_style define a cor da borda
@@ -90,7 +91,7 @@ def exibir_menu_gerenciamento():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
     conteudo = (
         "               [bold bright_white][1][/bold bright_white]  Eleitores\n"
@@ -114,7 +115,7 @@ def exibir_menu_eleitores():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
     conteudo = (
         "                   [bold bright_white][1][/bold bright_white]  Cadastrar Novos Eleitores\n"
@@ -142,7 +143,7 @@ def exibir_menu_candidatos():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
     conteudo = (
         "                  [bold bright_white][1][/bold bright_white]  Cadastrar Novos Candidatos\n"
@@ -169,7 +170,7 @@ def exibir_menu_votacao():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
     conteudo = (
         "                     [bold chartreuse1][1]  Abrir Sistema De Votação[/bold chartreuse1]\n"
@@ -194,7 +195,7 @@ def exibir_menu_sistema_votacao():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
     conteudo = (
         "          [bold bright_white][1][/bold bright_white]  Votar\n"
@@ -217,7 +218,7 @@ def exibir_menu_resultados_votacao():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
     conteudo = (
         "       [bold bright_white][1][/bold bright_white]  Boletim De Urna\n"
@@ -243,7 +244,7 @@ def exibir_menu_ocorrencias():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
     conteudo = (
         "                 [bold bright_white][1][/bold bright_white]  Abertura de Urna\n"
@@ -270,7 +271,7 @@ def exibir_menu_boletim_urna():
     Returns:
         None: A função realiza apenas impressões no console.
     """
-    os.system('cls' if os.name == 'nt' else 'clear')
+    limpar_tela()
     exibir_banner()
     conteudo = (
         "                 [bold bright_white][1][/bold bright_white]  Listagem dos Candidatos\n"
