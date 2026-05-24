@@ -58,13 +58,13 @@ def validar_nome():
                 limpar_tela()
             else:
 
-                if len(nome_ajustado[0]) < 2:
+                if sum(c.isalpha() for c in nome_ajustado[0]) < 2:
                     nome_validado = False
                     console.print("\nNome inválido! Primeiro nome precisa ter no mínimo 2 letras.", style="bold red")
                     sleep(1.5)
                     limpar_tela()
                 else:
-                    if len(nome_ajustado[1]) < 1:
+                    if sum(c.isalpha() for c in nome_ajustado[1]) < 1:
                         nome_validado = False
                         console.print("\nSobrenome inválido! Sobrenome precisa ter no mínimo 1 letra.", style="bold red")
                         sleep(1.5)
