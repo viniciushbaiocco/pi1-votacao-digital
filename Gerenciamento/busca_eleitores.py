@@ -102,67 +102,56 @@ def busca_eleitor():
     opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
     if not opcao:
+        cursor.close()
+        conexao.close()
         return False
 
-    while opcao == 1 or opcao == 2:
-
-        if opcao == 1:
-            limpar_tela()
-            cpf = ge.input_cancelavel("Digite o CPF do eleitor", "BUSCA POR CPF")
-            if cpf is None:
-                limpar_tela()
-                break
+    if opcao == 1:
+        limpar_tela()
+        cpf = ge.input_cancelavel("Digite o CPF do eleitor", "BUSCA POR CPF")
+        if cpf is not None:
             while not val_cpf.validacao_de_cpf(cpf):
                 limpar_tela()
                 cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "BUSCA POR CPF")
                 if cpf is None:
                     limpar_tela()
                     break
-            if cpf is None:
-                limpar_tela()
-                break
+            if cpf is not None:
+                cpf_criptografado = cripto.criptografar_cpf(cpf)
+                if ver_cpf.verificar_cpf_banco(cpf_criptografado)[0] == 1:
+                    cursor.execute(
+                        "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE cpf = %s",
+                        (cpf_criptografado,)
+                    )
+                    e = cursor.fetchone()
+                    limpar_tela()
+                    exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'], cpf=cpf)
+                else:
+                    limpar_tela()
+                    console.print("\n*** Eleitor não cadastrado! ***\nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
 
-            cpf_criptografado = cripto.criptografar_cpf(cpf)
-            if ver_cpf.verificar_cpf_banco(cpf_criptografado)[0] == 1:
-                cursor.execute(
-                    "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE cpf = %s",
-                    (cpf_criptografado,)
-                )
-                e = cursor.fetchone()
-                limpar_tela()
-                exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'], cpf=cpf)
-            else:
-                limpar_tela()
-                console.print("\n*** Eleitor não cadastrado! ***\nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
-
-        if opcao == 2:
-            limpar_tela()
-            titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor", "BUSCA POR TÍTULO")
-            if titulo_eleitor is None:
-                limpar_tela()
-                break
+    elif opcao == 2:
+        limpar_tela()
+        titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor", "BUSCA POR TÍTULO")
+        if titulo_eleitor is not None:
             while not val_titulo.validar_titulo(titulo_eleitor):
                 limpar_tela()
                 titulo_eleitor = ge.input_cancelavel("Título inválido. Digite novamente", "BUSCA POR TÍTULO")
                 if titulo_eleitor is None:
                     limpar_tela()
                     break
-            if titulo_eleitor is None:
-                limpar_tela()
-                break
-
-            if ver_titulo.verificar_titulo_de_eleitor_banco(titulo_eleitor)[0] == 1:
-                cursor.execute(
-                    "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE titulo_eleitor = %s",
-                    (titulo_eleitor,)
-                )
-                e = cursor.fetchone()
-                limpar_tela()
-                exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'])
-            else:
-                limpar_tela()
-                console.print("*** Eleitor não cadastrado! ***\nRealizar o cadastramento no Menu Gerenciamento de Eleitores.\n", style="bold yellow")
-        break
+            if titulo_eleitor is not None:
+                if ver_titulo.verificar_titulo_de_eleitor_banco(titulo_eleitor)[0] == 1:
+                    cursor.execute(
+                        "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE titulo_eleitor = %s",
+                        (titulo_eleitor,)
+                    )
+                    e = cursor.fetchone()
+                    limpar_tela()
+                    exibir_tabela_eleitor(e['id'], e['nome'], e['titulo_eleitor'], e['mesario'], e['status_votacao'])
+                else:
+                    limpar_tela()
+                    console.print("*** Eleitor não cadastrado! ***\nRealizar o cadastramento no Menu Gerenciamento de Eleitores.\n", style="bold yellow")
 
     confirmacao.confirmacao()
     cursor.close()

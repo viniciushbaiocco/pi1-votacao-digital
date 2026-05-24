@@ -89,24 +89,21 @@ def remocao_eleitores():
     opcao = ge.obter_entrada_inteira_valida("Digite uma opção: ", 1, 2)
 
     if not opcao:
+        cursor.close()
+        conexao.close()
         return False
 
-    while opcao == 1 or opcao == 2:
-        eleitor = None
+    eleitor = None
 
-        match opcao:
-            case 1:
-                limpar_tela()
-                cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser removido", "REMOVER POR CPF")
+    if opcao == 1:
+        limpar_tela()
+        cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser removido", "REMOVER POR CPF")
+        if cpf is not None:
+            while not val_cpf.validacao_de_cpf(cpf):
+                cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "REMOVER POR CPF")
                 if cpf is None:
                     break
-                while not val_cpf.validacao_de_cpf(cpf):
-                    cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "REMOVER POR CPF")
-                    if cpf is None:
-                        break
-                if cpf is None:
-                    break
-
+            if cpf is not None:
                 cpf_criptografado = crip.criptografar_cpf(cpf)
                 cursor.execute('SELECT * FROM eleitores WHERE cpf = %s', (cpf_criptografado,))
                 eleitor = cursor.fetchone()
@@ -115,18 +112,15 @@ def remocao_eleitores():
                     console.print("\nEleitor não cadastrado.", style="bold yellow")
                     input("\nPressione Enter para continuar inserir novamente...")
 
-            case 2:
-                limpar_tela()
-                titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor a ser removido", "REMOVER POR TÍTULO")
+    elif opcao == 2:
+        limpar_tela()
+        titulo_eleitor = ge.input_cancelavel("Digite o Título de Eleitor a ser removido", "REMOVER POR TÍTULO")
+        if titulo_eleitor is not None:
+            while not val_tit.validar_titulo(titulo_eleitor):
+                titulo_eleitor = ge.input_cancelavel("Título inválido. Digite novamente", "REMOVER POR TÍTULO")
                 if titulo_eleitor is None:
                     break
-                while not val_tit.validar_titulo(titulo_eleitor):
-                    titulo_eleitor = ge.input_cancelavel("Título inválido. Digite novamente", "REMOVER POR TÍTULO")
-                    if titulo_eleitor is None:
-                        break
-                if titulo_eleitor is None:
-                    break
-
+            if titulo_eleitor is not None:
                 cursor.execute('SELECT * FROM eleitores WHERE titulo_eleitor = %s', (titulo_eleitor,))
                 eleitor = cursor.fetchone()
                 if eleitor is None:
@@ -134,30 +128,28 @@ def remocao_eleitores():
                     console.print("\nEleitor não cadastrado.", style="bold yellow")
                     input("\nPressione Enter para continuar inserir novamente...")
 
-        if eleitor is not None:
+    if eleitor is not None:
+        limpar_tela()
+        exibir_tabela_eleitor(eleitor)
+
+        conteudo_remover = (
+            "[bold bright_white][1][/bold bright_white]  Sim\n"
+            "[dim]──────────────────────────────[/dim]\n"
+            "[dim][2]  Não[/dim]"
+        )
+        console.print(Panel(Align.center(conteudo_remover), title="[bold bright_white]CONFIRMAR REMOÇÃO[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
+        confirmacao = ge.obter_entrada_inteira_valida("Opção escolhida: ", 1, 2)
+
+        if confirmacao == 1:
             limpar_tela()
-            exibir_tabela_eleitor(eleitor)
-
-            conteudo_remover = (
-                "[bold bright_white][1][/bold bright_white]  Sim\n"
-                "[dim]──────────────────────────────[/dim]\n"
-                "[dim][2]  Não[/dim]"
-            )
-            console.print(Panel(Align.center(conteudo_remover), title="[bold bright_white]CONFIRMAR REMOÇÃO[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
-            confirmacao = ge.obter_entrada_inteira_valida("Opção escolhida: ", 1, 2)
-
-            if confirmacao == 1:
-                limpar_tela()
-                cursor.execute('DELETE FROM eleitores WHERE id = %s', (eleitor['id'],))
-                conexao.commit()
-                console.print("\nEleitor removido com sucesso.", style="bold green")
-                conf.confirmacao()
-                break
-            else:
-                limpar_tela()
-                console.print("\nRemoção cancelada pelo usuário.", style="bold yellow")
-                conf.confirmacao()
-                break
+            cursor.execute('DELETE FROM eleitores WHERE id = %s', (eleitor['id'],))
+            conexao.commit()
+            console.print("\nEleitor removido com sucesso.", style="bold green")
+            conf.confirmacao()
+        else:
+            limpar_tela()
+            console.print("\nRemoção cancelada pelo usuário.", style="bold yellow")
+            conf.confirmacao()
 
     cursor.close()
     conexao.close()

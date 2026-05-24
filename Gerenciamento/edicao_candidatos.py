@@ -172,6 +172,11 @@ def edicao_candidatos():
                     console.print("Partido igual ao atual. Nenhuma alteração feita.", style="bold yellow")
                     sleep(1.5)
                     continue
+                cursor.execute("SELECT COUNT(*) AS cnt FROM candidatos WHERE partido = %s AND id <> %s", (novo_partido, id_candidato))
+                if cursor.fetchone()['cnt'] >= 1:
+                    console.print("Partido já em uso por outro candidato.", style="bold yellow")
+                    sleep(1.5)
+                    continue
                 editado = 1
                 cursor.execute('UPDATE candidatos SET partido = %s WHERE id = %s', (novo_partido, id_candidato))
                 conexao.commit()
@@ -192,6 +197,11 @@ def edicao_candidatos():
                     continue
                 if nova_sigla == candidato['sigla_partido']:
                     console.print("Sigla igual à atual. Nenhuma alteração feita.", style="bold yellow")
+                    sleep(1.5)
+                    continue
+                cursor.execute("SELECT COUNT(*) AS cnt FROM candidatos WHERE sigla_partido = %s AND id <> %s", (nova_sigla, id_candidato))
+                if cursor.fetchone()['cnt'] >= 1:
+                    console.print("Sigla já em uso por outro candidato.", style="bold yellow")
                     sleep(1.5)
                     continue
                 editado = 1

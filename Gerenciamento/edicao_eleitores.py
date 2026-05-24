@@ -115,8 +115,6 @@ def edicao_eleitores():
                 return None
 
             cursor.execute('SELECT id FROM eleitores WHERE cpf = %s', (crip.criptografar_cpf(cpf),))
-            if ver_cpf.verificar_cpf_banco(crip.criptografar_cpf(cpf)) == (0,):
-                console.print("\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
         case 2:
             limpar_tela()
             tit = ge.input_cancelavel("Digite o Título de Eleitor a ser editado", "EDITAR POR TÍTULO")
@@ -132,11 +130,12 @@ def edicao_eleitores():
                 return None
 
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
-            if ver_cpf.verificar_cpf_banco(tit) == (0,):
-                console.print("\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
 
     eleitor = cursor.fetchone()
     if eleitor is None:
+        console.print("\n*** Eleitor não cadastrado! *** \nRealizar o cadastramento no Menu Gerenciamento de Eleitores.", style="bold yellow")
+        cursor.close()
+        conexao.close()
         return confirmacao.confirmacao()
     id_eleitor = eleitor['id']
 
@@ -263,15 +262,13 @@ def edicao_eleitores():
                         limpar_tela()
                     case 4:
                         limpar_tela()
-                        novo_mesario = ge.input_cancelavel('\nMesário: \n 1 - SIM \n 2 - NÃO')
+                        novo_mesario = ge.obter_entrada_inteira_valida('Mesário?\n1 - SIM\n2 - NÃO\nDigite uma opção: ', 1, 2)
 
-                        if novo_mesario is None:
+                        if not novo_mesario:
                             limpar_tela()
                             continue
 
-                        elif novo_mesario == 2:
-                            novo_mesario = 0
-                            limpar_tela()
+                        novo_mesario = 1 if novo_mesario == 1 else 0
 
                         editado = 1
                         cursor.execute('''
