@@ -27,40 +27,30 @@ def verificar_candidato(partido, sigla_partido, numero_votacao):
     conexao = conexao_banco.conexao_banco()
     cursor = conexao.cursor()
 
-    query_partido = "SELECT COUNT(*) FROM candidatos WHERE partido = %s"
+    try:
+        cursor.execute("SELECT COUNT(*) FROM candidatos WHERE partido = %s", (partido,))
+        if cursor.fetchone()[0] > 0:
+            limpar_tela()
+            console.print("Apenas um candidato por partido é permitido", style="bold yellow")
+            sleep(1.5)
+            return False
 
-    cursor.execute(query_partido, (partido,))
-    resultado_partido = cursor.fetchone()
+        cursor.execute("SELECT COUNT(*) FROM candidatos WHERE sigla_partido = %s", (sigla_partido,))
+        if cursor.fetchone()[0] > 0:
+            limpar_tela()
+            console.print("Apenas um candidato por partido é permitido", style="bold yellow")
+            sleep(1.5)
+            return False
 
-    if resultado_partido == (1,):
-        limpar_tela()
-        console.print("Apenas um candidato por partido é permitido", style="bold yellow")
-        sleep(1.5)
-        return False
+        cursor.execute("SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s", (numero_votacao,))
+        if cursor.fetchone()[0] > 0:
+            limpar_tela()
+            console.print("Número de Votação já cadastrado", style="bold yellow")
+            sleep(1.5)
+            return False
 
-    query_sigla_partido = "SELECT COUNT(*) FROM candidatos WHERE sigla_partido = %s"
+        return True
 
-    cursor.execute(query_sigla_partido, (sigla_partido,))
-    resultado_sigla_partido = cursor.fetchone()
-
-    if resultado_sigla_partido == (1,):
-        limpar_tela()
-        console.print("Apenas um candidato por partido é permitido", style="bold yellow")
-        sleep(1.5)
-        return False
-
-    query_numero_votacao = "SELECT COUNT(*) FROM candidatos WHERE numero_votacao = %s"
-
-    cursor.execute(query_numero_votacao, (numero_votacao,))
-    resultado_votacao = cursor.fetchone()
-
-    if resultado_votacao == (1,):
-        limpar_tela()
-        console.print("Número de Votação já cadastrado", style="bold yellow")
-        sleep(1.5)
-        return False
-
-    cursor.close()
-    conexao.close()
-
-    return True
+    finally:
+        cursor.close()
+        conexao.close()
