@@ -17,10 +17,11 @@ def conexao_banco():
         None.
 
     Returns:
-        mysql.connector.connection.MySQLConnection ou None: Retorna o objeto de
-        conexão ativa se for bem-sucedido, ou None se ocorrer um erro do MySQL.
+        mysql.connector.connection.MySQLConnection: O objeto de conexão ativa com o banco.
 
     Raises:
+        SystemExit: Se a conexão com o MySQL falhar. Encerra o programa com uma mensagem
+        clara, em vez de retornar None e quebrar adiante com AttributeError.
         KeyError: Se alguma das variáveis de ambiente obrigatórias ('DB_USER',
         'DB_PASSWORD' ou 'DB_NAME') não estiver definida no sistema.
         """
@@ -34,4 +35,4 @@ def conexao_banco():
         return conexao
     except mysql.connector.Error as err:
         print(f"Erro de conexão: {err}")
-        return None
+        raise SystemExit("Não foi possível conectar ao banco de dados. Verifique se o MySQL está ativo e o arquivo .env.")
