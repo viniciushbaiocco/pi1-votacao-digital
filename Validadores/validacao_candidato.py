@@ -56,7 +56,7 @@ def validacao_numero_votacao(numero_votacao):
         limpar_tela()
         return False
 
-    if len(numero_votacao) < 2 or len(str(numero_votacao)) > 2:
+    if len(numero_votacao) != 2:
         console.print("\nNúmero de Votação INVÁLIDO", style="bold red")
         console.print("\nNúmero de Votação deve conter apenas dois dígitos", style="bold yellow")
         sleep(1.5)
