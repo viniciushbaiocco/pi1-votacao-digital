@@ -52,8 +52,6 @@ def encerrar_sistema_votacao(id_sessao):
 
         limpar_tela()
 
-        cursor = conexao.cursor()
-
         resposta = ge.input_cancelavel("Deseja realmente encerrar o sistema de votação? "
                                        "\n[bold white][1][/bold white] Sim", "Encerrar Sistema")
 
@@ -69,7 +67,7 @@ def encerrar_sistema_votacao(id_sessao):
             confirmacao_chave = ge.input_cancelavel("Confirme sua chave de acesso pessoal", "CONFIRMAÇÃO DE ENCERRAMENTO")
             if confirmacao_chave is None:
                 return False
-            confirmacao_chave = confirmacao_chave.strip().upper()
+            confirmacao_chave = validacao_chave_acesso.remover_acentos(confirmacao_chave.strip()).upper()
 
             if not validacao_chave_acesso.validar_chave_acesso(confirmacao_chave):
                 limpar_tela()
@@ -124,7 +122,7 @@ def encerrar_sistema_votacao(id_sessao):
 
         return True
 
-    except:
+    except Exception:
         limpar_tela()
         console.print("\nErro ao registrar encerramento.", style="bold red")
         if conexao:
@@ -133,5 +131,4 @@ def encerrar_sistema_votacao(id_sessao):
 
     finally:
         if conexao:
-            cursor.close()
             conexao.close()
