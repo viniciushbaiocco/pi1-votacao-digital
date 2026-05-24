@@ -52,6 +52,21 @@ def exibir_progresso_votacao(cpf_4=None, titulo=None, chave=None):
     console.print(Align.center(tabela))
 
 def exibir_candidato(candidato):
+    """
+    Renderiza um painel visual com os dados do candidato selecionado pelo eleitor.
+
+    A função monta um painel centralizado via biblioteca Rich exibindo o nome, o
+    partido e o número eleitoral do candidato. É utilizada na etapa de votação para
+    que o eleitor revise e confirme visualmente a sua escolha antes de o voto ser
+    efetivamente computado.
+
+    Args:
+        candidato (dict): Dicionário com os dados do candidato, contendo as chaves
+        'nome', 'partido' e 'numero_votacao'.
+
+    Returns:
+        None: A função realiza apenas a renderização do componente visual na CLI.
+    """
     conteudo = (
         f"[bright_white]Nome:[/bright_white]{candidato['nome']}\n"
         f"[bright_white]Partido:[/bright_white]{candidato['partido']}\n"
@@ -70,11 +85,11 @@ def sistema_voto(id_sessao):
         Título e Chave). Todos os inputs passam por validação de formato e, se cancelados
         pelo usuário, fecham o banco de dados e interrompem o fluxo com segurança.
     2.  Validação Criptográfica e Segurança Antifraude: Transforma os dados locais em hashes,
-        valida o cadastro do cidadão no banco e checa se ele já votou (`ver_votou == (0,)`).
+        valida a identidade do cidadão (título + CPF + chave na mesma consulta) e checa se já votou.
         Caso seja detectada uma tentativa de voto duplo, bloqueia a operação e grava alertas
         imediatos nos arquivos de auditoria.
     3.  Escolha do Candidato: Captura o número digitado. Se não existir, oferece um fluxo de
-        contingência para confirmação de voto nulo (atribuindo ID '00'). Se existir, exibe o
+        contingência para confirmação de voto nulo (número '00'). Se existir, exibe o
         painel do candidato para revisão visual e confirmação de intenção do eleitor.
 
     4.  Gravação e Anonimato: Gera um protocolo de auditoria alfanumérico único desvinculado de
@@ -175,7 +190,7 @@ def sistema_voto(id_sessao):
         conexao.close()
         return
 
-    if ver_eleit_vot.verificacao_eleitor_voto(chave_acesso) != (0,):
+    if ver_eleit_vot.verificacao_eleitor_voto(chave_acesso)[0] != 0:
         limpar_tela()
         console.print('\n[bold red]Erro, tentativa de voto duplo.[/bold red]')
         voto_duplo.ocorrencia_voto_duplo(id_sessao)
