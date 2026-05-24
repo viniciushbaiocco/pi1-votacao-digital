@@ -1,5 +1,5 @@
 from rich.console import Console
-from datetime import datetime
+from Ocorrencias.registro import registrar_ocorrencia
 from Validadores import confirmacao
 import os
 
@@ -27,10 +27,7 @@ def ocorrencia_abertura_urna(id_sessao):
     Returns:
         None: A função realiza apenas escrita em arquivo físico (I/O), sem retornar valor.
     """
-    with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-        agora = datetime.now()
-        sem_milissegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
 def imprimir_ocorrencia_abertura_urna():

@@ -1,5 +1,5 @@
 import os
-from datetime import datetime
+from Ocorrencias.registro import registrar_ocorrencia
 from rich.console import Console
 from Validadores import confirmacao
 
@@ -26,10 +26,7 @@ def ocorrencia_voto_computado(id_sessao):
     Returns:
         None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.
     """
-    with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-        agora = datetime.now()
-        sem_milissegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] Voto Computado!")
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "Voto Computado!")
 
 
 def imprimir_voto_computado():

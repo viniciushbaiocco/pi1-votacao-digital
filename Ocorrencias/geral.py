@@ -1,5 +1,5 @@
 from rich.console import Console
-from datetime import datetime
+from Ocorrencias.registro import registrar_ocorrencia
 from Validadores import confirmacao
 import os
 
@@ -25,10 +25,7 @@ def ocorrencia_abertura_urna(id_sessao):
     Returns:
         None: A função realiza apenas escrita em arquivo físico (I/O).
     """
-    with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-        agora = datetime.now()
-        sem_milissegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "ABERTURA: Votação iniciada com sucesso. Total de votos zerado.")
 
 
 def ocorrencia_acesso_negado(id_sessao):
@@ -44,10 +41,7 @@ def ocorrencia_acesso_negado(id_sessao):
     Returns:
         None: A função realiza apenas escrita em arquivo físico (I/O).
     """
-    with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-        agora = datetime.now()
-        sem_milissegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ALERTA: Validação do mesário negado")
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "ALERTA: Validação do mesário negado")
 
 
 def ocorrencia_encerramento_urna(id_sessao):
@@ -63,10 +57,7 @@ def ocorrencia_encerramento_urna(id_sessao):
     Returns:
         None: A função realiza apenas escrita em arquivo físico (I/O).
     """
-    with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-        agora = datetime.now()
-        sem_milissegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "ENCERRAMENTO: Votação encerrada. Total de votos registrados.")
 
 
 def ocorrencia_voto_computado(id_sessao):
@@ -82,10 +73,7 @@ def ocorrencia_voto_computado(id_sessao):
     Returns:
         None: A função realiza apenas escrita em arquivo físico (I/O).
     """
-    with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-        agora = datetime.now()
-        sem_milissegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] Voto Computado!")
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "Voto Computado!")
 
 
 def ocorrencia_voto_duplo(id_sessao):
@@ -102,10 +90,7 @@ def ocorrencia_voto_duplo(id_sessao):
     Returns:
         None: A função realiza apenas escrita em arquivo físico (I/O).
     """
-    with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-        agora = datetime.now()
-        sem_milissegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ALERTA: Tentativa de Voto Duplo")
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "ALERTA: Tentativa de Voto Duplo")
 
 
 def imprimir_ocorrencias_por_sessao():

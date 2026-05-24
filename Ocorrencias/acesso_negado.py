@@ -1,5 +1,5 @@
 from rich.console import Console
-from datetime import datetime
+from Ocorrencias.registro import registrar_ocorrencia
 from Validadores import confirmacao
 import os
 
@@ -27,10 +27,7 @@ def ocorrencia_acesso_negado(id_sessao):
     Returns:
         None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.
     """
-    with open(CAMINHO_ARQUIVO, "a", encoding="utf-8") as arq:
-        agora = datetime.now()
-        sem_milissegundos = agora.replace(microsecond=0)
-        arq.write(f"\n[SESSÃO: {id_sessao}] [{sem_milissegundos}] ALERTA: Validação do mesário negado")
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "ALERTA: Validação do mesário negado")
 
 
 def imprimir_ocorrencia_acesso_negado():
