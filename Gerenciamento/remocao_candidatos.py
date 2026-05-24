@@ -12,23 +12,19 @@ console = Console(highlight=False)
 
 def exibir_tabela_candidato(candidato):
     """
-    Gerencia a interface interativa e executa a exclusão de candidatos no sistema.
+    Exibe uma tabela estilizada no terminal com os dados do candidato a ser removido.
 
-    A função localiza o candidato no banco de dados por meio do número de votação.
-    Garante a integridade do sistema impedindo estritamente a remoção do candidato
-    com número '00' (reservado para computação de votos nulos).
-
-    Caso o candidato seja elegível para remoção, seus dados são exibidos em uma tabela
-    e um painel de confirmação é apresentado. Se o usuário confirmar a operação, o
-    registro é deletado permanentemente via comando SQL DELETE e as alterações são
-    consolidadas com um commit. Caso contrário, a ação é abortada com segurança.
+    Utiliza a biblioteca Rich para renderizar uma tabela centralizada, permitindo que
+    o usuário confira os dados do candidato (ID, Nome, Partido, Sigla e Número de Votação)
+    antes de confirmar a exclusão.
 
     Args:
-        None.
+        candidato (dict): Dicionário com os dados do candidato extraídos do banco de
+        dados. Deve possuir as chaves: 'id', 'nome', 'partido', 'sigla_partido' e
+        'numero_votacao'.
 
     Returns:
-        None: A função gerencia entradas e saídas no terminal e interações com a
-        base de dados, encerrando seus fluxos locais por meio de retornos antecipados.
+        None: A função realiza apenas a impressão dos dados no terminal, sem retornar valor.
     """
     tabela = Table(
         title="Candidato a ser Removido",
