@@ -206,7 +206,7 @@ def edicao_eleitores():
                             limpar_tela()
                             sleep(1.5)
                             continue
-                        while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo) == (1,):
+                        while ver_tit.verificar_titulo_de_eleitor_banco(novo_titulo)[0] > 0:
                             limpar_tela()
                             novo_titulo = ge.input_cancelavel("Título já cadastrado. Digite novamente", "EDITAR TÍTULO")
                             if novo_titulo is None:
@@ -243,7 +243,7 @@ def edicao_eleitores():
                             limpar_tela()
                             sleep(1.5)
                             continue
-                        while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado) == (1,):
+                        while ver_cpf.verificar_cpf_banco(novo_cpf_criptografado)[0] > 0:
                             novo_cpf = ge.input_cancelavel("CPF já cadastrado. Digite novamente", "EDITAR CPF")
                             if novo_cpf is None:
                                 limpar_tela()
@@ -292,5 +292,9 @@ def edicao_eleitores():
             conexao.close()
             return confirmacao.confirmacao()
         case 2:
+            cursor.close()
+            conexao.close()
             return confirmacao.confirmacao()
+    cursor.close()
+    conexao.close()
     return None
