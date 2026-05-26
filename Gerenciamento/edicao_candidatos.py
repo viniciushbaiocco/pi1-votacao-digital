@@ -168,6 +168,7 @@ def edicao_candidatos():
                         break
                 if novo_partido is None:
                     continue
+                novo_partido = " ".join(novo_partido.split())
                 if novo_partido == candidato['partido']:
                     console.print("Partido igual ao atual. Nenhuma alteração feita.", style="bold yellow")
                     sleep(1.5)
@@ -187,12 +188,12 @@ def edicao_candidatos():
                 nova_sigla = ge.input_cancelavel("Nova Sigla do Partido", "EDITAR SIGLA")
                 if nova_sigla is None:
                     continue
-                nova_sigla = nova_sigla.upper()
+                nova_sigla = nova_sigla.replace(" ", "").upper()
                 while not val_cand.validacao_sigla_partido(nova_sigla):
                     nova_sigla = ge.input_cancelavel("Sigla inválida. Digite novamente", "EDITAR SIGLA")
                     if nova_sigla is None:
                         break
-                    nova_sigla = nova_sigla.upper()
+                    nova_sigla = nova_sigla.replace(" ", "").upper()
                 if nova_sigla is None:
                     continue
                 if nova_sigla == candidato['sigla_partido']:
@@ -214,10 +215,12 @@ def edicao_candidatos():
                 novo_numero = ge.input_cancelavel("Novo Número de Votação", "EDITAR NÚMERO")
                 if novo_numero is None:
                     continue
+                novo_numero = novo_numero.replace(" ", "")
                 while not val_cand.validacao_numero_votacao(novo_numero):
                     novo_numero = ge.input_cancelavel("Número inválido. Digite novamente", "EDITAR NÚMERO")
                     if novo_numero is None:
                         break
+                    novo_numero = novo_numero.replace(" ", "")
                 if novo_numero is None:
                     continue
                 if novo_numero == '00':
