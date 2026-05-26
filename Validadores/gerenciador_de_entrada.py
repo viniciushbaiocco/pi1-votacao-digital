@@ -34,7 +34,7 @@ def input_cancelavel(prompt, titulo=""):
     valor = input("» ")
     if valor.strip().upper() == "X":
         return None
-    return valor
+    return valor.strip()
 
 def obter_entrada_inteira_valida(mensagem, min_val, max_val):
     """
