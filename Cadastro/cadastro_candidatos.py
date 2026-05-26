@@ -87,13 +87,14 @@ def cadastrar_candidato():
         partido = ge.input_cancelavel("Partido inválido. Digite novamente", "PARTIDO")
         if partido is None:
             return None
+    partido = " ".join(partido.split())
 
     limpar_tela()
     exibir_progresso(nome=nome, partido=partido)
     sigla = ge.input_cancelavel("Digite a Sigla do Partido (2 a 6 letras)", "SIGLA DO PARTIDO")
     if sigla is None:
         return None
-    sigla = sigla.upper()
+    sigla = sigla.replace(" ", "").upper()
 
     while not validacao_candidato.validacao_sigla_partido(sigla):
         limpar_tela()
@@ -101,13 +102,14 @@ def cadastrar_candidato():
         sigla = ge.input_cancelavel("Sigla inválida. Digite novamente", "SIGLA DO PARTIDO")
         if sigla is None:
             return None
-        sigla = sigla.upper()
+        sigla = sigla.replace(" ", "").upper()
 
     limpar_tela()
     exibir_progresso(nome=nome, partido=partido, sigla=sigla)
     numero = ge.input_cancelavel("Digite o Número de Votação (2 dígitos)", "NÚMERO DE VOTAÇÃO")
     if numero is None:
         return None
+    numero = numero.replace(" ", "")
 
     while not validacao_candidato.validacao_numero_votacao(numero):
         limpar_tela()
@@ -115,6 +117,7 @@ def cadastrar_candidato():
         numero = ge.input_cancelavel("Número inválido. Digite novamente", "NÚMERO DE VOTAÇÃO")
         if numero is None:
             return None
+        numero = numero.replace(" ", "")
 
     if numero == '00':
         limpar_tela()
