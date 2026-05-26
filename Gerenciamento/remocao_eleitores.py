@@ -121,6 +121,7 @@ def remocao_eleitores():
                 if titulo_eleitor is None:
                     break
             if titulo_eleitor is not None:
+                titulo_eleitor = titulo_eleitor.replace(" ", "")
                 cursor.execute('SELECT * FROM eleitores WHERE titulo_eleitor = %s', (titulo_eleitor,))
                 eleitor = cursor.fetchone()
                 if eleitor is None:

@@ -63,7 +63,7 @@ def recuperar_chave():
         cursor.close()
         conexao.close()
         return
-    titulo = titulo.strip()
+    titulo = titulo.replace(" ", "")
 
     while not val_tit.validar_titulo(titulo):
         limpar_tela()
@@ -72,7 +72,7 @@ def recuperar_chave():
             cursor.close()
             conexao.close()
             return
-        titulo = titulo.strip()
+        titulo = titulo.replace(" ", "")
 
     cpf_criptografado = cripto.criptografar_cpf(cpf)
     cursor.execute(

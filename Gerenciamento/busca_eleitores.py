@@ -117,6 +117,7 @@ def busca_eleitor():
                     limpar_tela()
                     break
             if cpf is not None:
+                cpf = cpf.replace(" ", "")
                 cpf_criptografado = cripto.criptografar_cpf(cpf)
                 if ver_cpf.verificar_cpf_banco(cpf_criptografado)[0] == 1:
                     cursor.execute(
@@ -141,6 +142,7 @@ def busca_eleitor():
                     limpar_tela()
                     break
             if titulo_eleitor is not None:
+                titulo_eleitor = titulo_eleitor.replace(" ", "")
                 if ver_titulo.verificar_titulo_de_eleitor_banco(titulo_eleitor)[0] == 1:
                     cursor.execute(
                         "SELECT id, nome, titulo_eleitor, mesario, status_votacao FROM eleitores WHERE titulo_eleitor = %s",

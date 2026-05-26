@@ -109,6 +109,7 @@ def cadastrar_eleitor():
     if cpf is None:
         return None
 
+    cpf = cpf.replace(" ", "")
     cpf_criptografado = cripto.criptografar_cpf(cpf)
     cpf_no_banco = verificacao_cpf_banco.verificar_cpf_banco(cpf_criptografado)
     if cpf_no_banco[0] == 1:

@@ -129,6 +129,7 @@ def edicao_eleitores():
                 cursor.close(); conexao.close()
                 return None
 
+            tit = tit.replace(" ", "")
             cursor.execute('SELECT id FROM eleitores WHERE titulo_eleitor = %s', (tit,))
 
     eleitor = cursor.fetchone()
@@ -201,6 +202,7 @@ def edicao_eleitores():
                         if novo_titulo is None:
                             limpar_tela()
                             continue
+                        novo_titulo = novo_titulo.replace(" ", "")
                         if novo_titulo == eleitor['titulo_eleitor']:
                             console.print("Título igual ao atual. Nenhuma alteração feita.", style="bold yellow")
                             limpar_tela()
