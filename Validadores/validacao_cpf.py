@@ -13,7 +13,7 @@ def validacao_de_cpf(cpf_digitado_usuario):
         bool: True se o CPF for válido, False caso contrário.
     """
     # Limpando
-    cpf_limpo = cpf_digitado_usuario.replace(".", "").replace("-", "")
+    cpf_limpo = cpf_digitado_usuario.replace(".", "").replace("-", "").replace(" ", "")
 
     # Letras
     if not cpf_limpo.isdigit():
