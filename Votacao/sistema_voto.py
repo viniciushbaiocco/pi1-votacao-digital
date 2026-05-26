@@ -130,6 +130,8 @@ def sistema_voto(id_sessao):
         conexao.close()
         return
 
+    cpf_4 = cpf_4.replace(" ", "")
+
     limpar_tela()
     exibir_progresso_votacao(cpf_4=cpf_4)
     titulo = ge.input_cancelavel("Digite seu Título de Eleitor", "IDENTIFICAÇÃO")
@@ -138,7 +140,7 @@ def sistema_voto(id_sessao):
         conexao.close()
         return
 
-    titulo = titulo.strip()
+    titulo = titulo.replace(" ", "")
     titulo_valido = val_tit.validar_titulo(titulo)
     while not titulo_valido:
         limpar_tela()
@@ -146,7 +148,7 @@ def sistema_voto(id_sessao):
         titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO")
         if titulo is None:
             break
-        titulo = titulo.strip()
+        titulo = titulo.replace(" ", "")
         titulo_valido = val_tit.validar_titulo(titulo)
     if titulo is None:
         cursor.close()
