@@ -9,6 +9,3 @@ INSERT INTO candidatos (nome, partido, sigla_partido, numero_votacao) VALUES
 ('Gisele Rocha', 'Voz Ativa', 'VA', '70'),
 ('Helder Matos', 'Caminho Novo', 'CN', '80');
 
--- Inserindo o candidato para Votos Nulos
-INSERT INTO candidatos (nome, partido, sigla_partido, numero_votacao) VALUES 
-('Voto Nulo', 'Nulo', 'NULO', '00');
