@@ -119,7 +119,7 @@ def recuperar_chave():
         palavra = ge.input_cancelavel("Palavra inválida. Digite novamente", "PALAVRA-CHAVE DE BACKUP")
         if palavra is None:
             return
-        palavra = palavra.upper()
+        palavra = palavra.replace(" ", "").upper()
 
     palavra_criptografada = cripto.criptografar_palavra_chave(palavra)
 
