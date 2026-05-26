@@ -177,14 +177,14 @@ def cadastrar_eleitor():
         exibir_progresso(cpf=cpf, nome=nome, titulo=titulo, mesario=mesario)
         palavra = ge.input_cancelavel("Digite uma palavra-chave (4 letras, sem acento)", "PALAVRA-CHAVE DE BACKUP")
         if palavra is not None:
-            palavra = palavra.upper()
+            palavra = palavra.replace(" ", "").upper()
             while not validacao_palavra_chave.validacao_palavra_chave(palavra):
                 limpar_tela()
                 exibir_progresso(cpf=cpf, nome=nome, titulo=titulo, mesario=mesario)
                 palavra = ge.input_cancelavel("Palavra inválida. Digite novamente", "PALAVRA-CHAVE DE BACKUP")
                 if palavra is None:
                     break
-                palavra = palavra.upper()
+                palavra = palavra.replace(" ", "").upper()
             if palavra is not None:
                 palavra_chave_criptografada = cripto.criptografar_palavra_chave(palavra)
 
