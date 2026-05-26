@@ -87,7 +87,7 @@ def autenticar_mesario(id_sessao):
         if titulo is None:
             return False
 
-        titulo = titulo.strip()
+        titulo = titulo.replace(" ", "")
         titulo_valido = val_tit.validar_titulo(titulo)
         while not titulo_valido:
             limpar_tela()
@@ -95,7 +95,7 @@ def autenticar_mesario(id_sessao):
             titulo = ge.input_cancelavel("Título inválido. Digite novamente", "IDENTIFICAÇÃO DO MESÁRIO")
             if titulo is None:
                 return False
-            titulo = titulo.strip()
+            titulo = titulo.replace(" ", "")
             titulo_valido = val_tit.validar_titulo(titulo)
 
         conexao = cb.conexao_banco()
@@ -129,6 +129,7 @@ def autenticar_mesario(id_sessao):
                 return False
             cpf_4_valido = val_cpf_vot.validar_cpf_voto(cpf_4)
 
+        cpf_4 = cpf_4.replace(" ", "")
         cpf_4_criptografado = crip.criptografar_cpf(cpf_4)
         conexao = cb.conexao_banco()
         cursor = conexao.cursor()
