@@ -14,7 +14,7 @@ def validar_titulo(titulo):
         bool: True se o Título de Eleitor for válido, False caso contrário.
     """
     # Limpando
-    titulo_limpo = titulo.replace(" ", "")
+    titulo_limpo = titulo.replace(".", "").replace("-", "").replace(" ", "")
 
     # Letras
     if not titulo_limpo.isdigit():
