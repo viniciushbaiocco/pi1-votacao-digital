@@ -1,3 +1,5 @@
+from rich.table import Table
+
 from database import conexao_banco
 from Visual.visual import carregar_pontos_loop, limpar_tela
 from Validadores.confirmacao import   confirmacao
@@ -49,6 +51,22 @@ def validar_integridade():
     conexao.close()
 
     carregar_pontos_loop(3, "Validando Integridade")
+
+    tabela = Table(
+        title="Validação de Integridade",
+        box=box.DOUBLE,
+        border_style="bold sandy_brown",
+        title_style="bold bright_white",
+        header_style="bold sandy_brown",
+        show_lines=True
+    )
+
+    tabela.add_column("Total de Votos", justify="center", style="bright_white")
+    tabela.add_column("Eleitores que Votaram", justify="center", style="bright_white")
+
+    tabela.add_row(str(total_votos), str(total_ja_votou))
+
+    console.print(Align.center(tabela))
 
     if total_votos == 0:
         console.print(Panel(Align.center("[bold yellow]Nenhum voto registrado para concluir a validação.[/bold yellow]"),
