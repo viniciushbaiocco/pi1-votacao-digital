@@ -45,9 +45,9 @@ def exibir_progresso_votacao(cpf_4=None, titulo=None, chave=None):
     tabela.add_column("Campo", style="bright_white", min_width=22)
     tabela.add_column("Valor", min_width=30)
 
-    tabela.add_row("CPF (4 primeiros dígitos)", f"[dim green]{cpf_4}[/dim green]" if cpf_4 is not None else "[dim]─[/dim]")
-    tabela.add_row("Título de Eleitor", f"[dim green]{titulo}[/dim green]" if titulo is not None else "[dim]─[/dim]")
-    tabela.add_row("Chave de Acesso", f"[dim green]Confirmada[/dim green]" if chave is not None else "[dim]─[/dim]")
+    tabela.add_row("CPF (4 primeiros dígitos)", f"[green]{cpf_4}[/green]" if cpf_4 is not None else "[dim]─[/dim]")
+    tabela.add_row("Título de Eleitor", f"[green]{titulo}[/green]" if titulo is not None else "[dim]─[/dim]")
+    tabela.add_row("Chave de Acesso", f"[green]Confirmada[/green]" if chave is not None else "[dim]─[/dim]")
 
     console.print(Align.center(tabela))
 
