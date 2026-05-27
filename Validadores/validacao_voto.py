@@ -31,13 +31,9 @@ def validacao_voto():
     executando_entrada = 0
     while (executando_entrada == 0):
         try:
-            voto = (input('\n Digite o número eleitoral do candidato que deseja votar: '))
+            voto = (input('\nDigite o número eleitoral do candidato que deseja votar: '))
             if int(voto) < 0:
                 console.print('\nErro: Opção inválida. Por favor, escolha uma opção positiva.', style="bold red")
-                sleep(1.5)
-                limpar_tela()
-            elif len(voto) != 2:
-                console.print('\nErro: Opção Inválida. O número eleitoral deve conter dois digitos.', style="bold red")
                 sleep(1.5)
                 limpar_tela()
             else:
