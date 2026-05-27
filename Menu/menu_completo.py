@@ -137,7 +137,7 @@ def menu_completo():
                                 votos_partido.votos_por_partido()
                             case 4:
                                 validacao_integridade.validar_integridade()
-                            case False:  # Voltar
+                            case False:
                                 executando_menu_resultados_votacao = 0
                 elif escolha_votacao == 3:
                     executando_menu_ocorrencias = 1
