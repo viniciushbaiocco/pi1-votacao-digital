@@ -50,7 +50,7 @@ def validar_integridade():
     cursor.close()
     conexao.close()
 
-    carregar_pontos_loop(3, "Validando Integridade")
+    carregar_pontos_loop(2, "Validando Integridade")
 
     tabela = Table(
         title="Validação de Integridade",

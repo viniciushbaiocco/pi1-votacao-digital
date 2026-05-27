@@ -104,7 +104,7 @@ def exibir_boletim_urna():
                     cursor.execute(query_verificar_tabela_votos)
                     verificar_tabela = cursor.fetchall()
 
-                    visual.carregar_pontos_loop(3, "Verificando Vencedor")
+                    visual.carregar_pontos_loop(2, "Verificando Vencedor")
                     time.sleep(1)
 
                     if not verificar_tabela:

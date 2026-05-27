@@ -38,7 +38,7 @@ def zeresima():
       cursor = conexao.cursor()
 
       limpar_tela()
-      carregar_pontos_loop(3, "Iniciando Zerésima")
+      carregar_pontos_loop(2, "Iniciando Zerésima")
 
       truncar_votos = "TRUNCATE votos;"
       cursor.execute(truncar_votos)

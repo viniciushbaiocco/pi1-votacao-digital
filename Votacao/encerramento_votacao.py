@@ -69,7 +69,7 @@ def encerrar_sistema_votacao(id_sessao):
             if not validacao_chave_acesso.validar_chave_acesso(confirmacao_chave):
                 limpar_tela()
                 console.print("\n[bold red]Chave inválida. Tente novamente.[/bold red]")
-                confirmacao.confirmacao()
+                input("\nPressione Enter para continuar...")
                 continue
 
             confirmacao_chave_criptografada = cripto.criptografar_chave_acesso(confirmacao_chave)
