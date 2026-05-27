@@ -58,14 +58,14 @@ def exibir_progresso(cpf=None, nome=None, titulo=None, mesario=None, palavra_cha
     elif mesario:
         tabela.add_row("Mesário", "[green]Sim[/green]")
     else:
-        tabela.add_row("Mesário", "[dim red]Não[/dim red]")
+        tabela.add_row("Mesário", "[red]Não[/red]")
 
     if palavra_chave is None:
         tabela.add_row("Palavra-chave de Backup", "[dim]─[/dim]")
     elif palavra_chave:
         tabela.add_row("Palavra-chave de Backup", "[green]Cadastrada[/green]")
     else:
-        tabela.add_row("Palavra-chave de Backup", "[dim]Não cadastrada[/dim]")
+        tabela.add_row("Palavra-chave de Backup", "[red]Não cadastrada[/red]")
 
     console.print(Align.center(tabela))
 
@@ -149,7 +149,7 @@ def cadastrar_eleitor():
     conteudo_mesario = (
         "[bold bright_white][1][/bold bright_white]  Sim\n"
         "[dim]──────────────────────────────[/dim]\n"
-        "[dim][X]  Não[/dim]"
+        "[red][X]  Não[/red]"
     )
     console.print(Panel(Align.center(conteudo_mesario), title="[bold bright_white]MESÁRIO[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
     resposta = ge.obter_entrada_inteira_valida("Escolha: ", 1, 1)
@@ -166,7 +166,7 @@ def cadastrar_eleitor():
     conteudo_backup = (
         "[bold bright_white][1][/bold bright_white]  Sim\n"
         "[dim]──────────────────────────────[/dim]\n"
-        "[dim][X]  Não[/dim]"
+        "[red][X]  Não[/red]"
     )
     console.print(Panel(Align.center(conteudo_backup), title="[bold bright_white]CADASTRAR PALAVRA-CHAVE DE BACKUP?[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
     opcao_backup = ge.obter_entrada_inteira_valida("Escolha: ", 1, 1)
@@ -219,10 +219,10 @@ def cadastrar_eleitor():
     tabela_final.add_column("Status de Votação", justify="center")
     tabela_final.add_column("Chave de Acesso",   style="bold yellow")
 
-    mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] else "[dim]Não[/dim]"
+    mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] else "[red]Não[/red]"
     tabela_final.add_row(
         str(eleitor['id']), eleitor['nome'], eleitor['titulo_eleitor'],
-        mesario_texto, "[dim]Não Votou[/dim]", chave_acesso_original
+        mesario_texto, "[red]Não Votou[/red]", chave_acesso_original
     )
 
     limpar_tela()
