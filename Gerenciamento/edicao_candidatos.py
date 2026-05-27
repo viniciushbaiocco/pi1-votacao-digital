@@ -116,7 +116,7 @@ def edicao_candidatos():
     conteudo_confirmar = (
         "[bold bright_white][1][/bold bright_white]  Sim\n"
         "[dim]──────────────────────────────[/dim]\n"
-        "[dim][2]  Não[/dim]"
+        "[red][2]  Não[/red]"
     )
     console.print(Panel(Align.center(conteudo_confirmar), title="[bold bright_white]CONFIRMAR EDIÇÃO[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
     opcao_confirmar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 2)
@@ -137,7 +137,7 @@ def edicao_candidatos():
             "[bold bright_white][4][/bold bright_white]  Número de Votação\n"
             "[dim]──────────────────────────────[/dim]\n"
             "[bold bright_white][5][/bold bright_white]  Confirmar\n"
-            "[dim red][X]  Cancelar[/dim red]"
+            "[red][X]  Cancelar[/red]"
         )
         console.print(Panel(Align.center(conteudo_campos), title="[bold bright_white]O QUE DESEJA EDITAR[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
         opcao_editar = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 5)

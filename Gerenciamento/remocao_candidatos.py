@@ -117,7 +117,7 @@ def remocao_candidatos():
     conteudo_remover = (
         "[bold bright_white][1][/bold bright_white]  Sim\n"
         "[dim]──────────────────────────────[/dim]\n"
-        "[dim][2]  Não[/dim]"
+        "[red][2]  Não[/red]"
     )
     console.print(Panel(Align.center(conteudo_remover), title="[bold bright_white]CONFIRMAR REMOÇÃO[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
     confirmacao = ge.obter_entrada_inteira_valida("Opção escolhida: ", 1, 2)

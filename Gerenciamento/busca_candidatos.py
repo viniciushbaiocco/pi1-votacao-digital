@@ -86,7 +86,7 @@ def busca_candidato():
         "[bold bright_white][1][/bold bright_white]  Buscar por Número de Votação\n"
         "[bold bright_white][2][/bold bright_white]  Buscar por Nome\n"
         "[dim]──────────────────────────────[/dim]\n"
-        "[dim][X]  Cancelar[/dim]"
+        "[red][X]  Cancelar[/red]"
     )
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]BUSCAR CANDIDATOS[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
 
