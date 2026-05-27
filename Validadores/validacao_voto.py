@@ -31,6 +31,8 @@ def validacao_voto():
     executando_entrada = 0
     while (executando_entrada == 0):
         try:
+            input("\nPressione Enter para continuar...")
+            limpar_tela()
             voto = (input('\nDigite o número eleitoral do candidato que deseja votar: '))
             if int(voto) < 0:
                 console.print('\nErro: Opção inválida. Por favor, escolha uma opção positiva.', style="bold red")
