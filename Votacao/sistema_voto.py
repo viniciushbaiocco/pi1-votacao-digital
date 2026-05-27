@@ -67,12 +67,30 @@ def exibir_candidato(candidato):
     Returns:
         None: A função realiza apenas a renderização do componente visual na CLI.
     """
-    conteudo = (
-        f"[bright_white]Nome:[/bright_white]{candidato['nome']}\n"
-        f"[bright_white]Partido:[/bright_white]{candidato['partido']}\n"
-        f"[bright_white]Número Eleitoral:[/bright_white]{candidato['numero_votacao']}"
+    tabela = Table(
+        title="Candidato",
+        box=box.DOUBLE,
+        border_style="bold chartreuse1",
+        title_style="bold bright_white",
+        header_style="bold chartreuse1",
+        show_lines=True
     )
-    console.print(Panel(conteudo, title="[bold bright_white]CANDIDATO[/bold bright_white]", border_style="bold chartreuse1", box=box.DOUBLE, padding=(1, 2)))
+
+    tabela.add_column("ID", justify="center", style="bright_white")
+    tabela.add_column("Nome", style="bright_white")
+    tabela.add_column("Partido", style="bright_white")
+    tabela.add_column("Sigla", justify="center", style="bright_white")
+    tabela.add_column("Número de Votação", justify="center", style="bright_white")
+
+    tabela.add_row(
+        str(candidato['id']),
+        candidato['nome'],
+        candidato['partido'],
+        candidato['sigla_partido'],
+        candidato['numero_votacao']
+    )
+
+    console.print(Align.center(tabela))
 
 def sistema_voto(id_sessao):
     """
