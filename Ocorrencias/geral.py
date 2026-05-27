@@ -92,6 +92,24 @@ def ocorrencia_voto_duplo(id_sessao):
     """
     registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "ALERTA: Tentativa de Voto Duplo")
 
+def ocorrencia_protocolo_votacao(id_sessao):
+    """
+    Cria ou atualiza o log de ocorrência para protocolo de votação.
+
+    A função abre o arquivo de log especificado em modo de anexação (append), captura
+    o carimbo de data e hora corrente do sistema (com resolução de segundos, limpando
+    os microssegundos) e grava uma nova linha de registro identificando um alerta de
+    falha de validação/autenticação para a sessão eleitoral fornecida.
+
+    Args:
+        id_sessao (str ou int): O identificador exclusivo da sessão de urna ativa
+            onde a falha de autenticação ocorreu.
+
+    Returns:
+        None: A função realiza exclusivamente escritas físicas em arquivos de log em disco.
+    """
+    registrar_ocorrencia(CAMINHO_ARQUIVO, id_sessao, "Protocolo de Votação Gerado")
+
 
 def imprimir_ocorrencias_por_sessao():
     """

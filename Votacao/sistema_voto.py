@@ -1,6 +1,6 @@
 from database import conexao_banco as conect
 from Ocorrencias import voto_computado
-from Ocorrencias import voto_duplo, geral
+from Ocorrencias import voto_duplo, geral, protocolo_votacao
 from Validadores import gerenciador_de_entrada as ge, validacao_voto as val_voto
 from criptografia import criptografia as crip
 from Verificadores import verificacao_eleitor_voto as ver_eleit_vot
@@ -245,9 +245,12 @@ def sistema_voto(id_sessao):
         cursor.execute("SELECT COUNT(*) AS total FROM votos WHERE protocolo_votacao = %s", (protocolo_cripto,))
 
     console.print(f"\n[bold bright_white]Seu protocolo de votação é: {protocolo}[/bold bright_white]")
+
     confirmacao.confirmacao()
 
     voto_computado.ocorrencia_voto_computado(id_sessao)
+    protocolo_votacao.ocorrencia_protocolo_votacao(id_sessao)
+    geral.ocorrencia_protocolo_votacao(id_sessao)
     geral.ocorrencia_voto_computado(id_sessao)
 
     data_hora = datetime.now()
