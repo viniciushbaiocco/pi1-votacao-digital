@@ -73,7 +73,7 @@ def exibir_menu_principal():
         "              [bold bright_white][1][/bold bright_white]  Gerenciamento\n"
         "              [bold bright_white][2][/bold bright_white]  Votação\n"
         "              [dim]──────────────────────────────[/dim]\n"
-        "              [dim red][X]  Finalizar Sistema[/dim red]"
+        "              [red][X]  Finalizar Sistema[/red]"
     )
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
 
