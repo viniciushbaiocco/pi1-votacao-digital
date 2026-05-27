@@ -252,7 +252,8 @@ def exibir_menu_ocorrencias():
         "                 [bold bright_white][3][/bold bright_white]  Encerramento de Urna\n"
         "                 [bold bright_white][4][/bold bright_white]  Voto Computado\n"
         "                 [bold bright_white][5][/bold bright_white]  Voto Duplo\n"
-        "                 [bold bright_white][6][/bold bright_white]  Gerais\n"
+        "                 [bold bright_white][6][/bold bright_white]  Protocolo de Votação\n"
+        "                 [bold bright_white][7][/bold bright_white]  Gerais\n"
         "                 [dim]──────────────────────────────[/dim]\n"
         "                 [red][X]  Voltar[/red]"
     )

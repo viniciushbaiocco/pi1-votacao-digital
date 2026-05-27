@@ -1,6 +1,6 @@
 from database import conexao_banco as conect
 from Ocorrencias import voto_computado
-from Ocorrencias import voto_duplo, geral
+from Ocorrencias import voto_duplo, geral, protocolo_votacao
 from Validadores import gerenciador_de_entrada as ge, validacao_voto as val_voto
 from criptografia import criptografia as crip
 from Verificadores import verificacao_eleitor_voto as ver_eleit_vot
@@ -45,9 +45,9 @@ def exibir_progresso_votacao(cpf_4=None, titulo=None, chave=None):
     tabela.add_column("Campo", style="bright_white", min_width=22)
     tabela.add_column("Valor", min_width=30)
 
-    tabela.add_row("CPF (4 primeiros dígitos)", f"[dim green]{cpf_4}[/dim green]" if cpf_4 is not None else "[dim]─[/dim]")
-    tabela.add_row("Título de Eleitor", f"[dim green]{titulo}[/dim green]" if titulo is not None else "[dim]─[/dim]")
-    tabela.add_row("Chave de Acesso", f"[dim green]Confirmada[/dim green]" if chave is not None else "[dim]─[/dim]")
+    tabela.add_row("CPF (4 primeiros dígitos)", f"[green]{cpf_4}[/green]" if cpf_4 is not None else "[dim]─[/dim]")
+    tabela.add_row("Título de Eleitor", f"[green]{titulo}[/green]" if titulo is not None else "[dim]─[/dim]")
+    tabela.add_row("Chave de Acesso", f"[green]Confirmada[/green]" if chave is not None else "[dim]─[/dim]")
 
     console.print(Align.center(tabela))
 
@@ -245,9 +245,12 @@ def sistema_voto(id_sessao):
         cursor.execute("SELECT COUNT(*) AS total FROM votos WHERE protocolo_votacao = %s", (protocolo_cripto,))
 
     console.print(f"\n[bold bright_white]Seu protocolo de votação é: {protocolo}[/bold bright_white]")
+
     confirmacao.confirmacao()
 
     voto_computado.ocorrencia_voto_computado(id_sessao)
+    protocolo_votacao.ocorrencia_protocolo_votacao(id_sessao)
+    geral.ocorrencia_protocolo_votacao(id_sessao)
     geral.ocorrencia_voto_computado(id_sessao)
 
     data_hora = datetime.now()

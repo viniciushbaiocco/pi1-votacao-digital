@@ -49,21 +49,21 @@ def exibir_progresso(cpf=None, nome=None, titulo=None, mesario=None, palavra_cha
     tabela.add_column("Campo", style="bright_white", min_width=20)
     tabela.add_column("Valor", min_width=30)
 
-    tabela.add_row("CPF",               f"[dim green]{cpf}[/dim green]"    if cpf    is not None else "[dim]─[/dim]")
-    tabela.add_row("Nome",              f"[dim green]{nome}[/dim green]"   if nome   is not None else "[dim]─[/dim]")
-    tabela.add_row("Título de Eleitor", f"[dim green]{titulo}[/dim green]" if titulo is not None else "[dim]─[/dim]")
+    tabela.add_row("CPF",               f"[green]{cpf}[/green]"    if cpf    is not None else "[dim]─[/dim]")
+    tabela.add_row("Nome",              f"[green]{nome}[/green]"   if nome   is not None else "[dim]─[/dim]")
+    tabela.add_row("Título de Eleitor", f"[green]{titulo}[/green]" if titulo is not None else "[dim]─[/dim]")
 
     if mesario is None:
         tabela.add_row("Mesário", "[dim]─[/dim]")
     elif mesario:
-        tabela.add_row("Mesário", "[dim green]Sim[/dim green]")
+        tabela.add_row("Mesário", "[green]Sim[/green]")
     else:
         tabela.add_row("Mesário", "[dim red]Não[/dim red]")
 
     if palavra_chave is None:
         tabela.add_row("Palavra-chave de Backup", "[dim]─[/dim]")
     elif palavra_chave:
-        tabela.add_row("Palavra-chave de Backup", "[dim green]Cadastrada[/dim green]")
+        tabela.add_row("Palavra-chave de Backup", "[green]Cadastrada[/green]")
     else:
         tabela.add_row("Palavra-chave de Backup", "[dim]Não cadastrada[/dim]")
 

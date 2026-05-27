@@ -3,7 +3,7 @@ from Validadores import gerenciador_de_entrada as ge
 from Gerenciamento import busca_eleitores, edicao_eleitores, listagem_eleitores, remocao_eleitores, recuperacao_chave
 from Gerenciamento import busca_candidatos, edicao_candidatos, listagem_candidatos, remocao_candidatos
 from Cadastro import cadastro_eleitores, cadastro_candidatos
-from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna, geral
+from Ocorrencias import acesso_negado, voto_computado, voto_duplo, abertura_urna, encerramento_urna, geral, protocolo_votacao
 from Votacao import abertura_votacao, encerramento_votacao, sistema_voto
 from rich.console import Console
 from Resultados import boletim_urna, estatistica_comparecimento, votos_partido, validacao_integridade
@@ -144,7 +144,7 @@ def menu_completo():
                     while executando_menu_ocorrencias == 1:
                         sm.exibir_menu_ocorrencias()
                         escolha_ocorrencia = ge.obter_entrada_inteira_valida(
-                            "Escolha uma opção: ", 1, 6)
+                            "Escolha uma opção: ", 1, 7)
 
                         match escolha_ocorrencia:
                             case 1:
@@ -163,6 +163,9 @@ def menu_completo():
                                 limpar_tela()
                                 voto_duplo.imprimir_voto_duplo()
                             case 6:
+                                limpar_tela()
+                                protocolo_votacao.imprimir_ocorrencia_protocolo_votacao()
+                            case 7:
                                 limpar_tela()
                                 geral.imprimir_ocorrencias_por_sessao()
                             case False:

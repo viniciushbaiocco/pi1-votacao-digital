@@ -42,10 +42,10 @@ def exibir_progresso(nome=None, partido=None, sigla=None, numero=None):
     tabela.add_column("Campo", style="bright_white", min_width=20)
     tabela.add_column("Valor", min_width=30)
 
-    tabela.add_row("Nome",              f"[dim green]{nome}[/dim green]"    if nome    is not None else "[dim]─[/dim]")
-    tabela.add_row("Partido",           f"[dim green]{partido}[/dim green]" if partido is not None else "[dim]─[/dim]")
-    tabela.add_row("Sigla do Partido",  f"[dim green]{sigla}[/dim green]"   if sigla   is not None else "[dim]─[/dim]")
-    tabela.add_row("Número de Votação", f"[dim green]{numero}[/dim green]"  if numero  is not None else "[dim]─[/dim]")
+    tabela.add_row("Nome",              f"[green]{nome}[/green]"    if nome    is not None else "[dim]─[/dim]")
+    tabela.add_row("Partido",           f"[green]{partido}[/green]" if partido is not None else "[dim]─[/dim]")
+    tabela.add_row("Sigla do Partido",  f"[green]{sigla}[/green]"   if sigla   is not None else "[dim]─[/dim]")
+    tabela.add_row("Número de Votação", f"[green]{numero}[/green]"  if numero  is not None else "[dim]─[/dim]")
 
     console.print(Align.center(tabela))
 
