@@ -62,12 +62,12 @@ def listagem_eleitores():
                 if eleitor['mesario'] == 1:
                     mesario = "[bold green]Sim[/bold green]"
                 else:
-                    mesario = "[dim]Não[/dim]"
+                    mesario = "[red]Não[/red]"
 
                 if eleitor['status_votacao'] == 1:
                     status_votacao = "[bold green]Já Votou[/bold green]"
                 else:
-                    status_votacao = "[dim]Não Votou[/dim]"
+                    status_votacao = "[red]Não Votou[/red]"
 
                 tabela.add_row(
                     str(eleitor['id']),

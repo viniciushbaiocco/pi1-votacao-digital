@@ -37,8 +37,8 @@ def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao, cp
         None: A função realiza apenas a impressão dos dados no terminal, sem retornar valor.
         """
 
-    mesario_texto  = "[bold green]Sim[/bold green]" if mesario == 1 else "[dim]Não[/dim]"
-    status_texto   = "[bold green]Já Votou[/bold green]" if status_votacao == 1 else "[dim]Não Votou[/dim]"
+    mesario_texto  = "[bold green]Sim[/bold green]" if mesario == 1 else "[red]Não[/red]"
+    status_texto   = "[bold green]Já Votou[/bold green]" if status_votacao == 1 else "[red]Não Votou[/red]"
 
     tabela = Table(
         title="Eleitor Encontrado",
@@ -95,7 +95,7 @@ def busca_eleitor():
         "[bold bright_white][1][/bold bright_white]  Buscar pelo CPF\n"
         "[bold bright_white][2][/bold bright_white]  Buscar pelo Título de Eleitor\n"
         "[dim]──────────────────────────────[/dim]\n"
-        "[dim][X]  Cancelar[/dim]"
+        "[red][X]  Cancelar[/red]"
     )
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]BUSCAR ELEITORES[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
 

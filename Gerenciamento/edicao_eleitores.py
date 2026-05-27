@@ -33,8 +33,8 @@ def exibir_tabela_eleitor(titulo, eleitor):
         None: A função apenas manipula saídas no console, não retornando valor.
     """
 
-    mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] == 1 else "[dim]Não[/dim]"
-    status_texto  = "[bold green]Já Votou[/bold green]" if eleitor['status_votacao'] == 1 else "[dim]Não Votou[/dim]"
+    mesario_texto = "[bold green]Sim[/bold green]" if eleitor['mesario'] == 1 else "[red]Não[/red]"
+    status_texto  = "[bold green]Já Votou[/bold green]" if eleitor['status_votacao'] == 1 else "[red]Não Votou[/red]"
     cpf_desc      = crip.descriptografar_cpf(eleitor['cpf'])
 
     tabela = Table(
@@ -88,7 +88,7 @@ def edicao_eleitores():
         "[bold bright_white][1][/bold bright_white]  Buscar pelo CPF\n"
         "[bold bright_white][2][/bold bright_white]  Buscar pelo Título de Eleitor\n"
         "[dim]──────────────────────────────[/dim]\n"
-        "[dim][X]  Cancelar[/dim]"
+        "[red][X]  Cancelar[/red]"
     )
     console.print(Panel(Align.center(conteudo), title="[bold bright_white]EDITAR ELEITORES[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
 
@@ -149,7 +149,7 @@ def edicao_eleitores():
     conteudo_confirmar = (
         "[bold bright_white][1][/bold bright_white]  Sim\n"
         "[dim]──────────────────────────────[/dim]\n"
-        "[dim][2]  Não[/dim]"
+        "[red][2]  Não[/red]"
     )
     console.print(Panel(Align.center(conteudo_confirmar), title="[bold bright_white]CONFIRMAR EDIÇÃO[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
     opcao2 = ge.obter_entrada_inteira_valida('\nDigite uma opção: ', 1, 2)
