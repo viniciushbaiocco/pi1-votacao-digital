@@ -78,7 +78,7 @@ def listagem_eleitores():
                 )
 
             console.print(Align.center(tabela))
-            console.print(f'\n Total de Eleitores Cadastrados: [bold white]{len(total_eleitores)}[/bold white]')
+            console.print(f'\nTotal de Eleitores Cadastrados: [bold white]{len(total_eleitores)}[/bold white]')
 
     except Exception as erro:
         console.print(f'\n Erro ao listar eleitores: {erro}', style="bold red")
