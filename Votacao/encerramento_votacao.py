@@ -92,7 +92,7 @@ def encerrar_sistema_votacao(id_sessao):
                 aviso = "[bold red]Esta foi sua última tentativa.[/bold red] O encerramento está bloqueado.\nRecupere sua chave para tentar novamente na próxima sessão.\n\n"
 
             console.print(Panel(
-                Align.center(f"{aviso}[bold bright_white][1][/bold bright_white]  Sim\n[dim]──────────────────────────────[/dim]\n[dim red][X]  Não[/dim red]"),
+                Align.center(f"{aviso}[bold bright_white][1][/bold bright_white]  Sim\n[dim]──────────────────────────────[/dim]\n[red][X]  Não[red]"),
                 title=titulo_painel,
                 border_style=borda_painel,
                 box=box.DOUBLE,
