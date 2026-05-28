@@ -1,7 +1,9 @@
+import time
 from database import conexao_banco as cb
-from Visual.visual import limpar_tela, carregar_pontos_loop
+from Visual.visual import limpar_tela
 from rich.console import Console
 from rich.table import Table
+from rich.panel import Panel
 from rich.align import Align
 from rich import box
 
@@ -38,24 +40,61 @@ def zeresima():
       cursor = conexao.cursor()
 
       limpar_tela()
-      carregar_pontos_loop(2, "Iniciando Zerésima")
+      console.print(Panel(
+            Align.center(
+                  "[bold bright_white]Verificando e zerando o sistema antes da votação...[/bold bright_white]\n"
+                  "[dim]Todos os votos e status dos eleitores serão reiniciados.[/dim]"
+            ),
+            title="[bold bright_white]INICIANDO ZERÉSIMA[/bold bright_white]",
+            border_style="bold green",
+            box=box.DOUBLE,
+            padding=(1, 4)
+      ))
+      time.sleep(2)
+      limpar_tela()
 
       truncar_votos = "TRUNCATE votos;"
       cursor.execute(truncar_votos)
       conexao.commit()
 
-      carregar_pontos_loop(2, "Eliminando todos os votos registrados na tabela 'Votos'")
+      console.print(Panel(
+            Align.center(
+                  "[bold green]✓[/bold green]  Tabela de votos limpa com sucesso.\n"
+                  "[dim]Todos os registros de votos foram eliminados.[/dim]"
+            ),
+            title="[bold bright_white]VOTOS ZERADOS[/bold bright_white]",
+            border_style="bold green",
+            box=box.DOUBLE,
+            padding=(1, 4)
+      ))
+      time.sleep(2)
+      limpar_tela()
 
       resetar_status_eleitores = "UPDATE eleitores SET status_votacao = 0;"
       cursor.execute(resetar_status_eleitores)
       conexao.commit()
 
+      console.print(Panel(
+            Align.center(
+                  "[bold green]✓[/bold green]  Status de votação dos eleitores redefinido.\n"
+                  "[dim]Todos os eleitores estão aptos para votar.[/dim]"
+            ),
+            title="[bold bright_white]ELEITORES RESETADOS[/bold bright_white]",
+            border_style="bold green",
+            box=box.DOUBLE,
+            padding=(1, 4)
+      ))
+      time.sleep(2)
       limpar_tela()
-      carregar_pontos_loop(2, "Atualizando status de votação dos eleitores para 'Não'")
 
-      limpar_tela()
-      console.print("[bold green]Zerésima finalizada![/bold green]\n")
-      input("Pressione Enter para continuar...")
+      console.print(Panel(
+            Align.center("[bold green]Zerésima finalizada com sucesso![/bold green]"),
+            title="[bold bright_white]ZERÉSIMA CONCLUÍDA[/bold bright_white]",
+            border_style="bold green",
+            box=box.DOUBLE,
+            padding=(1, 4)
+      ))
+      input("\nPressione Enter para ver o relatório de votos...")
       limpar_tela()
 
       buscar_candidatos = "SELECT candidatos.nome, candidatos.sigla_partido, COUNT(votos.id) AS total_votos FROM candidatos LEFT JOIN votos ON candidatos.id = votos.id_candidato GROUP BY candidatos.id ORDER BY candidatos.nome;"
