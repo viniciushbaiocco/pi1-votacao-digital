@@ -173,8 +173,16 @@ def autenticar_mesario(id_sessao):
         if resultado[0] > 0:
             limpar_tela()
             exibir_progresso_mesario(titulo=titulo, cpf_4=cpf_4, chave=chave_acesso, tentativa=tentativa)
-            limpar_tela()
-            console.print("\n[bold green]Mesário validado com sucesso![/bold green]")
+            console.print(Panel(
+                Align.center(
+                    "[bold green]Mesário validado com sucesso![/bold green]\n"
+                    "[dim]Acesso ao sistema eleitoral autorizado.[/dim]"
+                ),
+                title="[bold bright_white]AUTENTICAÇÃO CONCLUÍDA[/bold bright_white]",
+                border_style="bold green",
+                box=box.DOUBLE,
+                padding=(1, 2)
+            ))
             input("\nPressione Enter para continuar...")
             return True
 
