@@ -34,9 +34,9 @@ def exibir_progresso(nome=None, partido=None, sigla=None, numero=None):
     tabela = Table(
         title="Cadastro de Candidato",
         box=box.DOUBLE,
-        border_style="bold sandy_brown",
+        border_style="bold #D4620A",
         title_style="bold bright_white",
-        header_style="bold sandy_brown",
+        header_style="bold #D4620A",
         show_lines=True
     )
     tabela.add_column("Campo", style="bright_white", min_width=20)

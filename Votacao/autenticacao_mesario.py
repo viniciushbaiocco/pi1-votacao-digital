@@ -37,9 +37,9 @@ def exibir_progresso_mesario(titulo=None, cpf_4=None, chave=None, tentativa=1):
     tabela = Table(
         title=f"Identificação do Mesário — Tentativa {tentativa} de 3",
         box=box.DOUBLE,
-        border_style="bold chartreuse1",
+        border_style="bold #21A500",
         title_style="bold bright_white",
-        header_style="bold chartreuse1",
+        header_style="bold #21A500",
         show_lines=True
     )
     tabela.add_column("Campo", style="bright_white", min_width=22)

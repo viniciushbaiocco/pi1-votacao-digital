@@ -6,6 +6,8 @@ from rich.panel import Panel
 from rich.align import Align
 from rich import box
 from Visual.visual import limpar_tela
+VERDE = "#21A500"
+AMARELO = "#FFD000"   # ou "#E0A800" se quiser mais vibrante
 
 console = Console(highlight=False)
 
@@ -38,9 +40,9 @@ def exibir_splash():
         largura_terminal = 80
 
     arte = pyfiglet.figlet_format("LAD.PY", font="standard")
-    cores_brasil = ["bold green", "bold green", "bold yellow", "bold yellow", "bold green", "bold green"]
+    cores_brasil = [f"bold {VERDE}", f"bold {VERDE}", f"bold {AMARELO}", f"bold {AMARELO}", f"bold {VERDE}", f"bold {VERDE}"]
 
-    console.print("═" * largura_terminal, style="bold yellow")
+    console.print("═" * largura_terminal, style=f"bold {AMARELO}")
     console.print()
     for i, linha in enumerate(arte.split('\n')):
         cor = cores_brasil[i % len(cores_brasil)]
@@ -48,14 +50,14 @@ def exibir_splash():
     console.print()
     console.print("Sistema de Votação Digital".center(largura_terminal), style="bright_white")
     console.print()
-    console.print("═" * largura_terminal, style="bold yellow")
+    console.print("═" * largura_terminal, style=f"bold {AMARELO}")
     console.print()
 
     descricao = (
         "[bright_white]Sistema eleitoral digital desenvolvido com segurança de ponta a ponta.[/bright_white]\n"
         "[dim]Garantindo integridade, rastreabilidade e confiabilidade em cada etapa da votação.[/dim]"
     )
-    console.print(Panel(Align.center(descricao), border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(descricao), border_style=f"bold {VERDE}", box=box.DOUBLE, padding=(1, 4)))
     console.print()
     console.print("Pressione Enter para iniciar...".center(largura_terminal), style="dim")
     input()

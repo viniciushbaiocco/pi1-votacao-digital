@@ -3,12 +3,16 @@ import os
 if not os.environ.get('TERM'):
     os.environ['TERM'] = 'xterm-266color'
 
-import pyfiglet 
+import pyfiglet
 from rich.console import Console
-from rich.panel import Panel     
+from rich.panel import Panel
 from rich import box
 from rich.align import Align      # centraliza o conteúdo dentro do painel
 from Visual.visual import limpar_tela
+
+VERDE = "#21A500"
+AMARELO = "#FFD000"
+LARANJA = "#D4620A"
 
 console = Console(highlight=False)
 
@@ -37,9 +41,9 @@ def exibir_banner():
         largura_terminal = 80
     arte_lad_py = pyfiglet.figlet_format("LAD.PY", font="standard")
 
-    cores_brasil = ["bold green", "bold green", "bold yellow", "bold yellow", "bold green", "bold green"]
+    cores_brasil = [f"bold {VERDE}", f"bold {VERDE}", f"bold {AMARELO}", f"bold {AMARELO}", f"bold {VERDE}", f"bold {VERDE}"]
 
-    console.print("═" * largura_terminal, style="bold yellow")
+    console.print("═" * largura_terminal, style=f"bold {AMARELO}")
     console.print()
     for i, linha in enumerate(arte_lad_py.split('\n')):
         cor = cores_brasil[i % len(cores_brasil)]
@@ -47,7 +51,7 @@ def exibir_banner():
     console.print()
     console.print(subtitulo_banner.center(largura_terminal), style="bright_white")
     console.print()
-    console.print("═" * largura_terminal, style="bold yellow")
+    console.print("═" * largura_terminal, style=f"bold {AMARELO}")
     console.print()
 
 def exibir_menu_principal():
@@ -75,7 +79,7 @@ def exibir_menu_principal():
         "              [dim]──────────────────────────────[/dim]\n"
         "              [red][X]  Finalizar Sistema[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style="bold spring_green1", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]MENU PRINCIPAL[/bold bright_white]", border_style=f"bold {VERDE}", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_gerenciamento():
@@ -99,7 +103,7 @@ def exibir_menu_gerenciamento():
         "               [dim]──────────────────────────────[/dim]\n"
         "               [red][X]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]GERENCIAMENTO[/bold bright_white]", border_style="bold orange1", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]GERENCIAMENTO[/bold bright_white]", border_style=f"bold {LARANJA}", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_eleitores():
@@ -127,7 +131,7 @@ def exibir_menu_eleitores():
         "                   [dim]──────────────────────────────[/dim]\n"
         "                   [red][X]  Voltar[/red]"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]ELEITORES[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]ELEITORES[/bold bright_white]", border_style=f"bold {LARANJA}", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_candidatos():
@@ -173,7 +177,7 @@ def exibir_menu_votacao():
     limpar_tela()
     exibir_banner()
     conteudo = (
-        "                     [bold chartreuse1][1]  Abrir Sistema De Votação[/bold chartreuse1]\n"
+        f"                     [bold {VERDE}][1]  Abrir Sistema De Votação[/bold {VERDE}]\n"
         "                     [bold bright_white][2][/bold bright_white]  Resultados Da Votação\n"
         "                     [bold bright_white][3][/bold bright_white]  Ocorrências\n"
         "                     [dim]──────────────────────────────[/dim]\n"
@@ -201,7 +205,7 @@ def exibir_menu_sistema_votacao():
         "          [bold bright_white][1][/bold bright_white]  Votar\n"
         "          [bold bright_white][2][/bold bright_white]  Encerrar Sistema De Votação"
     )
-    console.print(Panel(Align.center(conteudo), title="[bold bright_white]SISTEMA DE VOTAÇÃO[/bold bright_white]", border_style="bold chartreuse1", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title="[bold bright_white]SISTEMA DE VOTAÇÃO[/bold bright_white]", border_style=f"bold {VERDE}", box=box.DOUBLE, padding=(1, 4)))
 
 
 def exibir_menu_resultados_votacao():

@@ -43,9 +43,9 @@ def exibir_tabela_eleitor(id_, nome, titulo_eleitor, mesario, status_votacao, cp
     tabela = Table(
         title="Eleitor Encontrado",
         box=box.DOUBLE,
-        border_style="bold sandy_brown",
+        border_style="bold #D4620A",
         title_style="bold bright_white",
-        header_style="bold sandy_brown",
+        header_style="bold #D4620A",
         show_lines=True
     )
     tabela.add_column("ID",                justify="center", style="bright_white")

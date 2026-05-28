@@ -49,9 +49,9 @@ def exibir_boletim_urna():
             tabela = Table(
                 title="Listagem de Candidatos",
                 box=box.DOUBLE,
-                border_style="bold sandy_brown",
+                border_style="bold #D4620A",
                 title_style="bold bright_white",
-                header_style="bold sandy_brown",
+                header_style="bold #D4620A",
                 show_lines=True
             )
 
@@ -62,9 +62,9 @@ def exibir_boletim_urna():
             tabela_vencedor = Table(
                 title="Vencedor",
                 box=box.DOUBLE,
-                border_style="bold sandy_brown",
+                border_style="bold #D4620A",
                 title_style="bold bright_white",
-                header_style="bold sandy_brown",
+                header_style="bold #D4620A",
                 show_lines=True
             )
 

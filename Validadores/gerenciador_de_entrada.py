@@ -30,7 +30,7 @@ def input_cancelavel(prompt, titulo=""):
         operação prossiga; retorna `None` se o usuário optar por cancelar a ação digitando 'X'.
     """
     conteudo = f"[bright_white]{prompt}[/bright_white]\n[red]X - Cancelar[/red]"
-    console.print(Panel(Align.center(conteudo), title=f"[bold bright_white]{titulo}[/bold bright_white]", border_style="bold sandy_brown", box=box.DOUBLE, padding=(1, 4)))
+    console.print(Panel(Align.center(conteudo), title=f"[bold bright_white]{titulo}[/bold bright_white]", border_style="bold black", box=box.DOUBLE, padding=(1, 4)))
     valor = input("» ")
     if valor.strip().upper() == "X":
         return None

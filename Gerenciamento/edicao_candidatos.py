@@ -31,9 +31,9 @@ def exibir_tabela_candidato(titulo, candidato):
     tabela = Table(
         title=titulo,
         box=box.DOUBLE,
-        border_style="bold sandy_brown",
+        border_style="bold #D4620A",
         title_style="bold bright_white",
-        header_style="bold sandy_brown",
+        header_style="bold #D4620A",
         show_lines=True
     )
     tabela.add_column("ID",               justify="center", style="bright_white")
