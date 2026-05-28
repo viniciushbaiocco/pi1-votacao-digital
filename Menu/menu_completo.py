@@ -180,5 +180,6 @@ def menu_completo():
             encerramento_urna.excluir_ocorrencia_encerramento_urna()
             voto_computado.excluir_arquivo_voto_computado()
             voto_duplo.excluir_arquivo_voto_duplo()
+            protocolo_votacao.excluir_ocorrencia_protocolo_votacao()
             geral.excluir_arquivo_ocorrencias_gerais()
             executando_menu_principal = 0
