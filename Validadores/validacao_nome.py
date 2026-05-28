@@ -72,4 +72,4 @@ def validar_nome():
                     else:
                         nome_validado = True
 
-    return " ".join(nome_ajustado)
+    return " ".join(nome_ajustado).upper()
