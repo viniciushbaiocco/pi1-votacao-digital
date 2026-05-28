@@ -241,7 +241,18 @@ def sistema_voto(id_sessao):
             cursor.execute('SELECT * FROM candidatos WHERE numero_votacao = %s', (voto,))
             candidato = cursor.fetchone()
             exibir_candidato(candidato)
-            escolha = ge.obter_entrada_inteira_valida('\nCerteza que deseja votar nesse candidato? \n1 - Sim \n2 - Não \nDigite uma opção: ', 1, 2)
+            console.print(Panel(
+                Align.center(
+                    "[bold bright_white][1][/bold bright_white]  Confirmar voto neste candidato\n"
+                    "[dim]──────────────────────────────[/dim]\n"
+                    "[red][2]  Cancelar e escolher novamente[/red]"
+                ),
+                title="[bold bright_white]CONFIRMAR VOTO[/bold bright_white]",
+                border_style="bold chartreuse1",
+                box=box.DOUBLE,
+                padding=(1, 4)
+            ))
+            escolha = ge.obter_entrada_inteira_valida("Escolha: ", 1, 2)
             if escolha != 1:
                 continue
             votou = 1
@@ -251,7 +262,6 @@ def sistema_voto(id_sessao):
     id_candidato = cursor.fetchone()['id']
 
     limpar_tela()
-    console.print('\n[bold green]Voto Computado![/bold green]')
 
     # Protocolo único (coluna protocolo_votacao é UNIQUE): regenera em caso de colisão
     protocolo = prot_vot.gerar_protocolo_votacao(voto)
@@ -262,7 +272,17 @@ def sistema_voto(id_sessao):
         protocolo_cripto = crip.criptografar_protocolo(protocolo)
         cursor.execute("SELECT COUNT(*) AS total FROM votos WHERE protocolo_votacao = %s", (protocolo_cripto,))
 
-    console.print(f"\n[bold bright_white]Seu protocolo de votação é: {protocolo}[/bold bright_white]")
+    console.print(Panel(
+        Align.center(
+            "[bold green]Voto computado com sucesso![/bold green]\n\n"
+            f"[dim]Protocolo:[/dim] [bold bright_white]{protocolo}[/bold bright_white]\n"
+            "[dim]Guarde este código — ele comprova que seu voto foi registrado.[/dim]"
+        ),
+        title="[bold bright_white]VOTO REGISTRADO[/bold bright_white]",
+        border_style="bold green",
+        box=box.DOUBLE,
+        padding=(1, 4)
+    ))
 
     confirmacao.confirmacao()
 
