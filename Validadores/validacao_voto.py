@@ -1,4 +1,8 @@
+from rich import box
+from rich.align import Align
 from rich.console import Console
+from rich.panel import Panel
+
 from Visual.visual import limpar_tela
 from time import sleep
 
@@ -33,7 +37,15 @@ def validacao_voto():
         try:
             input("\nPressione Enter para continuar...")
             limpar_tela()
-            voto = (input('\nDigite o número eleitoral do candidato que deseja votar: '))
+            console.print(Panel(
+                Align.center(
+                    "Digite o número eleitoral do candidato que deseja votar: "
+                ),
+                border_style="bold blue",
+                box=box.DOUBLE,
+                padding=(1, 4)
+            ))
+            voto = (input('» '))
             if int(voto) < 0:
                 console.print('\nErro: Opção inválida. Por favor, escolha uma opção positiva.', style="bold red")
                 sleep(1.5)

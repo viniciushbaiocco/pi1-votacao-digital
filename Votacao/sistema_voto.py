@@ -229,8 +229,24 @@ def sistema_voto(id_sessao):
 
         if not candidato_existe:
             limpar_tela()
-            console.print("\n[bold yellow]Número não cadastrado. Se confirmar, o voto será considerado nulo.[/bold yellow]")
-            escolha = ge.obter_entrada_inteira_valida('\n1 - Confirmar voto nulo \n2 - Tentar novamente \nDigite uma opção: ', 1, 2)
+            console.print(Panel(
+                Align.center(
+                    "[bold yellow]Número não cadastrado. Se confirmar, o voto será considerado nulo.[/bold yellow]"
+                ),
+                border_style="bold black",
+                box=box.DOUBLE,
+                padding=(1, 4)
+            ))
+            console.print(Panel(
+                Align.center(
+                    "[bold bright_white][1][/bold bright_white] Confirmar voto nulo \n[bold bright_white][2][/bold bright_white] Tentar novamente"
+                ),
+                border_style="bold black",
+                box=box.DOUBLE,
+                padding=(1, 4)
+            ))
+
+            escolha = ge.obter_entrada_inteira_valida("Escolha uma opção: ", 1, 2)
             if escolha == 1:
                 voto = '00'
                 votou = 1
