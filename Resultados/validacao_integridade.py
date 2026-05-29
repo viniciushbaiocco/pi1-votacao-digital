@@ -1,8 +1,9 @@
+import time
 from rich.table import Table
-
+from rich.panel import Panel
 from database import conexao_banco
-from Visual.visual import carregar_pontos_loop, limpar_tela
-from Validadores.confirmacao import   confirmacao
+from Visual.visual import limpar_tela
+from Validadores.confirmacao import confirmacao
 from rich.console import Console
 from rich import box
 from rich.align import Align
@@ -46,7 +47,18 @@ def validar_integridade():
     cursor.close()
     conexao.close()
 
-    carregar_pontos_loop(2, "Validando Integridade")
+    console.print(Panel(
+        Align.center(
+            "[bold bright_white]Validando integridade matemática da eleição...[/bold bright_white]\n"
+            "[dim]Cruzando total de votos com eleitores que compareceram.[/dim]"
+        ),
+        title="[bold bright_white]VALIDANDO INTEGRIDADE[/bold bright_white]",
+        border_style="bold green",
+        box=box.DOUBLE,
+        padding=(1, 4)
+    ))
+    time.sleep(2)
+    limpar_tela()
 
     if total_votos == 0:
         mensagem = "[bold white]Nenhum voto registrado para concluir a validação.[/bold white]"
