@@ -1,8 +1,10 @@
+import time
 from database.conexao_banco import conexao_banco
-from Visual.visual import carregar_pontos_loop, limpar_tela
+from Visual.visual import limpar_tela
 from Validadores.confirmacao import confirmacao
 from rich.console import Console
 from rich.table import Table
+from rich.panel import Panel
 from rich import box
 from rich.align import Align
 
@@ -38,7 +40,18 @@ def exibir_estatistica_comparecimento() -> None:
     cursor.execute("SELECT COUNT(*) AS total FROM eleitores")
     total_eleitores = cursor.fetchone()["total"]
 
-    carregar_pontos_loop(3, "Calculando Estatísticas")
+    console.print(Panel(
+        Align.center(
+            "[bold bright_white]Calculando estatísticas de comparecimento...[/bold bright_white]\n"
+            "[dim]Consultando eleitores aptos e votos registrados.[/dim]"
+        ),
+        title="[bold bright_white]CALCULANDO ESTATÍSTICAS[/bold bright_white]",
+        border_style="bold green",
+        box=box.DOUBLE,
+        padding=(1, 4)
+    ))
+    time.sleep(2)
+    limpar_tela()
 
     if total_eleitores == 0:
         console.print("\n[bold red][AVISO] Nenhum eleitor cadastrado no sistema.[/bold red]")
