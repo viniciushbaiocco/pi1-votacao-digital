@@ -9,6 +9,7 @@ from rich.table import Table
 from rich import box
 from rich.align import Align
 from rich.panel import Panel
+from Visual.visual import limpar_tela
 
 console = Console(highlight=False)
 
@@ -103,9 +104,20 @@ def exibir_boletim_urna():
                     query_verificar_tabela_votos = ('SELECT * FROM votos')
                     cursor.execute(query_verificar_tabela_votos)
                     verificar_tabela = cursor.fetchall()
+                    limpar_tela()
 
-                    visual.carregar_pontos_loop(2, "Verificando Vencedor")
-                    time.sleep(1)
+                    console.print(Panel(
+                        Align.center(
+                            "[bold bright_white]Verificando o resultado da eleição...[/bold bright_white]\n"
+                            "[dim]Consultando votos e determinando o vencedor.[/dim]"
+                        ),
+                        title="[bold bright_white]VERIFICANDO VENCEDOR[/bold bright_white]",
+                        border_style="bold green",
+                        box=box.DOUBLE,
+                        padding=(1, 4)
+                    ))
+                    time.sleep(2)
+                    visual.limpar_tela()
 
                     if not verificar_tabela:
                         console.print(Panel(Align.center("[bold red]Nenhum Voto Registrado.[/bold red]"), title="[bold bright_white]Erro[/bold bright_white]", border_style="bold red", box=box.DOUBLE, padding=(1, 4)))
