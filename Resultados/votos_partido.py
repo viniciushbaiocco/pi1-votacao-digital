@@ -4,8 +4,10 @@ from database import conexao_banco as cb
 from rich.console import Console
 from rich.table import Table
 from rich import box
-from Visual import visual
+from rich.panel import Panel
+from Visual.visual import limpar_tela
 from rich.align import Align
+
 
 console = Console(highlight=False)
 
@@ -66,12 +68,23 @@ def votos_por_partido():
                 partidos['sigla_partido'],
                 str(partidos['total_votos'])
             )
-
-        visual.carregar_pontos_loop(2, "Consultando Resultados")
-        time.sleep(1)
+        
+        limpar_tela()
+        console.print(Panel(
+            Align.center(
+                "[bold bright_white]Consultando votos por partido...[/bold bright_white]\n"
+                "[dim]Agregando resultados das legendas partidárias.[/dim]"
+            ),
+            title="[bold bright_white]CONSULTANDO RESULTADOS[/bold bright_white]",
+            border_style="bold green",
+            box=box.DOUBLE,
+            padding=(1, 4)
+        ))
+        time.sleep(2)
+        limpar_tela()
         console.print(Align.center(tabela))
         confirmacao.confirmacao()
-        visual.limpar_tela()
+        limpar_tela()
 
     finally:
         if cursor:
