@@ -110,6 +110,7 @@ def edicao_candidatos():
         conexao.close()
         return None
 
+    limpar_tela()
     id_candidato = candidato['id']
     exibir_tabela_candidato("Candidato a Ser Editado", candidato)
 
