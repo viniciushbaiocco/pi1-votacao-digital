@@ -6,6 +6,7 @@ from rich.panel import Panel
 from Validadores import confirmacao, gerenciador_de_entrada as ge, validacao_cpf as val_cpf, \
     validacao_titulo as val_tit, validacao_palavra_chave as val_palavra
 from Visual.visual import limpar_tela
+from time import sleep
 from criptografia import criptografia as cripto
 from database import conexao_banco as conect
 
@@ -47,7 +48,10 @@ def recuperar_chave():
         conexao.close()
         return
 
-    while not val_cpf.validacao_de_cpf(cpf):
+    cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(cpf)
+    while not cpf_valido:
+        console.print(f"\n{erro_cpf}", style="bold red")
+        sleep(1.5)
         limpar_tela()
         cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "RECUPERAÇÃO DE CHAVE DE ACESSO")
         if cpf is None:
@@ -55,6 +59,7 @@ def recuperar_chave():
             cursor.close()
             conexao.close()
             return
+        cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(cpf)
 
     limpar_tela()
     titulo = ge.input_cancelavel("Digite seu Título de Eleitor", "RECUPERAÇÃO DE CHAVE DE ACESSO")

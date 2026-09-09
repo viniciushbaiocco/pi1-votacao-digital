@@ -7,6 +7,7 @@ from rich.panel import Panel
 from rich.align import Align
 from rich import box
 from Visual.visual import limpar_tela
+from time import sleep
 
 console = Console(highlight=False)
 
@@ -99,10 +100,15 @@ def remocao_eleitores():
         limpar_tela()
         cpf = ge.input_cancelavel("Digite o CPF do eleitor a ser removido", "REMOVER POR CPF")
         if cpf is not None:
-            while not val_cpf.validacao_de_cpf(cpf):
+            cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(cpf)
+            while not cpf_valido:
+                console.print(f"\n{erro_cpf}", style="bold red")
+                sleep(1.5)
+                limpar_tela()
                 cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "REMOVER POR CPF")
                 if cpf is None:
                     break
+                cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(cpf)
             if cpf is not None:
                 cpf_criptografado = crip.criptografar_cpf(cpf)
                 cursor.execute('SELECT * FROM eleitores WHERE cpf = %s', (cpf_criptografado,))

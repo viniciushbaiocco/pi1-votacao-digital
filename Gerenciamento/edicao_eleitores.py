@@ -106,10 +106,15 @@ def edicao_eleitores():
             if cpf is None:
                 cursor.close(); conexao.close()
                 return None
-            while not val_cpf.validacao_de_cpf(cpf):
+            cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(cpf)
+            while not cpf_valido:
+                console.print(f"\n{erro_cpf}", style="bold red")
+                sleep(1.5)
+                limpar_tela()
                 cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "EDITAR POR CPF")
                 if cpf is None:
                     break
+                cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(cpf)
             if cpf is None:
                 cursor.close(); conexao.close()
                 return None
@@ -230,11 +235,16 @@ def edicao_eleitores():
                         if novo_cpf is None:
                             limpar_tela()
                             continue
-                        while not val_cpf.validacao_de_cpf(novo_cpf):
+                        cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(novo_cpf)
+                        while not cpf_valido:
+                            console.print(f"\n{erro_cpf}", style="bold red")
+                            sleep(1.5)
+                            limpar_tela()
                             novo_cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "EDITAR CPF")
                             if novo_cpf is None:
                                 limpar_tela()
                                 break
+                            cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(novo_cpf)
                         if novo_cpf is None:
                             limpar_tela()
                             continue

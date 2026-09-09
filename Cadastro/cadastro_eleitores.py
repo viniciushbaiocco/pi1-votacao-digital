@@ -6,6 +6,7 @@ from database import conexao_banco
 from criptografia import criptografia as cripto
 from Cadastro import chave_acesso
 from Visual.visual import limpar_tela
+from time import sleep
 from Validadores import gerenciador_de_entrada as ge
 from rich.console import Console
 from rich.table import Table
@@ -98,14 +99,16 @@ def cadastrar_eleitor():
     if cpf is None:
         return None
 
-    cpf_valido = validacao_cpf.validacao_de_cpf(cpf)
+    cpf_valido, erro_cpf = validacao_cpf.validacao_de_cpf(cpf)
     while not cpf_valido:
+        console.print(f"\n{erro_cpf}", style="bold red")
+        sleep(1.5)
         limpar_tela()
         exibir_progresso()
         cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "CPF")
         if cpf is None:
             break
-        cpf_valido = validacao_cpf.validacao_de_cpf(cpf)
+        cpf_valido, erro_cpf = validacao_cpf.validacao_de_cpf(cpf)
     if cpf is None:
         return None
 

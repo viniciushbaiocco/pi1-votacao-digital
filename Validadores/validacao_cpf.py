@@ -1,42 +1,33 @@
-from rich.console import Console
-from Visual.visual import limpar_tela
-from time import sleep
-
-console = Console(highlight=False)
-
 def validacao_de_cpf(cpf_digitado_usuario):
     """
     Valida matematicamente um CPF verificando seus dois dígitos verificadores.
+
+    A função apenas valida: não imprime nada na tela e não limpa o terminal.
+    Cabe a quem chama decidir como exibir a mensagem de erro devolvida.
+
     Args:
         cpf_digitado_usuario (str): O CPF a ser validado, com ou sem formatação.
+
     Returns:
-        bool: True se o CPF for válido, False caso contrário.
+        tuple[bool, str | None]: (True, None) se o CPF for válido.
+        (False, mensagem) caso contrário, onde 'mensagem' descreve o motivo da recusa.
     """
     # Limpando
     cpf_limpo = cpf_digitado_usuario.replace(".", "").replace("-", "").replace(" ", "")
 
     # Letras
     if not cpf_limpo.isdigit():
-        console.print("\nCPF inválido! O CPF deve conter apenas números.", style="bold red")
-        sleep(1.5)
-        limpar_tela()
-        return False
+        return False, "O CPF deve conter apenas números."
 
     digitos = [int(d) for d in cpf_limpo]
 
     # Tamanho
     if len(digitos) != 11:
-        console.print("\nCPF inválido! O CPF deve conter 11 dígitos.", style="bold red")
-        sleep(1.5)
-        limpar_tela()
-        return False
+        return False, "O CPF deve conter 11 dígitos."
 
     # Sequência repetida
     if cpf_limpo == cpf_limpo[0] * 11:
-        console.print("\nCPF inválido! Sequência de números repetidos.", style="bold red")
-        sleep(1.5)
-        limpar_tela()
-        return False
+        return False, "Sequência de números repetidos."
 
     # 1 dígito verificador
     pesos_1_DV = [10, 9, 8, 7, 6, 5, 4, 3, 2]
@@ -65,9 +56,6 @@ def validacao_de_cpf(cpf_digitado_usuario):
 
     # Comparando
     if digito_1_DV != digitos[9] or digito_2_DV != digitos[10]:
-        console.print("\nCPF inválido!", style="bold red")
-        sleep(1.5)
-        limpar_tela()
-        return False
+        return False, "CPF inválido."
 
-    return True
+    return True, None

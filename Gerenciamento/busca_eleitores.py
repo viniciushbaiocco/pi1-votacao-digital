@@ -12,6 +12,7 @@ from rich.panel import Panel
 from rich.align import Align
 from rich import box
 from Visual.visual import limpar_tela
+from time import sleep
 
 console = Console(highlight=False)
 
@@ -110,12 +111,16 @@ def busca_eleitor():
         limpar_tela()
         cpf = ge.input_cancelavel("Digite o CPF do eleitor", "BUSCA POR CPF")
         if cpf is not None:
-            while not val_cpf.validacao_de_cpf(cpf):
+            cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(cpf)
+            while not cpf_valido:
+                console.print(f"\n{erro_cpf}", style="bold red")
+                sleep(1.5)
                 limpar_tela()
                 cpf = ge.input_cancelavel("CPF inválido. Digite novamente", "BUSCA POR CPF")
                 if cpf is None:
                     limpar_tela()
                     break
+                cpf_valido, erro_cpf = val_cpf.validacao_de_cpf(cpf)
             if cpf is not None:
                 cpf = cpf.replace(" ", "")
                 cpf_criptografado = cripto.criptografar_cpf(cpf)
