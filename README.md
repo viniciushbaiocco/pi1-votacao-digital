@@ -1,3 +1,9 @@
+Cópia pessoal do Projeto Integrador I da PUC-Campinas, desenvolvido originalmente em equipe de seis pessoas.
+
+Minhas contribuições no projeto original: módulo completo de candidatos, listagem e remoção de eleitores, personalização da interface de terminal (biblioteca Rich), otimização e refatoração do código.
+
+Uso este repositório para continuar desenvolvendo por conta própria.
+
 # Sistema de Votação Digital
 
 Back-end de um sistema de votação digital operado por terminal, desenvolvido como Projeto Integrador I do curso de Engenharia de Software da PUC-Campinas.
